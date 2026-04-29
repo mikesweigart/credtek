@@ -21,7 +21,9 @@ const LANDING_BODY_PRE_CALC = `
       <a href="#pricing">Pricing</a>
       <a href="#guarantee">Guarantee</a>
       <a href="#faq">FAQ</a>
-      <a href="/compare" class="topnav-link-demo">vs. competitors</a>
+      <a href="/compare">vs. competitors</a>
+      <a href="/api-docs">API</a>
+      <a href="/changelog">Changelog</a>
       <a href="/dashboard" class="topnav-link-demo">Live demo →</a>
     </div>
     <a class="topnav-cta" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a demo →</a>
