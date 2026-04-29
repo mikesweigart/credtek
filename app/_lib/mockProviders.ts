@@ -165,3 +165,215 @@ export const AGENT_FEED: AgentEvent[] = [
 export function findProvider(slug: string): Provider | undefined {
   return PROVIDERS.find((p) => p.slug === slug);
 }
+
+// ============================================================================
+// State licenses — drives the /licenses 50-state matrix page. Statuses are
+// aggregated across the team (e.g., "TX = licensed" means the team holds at
+// least one TX license; "OH = compact eligible" means our PSYPACT/Counseling
+// Compact members can practice there without a separate state license).
+// ============================================================================
+
+export type StateStatus =
+  | "licensed"
+  | "compact"
+  | "pending"
+  | "expiring"
+  | "eligible";
+
+export type StateRow = { code: string; name: string; status: StateStatus };
+
+export const STATES: StateRow[] = [
+  { code: "CA", name: "California", status: "licensed" },
+  { code: "TX", name: "Texas", status: "licensed" },
+  { code: "FL", name: "Florida", status: "licensed" },
+  { code: "NY", name: "New York", status: "expiring" },
+  { code: "PA", name: "Pennsylvania", status: "licensed" },
+  { code: "IL", name: "Illinois", status: "licensed" },
+  { code: "OH", name: "Ohio", status: "compact" },
+  { code: "GA", name: "Georgia", status: "compact" },
+  { code: "NC", name: "North Carolina", status: "compact" },
+  { code: "MI", name: "Michigan", status: "licensed" },
+  { code: "NJ", name: "New Jersey", status: "pending" },
+  { code: "VA", name: "Virginia", status: "licensed" },
+  { code: "WA", name: "Washington", status: "compact" },
+  { code: "AZ", name: "Arizona", status: "compact" },
+  { code: "MA", name: "Massachusetts", status: "licensed" },
+  { code: "TN", name: "Tennessee", status: "compact" },
+  { code: "IN", name: "Indiana", status: "compact" },
+  { code: "MO", name: "Missouri", status: "licensed" },
+  { code: "MD", name: "Maryland", status: "pending" },
+  { code: "WI", name: "Wisconsin", status: "compact" },
+  { code: "CO", name: "Colorado", status: "compact" },
+  { code: "MN", name: "Minnesota", status: "compact" },
+  { code: "SC", name: "South Carolina", status: "compact" },
+  { code: "AL", name: "Alabama", status: "licensed" },
+  { code: "LA", name: "Louisiana", status: "compact" },
+  { code: "KY", name: "Kentucky", status: "compact" },
+  { code: "OR", name: "Oregon", status: "compact" },
+  { code: "OK", name: "Oklahoma", status: "compact" },
+  { code: "CT", name: "Connecticut", status: "pending" },
+  { code: "UT", name: "Utah", status: "compact" },
+  { code: "IA", name: "Iowa", status: "compact" },
+  { code: "NV", name: "Nevada", status: "compact" },
+  { code: "AR", name: "Arkansas", status: "compact" },
+  { code: "MS", name: "Mississippi", status: "compact" },
+  { code: "KS", name: "Kansas", status: "compact" },
+  { code: "NM", name: "New Mexico", status: "expiring" },
+  { code: "NE", name: "Nebraska", status: "compact" },
+  { code: "WV", name: "West Virginia", status: "compact" },
+  { code: "ID", name: "Idaho", status: "compact" },
+  { code: "HI", name: "Hawaii", status: "eligible" },
+  { code: "NH", name: "New Hampshire", status: "compact" },
+  { code: "ME", name: "Maine", status: "compact" },
+  { code: "MT", name: "Montana", status: "compact" },
+  { code: "RI", name: "Rhode Island", status: "compact" },
+  { code: "DE", name: "Delaware", status: "compact" },
+  { code: "SD", name: "South Dakota", status: "compact" },
+  { code: "ND", name: "North Dakota", status: "compact" },
+  { code: "AK", name: "Alaska", status: "eligible" },
+  { code: "VT", name: "Vermont", status: "compact" },
+  { code: "WY", name: "Wyoming", status: "compact" },
+];
+
+/** Headline numbers shown under the state grid. These are aggregate license
+ *  counts across the team, NOT state-cell counts (a 200-provider group holds
+ *  many more individual licenses than 50 states). Matches the landing page. */
+export const LICENSE_TOTALS = {
+  active: 187,
+  compactEligible: 31,
+  inProgress: 7,
+  expiringSoon: 3,
+};
+
+// ============================================================================
+// Payor enrollments — drives the /payors Kanban. Each row is one
+// (provider, payor) pair; the column it lives in is `stage`.
+// ============================================================================
+
+export type PayorStage = "drafted" | "submitted" | "info_needed" | "in_network";
+
+export type PayorEnrollment = {
+  /** Slug for the provider (matches PROVIDERS.slug so cards link to the detail page). */
+  providerSlug: string;
+  /** Display name shortened for Kanban density: "Mitchell, J.". */
+  providerLabel: string;
+  payor: string;
+  /** Compact context line: "CA · LCSW", "PSYPACT · PsyD". */
+  context: string;
+  stage: PayorStage;
+  /** Day count for visible context. Negative meaning depends on stage. */
+  dayLabel: string;
+  /** Set true to render the danger style (escalation needed). */
+  danger?: boolean;
+  /** Set true to render the success style (active in-network). */
+  success?: boolean;
+};
+
+export const PAYOR_ENROLLMENTS: PayorEnrollment[] = [
+  // --- Drafted (awaiting coordinator approval before submit) ---
+  {
+    providerSlug: "james-mitchell",
+    providerLabel: "Mitchell, J.",
+    payor: "Optum",
+    context: "CA · LCSW",
+    stage: "drafted",
+    dayLabel: "READY · APPROVE",
+  },
+  {
+    providerSlug: "aisha-patel",
+    providerLabel: "Patel, A.",
+    payor: "Carelon",
+    context: "TX · LPC-A",
+    stage: "drafted",
+    dayLabel: "READY · APPROVE",
+  },
+  {
+    providerSlug: "rachel-bennett",
+    providerLabel: "Bennett, R.",
+    payor: "Magellan",
+    context: "CO · LMFT",
+    stage: "drafted",
+    dayLabel: "READY · APPROVE",
+  },
+  // --- Submitted (waiting on payor response) ---
+  {
+    providerSlug: "sarah-reyes",
+    providerLabel: "Reyes, S.",
+    payor: "Evernorth",
+    context: "PSYPACT · PsyD",
+    stage: "submitted",
+    dayLabel: "DAY 6",
+  },
+  {
+    providerSlug: "james-mitchell",
+    providerLabel: "Mitchell, J.",
+    payor: "Carelon",
+    context: "CA · LCSW",
+    stage: "submitted",
+    dayLabel: "DAY 12",
+  },
+  {
+    providerSlug: "marcus-singh",
+    providerLabel: "Singh, M.",
+    payor: "Anthem BH",
+    context: "GA · LCSW",
+    stage: "submitted",
+    dayLabel: "DAY 47 · ESCALATE",
+    danger: true,
+  },
+  // --- Info Needed (payor came back asking for something) ---
+  {
+    providerSlug: "daniel-kim",
+    providerLabel: "Kim, D.",
+    payor: "TX Medicaid",
+    context: "Superior · MD",
+    stage: "info_needed",
+    dayLabel: "DEA UPDATE · SMS SENT",
+  },
+  {
+    providerSlug: "aisha-patel",
+    providerLabel: "Patel, A.",
+    payor: "Optum",
+    context: "TX · LPC-A",
+    stage: "info_needed",
+    dayLabel: "CAQH ATTEST · DUE",
+  },
+  // --- In-Network (active) ---
+  {
+    providerSlug: "sarah-reyes",
+    providerLabel: "Reyes, S.",
+    payor: "Optum",
+    context: "PSYPACT · PsyD",
+    stage: "in_network",
+    dayLabel: "ACTIVE · 38 DAYS",
+    success: true,
+  },
+  {
+    providerSlug: "aisha-patel",
+    providerLabel: "Patel, A.",
+    payor: "Optum",
+    context: "TX · LPC-A",
+    stage: "in_network",
+    dayLabel: "ACTIVE · 42 DAYS",
+    success: true,
+  },
+  {
+    providerSlug: "marcus-singh",
+    providerLabel: "Singh, M.",
+    payor: "Carelon",
+    context: "GA · LCSW",
+    stage: "in_network",
+    dayLabel: "ACTIVE · 31 DAYS",
+    success: true,
+  },
+];
+
+/** Headline column counts. Includes records not visualized as cards (the
+ *  Kanban shows ~3 per column for visual density; the count reflects total
+ *  pipeline volume). */
+export const PAYOR_COLUMN_COUNTS: Record<PayorStage, number> = {
+  drafted: 8,
+  submitted: 14,
+  info_needed: 5,
+  in_network: 4,
+};

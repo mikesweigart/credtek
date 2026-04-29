@@ -21,10 +21,10 @@ type NavItem = {
 
 const WORKSPACE: NavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: "▣" },
-  { label: "Providers", href: "/dashboard", icon: "◯", badge: "214" },
+  { label: "Providers", href: "/providers", icon: "◯", badge: "214" },
   { label: "Pipeline", href: "/dashboard", icon: "◇", badge: "31" },
-  { label: "Payors", href: "#", icon: "▤", stub: true },
-  { label: "Licenses", href: "#", icon: "⚐", stub: true },
+  { label: "Payors", href: "/payors", icon: "▤" },
+  { label: "Licenses", href: "/licenses", icon: "⚐" },
 ];
 
 const AGENTS: NavItem[] = [
