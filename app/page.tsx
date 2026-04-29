@@ -1,12 +1,14 @@
 // CredTek landing page.
 //
 // The body is rendered verbatim from the original artifact HTML so we keep
-// pixel-parity with the version the team has already reviewed. When we add
-// real interactivity (demo-booking form, analytics, A/B variants) we'll
-// extract the relevant section into a real React component instead of
-// converting the whole page to JSX.
+// pixel-parity with the version the team has already reviewed. The interactive
+// pricing calculator is rendered as a real React component between the
+// cost-of-inaction math and the 45-day guarantee — that's the section split
+// you see below.
 
-const LANDING_BODY = `
+import { PricingCalculator } from "./_components/PricingCalculator";
+
+const LANDING_BODY_PRE_CALC = `
 <!-- ============== TOP NAV ============== -->
 <nav class="topnav">
   <div class="topnav-inner">
@@ -582,7 +584,9 @@ const LANDING_BODY = `
     </div>
   </div>
 </section>
+`;
 
+const LANDING_BODY_POST_CALC = `
 <!-- ============== GUARANTEE ============== -->
 <section class="section" id="guarantee" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container container-narrow">
@@ -736,5 +740,11 @@ const LANDING_BODY = `
 `;
 
 export default function Page() {
-  return <div dangerouslySetInnerHTML={{ __html: LANDING_BODY }} />;
+  return (
+    <>
+      <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_PRE_CALC }} />
+      <PricingCalculator />
+      <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_POST_CALC }} />
+    </>
+  );
 }
