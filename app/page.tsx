@@ -21,7 +21,7 @@ const LANDING_BODY = `
       <a href="#faq">FAQ</a>
       <a href="/dashboard" class="topnav-link-demo">Live demo →</a>
     </div>
-    <a class="topnav-cta" href="#cta">Book a demo →</a>
+    <a class="topnav-cta" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a demo →</a>
   </div>
 </nav>
 
@@ -34,7 +34,7 @@ const LANDING_BODY = `
         <h1>Get your behavioral health providers <em>in-network in 45 days.</em><br/><span class="strike">Not 120.</span></h1>
         <p class="hero-sub">CredTek is the AI-agent-native credentialing platform purpose-built for behavioral health groups. Cut time-to-revenue by 67%, eliminate the spreadsheets, and pass your next NCQA audit in an afternoon — <strong>without adding a single coordinator.</strong></p>
         <div class="hero-cta">
-          <a class="btn-primary" href="#cta">Book a 20-min demo <span class="arrow">→</span></a>
+          <a class="btn-primary" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
           <a class="btn-secondary" href="#how">See how it works</a>
         </div>
         <div class="hero-trust">
@@ -714,7 +714,7 @@ const LANDING_BODY = `
     <h2>See your own credentialing pipeline <em>running in CredTek.</em></h2>
     <p>20 minutes. We pull a sample of your providers, run them through the platform live, and show you exactly what's possible. No slides. No fluff.</p>
     <div class="final-cta-btns">
-      <a class="btn-primary" href="mailto:hello@credtek.com">Book a 20-min demo →</a>
+      <a class="btn-primary" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a 20-min demo →</a>
       <a class="btn-secondary" href="#how">See how it works first</a>
     </div>
     <div class="final-meta">→ NO CONTRACT REQUIRED · 45-DAY GUARANTEE · LIVE IN 14 DAYS</div>
