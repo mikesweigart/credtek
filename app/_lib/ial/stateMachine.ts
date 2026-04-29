@@ -189,6 +189,14 @@ export function decideTransition(args: {
 // Side-effect free job updater
 // ---------------------------------------------------------------------
 
+export type TransitionPatch = {
+  result?: IntegrationJob["result"];
+  eta?: IntegrationJob["eta"];
+  costCents?: IntegrationJob["costCents"];
+  /** Partial — merged shallowly into existing metadata. */
+  metadata?: Partial<IntegrationJob["metadata"]>;
+};
+
 /**
  * Returns the new IntegrationJob shape after transition. The caller is
  * responsible for persisting both the new job state and an audit-log
@@ -200,9 +208,7 @@ export function applyTransition(args: {
   /** ISO timestamp of the transition; injected to keep the function pure. */
   now: Date;
   /** Optional updates to apply alongside the status change. */
-  patch?: Partial<
-    Pick<IntegrationJob, "result" | "eta" | "costCents" | "metadata">
-  >;
+  patch?: TransitionPatch;
 }): IntegrationJob {
   const next: IntegrationJob = {
     ...args.job,

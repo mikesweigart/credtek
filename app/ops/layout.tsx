@@ -10,6 +10,7 @@ import type { ReactNode } from "react";
 
 const NAV = [
   { label: "Queue", href: "/ops/queue" },
+  { label: "Templates", href: "/ops/templates" },
   { label: "Audit log", href: "/ops/audit" },
   { label: "Margin", href: "/ops/margin" },
 ];
@@ -41,7 +42,6 @@ export default function OpsLayout({ children }: { children: ReactNode }) {
               </Link>
             );
           })}
-          <span className="ops-topnav-link disabled">Templates</span>
         </nav>
 
         <div className="ops-topbar-right">
