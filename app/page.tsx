@@ -19,6 +19,7 @@ const LANDING_BODY = `
       <a href="#pricing">Pricing</a>
       <a href="#guarantee">Guarantee</a>
       <a href="#faq">FAQ</a>
+      <a href="/dashboard" class="topnav-link-demo">Live demo →</a>
     </div>
     <a class="topnav-cta" href="#cta">Book a demo →</a>
   </div>
