@@ -1,0 +1,28 @@
+{
+  "name": "credtek-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node -e \"const fs=require('fs');for(const p of ['.next','tsconfig.tsbuildinfo','.tsbuildinfo']){try{fs.rmSync(p,{recursive:true,force:true})}catch(e){}}\" && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "16.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.3",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
