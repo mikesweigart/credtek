@@ -11,11 +11,14 @@ export function DemoBanner() {
       <span>
         <strong>Demo workspace</strong> · sample providers, no real PHI
       </span>
+      <Link href="/welcome" className="demo-banner-link">
+        ↳ Onboarding flow
+      </Link>
       <Link href="/ops/queue" className="demo-banner-link">
-        ↳ Switch to Ops view
+        ↳ Ops view
       </Link>
       <Link href="/" className="demo-banner-cta">
-        See the marketing site →
+        Marketing site →
       </Link>
     </div>
   );

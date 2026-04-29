@@ -2,10 +2,20 @@
 // from the customer-facing (app) shell. The audience is credentialing
 // specialists (CVO partner staff in year 1, internal ops in year 2).
 
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
+const NAV = [
+  { label: "Queue", href: "/ops/queue" },
+  { label: "Audit log", href: "/ops/audit" },
+  { label: "Margin", href: "/ops/margin" },
+];
+
 export default function OpsLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname() ?? "/ops/queue";
   return (
     <div className="ops-shell">
       <header className="ops-topbar">
@@ -17,12 +27,21 @@ export default function OpsLayout({ children }: { children: ReactNode }) {
         </Link>
 
         <nav className="ops-topnav">
-          <Link href="/ops/queue" className="ops-topnav-link active">
-            Queue
-          </Link>
+          {NAV.map((item) => {
+            const active = pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={
+                  active ? "ops-topnav-link active" : "ops-topnav-link"
+                }
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <span className="ops-topnav-link disabled">Templates</span>
-          <span className="ops-topnav-link disabled">Audit log</span>
-          <span className="ops-topnav-link disabled">Margin</span>
         </nav>
 
         <div className="ops-topbar-right">
