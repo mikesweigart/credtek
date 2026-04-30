@@ -6,17 +6,64 @@
 // revenue per idle provider per day. Outputs: annual CredTek cost,
 // "do nothing" cost, projected savings, and ROI multiple.
 //
+// Inputs are URL-shareable: ?p=200&n=10&d=75&l=2000. When a coordinator
+// emails the page to a CFO, the CFO opens the URL with the same numbers
+// the coordinator modeled. Hash is updated live as sliders move.
+//
 // Math intentionally identical to what the static cost-of-inaction
 // section uses, just parameterized — partners modeling their group
 // don't have to trust our numbers; the formula is in the markup.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+function readInitial(name: string, fallback: number): number {
+  if (typeof window === "undefined") return fallback;
+  const params = new URLSearchParams(window.location.search);
+  const v = Number.parseInt(params.get(name) ?? "", 10);
+  return Number.isFinite(v) && v > 0 ? v : fallback;
+}
 
 export function PricingCalculator() {
   const [providers, setProviders] = useState(200);
   const [newPerQuarter, setNewPerQuarter] = useState(10);
   const [currentDelayDays, setCurrentDelayDays] = useState(75);
   const [lostPerDay, setLostPerDay] = useState(2000);
+  const [copied, setCopied] = useState(false);
+
+  // Hydrate from URL on mount (client-only — server render uses defaults
+  // so the static markup is still cacheable).
+  useEffect(() => {
+    setProviders(readInitial("p", 200));
+    setNewPerQuarter(readInitial("n", 10));
+    setCurrentDelayDays(readInitial("d", 75));
+    setLostPerDay(readInitial("l", 2000));
+  }, []);
+
+  // Sync URL as inputs change (replaceState — no history entry per drag).
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    params.set("p", String(providers));
+    params.set("n", String(newPerQuarter));
+    params.set("d", String(currentDelayDays));
+    params.set("l", String(lostPerDay));
+    const next = `${window.location.pathname}?${params.toString()}#calc`;
+    window.history.replaceState({}, "", next);
+  }, [providers, newPerQuarter, currentDelayDays, lostPerDay]);
+
+  const handleCopyShare = () => {
+    if (typeof window === "undefined") return;
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2400);
+      })
+      .catch(() => {
+        // Fallback: select text in a hidden input. Skip for v0.
+      });
+  };
 
   // CredTek pricing constants (mirror the landing page's pricing section).
   const PER_PROVIDER_MONTH = 35;
@@ -35,7 +82,7 @@ export function PricingCalculator() {
   const roi = credtekTotal > 0 ? netSavings / credtekTotal : 0;
 
   return (
-    <section className="calc-section">
+    <section className="calc-section" id="calc">
       <div className="container">
         <span className="section-eyebrow">Run your numbers</span>
         <h2>
@@ -43,7 +90,14 @@ export function PricingCalculator() {
         </h2>
         <p className="section-lead">
           Drag the sliders to match your group. The numbers update live —
-          no email volley required.
+          no email volley required.{" "}
+          <button
+            type="button"
+            onClick={handleCopyShare}
+            className="calc-share-btn"
+          >
+            {copied ? "✓ Link copied" : "Copy share link →"}
+          </button>
         </p>
 
         <div className="calc-grid">

@@ -3001,6 +3001,232 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: var(--ink-soft);
   font-weight: 600;
 }
+.calc-share-btn {
+  background: none;
+  border: 1px solid var(--gold);
+  color: var(--gold-deep);
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.calc-share-btn:hover {
+  background: rgba(201, 146, 61, 0.08);
+  color: var(--gold);
+}
+
+/* ============================================================
+   /status — system health page
+   ============================================================ */
+.status-page { background: var(--paper); min-height: 100vh; }
+.status-hero { padding: 48px 0 28px; }
+.status-hero-card {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 26px;
+  border-left: 4px solid #4F6B58;
+}
+.status-hero-card.status-degraded { border-left-color: var(--gold-deep); }
+.status-hero-card.status-down { border-left-color: var(--danger); }
+.status-hero-pulse {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #4F6B58;
+  flex-shrink: 0;
+  animation: status-pulse 2.5s ease-in-out infinite;
+}
+.status-degraded .status-hero-pulse { background: var(--gold-deep); }
+.status-down .status-hero-pulse { background: var(--danger); }
+@keyframes status-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(79, 107, 88, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(79, 107, 88, 0); }
+}
+.status-hero-text { flex: 1; }
+.status-hero-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.status-hero-card h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+.status-hero-card p { font-size: 13.5px; color: var(--muted); margin: 0; line-height: 1.55; }
+
+.status-services { padding: 0 0 32px; }
+.status-cat { margin-bottom: 28px; }
+.status-cat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--gold-deep);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.status-cat-count {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.status-list {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.status-row {
+  display: grid;
+  grid-template-columns: 14px 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13px;
+}
+.status-row:last-child { border-bottom: none; }
+.status-row:hover { background: var(--cream); }
+.status-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #4F6B58;
+}
+.status-dot.status-degraded { background: var(--gold-deep); }
+.status-dot.status-down { background: var(--danger); }
+.status-dot.status-maintenance { background: var(--muted-soft); }
+.status-name { color: var(--ink); font-weight: 500; }
+.status-uptime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: 'JetBrains Mono', monospace;
+}
+.status-uptime-num {
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.status-uptime-label {
+  font-size: 9.5px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.status-last {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.02em;
+}
+.status-notes {
+  grid-column: 2 / -1;
+  font-size: 12px;
+  color: var(--gold-deep);
+  background: rgba(201, 146, 61, 0.06);
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.status-incidents { padding: 0 0 48px; }
+.incident-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+.incident-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.incident-head h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--ink);
+}
+.incident-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+.incident-status.status-investigating { background: rgba(184, 85, 63, 0.1); color: var(--danger); border: 1px solid rgba(184, 85, 63, 0.3); }
+.incident-status.status-identified { background: rgba(201, 146, 61, 0.12); color: var(--gold-deep); border: 1px solid rgba(201, 146, 61, 0.3); }
+.incident-status.status-monitoring { background: rgba(201, 146, 61, 0.08); color: var(--gold-deep); border: 1px solid rgba(201, 146, 61, 0.25); }
+.incident-status.status-resolved { background: rgba(123, 158, 137, 0.18); color: #4F6B58; border: 1px solid rgba(123, 158, 137, 0.4); }
+.incident-time {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.03em;
+  margin-left: auto;
+}
+.incident-scope {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.incident-scope code {
+  background: #F0EDE5;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.incident-updates {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.incident-update {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 14px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.incident-update-ts {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
 
 /* ============================================================
    /ops/* — internal Operations Queue (Tier 4 specialists)
