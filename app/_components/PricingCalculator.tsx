@@ -407,6 +407,24 @@ function CalcInput({
   step: number;
   format: (v: number) => string;
 }) {
+  // Type a number — the live quote updates as you go. Clamping happens
+  // in onBlur so you can backspace to empty and retype without the field
+  // fighting you mid-keystroke.
+  const handleChange = (raw: string) => {
+    if (raw === "") return; // allow temporary empty while typing
+    const n = Number(raw);
+    if (!Number.isFinite(n)) return;
+    setValue(n);
+  };
+  const handleBlur = (raw: string) => {
+    const n = Number(raw);
+    if (!Number.isFinite(n) || n < min) {
+      setValue(min);
+    } else if (n > max) {
+      setValue(max);
+    }
+  };
+
   return (
     <div className="calc-input">
       <div className="calc-input-top">
@@ -418,19 +436,39 @@ function CalcInput({
         </label>
         <span className="calc-input-value">{format(value)}</span>
       </div>
-      <input
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
-        className="calc-slider"
-        aria-label={label}
-      />
+      <div className="calc-number-wrap">
+        <button
+          type="button"
+          className="calc-number-step"
+          aria-label="decrease"
+          onClick={() => setValue(Math.max(min, value - step))}
+        >
+          −
+        </button>
+        <input
+          type="number"
+          inputMode="numeric"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => handleChange(e.target.value)}
+          onBlur={(e) => handleBlur(e.target.value)}
+          className="calc-number"
+          aria-label={label}
+        />
+        <button
+          type="button"
+          className="calc-number-step"
+          aria-label="increase"
+          onClick={() => setValue(Math.min(max, value + step))}
+        >
+          +
+        </button>
+      </div>
       <div className="calc-input-range">
-        <span>{format(min)}</span>
-        <span>{format(max)}</span>
+        <span>min {format(min)}</span>
+        <span>max {format(max)}</span>
       </div>
     </div>
   );
