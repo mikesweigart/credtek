@@ -40,7 +40,7 @@ const LANDING_BODY_PRE_CALC = `
         <p class="hero-sub">CredTek is the AI-agent-native credentialing platform purpose-built for behavioral health groups. Cut time-to-revenue by 67%, eliminate the spreadsheets, and pass your next NCQA audit in an afternoon — <strong>without adding a single coordinator.</strong></p>
         <div class="hero-cta">
           <a class="btn-primary" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
-          <a class="btn-secondary" href="#how">See how it works</a>
+          <a class="btn-quote" href="#calc">Get your instant quote ↓</a>
         </div>
         <div class="hero-trust">
           <span class="dot">●</span> <strong>HIPAA compliant</strong> &nbsp;·&nbsp; <span class="dot">●</span> <strong>NCQA-aligned</strong> &nbsp;·&nbsp; <span class="dot">●</span> <strong>BAA on day one</strong>
