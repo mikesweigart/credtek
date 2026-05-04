@@ -17,16 +17,16 @@ const LANDING_BODY_PRE_CALC = `
       <span>CredTek</span>
     </div>
     <div class="topnav-links">
-      <a href="#how">How it works</a>
+      <a href="#calc">Quote</a>
+      <a href="#how">How</a>
       <a href="#pricing">Pricing</a>
-      <a href="#guarantee">Guarantee</a>
       <a href="#faq">FAQ</a>
-      <a href="/compare">vs. competitors</a>
+      <a href="/compare">Compare</a>
+      <a href="/dashboard">Demo</a>
       <a href="/api-docs">API</a>
-      <a href="/changelog">Changelog</a>
-      <a href="/dashboard" class="topnav-link-demo">Live demo →</a>
+      <a href="/help">Help</a>
     </div>
-    <a class="topnav-cta" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a demo →</a>
+    <a class="topnav-cta" href="https://cal.com/mikesweigart" target="_blank" rel="noopener">Book a demo</a>
   </div>
 </nav>
 
