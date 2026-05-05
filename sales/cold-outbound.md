@@ -39,7 +39,7 @@ NCQA audits.
 subscription is free for the first 90 days — that's our written
 guarantee.
 
-Worth 20 minutes? Here's my Cal link: [your-cal-link]
+Worth 20 minutes? Here's my Calendly: https://calendly.com/mike-fusion-advisory/30min
 
 — [Your name]
 [Your title], CredTek
@@ -84,7 +84,7 @@ At $35/provider/month + $300/enrollment, payback is typically under
 60 days against the lost revenue alone — before we count what you
 save on coordinator headcount.
 
-20 minutes, demo straight on your providers? [your-cal-link]
+20 minutes, demo straight on your providers? https://calendly.com/mike-fusion-advisory/30min
 
 — [Your name]
 ```
@@ -112,7 +112,7 @@ spreadsheet"]. That's exactly what we built CredTek for.
 
 Two ways to do this — you pick:
 
-1. 20 min on Cal: [your-cal-link]
+1. 20 min on Calendly: https://calendly.com/mike-fusion-advisory/30min
 2. I send you a 3-min Loom walking through your specific situation
    so you can decide if a live demo is worth it
 
@@ -153,7 +153,7 @@ Built CredTek specifically for multi-state BH groups your size — AI
 agents that handle Optum/Carelon enrollment + the supervision
 tracker for pre-licensed clinicians.
 
-20-min demo if it sounds useful: [your-cal-link]
+20-min demo if it sounds useful: https://calendly.com/mike-fusion-advisory/30min
 ```
 
 ---

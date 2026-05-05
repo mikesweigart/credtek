@@ -225,7 +225,7 @@ Don't ask "what do you think?" That's the worst close. Ask one of:
 > Thursday next week?"
 
 If you get ANY signal of interest, **lock the next meeting on their
-calendar before you hang up**. Don't say "I'll send you a Cal link" —
+calendar before you hang up**. Don't say "I'll send you a Calendly link" —
 open your shared calendar in the call and propose times.
 
 ---

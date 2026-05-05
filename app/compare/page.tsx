@@ -215,7 +215,7 @@ export default function ComparePage() {
           <span>CredTek</span>
         </Link>
         <Link
-          href="https://cal.com/mikesweigart"
+          href="https://calendly.com/mike-fusion-advisory/30min"
           target="_blank"
           rel="noopener"
           className="topnav-cta"
@@ -278,7 +278,7 @@ export default function ComparePage() {
             No fluff.
           </p>
           <Link
-            href="https://cal.com/mikesweigart"
+            href="https://calendly.com/mike-fusion-advisory/30min"
             target="_blank"
             rel="noopener"
             className="btn-primary"

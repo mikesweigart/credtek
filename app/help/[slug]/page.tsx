@@ -39,7 +39,7 @@ export default async function HelpArticlePage({ params }: PageProps) {
           <span>CredTek</span>
         </Link>
         <Link
-          href="https://cal.com/mikesweigart"
+          href="https://calendly.com/mike-fusion-advisory/30min"
           target="_blank"
           rel="noopener"
           className="topnav-cta"
@@ -73,7 +73,7 @@ export default async function HelpArticlePage({ params }: PageProps) {
               specific workflow.
             </p>
             <Link
-              href="https://cal.com/mikesweigart"
+              href="https://calendly.com/mike-fusion-advisory/30min"
               target="_blank"
               rel="noopener"
               className="btn-primary"

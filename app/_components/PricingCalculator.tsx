@@ -18,7 +18,7 @@ function readInitial(name: string, fallback: number): number {
   return Number.isFinite(v) && v > 0 ? v : fallback;
 }
 
-const CAL_LINK = "https://cal.com/mikesweigart";
+const CAL_LINK = "https://calendly.com/mike-fusion-advisory/30min";
 
 export function PricingCalculator() {
   const [providers, setProviders] = useState(200);

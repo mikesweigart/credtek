@@ -332,7 +332,7 @@ export default function ApiDocsPage() {
               every Tier 3 submission.
             </p>
             <Link
-              href="https://cal.com/mikesweigart"
+              href="https://calendly.com/mike-fusion-advisory/30min"
               target="_blank"
               rel="noopener"
               className="btn-primary"
