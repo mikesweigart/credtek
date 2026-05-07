@@ -42,10 +42,6 @@ const LANDING_BODY_PRE_CALC = `
           <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
           <a class="btn-quote" href="#calc">Get your instant quote ↓</a>
         </div>
-        <div class="hero-trust">
-          <span class="dot">●</span> <strong>HIPAA compliant</strong> &nbsp;·&nbsp; <span class="dot">●</span> <strong>NCQA-aligned</strong> &nbsp;·&nbsp; <span class="dot">●</span> <strong>BAA on day one</strong>
-        </div>
-
         <div class="hero-metrics">
           <div class="hero-metric">
             <div class="num"><em>45</em></div>
@@ -150,6 +146,49 @@ const LANDING_BODY_PRE_CALC = `
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============== TRUST STRIP ============== -->
+<section class="trust-strip">
+  <div class="container">
+    <ul class="trust-strip-list">
+      <li>
+        <span class="trust-icon" aria-hidden="true">🔒</span>
+        <div>
+          <div class="trust-label">HIPAA compliant</div>
+          <div class="trust-detail">BAA on day one</div>
+        </div>
+      </li>
+      <li>
+        <span class="trust-icon" aria-hidden="true">✦</span>
+        <div>
+          <div class="trust-label">NCQA-aligned</div>
+          <div class="trust-detail">via certified CVO partner</div>
+        </div>
+      </li>
+      <li>
+        <span class="trust-icon" aria-hidden="true">⛨</span>
+        <div>
+          <div class="trust-label">Tamper-evident audit log</div>
+          <div class="trust-detail">SHA-256 hash chain</div>
+        </div>
+      </li>
+      <li>
+        <span class="trust-icon" aria-hidden="true">⚐</span>
+        <div>
+          <div class="trust-label">50-state coverage</div>
+          <div class="trust-detail">every BH licensing board</div>
+        </div>
+      </li>
+      <li>
+        <span class="trust-icon" aria-hidden="true">⚙</span>
+        <div>
+          <div class="trust-label">AI-native architecture</div>
+          <div class="trust-detail">human approval on every action</div>
+        </div>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -521,6 +560,45 @@ const LANDING_BODY_PRE_CALC = `
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FROM THE FOUNDER ============== -->
+<section class="founder-section">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-content">
+        <span class="section-eyebrow">From the founder</span>
+        <h2>Why <em>we</em> built this.</h2>
+        <p class="founder-p">
+          We got tired of forcing credentialing tools built around medical
+          doctors to fit master&apos;s-level clinicians, multi-state
+          compacts, and the BH-specific payor matrix.
+        </p>
+        <p class="founder-p">
+          My partners bring decades of inside experience running credentialing
+          at multi-state behavioral health groups — they&apos;re the ones who
+          know which payor portal breaks next week and what a 200-clinician
+          roster really requires. I bring the technology and operations side.
+          Together we built the platform we&apos;d want our own teams to use.
+        </p>
+        <p class="founder-p">
+          If you run a 50–500 provider BH group, you&apos;ll recognize every
+          pain point this product fights.
+        </p>
+        <div class="founder-sig">
+          <div class="founder-sig-name">Mike Sweigart</div>
+          <div class="founder-sig-title">Founder · CredTek</div>
+        </div>
+      </div>
+      <div class="founder-photo">
+        <img src="/mike-headshot.jpg" alt="Mike Sweigart, Founder of CredTek" />
+        <div class="founder-photo-tag">
+          <span class="founder-photo-dot">●</span>
+          Built by an operator
         </div>
       </div>
     </div>
