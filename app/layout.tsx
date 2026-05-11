@@ -3,13 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "CredTek — Medical credentialing in 45 days. Not 120.",
+    default: "CredTek — Medical credentialing, faster than anyone in healthcare.",
     template: "%s · CredTek",
   },
   description:
     "The AI-agent-native credentialing platform for US medical practices, MSOs, and health systems. Get your providers in-network 67% faster, with the deepest specialty workflows on the market.",
   openGraph: {
-    title: "CredTek · Medical credentialing, 45 days not 120.",
+    title: "CredTek · Medical credentialing, faster than anyone in healthcare.",
     description:
       "The AI-agent-native credentialing platform for US medical practices, MSOs, and health systems.",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CredTek · Medical credentialing, 45 days not 120.",
+    title: "CredTek · Medical credentialing, faster than anyone in healthcare.",
     description:
       "The AI-agent-native credentialing platform for US medical practices, MSOs, and health systems.",
   },

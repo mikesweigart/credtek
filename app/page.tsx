@@ -35,16 +35,16 @@ const LANDING_BODY_PRE_CALC = `
     <div class="hero-inner">
       <div>
         <div class="hero-eyebrow">→ For US medical groups, MSOs &amp; health systems</div>
-        <h1>Get your providers <em>in-network in 45 days.</em><br/><span class="strike">Not 120.</span></h1>
-        <p class="hero-sub">CredTek is the AI-agent-native credentialing platform for US medical practices, MSOs, and health systems. Cut time-to-revenue by 67%, replace the spreadsheets, and pass your next NCQA audit in an afternoon — <strong>without adding a single coordinator.</strong> Built with the deepest specialty workflows on the market, from primary care to behavioral health.</p>
+        <h1>Get your providers <em>in-network faster</em> than anyone in healthcare.<br/><span class="strike">Industry average: 90+ days of waiting.</span></h1>
+        <p class="hero-sub"><strong>Old-school credentialing care meets new-school technology.</strong> With <strong>40+ years of enterprise medical credentialing experience</strong> baked into modern AI agents, no team gets your providers in-network faster, more accurately, or more efficiently than CredTek — without adding a single coordinator to your team.</p>
         <div class="hero-cta">
           <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
           <a class="btn-quote" href="#calc">Get your instant quote ↓</a>
         </div>
         <div class="hero-metrics">
           <div class="hero-metric">
-            <div class="num"><em>45</em></div>
-            <div class="lbl">Avg days to first revenue</div>
+            <div class="num"><em>40+</em></div>
+            <div class="lbl">Years combined credentialing experience</div>
           </div>
           <div class="hero-metric">
             <div class="num"><em>67%</em></div>
@@ -666,26 +666,40 @@ const LANDING_BODY_PRE_CALC = `
         <span class="vs">→ CredTek annual cost (200 providers, 40 enrollments): $96,000</span>
       </div>
 
-      <div class="coi-roi">If CredTek cuts your time-to-revenue from 75 days to 40 — even just <strong>conservatively</strong> — you recover <strong>$2.8M+ in revenue in year one.</strong><br/><br/>That's a <strong>29× return</strong> on your CredTek subscription.</div>
+      <div class="coi-roi">CredTek customers typically cut time-to-revenue by <strong>40-60%</strong>. Even on the conservative end of that range, a 200-provider group recovers <strong>$2M+ in revenue in year one</strong> — a <strong>20×+ return</strong> on the CredTek subscription. Bigger gains when the inputs are clean.</div>
     </div>
   </div>
 </section>
 `;
 
 const LANDING_BODY_POST_CALC = `
-<!-- ============== GUARANTEE ============== -->
-<section class="section" id="guarantee" style="background: var(--paper); border-top: 1px solid var(--line);">
+<!-- ============== WHY NO ONE DOES IT BETTER ============== -->
+<section class="section" id="why-us" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container container-narrow">
-    <span class="section-eyebrow">The risk reversal</span>
-    <h2>If we don't perform, <em>you don't pay.</em></h2>
-    <p class="section-lead">We're confident enough in CredTek to put real money on the line. Here's our guarantee — in writing, in your contract.</p>
+    <span class="section-eyebrow">Why no one does it better</span>
+    <h2>Old-school care. <em>New-school technology.</em></h2>
+    <p class="section-lead">Most credentialing software companies are run by software people who&apos;ve never filed a CAQH attestation. Most credentialing services firms are run by ops people who&apos;ve never built a system. CredTek is the rare combination — and it&apos;s why our customers get their providers in-network faster than anyone in the industry.</p>
 
-    <div class="guarantee">
-      <div class="guarantee-seal">G</div>
-      <div>
-        <h3>The CredTek <em>45-Day Guarantee.</em></h3>
-        <p>Run CredTek alongside your current process for 45 days. If your average time-to-active for the providers you onboard during that window isn't <strong>under 60 days</strong>, we refund your full subscription <strong>and</strong> process your next 25 enrollments at no charge — until we hit the number we promised.</p>
-        <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 14px;">No fine print. No "as long as you also bought…" clauses. Just: <strong>we hit the number, or we make it right.</strong></p>
+    <div class="why-us-grid">
+      <div class="why-us-card">
+        <div class="why-us-icon">📚</div>
+        <h3>40+ years of credentialing experience</h3>
+        <p>Two co-founders, each with 20+ years inside enterprise medical credentialing — running programs at multi-billion-dollar health systems, designing delegated arrangements with major payors, stewarding rosters through M&amp;A. They&apos;ve seen every failure mode of every competing tool firsthand. That experience is built into how every CredTek workflow handles edge cases the generic tools ignore.</p>
+      </div>
+      <div class="why-us-card">
+        <div class="why-us-icon">⚙</div>
+        <h3>Modern AI agents — with humans in the loop</h3>
+        <p>Agents that actually fill the Aetna, Anthem, Optum, and Cigna forms. Agents that scrape state boards and self-heal when portals change. Agents that draft 180-day renewal applications before deadlines slip. <strong>And a coordinator approval gate on every single submission</strong> — no hallucinated data ever reaches a payor.</p>
+      </div>
+      <div class="why-us-card">
+        <div class="why-us-icon">❤</div>
+        <h3>Old-school care &amp; concern</h3>
+        <p>You get a named CSM, weekly check-ins for the first 90 days, and direct Slack access to the founders. We treat every provider in your roster like ours. When inputs are incomplete or messy — and they always are — we work the problem with you, not around you.</p>
+      </div>
+      <div class="why-us-card">
+        <div class="why-us-icon">⚡</div>
+        <h3>Faster than anyone in healthcare</h3>
+        <p>The industry average is 90–120 days from hire date to first in-network payor. CredTek customers typically beat that by half — sometimes much more — and we don&apos;t need perfect inputs to do it. The combination of experienced humans handling the judgment calls and AI agents handling the volume is what no other vendor offers.</p>
       </div>
     </div>
   </div>
@@ -818,7 +832,7 @@ const LANDING_BODY_POST_CALC = `
 
       <div class="faq-item">
         <div class="faq-q"><span class="q-mark">Q.</span> What if we're not ready to switch our entire system?</div>
-        <div class="faq-a">You don't have to. Run CredTek alongside your current process for 45 days. Onboard a subset of providers. See the numbers for yourself. If we don't hit the guarantee, you walk away with no contract and a refund. <strong>The risk is on us.</strong></div>
+        <div class="faq-a">You don't have to. Run CredTek alongside your current process — onboard a single subset of providers, see how fast we move them through, then expand. Month-to-month with a 30-day out clause for the first 90 days, so the only thing you're risking is finding out we&apos;re right.</div>
       </div>
     </div>
   </div>

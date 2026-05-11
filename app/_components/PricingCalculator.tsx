@@ -128,7 +128,7 @@ export function PricingCalculator() {
         `· CredTek (per year): ${fmtMoneyBig(credtekTotal)}`,
         `   - ${fmtMoney(credtekSubscription)} subscription`,
         `   - ${fmtMoney(credtekEnrollments)} enrollment actions`,
-        `· Net annual savings (assumes 45-day time-to-active): ${fmtMoneyBig(netSavings)}`,
+        `· Net annual savings (modeling CredTek time-to-active near 45 days; real ranges 30-60% of current): ${fmtMoneyBig(netSavings)}`,
         `· Year-one ROI: ${roi.toFixed(1)}× on subscription`,
         "",
         "NEXT STEP",
@@ -320,10 +320,11 @@ export function PricingCalculator() {
             </div>
 
             <div className="calc-disclaimer">
-              ✦ Conservative model — real customers typically beat 45-day
-              time-to-active after month 3. Numbers don&apos;t include
-              coordinator team savings or outsourced CVO costs you stop
-              paying.
+              ✦ Modeling assumes CredTek cuts time-to-active by 40–60%
+              (typical range across customer rosters). Bigger gains when
+              inputs are clean; smaller when they aren&apos;t. Numbers
+              don&apos;t include coordinator team savings or outsourced
+              CVO costs you stop paying.
             </div>
           </div>
         </div>
@@ -506,8 +507,9 @@ function PrintQuote(props: {
 
       <h1 className="calc-print-title">Your CredTek ROI quote</h1>
       <p className="calc-print-sub">
-        Modeled against the inputs you provided. Conservative assumption:
-        CredTek brings average time-to-active down to 45 days.
+        Modeled against the inputs you provided. CredTek customers
+        typically cut current time-to-active by 40–60%; this estimate
+        uses the conservative end of that range.
       </p>
 
       <section className="calc-print-section">

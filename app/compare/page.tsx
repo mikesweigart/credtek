@@ -185,8 +185,8 @@ const SECTIONS: Section[] = [
         medallion: "no",
       },
       {
-        feature: "45-day performance guarantee",
-        detail: "Refund if average time-to-active doesn't drop below 60 days",
+        feature: "40+ years of credentialing experience built into the product",
+        detail: "Co-founders ran enterprise medical credentialing programs before building CredTek",
         credtek: "yes",
         modio: "no",
         symplr: "no",
@@ -287,7 +287,7 @@ export default function ComparePage() {
             Book a 20-min demo →
           </Link>
           <div className="final-meta" style={{ marginTop: 24, color: "var(--muted)" }}>
-            45-day guarantee · live in 14 days · no contract required to start
+            40+ years of credentialing experience · live in 14 days · month-to-month with 30-day out
           </div>
         </div>
       </section>
