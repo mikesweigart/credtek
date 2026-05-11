@@ -853,42 +853,122 @@ body {
 
 /* ========== PRICING ========== */
 .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
+.price-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+@media (max-width: 980px) { .price-grid-3 { grid-template-columns: 1fr; } }
 @media (max-width: 768px) { .price-grid { grid-template-columns: 1fr; } }
 .price-card {
   background: white;
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 32px 28px;
+  padding: 28px 26px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .price-card.featured {
   background: var(--ink);
   color: white;
   border-color: var(--ink);
+  box-shadow: 0 20px 40px -16px rgba(11, 31, 46, 0.35);
+  transform: translateY(-4px);
+}
+.price-card.enterprise {
+  background: linear-gradient(160deg, var(--blue-soft) 0%, white 100%);
+  border-color: var(--blue);
+}
+.price-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  color: var(--blue);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--blue-soft);
+  border: 1px solid var(--blue);
+  padding: 4px 10px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+.price-card.featured .price-tag {
+  background: rgba(4, 103, 222, 0.18);
+  color: var(--gold);
+  border-color: var(--gold);
 }
 .price-card .price-amount {
   font-family: 'Instrument Serif', serif;
-  font-size: 60px;
+  font-size: 54px;
   line-height: 1;
   letter-spacing: -0.02em;
+  margin-top: 4px;
 }
 .price-card .price-amount em { font-style: italic; color: var(--gold); }
-.price-card .price-unit { font-size: 13px; color: var(--muted); margin-top: 4px; }
-.price-card.featured .price-unit { color: rgba(255,255,255,0.6); }
+.price-card .price-unit {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.price-card.featured .price-unit { color: rgba(255,255,255,0.7); }
+.price-card.enterprise .price-unit { color: var(--ink-soft); }
 .price-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-.price-card .price-desc { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
-.price-card.featured .price-desc { color: rgba(255,255,255,0.7); }
-.price-card ul { list-style: none; padding: 0; margin: 24px 0 0; }
+.price-card .price-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+.price-card.featured .price-desc { color: rgba(255,255,255,0.75); }
+.price-card.enterprise .price-desc { color: var(--ink-soft); }
+.price-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+  flex: 1;
+}
 .price-card li {
-  font-size: 13.5px;
-  padding: 8px 0;
+  font-size: 13px;
+  padding: 7px 0;
   border-top: 1px solid var(--line-soft);
   display: flex; gap: 8px;
+  line-height: 1.5;
 }
-.price-card.featured li { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); }
+.price-card.featured li { border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.92); }
+.price-card.enterprise li { border-color: rgba(4, 103, 222, 0.15); }
 .price-card li::before {
   content: '+'; color: var(--gold);
-  font-family: 'Instrument Serif', serif; font-size: 18px; line-height: 1;
+  font-family: 'Instrument Serif', serif; font-size: 18px; line-height: 1; flex-shrink: 0;
+}
+.price-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 22px;
+  padding: 11px 16px;
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--ink);
+  color: white;
+  border: 1px solid var(--ink);
+  transition: background 0.12s;
+}
+.price-cta:hover { background: var(--blue); border-color: var(--blue); }
+.price-card.featured .price-cta {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.price-card.featured .price-cta:hover { background: white; border-color: white; }
+.price-card.enterprise .price-cta {
+  background: var(--blue);
+  border-color: var(--blue);
 }
 
 /* ========== GUARANTEE ========== */
@@ -6447,3 +6527,158 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   transform: translateY(-2px);
   box-shadow: 0 8px 20px -8px rgba(11, 31, 46, 0.12);
 }
+
+/* ============================================================
+   /integrations — EHR/PMS + payor + federal source catalog
+   ============================================================ */
+.integ-page { background: var(--paper); min-height: 100vh; }
+.integ-hero { padding: 56px 0 32px; }
+.integ-hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(36px, 5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  margin-bottom: 16px;
+}
+.integ-hero h1 em { font-style: italic; color: var(--gold); }
+.integ-lead {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+.integ-legend {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.03em;
+  padding: 14px 18px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.integ-legend span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.integ-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.integ-dot.live { background: #4F8B6A; box-shadow: 0 0 0 3px rgba(79, 139, 106, 0.18); }
+.integ-dot.beta { background: var(--gold); box-shadow: 0 0 0 3px rgba(4, 103, 222, 0.15); }
+.integ-dot.roadmap { background: var(--muted-soft); }
+
+.integ-list { padding: 16px 0 32px; }
+.integ-cat { margin-bottom: 36px; }
+.integ-cat-label {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.integ-cat-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.integ-cat-intro {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.55;
+  max-width: 700px;
+}
+.integ-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 768px) { .integ-grid { grid-template-columns: 1fr; } }
+.integ-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.integ-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+.integ-card-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+}
+.integ-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 100px;
+}
+.integ-status-live { background: rgba(79, 139, 106, 0.15); color: #4F8B6A; border: 1px solid rgba(79, 139, 106, 0.3); }
+.integ-status-beta { background: rgba(4, 103, 222, 0.1); color: var(--blue); border: 1px solid rgba(4, 103, 222, 0.3); }
+.integ-status-roadmap { background: var(--cream); color: var(--muted); border: 1px solid var(--line); }
+.integ-card-note {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.integ-cta {
+  background: var(--ink);
+  color: white;
+  padding: 56px 0 64px;
+  margin-top: 32px;
+}
+.integ-cta h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin-bottom: 14px;
+  color: white;
+}
+.integ-cta p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.integ-cta .btn-primary {
+  background: var(--gold);
+  color: var(--ink);
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.integ-cta .btn-primary:hover { background: var(--gold-soft); }

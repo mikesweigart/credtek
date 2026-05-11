@@ -18,9 +18,8 @@ const LANDING_BODY_PRE_CALC = `
     </div>
     <div class="topnav-links">
       <a href="#calc">Quote</a>
-      <a href="#how">How</a>
       <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
+      <a href="/integrations">Integrations</a>
       <a href="/compare">Compare</a>
       <a href="/dashboard">Demo</a>
       <a href="/api-docs">API</a>
@@ -35,9 +34,9 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <div class="hero-inner">
       <div>
-        <div class="hero-eyebrow">→ For behavioral health groups · 50–500 providers</div>
-        <h1>Get your behavioral health providers <em>in-network in 45 days.</em><br/><span class="strike">Not 120.</span></h1>
-        <p class="hero-sub">CredTek is the AI-agent-native credentialing platform purpose-built for behavioral health groups. Cut time-to-revenue by 67%, eliminate the spreadsheets, and pass your next NCQA audit in an afternoon — <strong>without adding a single coordinator.</strong></p>
+        <div class="hero-eyebrow">→ For US medical groups, MSOs &amp; health systems</div>
+        <h1>Get your providers <em>in-network in 45 days.</em><br/><span class="strike">Not 120.</span></h1>
+        <p class="hero-sub">CredTek is the AI-agent-native credentialing platform for US medical practices, MSOs, and health systems. Cut time-to-revenue by 67%, replace the spreadsheets, and pass your next NCQA audit in an afternoon — <strong>without adding a single coordinator.</strong> Built with the deepest specialty workflows on the market, from primary care to behavioral health.</p>
         <div class="hero-cta">
           <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
           <a class="btn-quote" href="#calc">Get your instant quote ↓</a>
@@ -53,7 +52,7 @@ const LANDING_BODY_PRE_CALC = `
           </div>
           <div class="hero-metric">
             <div class="num"><em>50</em></div>
-            <div class="lbl">State BH boards covered</div>
+            <div class="lbl">State boards · every specialty</div>
           </div>
         </div>
       </div>
@@ -195,17 +194,17 @@ const LANDING_BODY_PRE_CALC = `
 <!-- ============== PAIN SECTION ============== -->
 <section class="section" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
-    <span class="section-eyebrow">If you run BH credentialing, this is your week</span>
+    <span class="section-eyebrow">If you run medical credentialing, this is your week</span>
     <h2>You already know <em>exactly</em> what this is.</h2>
-    <p class="section-lead">Direct quotes (paraphrased, with permission) from VPs of Network Operations and Directors of Credentialing at 50–500 provider behavioral health groups in the last 90 days.</p>
+    <p class="section-lead">Direct quotes (paraphrased, with permission) from VPs of Network Operations and Directors of Credentialing at medical practices, MSOs, and health systems across the US in the last 90 days.</p>
 
     <div class="pain-grid">
-      <div class="pain"><div class="q">"</div><div><div class="body">We added 80 providers last quarter and our credentialing team of 6 is drowning in CAQH attestations and license renewals. We're losing providers to competitors who onboard faster.</div><div class="speaker">— VP, NETWORK OPS · 200-PROVIDER ROLLUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">We just expanded into three new states and we don't even know what we don't know about each state's BH license requirements. Every state board has its own quirks.</div><div class="speaker">— COO · TELEHEALTH BH STARTUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Our pre-licensed clinicians' supervision hours are in a Google Sheet that the supervisor's assistant maintains. We're one audit away from a serious problem.</div><div class="speaker">— DIRECTOR OF CLINICAL OPS</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Optum demanded delegated credentialing documentation for our network and we're not NCQA compliant. We're rebuilding files from scratch and it's costing us six figures.</div><div class="speaker">— DIRECTOR OF CREDENTIALING</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Time-to-revenue per new provider is 90–120 days. Our CFO wants 45. Every day a credentialed provider sits idle is $2,000 of lost revenue.</div><div class="speaker">— CFO · PE-BACKED BH GROUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Carelon's portal changed last month and our coordinator now spends two days a week just on Carelon submissions. Modio doesn't help us with this at all.</div><div class="speaker">— CREDENTIALING MANAGER</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">We added 80 providers last quarter and our credentialing team of 6 is drowning in CAQH attestations and license renewals. We're losing providers to competitors who onboard faster.</div><div class="speaker">— VP, NETWORK OPS · 200-PROVIDER MULTI-SPECIALTY GROUP</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">We just expanded into three new states and we don't even know what we don't know about each state's licensing requirements. Every state board has its own quirks.</div><div class="speaker">— COO · MULTI-STATE TELEHEALTH NETWORK</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Our pre-licensed clinicians' supervision hours are in a Google Sheet that the supervisor's assistant maintains. We're one audit away from a serious problem.</div><div class="speaker">— DIRECTOR OF CLINICAL OPS · BH GROUP</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Optum demanded delegated credentialing documentation for our network and we're not NCQA compliant. We're rebuilding files from scratch and it's costing us six figures.</div><div class="speaker">— DIRECTOR OF CREDENTIALING · MSO</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Time-to-revenue per new provider is 90–120 days. Our CFO wants 45. Every day a credentialed provider sits idle is $2,000 of lost revenue.</div><div class="speaker">— CFO · PE-BACKED MEDICAL GROUP</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Aetna's portal changed last month and our coordinator now spends two days a week just on resubmissions. Modio doesn't help us with this at all.</div><div class="speaker">— CREDENTIALING MANAGER · HEALTH SYSTEM</div></div></div>
     </div>
 
     <div class="pain-conclusion">
@@ -220,7 +219,7 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <span class="section-eyebrow">Why nothing has worked</span>
     <h2>Modio. Spreadsheets. Symplr. <br/>Here's why <em>none of them</em> fix this.</h2>
-    <p class="section-lead">Every credentialing tool on the market was built for one of two scenarios: tiny solo practices, or enterprise hospital systems. <strong>Mid-market behavioral health groups have been ignored for a decade.</strong> Here's what that looks like in practice.</p>
+    <p class="section-lead">Every credentialing tool on the market was built for one of two scenarios: tiny solo practices, or enterprise hospital systems. <strong>The mid-market — 50 to 500 providers — has been ignored for a decade.</strong> Here's what that looks like in practice.</p>
 
     <div class="why-grid">
       <div class="why-card">
@@ -235,8 +234,8 @@ const LANDING_BODY_PRE_CALC = `
       </div>
       <div class="why-card">
         <div class="x">✕</div>
-        <h4>Medallion ignores behavioral health</h4>
-        <p>Designed around the MD use case. Doesn't handle pre-licensed supervision tracking. Doesn't have specialized agents for Optum/UBH, Carelon, or Magellan. Their pricing is steep and their roadmap won't reach you.</p>
+        <h4>Medallion is shallow on specialty workflows</h4>
+        <p>Designed around the simplest MD use case. Doesn't handle pre-licensed supervision, locum-tenens windows, or specialty-specific payor agents in depth. Their pricing is steep and their roadmap won't reach you if you have any real workflow complexity.</p>
       </div>
       <div class="why-card">
         <div class="x">✕</div>
@@ -267,10 +266,10 @@ const LANDING_BODY_PRE_CALC = `
         <p>If you operate in 10+ states, you're tracking thousands of licenses. PSYPACT, Counseling Compact, Social Work Compact eligibility. State-specific renewal cycles. Expirations creeping up across 50 jurisdictions.</p>
         <p><strong>CredTek's License Grid</strong> shows you everything in a single view. Filter by provider, state, license type, expiration window, or compact eligibility. One click to launch a renewal. One click to forecast which states a provider qualifies in via compact vs. needs a standalone license.</p>
         <ul>
-          <li>50 state BH boards with maintained scrapers (psychology, social work, counseling, MFT, psychiatry, BCBA)</li>
-          <li>PSYPACT · Counseling Compact · SW Compact eligibility tracker</li>
+          <li>50 state boards across every specialty (medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental)</li>
+          <li>Interstate compact eligibility — IMLC · NLC · PSYPACT · Counseling Compact · SW Compact</li>
           <li>180-day expiration forecast with auto-drafted renewal applications</li>
-          <li>State-specific quirks built in (CA BBS, NY, FL, TX, every state we cover)</li>
+          <li>State-specific quirks built in (CA, NY, FL, TX, every state we cover)</li>
         </ul>
       </div>
 
@@ -460,11 +459,12 @@ const LANDING_BODY_PRE_CALC = `
       <div class="feature-content">
         <span class="section-eyebrow">Feature 02 · Payor enrollment, automated</span>
         <h3>Stop filling out the same forms <em>thirty different times.</em></h3>
-        <p>Every payor portal is different. Every one wants the same data, formatted differently. Your coordinator types the same provider info into Optum, Carelon, Magellan, Evernorth, Anthem BH, and three Medicaid MCOs — over and over.</p>
-        <p><strong>CredTek's Payor Agents do the typing.</strong> Specialized agents for the payors that matter in BH. The agent fills the forms, attaches the documents, submits. You approve before anything goes out — every submission, every time.</p>
+        <p>Every payor portal is different. Every one wants the same data, formatted differently. Your coordinator types the same provider info into Aetna, Anthem, Cigna, UnitedHealthcare, Humana, BCBS, plus a long tail of specialty networks and state Medicaid MCOs — over and over.</p>
+        <p><strong>CredTek's Payor Agents do the typing.</strong> Agents for every major commercial payor and the specialty networks that matter (Optum, Carelon, Magellan, Evernorth BH for behavioral; specialty equivalents across other lines). The agent fills the forms, attaches the documents, submits. You approve before anything goes out — every submission, every time.</p>
         <ul>
-          <li>Specialized agents for Optum/UBH, Carelon, Magellan, Evernorth BH, Anthem BH</li>
-          <li>State Medicaid MCO agents in your design partner's states</li>
+          <li>Commercial payor agents — Aetna · Anthem · Cigna · UnitedHealthcare · Humana · BCBS · Optum · Tricare</li>
+          <li>BH-specialty network agents — Carelon · Magellan · Evernorth BH · Optum/UBH</li>
+          <li>State Medicaid MCO agents in your operating states</li>
           <li>CAQH attestation auto-completion with provider SMS approval</li>
           <li>Real-time status tracking · auto-escalation when payors stall</li>
           <li><strong>Human-in-the-loop approval gate on every submission</strong> — no hallucinated data ever reaches a payor</li>
@@ -479,16 +479,16 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <div class="feature-row">
       <div class="feature-content">
-        <span class="section-eyebrow">Feature 03 · The thing nobody else does</span>
-        <h3>Pre-licensed supervision tracking <em>that passes audits.</em></h3>
-        <p>Master's-level clinicians work under supervision for 2–4 years before independent licensure. LMSW → LCSW. LPC-Associate → LPC. Hours, supervisor credentials, signed attestations, state-specific rules. Today this lives in spreadsheets that break.</p>
-        <p><strong>CredTek tracks it natively.</strong> Hours by week. Modality (individual vs. group). Cosigning workflow. State-specific rule engines (3,000 hours for CA LCSW, different for TX, different for NY). When the supervisee is ready for independent licensure, we auto-generate the documentation packet. <strong>This feature alone is the reason design partners switch.</strong></p>
+        <span class="section-eyebrow">Feature 03 · Specialty depth others skip</span>
+        <h3>The workflows other tools <em>force you to spreadsheet.</em></h3>
+        <p>Generic credentialing software handles the easy specialties. The hard ones — pre-licensed BH supervision, locum-tenens credentialing windows, hospital-privilege re-applications, NPI corrections during M&amp;A — all end up in spreadsheets. Then they break.</p>
+        <p><strong>CredTek tracks them natively.</strong> Pictured: pre-licensed supervision for an LPC-Associate in Texas. State-specific rule engines per board, weekly hours logging with supervisor cosignature, auto-generated documentation at completion. <strong>One example of dozens — every specialty's hardest credentialing workflow has a real surface in CredTek.</strong></p>
         <ul>
-          <li>State-specific supervision rule engines for all 50 states</li>
-          <li>Weekly hours logging with supervisor cosignature workflow</li>
-          <li>Auto-generated licensure documentation packet at completion</li>
-          <li>Audit-ready trail for state boards and NCQA reviews</li>
-          <li>SMS reminders to supervisors for missing cosignatures</li>
+          <li>BH supervision: state-specific rule engines for all 50 boards</li>
+          <li>Locum-tenens: short-window credentialing with auto-expiry tracking</li>
+          <li>Hospital privileging: privilege re-applications + DEA + COI tracking</li>
+          <li>M&amp;A: NPI changes, group reassignments, payor revalidations</li>
+          <li>NCQA delegated credentialing: one-click audit binders</li>
         </ul>
       </div>
 
@@ -574,31 +574,36 @@ const LANDING_BODY_PRE_CALC = `
         <span class="section-eyebrow">From the founder</span>
         <h2>Why <em>we</em> built this.</h2>
         <p class="founder-p">
-          We got tired of forcing credentialing tools built around medical
-          doctors to fit master&apos;s-level clinicians, multi-state
-          compacts, and the BH-specific payor matrix.
+          We got tired of watching credentialing teams burn nights and
+          weekends on spreadsheets, broken portals, and 30-payor data
+          re-entry — only to lose providers anyway because the process
+          still took three months.
         </p>
         <p class="founder-p">
-          My partners bring decades of inside experience running credentialing
-          at multi-state behavioral health groups — they&apos;re the ones who
-          know which payor portal breaks next week and what a 200-clinician
-          roster really requires. I bring the technology and operations side.
-          Together we built the platform we&apos;d want our own teams to use.
+          I&apos;m building CredTek with two co-founders who&apos;ve each
+          spent <strong>20+ years inside enterprise medical credentialing
+          programs</strong>. They&apos;ve seen every failure mode of every
+          competing tool firsthand, run credentialing through multi-billion-
+          dollar M&amp;A reorganizations, and stood up delegated programs
+          for major payors. They&apos;re staying unnamed until our public
+          launch — you&apos;ll meet them on the demo.
         </p>
         <p class="founder-p">
-          If you run a 50–500 provider BH group, you&apos;ll recognize every
-          pain point this product fights.
+          Together we built the platform we&apos;d want our own teams to
+          use. If you run credentialing for a US medical practice, MSO, or
+          health system, you&apos;ll recognize every pain point this
+          product fights.
         </p>
         <div class="founder-sig">
-          <div class="founder-sig-name">Mike Sweigart</div>
-          <div class="founder-sig-title">Founder · CredTek</div>
+          <div class="founder-sig-name">Mike Sweigart · founder</div>
+          <div class="founder-sig-title">+ two co-founders · 40+ years combined enterprise medical credentialing</div>
         </div>
       </div>
       <div class="founder-photo">
         <img src="/mike-headshot.jpg" alt="Mike Sweigart, Founder of CredTek" />
         <div class="founder-photo-tag">
           <span class="founder-photo-dot">●</span>
-          Built by an operator
+          Built by operators
         </div>
       </div>
     </div>
@@ -610,16 +615,16 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <span class="section-eyebrow">Here's everything you get</span>
     <h2>Inside CredTek. <em>The full stack.</em></h2>
-    <p class="section-lead">No tiered pricing. No "contact sales for that feature." Every BH group on CredTek gets every capability — because verticalization, not feature-gating, is how we win this market.</p>
+    <p class="section-lead">No feature-gating. Every customer on CredTek gets every capability — because depth, not artificial tiering, is how we win this market.</p>
 
     <div class="stack-block">
       <h3>What's <em>actually included</em> at $35/provider/month</h3>
       <ul class="stack-list">
         <li><span class="check">✓</span><span class="item-text"><strong>Intake & Profile Agent</strong> — SMS/email provider invite, document OCR + LLM extraction, golden profile auto-population</span><span class="item-val">VALUE: $200/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>50-state BH board PSV</strong> — Direct verification against psychology, social work, counseling, MFT boards in every state</span><span class="item-val">VALUE: $400/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Pre-licensed Supervision Tracker</strong> — Hours, cosigning, state rules, auto-generated licensure packets</span><span class="item-val">VALUE: $300/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Multi-state Licensure Agent</strong> — PSYPACT, Counseling Compact, SW Compact eligibility + standalone license tracking</span><span class="item-val">VALUE: $250/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>BH Payor Enrollment Agents</strong> — Specialized agents for Optum/UBH, Carelon, Magellan, Evernorth BH, Anthem BH</span><span class="item-val">VALUE: $500/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>50-state board PSV · every specialty</strong> — Medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental</span><span class="item-val">VALUE: $400/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Specialty workflow library</strong> — BH supervision tracking, locum-tenens windows, hospital privileging, M&amp;A NPI handling</span><span class="item-val">VALUE: $300/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Multi-state Licensure Agent</strong> — IMLC · NLC · PSYPACT · Counseling Compact · SW Compact eligibility + standalone license tracking</span><span class="item-val">VALUE: $250/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Commercial &amp; specialty Payor Agents</strong> — Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare · Carelon · Magellan · Evernorth · BCBS</span><span class="item-val">VALUE: $500/mo</span></li>
         <li><span class="check">✓</span><span class="item-text"><strong>CAQH Attestation Automation</strong> — Every-120-day attestation handled with provider SMS approval</span><span class="item-val">VALUE: $150/mo</span></li>
         <li><span class="check">✓</span><span class="item-text"><strong>NCQA Audit Binder</strong> — One-click audit-ready evidence packet for delegated credentialing</span><span class="item-val">VALUE: $400/mo</span></li>
         <li><span class="check">✓</span><span class="item-text"><strong>Expirations & Re-credentialing Engine</strong> — 180-day forecast, auto-drafted renewals, SMS reminders</span><span class="item-val">VALUE: $200/mo</span></li>
@@ -645,11 +650,11 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <span class="section-eyebrow">The math you don't want to do</span>
     <h2>What slow credentialing <em>actually costs you.</em></h2>
-    <p class="section-lead">Every month you stay on spreadsheets, Modio, or your current outsourced CVO, you're paying a tax. Here's the actual math for a 200-provider behavioral health group.</p>
+    <p class="section-lead">Every month you stay on spreadsheets, Modio, or your current outsourced CVO, you're paying a tax. Here's the actual math for a 200-provider medical group.</p>
 
     <div class="coi-block">
       <h3>The cost of <em>doing nothing</em>.</h3>
-      <p style="font-size: 16px; color: var(--ink-soft); margin-bottom: 8px;">Assume a 200-provider BH group, 10 new hires per quarter, 75-day average enrollment delay, $2,000/day in lost revenue per idle provider:</p>
+      <p style="font-size: 16px; color: var(--ink-soft); margin-bottom: 8px;">Assume a 200-provider medical group, 10 new hires per quarter, 75-day average enrollment delay, $2,000/day in lost revenue per idle provider:</p>
 
       <div class="coi-math">
         <div class="calc">10 new providers × 4 quarters = <strong style="color:var(--ink);">40 enrollments / year</strong></div>
@@ -689,50 +694,71 @@ const LANDING_BODY_POST_CALC = `
 <!-- ============== PRICING ============== -->
 <section class="section" id="pricing" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
-    <span class="section-eyebrow">Pricing · No "contact us" games</span>
-    <h2>Two lines. <em>Posted publicly.</em></h2>
-    <p class="section-lead">Every credentialing competitor hides pricing behind a "Schedule a demo" form. That's a 2018 mistake. CredTek publishes simple, transparent pricing any COO can model on a napkin in 30 seconds.</p>
+    <span class="section-eyebrow">Pricing · No "contact us" games (until you need to)</span>
+    <h2>Three tiers. <em>Two posted publicly.</em></h2>
+    <p class="section-lead">Most competitors hide pricing behind a "schedule a demo" form. We don't — Starter and Growth are public, so any COO can model the math on a napkin in 30 seconds. Enterprise is custom because at 500+ providers your needs are too specific for a posted number.</p>
 
-    <div class="price-grid">
+    <div class="price-grid-3">
       <div class="price-card">
-        <h3>Subscription</h3>
-        <div class="price-desc">Per active provider, per month. Everything's included.</div>
+        <div class="price-tag">Starter</div>
+        <div class="price-desc">1–99 active providers · solo practices, small groups, single-state</div>
         <div class="price-amount"><em>$35</em></div>
-        <div class="price-unit">per provider · per month</div>
+        <div class="price-unit">per provider · per month<br/>+ $300 per enrollment action</div>
         <ul>
           <li>All 7 AI agents</li>
-          <li>50-state BH board PSV</li>
-          <li>Pre-licensed supervision tracking</li>
+          <li>50-state board PSV · every specialty</li>
           <li>Multi-state license dashboard</li>
           <li>CAQH automation</li>
           <li>Expirations management</li>
           <li>NCQA audit binder</li>
           <li>Unlimited users</li>
-          <li>White-glove onboarding</li>
+          <li>Email support</li>
+          <li>White-glove onboarding · 14 days</li>
         </ul>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
       </div>
       <div class="price-card featured">
-        <h3>Enrollment Actions</h3>
-        <div class="price-desc">Per submitted enrollment. Pay only when work happens.</div>
-        <div class="price-amount"><em>$300</em></div>
-        <div class="price-unit">per enrollment action</div>
+        <div class="price-tag">Growth · most common</div>
+        <div class="price-desc">100–499 active providers · multi-state groups, MSOs, PE rollups</div>
+        <div class="price-amount"><em>$35</em></div>
+        <div class="price-unit">per provider · per month<br/>+ $300 per enrollment action · volume discounts at 200+</div>
         <ul>
-          <li>Commercial payor enrollment (Optum, Carelon, Magellan, etc.)</li>
-          <li>State Medicaid MCO enrollment</li>
-          <li>State license application</li>
-          <li>License renewal</li>
-          <li>Re-credentialing cycle</li>
-          <li>Hospital privileging request</li>
-          <li>Includes all follow-up + escalation</li>
+          <li>Everything in Starter, plus:</li>
+          <li>Specialty workflow library (BH supervision, locum, M&amp;A)</li>
+          <li>Delegated-credentialing support &amp; audit prep</li>
+          <li>Priority Slack-channel support</li>
+          <li>Dedicated CSM</li>
+          <li>Quarterly business reviews</li>
+          <li>Custom payor agent requests (1/quarter)</li>
+          <li>Volume discount: 10% off enrollments at 200+ providers</li>
         </ul>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
+      </div>
+      <div class="price-card enterprise">
+        <div class="price-tag">Enterprise</div>
+        <div class="price-desc">500+ active providers · health systems, IPAs, payors</div>
+        <div class="price-amount"><em>Custom</em></div>
+        <div class="price-unit">tailored to your roster, integrations, and SLAs</div>
+        <ul>
+          <li>Everything in Growth, plus:</li>
+          <li>EHR / PMS integrations (Epic, Athena, Cerner, eClinical, etc.)</li>
+          <li>Delegated implementation team</li>
+          <li>Named CSM + named technical owner</li>
+          <li>SOC 2 attestation + custom BAA addenda</li>
+          <li>Custom SLAs &amp; financial guarantees</li>
+          <li>Unlimited custom payor agents</li>
+          <li>Multi-tenant / multi-entity hierarchy</li>
+          <li>Dedicated onboarding sprint</li>
+        </ul>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to founders →</a>
       </div>
     </div>
 
     <div style="margin-top: 28px; padding: 20px 24px; background: var(--cream); border: 1px solid var(--line); border-radius: 14px;">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:16px;">
         <div>
-          <div class="serif" style="font-size:22px;font-style:italic;">Modeling a 200-provider BH group</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px;">Multi-state, mix of master's and doctoral, ~40 enrollments/year</div>
+          <div class="serif" style="font-size:22px;font-style:italic;">Modeling a 200-provider medical group on Growth</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">Multi-state, mix of specialties, ~40 enrollments/year</div>
         </div>
         <div style="text-align:right;">
           <div class="serif" style="font-size:36px;letter-spacing:-0.01em;">~$96K<span style="color:var(--muted);font-size:18px;"> / year</span></div>
@@ -771,8 +797,13 @@ const LANDING_BODY_POST_CALC = `
       </div>
 
       <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> Does this work for non-BH credentialing too?</div>
-        <div class="faq-a">In year one — no. We're deliberately verticalized on behavioral health because that's where the pain is greatest and where we can build defensible depth. If you have a small percentage of medical providers in your group (e.g., a few psychiatrists or NPs), we cover them too. But CredTek is built for BH and we won't dilute it.</div>
+        <div class="faq-q"><span class="q-mark">Q.</span> Which specialties does CredTek support?</div>
+        <div class="faq-a"><strong>Every US medical specialty.</strong> MD, DO, NP, PA, RN, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — full state-board coverage across every licensing board. Our specialty workflow library goes deepest on the most complex credentialing scenarios (BH pre-licensed supervision, locum-tenens windows, hospital privileging, M&amp;A reorganizations) — the ones generic tools force you to spreadsheet.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="q-mark">Q.</span> Do you integrate with our EHR or practice management system?</div>
+        <div class="faq-a"><strong>Yes — on the Enterprise tier.</strong> Native integrations with Epic, athenahealth, Cerner, eClinicalWorks, NextGen, AdvancedMD, Kareo/Tebra, DrChrono, and Practice Fusion. Provider data syncs both ways so credentialing changes flow into your EHR and vice versa. See the full list at <a href="/integrations" style="color: var(--blue); text-decoration: underline;">/integrations</a>.</div>
       </div>
 
       <div class="faq-item">

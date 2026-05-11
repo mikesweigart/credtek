@@ -7,7 +7,7 @@ import Link from "next/link";
 export const metadata = {
   title: "CredTek vs. Modio, Symplr, Medallion · CredTek",
   description:
-    "Head-to-head feature comparison for behavioral health credentialing platforms. CredTek vs. Modio Health, Symplr CredentialStream, and Medallion.",
+    "Head-to-head feature comparison for US medical credentialing platforms. CredTek vs. Modio Health, Symplr CredentialStream, and Medallion.",
 };
 
 type Verdict = "yes" | "partial" | "no" | "n_a";
@@ -27,7 +27,7 @@ type Section = { title: string; rows: Row[] };
 
 const SECTIONS: Section[] = [
   {
-    title: "Behavioral health depth",
+    title: "Specialty workflow depth",
     rows: [
       {
         feature: "Pre-licensed supervision tracker",
@@ -301,7 +301,7 @@ export default function ComparePage() {
             </span>
           </Link>
           <div className="footer-meta">
-            Credentialing built for behavioral health · 2026
+            US medical credentialing platform · 2026
           </div>
         </div>
       </footer>
