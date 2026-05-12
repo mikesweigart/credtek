@@ -34,26 +34,15 @@ const LANDING_BODY_PRE_CALC = `
   <div class="container">
     <div class="hero-inner">
       <div>
-        <div class="hero-eyebrow">→ For US medical groups, MSOs &amp; health systems</div>
-        <h1>Get your providers <em>in-network faster</em> than anyone in healthcare.<br/><span class="strike">Industry average: 90+ days of waiting.</span></h1>
-        <p class="hero-sub"><strong>Old-school credentialing care meets new-school technology.</strong> With <strong>40+ years of enterprise medical credentialing experience</strong> baked into modern AI agents, no team gets your providers in-network faster, more accurately, or more efficiently than CredTek — without adding a single coordinator to your team.</p>
+        <div class="hero-eyebrow">→ Credentialing for US medical groups, MSOs &amp; health systems</div>
+        <h1>Your providers should be <em>billing.</em><br/>Not waiting on credentialing.</h1>
+        <p class="hero-sub">Every day your new clinicians sit idle waiting on payor enrollment, you lose <strong>$2,000–$3,000</strong> in revenue per provider. CredTek gets them in-network in weeks, not months — built by credentialing veterans, run by modern AI agents.</p>
         <div class="hero-cta">
-          <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo <span class="arrow">→</span></a>
-          <a class="btn-quote" href="#calc">Get your instant quote ↓</a>
+          <a class="btn-primary" href="#calc">See your numbers <span class="arrow">→</span></a>
+          <a class="btn-secondary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to us</a>
         </div>
-        <div class="hero-metrics">
-          <div class="hero-metric">
-            <div class="num"><em>40+</em></div>
-            <div class="lbl">Years combined credentialing experience</div>
-          </div>
-          <div class="hero-metric">
-            <div class="num"><em>67%</em></div>
-            <div class="lbl">Coordinator time saved</div>
-          </div>
-          <div class="hero-metric">
-            <div class="num"><em>50</em></div>
-            <div class="lbl">State boards · every specialty</div>
-          </div>
+        <div class="hero-trust">
+          <span class="dot">●</span> <strong>40+ yrs</strong> combined credentialing experience &nbsp;·&nbsp; <span class="dot">●</span> <strong>HIPAA + BAA</strong> on day one &nbsp;·&nbsp; <span class="dot">●</span> <strong>NCQA-aligned</strong>
         </div>
       </div>
 
@@ -148,110 +137,48 @@ const LANDING_BODY_PRE_CALC = `
   </div>
 </section>
 
-<!-- ============== TRUST STRIP ============== -->
-<section class="trust-strip">
+<!-- ============== THE PLAN (3 STEPS) ============== -->
+<section class="plan-section" id="how">
   <div class="container">
-    <ul class="trust-strip-list">
-      <li>
-        <span class="trust-icon" aria-hidden="true">🔒</span>
-        <div>
-          <div class="trust-label">HIPAA compliant</div>
-          <div class="trust-detail">BAA on day one</div>
-        </div>
+    <span class="section-eyebrow">How it works</span>
+    <h2>Three steps from <em>signed contract</em> to <em>providers billing.</em></h2>
+
+    <ol class="plan-grid">
+      <li class="plan-step">
+        <div class="plan-step-num">1</div>
+        <h3>See your numbers — today</h3>
+        <p>Use the 60-second ROI calculator below. You&apos;ll know your projected savings before our first call.</p>
       </li>
-      <li>
-        <span class="trust-icon" aria-hidden="true">✦</span>
-        <div>
-          <div class="trust-label">NCQA-aligned</div>
-          <div class="trust-detail">via certified CVO partner</div>
-        </div>
+      <li class="plan-step">
+        <div class="plan-step-num">2</div>
+        <h3>Talk to a credentialing veteran — this week</h3>
+        <p>20 minutes, no slides. Bring your actual pain — we&apos;ve seen every failure mode firsthand.</p>
       </li>
-      <li>
-        <span class="trust-icon" aria-hidden="true">⛨</span>
-        <div>
-          <div class="trust-label">Tamper-evident audit log</div>
-          <div class="trust-detail">SHA-256 hash chain</div>
-        </div>
+      <li class="plan-step">
+        <div class="plan-step-num">3</div>
+        <h3>Onboard your roster — within 14 days</h3>
+        <p>Your CSM gets your providers moving while you stay focused on running your practice.</p>
       </li>
-      <li>
-        <span class="trust-icon" aria-hidden="true">⚐</span>
-        <div>
-          <div class="trust-label">50-state coverage</div>
-          <div class="trust-detail">every BH licensing board</div>
-        </div>
-      </li>
-      <li>
-        <span class="trust-icon" aria-hidden="true">⚙</span>
-        <div>
-          <div class="trust-label">AI-native architecture</div>
-          <div class="trust-detail">human approval on every action</div>
-        </div>
-      </li>
-    </ul>
+    </ol>
   </div>
 </section>
 
 <!-- ============== PAIN SECTION ============== -->
 <section class="section" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
-    <span class="section-eyebrow">If you run medical credentialing, this is your week</span>
+    <span class="section-eyebrow">The problem</span>
     <h2>You already know <em>exactly</em> what this is.</h2>
-    <p class="section-lead">Direct quotes (paraphrased, with permission) from VPs of Network Operations and Directors of Credentialing at medical practices, MSOs, and health systems across the US in the last 90 days.</p>
+    <p class="section-lead">Real quotes (paraphrased, with permission) from VPs of Network Operations and Directors of Credentialing in the last 90 days.</p>
 
     <div class="pain-grid">
-      <div class="pain"><div class="q">"</div><div><div class="body">We added 80 providers last quarter and our credentialing team of 6 is drowning in CAQH attestations and license renewals. We're losing providers to competitors who onboard faster.</div><div class="speaker">— VP, NETWORK OPS · 200-PROVIDER MULTI-SPECIALTY GROUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">We just expanded into three new states and we don't even know what we don't know about each state's licensing requirements. Every state board has its own quirks.</div><div class="speaker">— COO · MULTI-STATE TELEHEALTH NETWORK</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Our pre-licensed clinicians' supervision hours are in a Google Sheet that the supervisor's assistant maintains. We're one audit away from a serious problem.</div><div class="speaker">— DIRECTOR OF CLINICAL OPS · BH GROUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Optum demanded delegated credentialing documentation for our network and we're not NCQA compliant. We're rebuilding files from scratch and it's costing us six figures.</div><div class="speaker">— DIRECTOR OF CREDENTIALING · MSO</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">We added 80 providers last quarter and our team of 6 is drowning in CAQH attestations and renewals. We&apos;re losing clinicians to competitors who onboard faster.</div><div class="speaker">— VP, NETWORK OPS · 200-PROVIDER MULTI-SPECIALTY GROUP</div></div></div>
       <div class="pain"><div class="q">"</div><div><div class="body">Time-to-revenue per new provider is 90–120 days. Our CFO wants 45. Every day a credentialed provider sits idle is $2,000 of lost revenue.</div><div class="speaker">— CFO · PE-BACKED MEDICAL GROUP</div></div></div>
-      <div class="pain"><div class="q">"</div><div><div class="body">Aetna's portal changed last month and our coordinator now spends two days a week just on resubmissions. Modio doesn't help us with this at all.</div><div class="speaker">— CREDENTIALING MANAGER · HEALTH SYSTEM</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Optum demanded delegated-credentialing documentation and we&apos;re not NCQA compliant. We&apos;re rebuilding files from scratch and it&apos;s costing us six figures.</div><div class="speaker">— DIRECTOR OF CREDENTIALING · MSO</div></div></div>
+      <div class="pain"><div class="q">"</div><div><div class="body">Aetna&apos;s portal changed last month and our coordinator now spends two days a week just on resubmissions. Modio doesn&apos;t help us with this at all.</div><div class="speaker">— CREDENTIALING MANAGER · HEALTH SYSTEM</div></div></div>
     </div>
 
     <div class="pain-conclusion">
-      Every day this stays broken, you're losing <strong>$1,500–$3,000 per provider per day</strong> in revenue your providers <em>could</em> be earning if they were in-network.
-      <br/><br/>For a 200-provider group, with 10 new hires per quarter, that's <strong>$1.1M–$2.25M evaporating every year.</strong>
-    </div>
-  </div>
-</section>
-
-<!-- ============== WHY NOTHING HAS WORKED ============== -->
-<section class="section" id="how" style="background: var(--paper);">
-  <div class="container">
-    <span class="section-eyebrow">Why nothing has worked</span>
-    <h2>Modio. Spreadsheets. Symplr. <br/>Here's why <em>none of them</em> fix this.</h2>
-    <p class="section-lead">Every credentialing tool on the market was built for one of two scenarios: tiny solo practices, or enterprise hospital systems. <strong>The mid-market — 50 to 500 providers — has been ignored for a decade.</strong> Here's what that looks like in practice.</p>
-
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>Modio is a glorified spreadsheet</h4>
-        <p>It tracks credentials. It doesn't <em>do</em> credentialing. Reviewers consistently complain it doesn't sync with state boards, lacks real PSV depth, and has no NCQA accreditation. Their "automated payor enrollment" is a checklist with email reminders.</p>
-      </div>
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>Symplr & CredentialStream are enterprise tools</h4>
-        <p>9-month implementations. $200K+ contracts. Built for 5,000-provider hospital systems, not 200-provider BH groups. They'll happily sell to you. Then you'll spend a year configuring it and still need an outside CVO.</p>
-      </div>
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>Medallion is shallow on specialty workflows</h4>
-        <p>Designed around the simplest MD use case. Doesn't handle pre-licensed supervision, locum-tenens windows, or specialty-specific payor agents in depth. Their pricing is steep and their roadmap won't reach you if you have any real workflow complexity.</p>
-      </div>
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>Spreadsheets break at 50 providers</h4>
-        <p>The supervisor's assistant who maintains your supervision tracker is going to leave. Your CAQH renewal calendar is in someone's Outlook. Your audit trail is screenshots in a SharePoint folder. You know this isn't sustainable.</p>
-      </div>
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>Outsourced CVOs charge per provider</h4>
-        <p>$300–$800 per file, plus retainer. They're a black box — you can't see what's happening until it's done. They don't help with multi-state licensure, supervision, or payor enrollment. And you still need internal coordinators.</p>
-      </div>
-      <div class="why-card">
-        <div class="x">✕</div>
-        <h4>None of them are AI-native</h4>
-        <p>"AI" features in incumbents are chatbots bolted onto CRUD apps. CredTek is the inverse: agents at the core, with a human approval UI on top. The 2026 architecture <strong>cannot</strong> be retrofitted into a 2014 product.</p>
-      </div>
+      For a 200-provider group with 10 new hires per quarter, slow credentialing costs <strong>$1.1M–$2.25M every year</strong> in revenue your providers <em>could</em> be earning if they were in-network.
     </div>
   </div>
 </section>
@@ -678,28 +605,56 @@ const LANDING_BODY_POST_CALC = `
   <div class="container container-narrow">
     <span class="section-eyebrow">Why no one does it better</span>
     <h2>Old-school care. <em>New-school technology.</em></h2>
-    <p class="section-lead">Most credentialing software companies are run by software people who&apos;ve never filed a CAQH attestation. Most credentialing services firms are run by ops people who&apos;ve never built a system. CredTek is the rare combination — and it&apos;s why our customers get their providers in-network faster than anyone in the industry.</p>
+    <p class="section-lead">Most credentialing software is built by software people who&apos;ve never filed a CAQH attestation. Most services firms are run by ops people who&apos;ve never built a system. CredTek is the rare combination.</p>
 
     <div class="why-us-grid">
       <div class="why-us-card">
-        <div class="why-us-icon">📚</div>
-        <h3>40+ years of credentialing experience</h3>
-        <p>Two co-founders, each with 20+ years inside enterprise medical credentialing — running programs at multi-billion-dollar health systems, designing delegated arrangements with major payors, stewarding rosters through M&amp;A. They&apos;ve seen every failure mode of every competing tool firsthand. That experience is built into how every CredTek workflow handles edge cases the generic tools ignore.</p>
-      </div>
-      <div class="why-us-card">
         <div class="why-us-icon">⚙</div>
-        <h3>Modern AI agents — with humans in the loop</h3>
-        <p>Agents that actually fill the Aetna, Anthem, Optum, and Cigna forms. Agents that scrape state boards and self-heal when portals change. Agents that draft 180-day renewal applications before deadlines slip. <strong>And a coordinator approval gate on every single submission</strong> — no hallucinated data ever reaches a payor.</p>
+        <h3>Agents that actually do the work</h3>
+        <p>Real Playwright-driven agents fill Aetna, Anthem, Optum, and Cigna forms end-to-end. <strong>Every submission gets a coordinator&apos;s approval before it leaves CredTek</strong> — no AI-hallucinated data ever reaches a payor.</p>
       </div>
       <div class="why-us-card">
         <div class="why-us-icon">❤</div>
-        <h3>Old-school care &amp; concern</h3>
-        <p>You get a named CSM, weekly check-ins for the first 90 days, and direct Slack access to the founders. We treat every provider in your roster like ours. When inputs are incomplete or messy — and they always are — we work the problem with you, not around you.</p>
+        <h3>A team that calls you back</h3>
+        <p>Named CSM, weekly check-ins for 90 days, direct Slack access to the founders. When inputs are messy — and they always are — we work the problem <em>with</em> you, not around you.</p>
       </div>
       <div class="why-us-card">
         <div class="why-us-icon">⚡</div>
-        <h3>Faster than anyone in healthcare</h3>
-        <p>The industry average is 90–120 days from hire date to first in-network payor. CredTek customers typically beat that by half — sometimes much more — and we don&apos;t need perfect inputs to do it. The combination of experienced humans handling the judgment calls and AI agents handling the volume is what no other vendor offers.</p>
+        <h3>Weeks, not months</h3>
+        <p>Industry average is 90–120 days from hire date to first in-network payor. CredTek customers typically beat that by half. We don&apos;t need perfect inputs to do it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== STAKES — what changes when you fix this ============== -->
+<section class="stakes-section">
+  <div class="container container-narrow">
+    <span class="section-eyebrow">What changes</span>
+    <h2>Two paths.<br/><em>One of them ends in your providers billing.</em></h2>
+
+    <div class="stakes-grid">
+      <div class="stakes-card stakes-failure">
+        <div class="stakes-tag">Without CredTek</div>
+        <ul>
+          <li>$2–6M in lost revenue every year</li>
+          <li>New hires sitting idle for 90–120 days</li>
+          <li>Coordinators quitting from burnout</li>
+          <li>Providers leaving for groups that onboard faster</li>
+          <li>One bad NCQA audit away from a real problem</li>
+          <li>Your CFO can&apos;t model when the next 20 hires start billing</li>
+        </ul>
+      </div>
+      <div class="stakes-card stakes-success">
+        <div class="stakes-tag">With CredTek</div>
+        <ul>
+          <li>Providers billing in weeks, not months</li>
+          <li>Coordinators on strategy, not data entry</li>
+          <li>Predictable time-to-revenue your CFO models accurately</li>
+          <li>Audit-ready every day, not just at audit time</li>
+          <li>Delegated-credentialing relationships with major payors</li>
+          <li>Your team focuses on patients — not portals</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -791,48 +746,28 @@ const LANDING_BODY_POST_CALC = `
 
     <div class="faq">
       <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What about HIPAA, SOC 2, NCQA?</div>
-        <div class="faq-a"><strong>HIPAA + signed BAA on day one.</strong> SOC 2 Type II audit is in flight (12-month process, started at company founding). For NCQA: in year one we partner with an NCQA-certified CVO and white-label their verifications under our platform — you get NCQA-compliant files immediately. We're pursuing our own NCQA CVO certification in year two as a strategic asset.</div>
-      </div>
-
-      <div class="faq-item">
         <div class="faq-q"><span class="q-mark">Q.</span> How fast can we go live?</div>
-        <div class="faq-a"><strong>14 days from contract signing.</strong> White-glove onboarding includes data migration from your current tool (Modio, spreadsheets, anywhere), provider import, payor portal credential setup, and a live training session for your credentialing team. Your CSM is on weekly check-ins for the first 90 days.</div>
+        <div class="faq-a"><strong>14 days from contract signing.</strong> White-glove onboarding migrates your existing data (Modio, CAQH, spreadsheets), imports your provider roster, sets up payor-portal credentials, and runs a live training session for your team. Your CSM is on weekly check-ins for the first 90 days.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What happens to our existing data in Modio or our spreadsheets?</div>
-        <div class="faq-a">We migrate it. CredTek's intake agent ingests Modio exports, CAQH data, and even messy spreadsheet data. Your golden profile gets populated automatically with confidence scoring — your coordinator approves anomalies. <strong>You don't redo months of work.</strong></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What if a payor portal blocks automation?</div>
-        <div class="faq-a">Some payors restrict automated form submission in their TOS. CredTek's enrollment agents are built with <strong>human-in-the-loop approval gates</strong> — every submission is reviewed by your coordinator before it leaves the platform. We're not "scraping" payors against their will. We're accelerating your team's manual work to seconds. For payors with direct enrollment APIs, we integrate natively.</div>
+        <div class="faq-q"><span class="q-mark">Q.</span> What happens to our existing data?</div>
+        <div class="faq-a">We migrate it. CredTek&apos;s intake agent ingests Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates automatically with confidence scoring — your coordinator approves anomalies. <strong>You don&apos;t redo months of work.</strong></div>
       </div>
 
       <div class="faq-item">
         <div class="faq-q"><span class="q-mark">Q.</span> Which specialties does CredTek support?</div>
-        <div class="faq-a"><strong>Every US medical specialty.</strong> MD, DO, NP, PA, RN, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — full state-board coverage across every licensing board. Our specialty workflow library goes deepest on the most complex credentialing scenarios (BH pre-licensed supervision, locum-tenens windows, hospital privileging, M&amp;A reorganizations) — the ones generic tools force you to spreadsheet.</div>
+        <div class="faq-a"><strong>Every US medical specialty.</strong> MD, DO, NP, PA, RN, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — full state-board coverage. Specialty workflow library goes deepest on the hard ones generic tools force you to spreadsheet (BH supervision, locum-tenens, hospital privileging, M&amp;A reorganizations).</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> Do you integrate with our EHR or practice management system?</div>
-        <div class="faq-a"><strong>Yes — on the Enterprise tier.</strong> Native integrations with Epic, athenahealth, Cerner, eClinicalWorks, NextGen, AdvancedMD, Kareo/Tebra, DrChrono, and Practice Fusion. Provider data syncs both ways so credentialing changes flow into your EHR and vice versa. See the full list at <a href="/integrations" style="color: var(--blue); text-decoration: underline;">/integrations</a>.</div>
+        <div class="faq-q"><span class="q-mark">Q.</span> Do you integrate with our EHR?</div>
+        <div class="faq-a"><strong>Yes — on the Enterprise tier.</strong> Native integrations with Epic, athenahealth, Cerner, eClinicalWorks, NextGen, AdvancedMD, Kareo/Tebra, DrChrono, and Practice Fusion. Two-way provider data sync. Full list at <a href="/integrations" style="color: var(--blue); text-decoration: underline;">/integrations</a>.</div>
       </div>
 
       <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What about delegated credentialing with payors?</div>
-        <div class="faq-a">Our NCQA Audit Binder is built specifically to support delegated credentialing arrangements with payors like Optum and Carelon. Once you're delegated with a payor, you skip their credentialing process entirely — you credential providers yourself and they accept it. <strong>This is the highest-leverage move a BH group can make</strong>, and CredTek gets you ready for it.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What if AI hallucinates and submits bad data?</div>
-        <div class="faq-a">Three guardrails. <strong>One:</strong> every agent output has a confidence score — anything below threshold flags for human review. <strong>Two:</strong> mandatory human approval gate before any submission to a payor or state board. <strong>Three:</strong> full audit logging on every agent action. We're not betting the company on AI being perfect. We're using AI to make your team 10× faster, with humans in the loop where it matters.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q"><span class="q-mark">Q.</span> What if we're not ready to switch our entire system?</div>
-        <div class="faq-a">You don't have to. Run CredTek alongside your current process — onboard a single subset of providers, see how fast we move them through, then expand. Month-to-month with a 30-day out clause for the first 90 days, so the only thing you're risking is finding out we&apos;re right.</div>
+        <div class="faq-q"><span class="q-mark">Q.</span> What if we&apos;re not ready to switch our entire system?</div>
+        <div class="faq-a">You don&apos;t have to. Run CredTek alongside your current process — onboard a subset of providers, see how fast we move them through, then expand. Month-to-month with a 30-day out clause for the first 90 days. The only risk is finding out we&apos;re right.</div>
       </div>
     </div>
   </div>
@@ -841,13 +776,13 @@ const LANDING_BODY_POST_CALC = `
 <!-- ============== FINAL CTA ============== -->
 <section class="final-cta" id="cta">
   <div class="final-cta-inner">
-    <h2>See your own credentialing pipeline <em>running in CredTek.</em></h2>
-    <p>20 minutes. We pull a sample of your providers, run them through the platform live, and show you exactly what's possible. No slides. No fluff.</p>
+    <h2>Stop losing money on providers <em>who can&apos;t bill yet.</em></h2>
+    <p>20 minutes with a credentialing veteran. We pull a sample of your providers, run them through CredTek live, and show you the ROI for your group specifically. No slides. No fluff.</p>
     <div class="final-cta-btns">
-      <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
-      <a class="btn-secondary" href="#how">See how it works first</a>
+      <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to us <span class="arrow">→</span></a>
+      <a class="btn-secondary" href="#calc">See your numbers first</a>
     </div>
-    <div class="final-meta">→ NO CONTRACT REQUIRED · 45-DAY GUARANTEE · LIVE IN 14 DAYS</div>
+    <div class="final-meta">→ MONTH-TO-MONTH · LIVE IN 14 DAYS · 40+ YEARS OF CREDENTIALING EXPERIENCE</div>
   </div>
 </section>
 

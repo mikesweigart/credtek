@@ -7246,3 +7246,224 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   .op-use { padding: 10px 12px; }
   .op-use p { font-size: 11px; }
 }
+
+/* ============================================================
+   THE PLAN (3 steps) — replaces the trust strip
+   StoryBrand: customer should know exactly what to do next
+   ============================================================ */
+.plan-section {
+  background: var(--paper);
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 768px) { .plan-section { padding: 56px 0; } }
+.plan-section h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 36px;
+  font-weight: 400;
+  max-width: 880px;
+}
+.plan-section h2 em { color: var(--blue); font-style: italic; }
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+@media (max-width: 900px) { .plan-grid { grid-template-columns: 1fr; gap: 14px; } }
+
+.plan-step {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  position: relative;
+}
+.plan-step:hover {
+  transform: translateY(-2px);
+  border-color: var(--blue);
+  box-shadow: 0 12px 28px -16px rgba(4, 103, 222, 0.25);
+}
+.plan-step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 14px -6px rgba(4, 103, 222, 0.45);
+}
+.plan-step h3 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.plan-step p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ============================================================
+   STAKES — Success vs Failure contrast section
+   StoryBrand: show the stakes immediately before the action
+   ============================================================ */
+.stakes-section {
+  background: var(--ink);
+  color: white;
+  padding: 80px 0;
+}
+@media (max-width: 768px) { .stakes-section { padding: 56px 0; } }
+.stakes-section h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  font-weight: 400;
+  color: white;
+}
+.stakes-section h2 em { color: var(--gold); font-style: italic; }
+.stakes-section .section-eyebrow {
+  color: var(--gold);
+  background: rgba(201, 146, 61, 0.1);
+  border-color: rgba(201, 146, 61, 0.35);
+}
+
+.stakes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 768px) { .stakes-grid { grid-template-columns: 1fr; gap: 14px; } }
+.stakes-card {
+  border-radius: 16px;
+  padding: 28px 28px;
+}
+.stakes-failure {
+  background: rgba(184, 85, 63, 0.08);
+  border: 1px solid rgba(184, 85, 63, 0.3);
+}
+.stakes-success {
+  background: rgba(79, 139, 106, 0.12);
+  border: 1px solid rgba(79, 139, 106, 0.4);
+}
+.stakes-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+.stakes-failure .stakes-tag {
+  background: rgba(184, 85, 63, 0.22);
+  color: #F0A48F;
+  border: 1px solid rgba(184, 85, 63, 0.4);
+}
+.stakes-success .stakes-tag {
+  background: rgba(79, 139, 106, 0.22);
+  color: #A4E0B8;
+  border: 1px solid rgba(79, 139, 106, 0.4);
+}
+.stakes-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.stakes-card li {
+  font-size: 14.5px;
+  line-height: 1.55;
+  padding: 10px 0 10px 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+  position: relative;
+}
+.stakes-card li:first-child { border-top: none; padding-top: 4px; }
+.stakes-failure li::before {
+  content: '✕';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  color: #F0A48F;
+  font-weight: 700;
+  font-size: 15px;
+}
+.stakes-success li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  color: #A4E0B8;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ============================================================
+   HERO — small mobile + spacing refinements
+   ============================================================ */
+@media (max-width: 600px) {
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-cta .btn-primary,
+  .hero-cta .btn-secondary {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 14px 22px;
+  }
+  .hero-trust {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+}
+
+/* ============================================================
+   MOBILE — type scale + spacing rhythm cleanup
+   ============================================================ */
+@media (max-width: 768px) {
+  .section h2 {
+    font-size: clamp(28px, 6vw, 36px);
+    line-height: 1.1;
+  }
+  .section-lead {
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .pain-grid { gap: 12px; }
+  .pain { padding: 16px 18px; }
+  .pain .body { font-size: 14.5px; }
+}
+
+/* Touch target floor on mobile — buttons should never feel cramped */
+@media (max-width: 600px) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-quote {
+    min-height: 48px;
+    font-size: 15px;
+  }
+}
