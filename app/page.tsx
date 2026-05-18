@@ -138,7 +138,7 @@ const LANDING_BODY_PRE_CALC = `
 </section>
 
 <!-- ============== THE PLAN (3 STEPS) ============== -->
-<section class="plan-section" id="how">
+<section class="plan-section reveal" id="how">
   <div class="container">
     <span class="section-eyebrow">How it works</span>
     <h2>Three steps from <em>signed contract</em> to <em>providers billing.</em></h2>
@@ -164,7 +164,7 @@ const LANDING_BODY_PRE_CALC = `
 </section>
 
 <!-- ============== PAIN SECTION ============== -->
-<section class="section" style="background: white; border-top: 1px solid var(--line);">
+<section class="section reveal" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
     <span class="section-eyebrow">The problem</span>
     <h2>You already know <em>exactly</em> what this is.</h2>
@@ -183,226 +183,50 @@ const LANDING_BODY_PRE_CALC = `
   </div>
 </section>
 
-<!-- ============== FEATURE 1: MULTI-STATE LICENSE GRID ============== -->
-<section class="feature-section" style="background: white; border-top: 1px solid var(--line);">
+<!-- ============== CAPABILITIES GRID (compact, replaces old features 1+2) ============== -->
+<section class="caps-section reveal">
   <div class="container">
-    <div class="feature-row">
-      <div class="feature-content">
-        <span class="section-eyebrow">Feature 01 · Multi-state command</span>
-        <h3>See <em>every license</em>, in every state, for every provider — on one screen.</h3>
-        <p>If you operate in 10+ states, you're tracking thousands of licenses. PSYPACT, Counseling Compact, Social Work Compact eligibility. State-specific renewal cycles. Expirations creeping up across 50 jurisdictions.</p>
-        <p><strong>CredTek's License Grid</strong> shows you everything in a single view. Filter by provider, state, license type, expiration window, or compact eligibility. One click to launch a renewal. One click to forecast which states a provider qualifies in via compact vs. needs a standalone license.</p>
-        <ul>
-          <li>50 state boards across every specialty (medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental)</li>
-          <li>Interstate compact eligibility — IMLC · NLC · PSYPACT · Counseling Compact · SW Compact</li>
-          <li>180-day expiration forecast with auto-drafted renewal applications</li>
-          <li>State-specific quirks built in (CA, NY, FL, TX, every state we cover)</li>
-        </ul>
-      </div>
+    <span class="section-eyebrow">What you get on day one</span>
+    <h2>The full credentialing stack — <em>not just tracking.</em></h2>
+    <p class="section-lead">Every CredTek customer gets every capability below from day one. No feature gating, no &quot;contact sales for that module.&quot; The deep-dive on the next section shows the one thing other tools force you to spreadsheet.</p>
 
-      <!-- ============== SCREENSHOT: LICENSE GRID ============== -->
-      <div class="ss-wrap">
-        <div class="screenshot">
-          <div class="screenshot-chrome">
-            <div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div>
-            <div class="ss-url">app.credtek.com / licenses / matrix</div>
-          </div>
-          <div class="license-grid-app">
-            <div class="lga-head">
-              <div>
-                <div class="lga-title">License Matrix · 214 providers</div>
-                <div class="lga-meta" style="margin-top:4px;">UPDATED 2 MIN AGO</div>
-              </div>
-              <div class="pstat s-active" style="font-size:10px;padding:4px 10px;">All current</div>
-            </div>
-            <div class="lga-legend">
-              <span><span class="swatch" style="background:var(--ink);"></span> Licensed</span>
-              <span><span class="swatch" style="background:rgba(123,158,137,0.3);border:1px solid rgba(123,158,137,0.5);"></span> Compact eligible</span>
-              <span><span class="swatch" style="background:rgba(201,146,61,0.2);border:1px solid rgba(201,146,61,0.5);"></span> In progress</span>
-              <span><span class="swatch" style="background:rgba(184,85,63,0.15);border:1px solid rgba(184,85,63,0.5);"></span> Expiring &lt;30d</span>
-            </div>
-            <div class="state-grid">
-              <div class="state-cell licensed">CA</div>
-              <div class="state-cell licensed">TX</div>
-              <div class="state-cell licensed">FL</div>
-              <div class="state-cell expiring">NY</div>
-              <div class="state-cell licensed">PA</div>
-              <div class="state-cell licensed">IL</div>
-              <div class="state-cell compact">OH</div>
-              <div class="state-cell compact">GA</div>
-              <div class="state-cell compact">NC</div>
-              <div class="state-cell licensed">MI</div>
-              <div class="state-cell pending">NJ</div>
-              <div class="state-cell licensed">VA</div>
-              <div class="state-cell compact">WA</div>
-              <div class="state-cell compact">AZ</div>
-              <div class="state-cell licensed">MA</div>
-              <div class="state-cell compact">TN</div>
-              <div class="state-cell compact">IN</div>
-              <div class="state-cell licensed">MO</div>
-              <div class="state-cell pending">MD</div>
-              <div class="state-cell compact">WI</div>
-              <div class="state-cell compact">CO</div>
-              <div class="state-cell compact">MN</div>
-              <div class="state-cell compact">SC</div>
-              <div class="state-cell licensed">AL</div>
-              <div class="state-cell compact">LA</div>
-              <div class="state-cell compact">KY</div>
-              <div class="state-cell compact">OR</div>
-              <div class="state-cell compact">OK</div>
-              <div class="state-cell pending">CT</div>
-              <div class="state-cell compact">UT</div>
-              <div class="state-cell compact">IA</div>
-              <div class="state-cell compact">NV</div>
-              <div class="state-cell compact">AR</div>
-              <div class="state-cell compact">MS</div>
-              <div class="state-cell compact">KS</div>
-              <div class="state-cell expiring">NM</div>
-              <div class="state-cell compact">NE</div>
-              <div class="state-cell compact">WV</div>
-              <div class="state-cell compact">ID</div>
-              <div class="state-cell eligible">HI</div>
-              <div class="state-cell compact">NH</div>
-              <div class="state-cell compact">ME</div>
-              <div class="state-cell compact">MT</div>
-              <div class="state-cell compact">RI</div>
-              <div class="state-cell compact">DE</div>
-              <div class="state-cell compact">SD</div>
-              <div class="state-cell compact">ND</div>
-              <div class="state-cell eligible">AK</div>
-              <div class="state-cell compact">VT</div>
-              <div class="state-cell compact">WY</div>
-            </div>
-            <div class="lga-summary">
-              <div class="lga-stat"><div class="v"><em>187</em></div><div class="l">Active licenses</div></div>
-              <div class="lga-stat"><div class="v">31</div><div class="l">Compact eligible</div></div>
-              <div class="lga-stat"><div class="v">7</div><div class="l">In progress</div></div>
-              <div class="lga-stat"><div class="v" style="color:var(--danger);">3</div><div class="l">Expiring &lt;30d</div></div>
-            </div>
-          </div>
-        </div>
+    <div class="caps-grid spotlight-group">
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">⚐</div>
+        <h3>Multi-state license matrix</h3>
+        <p>50 state boards across every specialty. Interstate compacts tracked (IMLC, NLC, PSYPACT, CC, SWC). 180-day expiration forecast with auto-drafted renewals.</p>
+      </div>
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">▤</div>
+        <h3>Payor enrollment agents</h3>
+        <p>Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare + specialty networks + state Medicaid MCOs. Every submission goes through a coordinator&apos;s approval gate.</p>
+      </div>
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">✦</div>
+        <h3>CAQH auto-attestation</h3>
+        <p>Every 120 days, automated against the provider&apos;s golden profile. Single-tap SMS approval from the provider. Never miss a window.</p>
+      </div>
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">⚙</div>
+        <h3>Primary-source verification</h3>
+        <p>NPPES, OIG LEIE, SAM.gov, NPDB, DEA — continuous monitoring. State board PSV across all 50 states + every specialty board.</p>
+      </div>
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">▣</div>
+        <h3>NCQA audit binder</h3>
+        <p>One-click audit-ready evidence packet. Designed for delegated-credentialing arrangements with major payors (Optum, Aetna, Cigna).</p>
+      </div>
+      <div class="caps-card spotlight-card">
+        <div class="caps-icon">⛨</div>
+        <h3>Tamper-evident audit log</h3>
+        <p>Every PHI access, state transition, and external call hash-chained with SHA-256. Tampering breaks the chain — your auditors will love it.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== FEATURE 2: PAYOR PIPELINE ============== -->
-<section class="feature-section" style="background: var(--paper); border-top: 1px solid var(--line);">
-  <div class="container">
-    <div class="feature-row flip">
-      <!-- ============== SCREENSHOT: PAYOR KANBAN ============== -->
-      <div class="ss-wrap">
-        <div class="screenshot">
-          <div class="screenshot-chrome">
-            <div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div>
-            <div class="ss-url">app.credtek.com / payors / pipeline</div>
-          </div>
-          <div class="kanban-app">
-            <div class="kb-head">
-              <div>
-                <div class="kb-title">Payor Pipeline</div>
-                <div style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:4px;">31 active enrollments · 4 stages</div>
-              </div>
-              <div class="pstat s-active" style="font-size:10px;padding:4px 10px;">3 approvals waiting</div>
-            </div>
-            <div class="kb-cols">
-              <div class="kb-col">
-                <div class="kb-col-head"><span class="kb-col-title">Drafted</span><span class="kb-col-count">8</span></div>
-                <div class="kb-card">
-                  <div class="name">Mitchell, J. — Optum</div>
-                  <div class="meta">CA · LCSW</div>
-                  <div class="day">READY · APPROVE</div>
-                </div>
-                <div class="kb-card">
-                  <div class="name">Patel, A. — Carelon</div>
-                  <div class="meta">TX · LPC-A</div>
-                  <div class="day">READY · APPROVE</div>
-                </div>
-                <div class="kb-card">
-                  <div class="name">Bennett, R. — Magellan</div>
-                  <div class="meta">CO · LMFT</div>
-                  <div class="day">READY · APPROVE</div>
-                </div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head"><span class="kb-col-title">Submitted</span><span class="kb-col-count">14</span></div>
-                <div class="kb-card">
-                  <div class="name">Reyes, S. — Evernorth</div>
-                  <div class="meta">PSYPACT · PsyD</div>
-                  <div class="day">DAY 6</div>
-                </div>
-                <div class="kb-card">
-                  <div class="name">Mitchell, J. — Carelon</div>
-                  <div class="meta">CA · LCSW</div>
-                  <div class="day">DAY 12</div>
-                </div>
-                <div class="kb-card">
-                  <div class="name">Ortega, T. — Optum</div>
-                  <div class="meta">FL · LPC</div>
-                  <div class="day">DAY 18</div>
-                </div>
-                <div class="kb-card danger">
-                  <div class="name">Singh, M. — Anthem BH</div>
-                  <div class="meta">GA · LCSW</div>
-                  <div class="day">DAY 47 · ESCALATE</div>
-                </div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head"><span class="kb-col-title">Info Needed</span><span class="kb-col-count">5</span></div>
-                <div class="kb-card">
-                  <div class="name">Kim, D. — TX Medicaid</div>
-                  <div class="meta">Superior · MD</div>
-                  <div class="day">DEA UPDATE · SMS SENT</div>
-                </div>
-                <div class="kb-card">
-                  <div class="name">Park, L. — Optum</div>
-                  <div class="meta">NY · LMHC</div>
-                  <div class="day">CAQH ATTEST · DUE</div>
-                </div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head"><span class="kb-col-title">In-Network</span><span class="kb-col-count">4</span></div>
-                <div class="kb-card success">
-                  <div class="name">Reyes, S. — Optum</div>
-                  <div class="meta">PSYPACT · PsyD</div>
-                  <div class="day">ACTIVE · 38 DAYS</div>
-                </div>
-                <div class="kb-card success">
-                  <div class="name">Patel, A. — Optum</div>
-                  <div class="meta">TX · LPC-A</div>
-                  <div class="day">ACTIVE · 42 DAYS</div>
-                </div>
-                <div class="kb-card success">
-                  <div class="name">Singh, M. — Carelon</div>
-                  <div class="meta">GA · LCSW</div>
-                  <div class="day">ACTIVE · 31 DAYS</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="feature-content">
-        <span class="section-eyebrow">Feature 02 · Payor enrollment, automated</span>
-        <h3>Stop filling out the same forms <em>thirty different times.</em></h3>
-        <p>Every payor portal is different. Every one wants the same data, formatted differently. Your coordinator types the same provider info into Aetna, Anthem, Cigna, UnitedHealthcare, Humana, BCBS, plus a long tail of specialty networks and state Medicaid MCOs — over and over.</p>
-        <p><strong>CredTek's Payor Agents do the typing.</strong> Agents for every major commercial payor and the specialty networks that matter (Optum, Carelon, Magellan, Evernorth BH for behavioral; specialty equivalents across other lines). The agent fills the forms, attaches the documents, submits. You approve before anything goes out — every submission, every time.</p>
-        <ul>
-          <li>Commercial payor agents — Aetna · Anthem · Cigna · UnitedHealthcare · Humana · BCBS · Optum · Tricare</li>
-          <li>BH-specialty network agents — Carelon · Magellan · Evernorth BH · Optum/UBH</li>
-          <li>State Medicaid MCO agents in your operating states</li>
-          <li>CAQH attestation auto-completion with provider SMS approval</li>
-          <li>Real-time status tracking · auto-escalation when payors stall</li>
-          <li><strong>Human-in-the-loop approval gate on every submission</strong> — no hallucinated data ever reaches a payor</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============== FEATURE 3: SUPERVISION TRACKING ============== -->
-<section class="feature-section" style="background: white; border-top: 1px solid var(--line);">
+<!-- ============== DEEP-DIVE: SUPERVISION TRACKING (the differentiator) ============== -->
+<section class="feature-section reveal" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
     <div class="feature-row">
       <div class="feature-content">
@@ -493,8 +317,46 @@ const LANDING_BODY_PRE_CALC = `
   </div>
 </section>
 
+<!-- ============== SPECIALTY PROOF STRIP — band of pills, slow marquee ============== -->
+<section class="specialty-strip reveal">
+  <div class="container">
+    <div class="specialty-strip-inner">
+      <span class="specialty-strip-lbl">Built for every US clinical specialty</span>
+      <div class="specialty-pills-wrap">
+        <div class="specialty-pills" aria-hidden="true">
+          <span>MD &amp; DO</span>
+          <span>NP &amp; PA</span>
+          <span>RN · LPN</span>
+          <span>Psychiatry</span>
+          <span>Psychology</span>
+          <span>LCSW · LPC · LMFT</span>
+          <span>BCBA</span>
+          <span>Pharmacy</span>
+          <span>Dental &amp; DMD</span>
+          <span>Optometry</span>
+          <span>Anesthesia · CRNA</span>
+          <span>PT · OT · SLP</span>
+          <!-- duplicate set keeps the marquee seamless -->
+          <span>MD &amp; DO</span>
+          <span>NP &amp; PA</span>
+          <span>RN · LPN</span>
+          <span>Psychiatry</span>
+          <span>Psychology</span>
+          <span>LCSW · LPC · LMFT</span>
+          <span>BCBA</span>
+          <span>Pharmacy</span>
+          <span>Dental &amp; DMD</span>
+          <span>Optometry</span>
+          <span>Anesthesia · CRNA</span>
+          <span>PT · OT · SLP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============== FROM THE FOUNDER ============== -->
-<section class="founder-section">
+<section class="founder-section reveal">
   <div class="container">
     <div class="founder-grid">
       <div class="founder-content">
@@ -538,7 +400,7 @@ const LANDING_BODY_PRE_CALC = `
 </section>
 
 <!-- ============== STACK THE VALUE ============== -->
-<section class="section" style="background: var(--paper); border-top: 1px solid var(--line);">
+<section class="section reveal" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container">
     <span class="section-eyebrow">Here's everything you get</span>
     <h2>Inside CredTek. <em>The full stack.</em></h2>
@@ -546,19 +408,15 @@ const LANDING_BODY_PRE_CALC = `
 
     <div class="stack-block">
       <h3>What's <em>actually included</em> at $35/provider/month</h3>
+      <p class="stack-block-sub">Seven capability bundles. Every one of them turned on for every customer from day one — no &quot;contact sales for that module&quot; games. Continuous monitoring (OIG · SAM · NPDB · DEA), unlimited users, and HIPAA-compliant document storage are table stakes and built in.</p>
       <ul class="stack-list">
-        <li><span class="check">✓</span><span class="item-text"><strong>Intake & Profile Agent</strong> — SMS/email provider invite, document OCR + LLM extraction, golden profile auto-population</span><span class="item-val">VALUE: $200/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>50-state board PSV · every specialty</strong> — Medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental</span><span class="item-val">VALUE: $400/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Specialty workflow library</strong> — BH supervision tracking, locum-tenens windows, hospital privileging, M&amp;A NPI handling</span><span class="item-val">VALUE: $300/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Multi-state Licensure Agent</strong> — IMLC · NLC · PSYPACT · Counseling Compact · SW Compact eligibility + standalone license tracking</span><span class="item-val">VALUE: $250/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Commercial &amp; specialty Payor Agents</strong> — Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare · Carelon · Magellan · Evernorth · BCBS</span><span class="item-val">VALUE: $500/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>CAQH Attestation Automation</strong> — Every-120-day attestation handled with provider SMS approval</span><span class="item-val">VALUE: $150/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>NCQA Audit Binder</strong> — One-click audit-ready evidence packet for delegated credentialing</span><span class="item-val">VALUE: $400/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Expirations & Re-credentialing Engine</strong> — 180-day forecast, auto-drafted renewals, SMS reminders</span><span class="item-val">VALUE: $200/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>OIG · SAM · NPDB · DEA monitoring</strong> — Continuous sanctions and exclusions screening</span><span class="item-val">VALUE: $150/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Unlimited users</strong> — Whole credentialing team, billing, ops, leadership</span><span class="item-val">VALUE: $200/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>HIPAA-compliant document storage</strong> — Encrypted, audit-logged, BAA-covered</span><span class="item-val">VALUE: $100/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>White-glove onboarding & dedicated CSM</strong> — Live in 14 days, weekly check-ins for 90 days</span><span class="item-val">VALUE: $500/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Intake &amp; Profile Agent</strong> — SMS/email provider invite, document OCR + LLM extraction, golden profile with confidence scoring and coordinator approval gate</span><span class="item-val">VALUE: $300/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>50-state PSV · every specialty</strong> — Medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — plus compact eligibility (IMLC · NLC · PSYPACT · CC · SWC)</span><span class="item-val">VALUE: $500/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Specialty workflow library</strong> — BH supervision tracking, locum-tenens windows, hospital privileging, M&amp;A NPI changes — the spreadsheet-killers</span><span class="item-val">VALUE: $400/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Commercial &amp; specialty Payor Agents</strong> — Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare · Carelon · Magellan · Evernorth · state Medicaid MCOs</span><span class="item-val">VALUE: $700/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>CAQH attestation + expirations engine</strong> — Every-120-day CAQH attestation with provider SMS approval, plus 180-day expiration forecast with auto-drafted renewals</span><span class="item-val">VALUE: $200/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>NCQA audit binder + tamper-evident log</strong> — One-click audit-ready evidence packet for delegated-credentialing. SHA-256 hash chain so tampering breaks the chain</span><span class="item-val">VALUE: $500/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>White-glove onboarding + dedicated CSM</strong> — Live in 14 days, weekly check-ins for 90 days, direct Slack channel to the founders</span><span class="item-val">VALUE: $750/mo</span></li>
       </ul>
       <div class="stack-total">
         <div class="lbl">Total comparable value:</div>
@@ -573,7 +431,7 @@ const LANDING_BODY_PRE_CALC = `
 </section>
 
 <!-- ============== COST OF INACTION ============== -->
-<section class="section" style="background: white; border-top: 1px solid var(--line);">
+<section class="section reveal" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
     <span class="section-eyebrow">The math you don't want to do</span>
     <h2>What slow credentialing <em>actually costs you.</em></h2>
@@ -601,7 +459,7 @@ const LANDING_BODY_PRE_CALC = `
 
 const LANDING_BODY_POST_CALC = `
 <!-- ============== WHY NO ONE DOES IT BETTER ============== -->
-<section class="section" id="why-us" style="background: var(--paper); border-top: 1px solid var(--line);">
+<section class="section reveal" id="why-us" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container container-narrow">
     <span class="section-eyebrow">Why no one does it better</span>
     <h2>Old-school care. <em>New-school technology.</em></h2>
@@ -628,7 +486,7 @@ const LANDING_BODY_POST_CALC = `
 </section>
 
 <!-- ============== STAKES — what changes when you fix this ============== -->
-<section class="stakes-section">
+<section class="stakes-section reveal">
   <div class="container container-narrow">
     <span class="section-eyebrow">What changes</span>
     <h2>Two paths.<br/><em>One of them ends in your providers billing.</em></h2>
@@ -661,7 +519,7 @@ const LANDING_BODY_POST_CALC = `
 </section>
 
 <!-- ============== PRICING ============== -->
-<section class="section" id="pricing" style="background: white; border-top: 1px solid var(--line);">
+<section class="section reveal" id="pricing" style="background: white; border-top: 1px solid var(--line);">
   <div class="container">
     <span class="section-eyebrow">Pricing · No "contact us" games (until you need to)</span>
     <h2>Three tiers. <em>Two posted publicly.</em></h2>
@@ -687,6 +545,7 @@ const LANDING_BODY_POST_CALC = `
         <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
       </div>
       <div class="price-card featured">
+        <div class="price-ribbon">Most popular</div>
         <div class="price-tag">Growth · most common</div>
         <div class="price-desc">100–499 active providers · multi-state groups, MSOs, PE rollups</div>
         <div class="price-amount"><em>$35</em></div>
@@ -739,7 +598,7 @@ const LANDING_BODY_POST_CALC = `
 </section>
 
 <!-- ============== FAQ ============== -->
-<section class="section" id="faq" style="background: var(--paper); border-top: 1px solid var(--line);">
+<section class="section reveal" id="faq" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container container-narrow">
     <span class="section-eyebrow">Everything else you're wondering</span>
     <h2>Honest answers to <em>actual questions</em>.</h2>
@@ -774,7 +633,7 @@ const LANDING_BODY_POST_CALC = `
 </section>
 
 <!-- ============== FINAL CTA ============== -->
-<section class="final-cta" id="cta">
+<section class="final-cta reveal" id="cta">
   <div class="final-cta-inner">
     <h2>Stop losing money on providers <em>who can&apos;t bill yet.</em></h2>
     <p>20 minutes with a credentialing veteran. We pull a sample of your providers, run them through CredTek live, and show you the ROI for your group specifically. No slides. No fluff.</p>
@@ -794,7 +653,7 @@ const LANDING_BODY_POST_CALC = `
       <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;">CredTek</span>
     </div>
     <div class="footer-meta">
-      Credentialing built for behavioral health · 2026
+      US medical credentialing platform · 2026
     </div>
   </div>
 </footer>

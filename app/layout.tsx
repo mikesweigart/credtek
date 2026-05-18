@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { ScrollReveal } from "./_components/ScrollReveal";
+import { CursorSpotlight } from "./_components/CursorSpotlight";
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +44,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ScrollReveal />
+        <CursorSpotlight />
+      </body>
     </html>
   );
 }
