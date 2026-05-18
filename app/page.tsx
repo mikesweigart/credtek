@@ -8,112 +8,82 @@
 
 import { PricingCalculator } from "./_components/PricingCalculator";
 import { TopNav } from "./_components/TopNav";
+import { Hero } from "./_components/Hero";
+import { StickyCTABar } from "./_components/StickyCTABar";
+
+// FAQ structured data — Google rewards real FAQ schema with rich-result
+// eligibility, and credentialing buyers literally Google these questions.
+// Mirror the FAQ content in LANDING_BODY_POST_CALC so the visible answers
+// and the structured data never drift apart.
+const FAQ_JSONLD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How fast can we go live with CredTek?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "14 days from contract signing. White-glove onboarding migrates your existing data (Modio, CAQH, spreadsheets), imports your provider roster, sets up payor-portal credentials, and runs a live training session for your team. Your CSM is on weekly check-ins for the first 90 days.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What happens to our existing credentialing data?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We migrate it. CredTek's intake agent ingests Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates automatically with confidence scoring — your coordinator approves anomalies.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Which medical specialties does CredTek support?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Every US medical specialty. MD, DO, NP, PA, RN, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — full state-board coverage. Specialty workflow library covers BH supervision, locum-tenens, hospital privileging, and M&A reorganizations.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does CredTek integrate with our EHR?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, on the Enterprise tier. Native integrations with Epic, athenahealth, Cerner, eClinicalWorks, NextGen, AdvancedMD, Kareo/Tebra, DrChrono, and Practice Fusion. Two-way provider data sync.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does CredTek cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Three tiers. Starter and Growth are $35/provider/month + $300/enrollment action (volume discounts at 200+ providers). Enterprise (500+ providers) is custom. Month-to-month with a 30-day out clause for the first 90 days.",
+      },
+    },
+  ],
+};
 
 const LANDING_BODY_PRE_CALC = `
-<!-- ============== HERO ============== -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-eyebrow">→ Credentialing for US medical groups, MSOs &amp; health systems</div>
-        <h1>Your providers should be <em>billing.</em><br/>Not waiting on credentialing.</h1>
-        <p class="hero-sub">Every day your new clinicians sit idle waiting on payor enrollment, you lose <strong>$2,000–$3,000</strong> in revenue per provider. CredTek gets them in-network in weeks, not months — built by credentialing veterans, run by modern AI agents.</p>
-        <div class="hero-cta">
-          <a class="btn-primary" href="#calc">See your numbers <span class="arrow">→</span></a>
-          <a class="btn-secondary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to us</a>
-        </div>
-        <div class="hero-trust">
-          <span class="dot">●</span> <strong>40+ yrs</strong> combined credentialing experience &nbsp;·&nbsp; <span class="dot">●</span> <strong>HIPAA + BAA</strong> on day one &nbsp;·&nbsp; <span class="dot">●</span> <strong>NCQA-aligned</strong>
-        </div>
-      </div>
 
-      <!-- ============== HERO SCREENSHOT: MAIN DASHBOARD ============== -->
-      <div class="screenshot">
-        <div class="screenshot-chrome">
-          <div class="ss-dot"></div><div class="ss-dot"></div><div class="ss-dot"></div>
-          <div class="ss-url">app.credtek.com / dashboard</div>
-        </div>
-        <div class="app-dash">
-          <div class="sidebar">
-            <div class="sb-logo">
-              <div class="sb-logo-mark">C</div>
-              <div class="sb-logo-text">CredTek</div>
-            </div>
-            <div class="sb-section">Workspace</div>
-            <div class="sb-item active">▣ Dashboard</div>
-            <div class="sb-item">◯ Providers <span class="badge">214</span></div>
-            <div class="sb-item">◇ Pipeline <span class="badge">31</span></div>
-            <div class="sb-item">▤ Payors</div>
-            <div class="sb-item">⚐ Licenses</div>
-            <div class="sb-section">Agents</div>
-            <div class="sb-item">⚙ PSV Agent</div>
-            <div class="sb-item">⚙ Enrollment</div>
-            <div class="sb-item">⚙ Supervision</div>
-            <div class="sb-section">Compliance</div>
-            <div class="sb-item">▤ NCQA Binder</div>
-            <div class="sb-item">▤ Reports</div>
-          </div>
-          <div class="main">
-            <div class="topbar">
-              <div class="search">⌕ Search providers, payors…</div>
-              <div class="topbar-actions">
-                <span style="font-size:11px;color:var(--muted);">⌘K</span>
-                <div class="av">MD</div>
-              </div>
-            </div>
-            <div class="content">
-              <div class="greet">
-                <h2>Good morning, Marisol.</h2>
-                <p>3 items need approval · 2 expirations in 14 days</p>
-              </div>
-              <div class="stats">
-                <div class="stat"><div class="lbl">Active</div><div class="val"><em>214</em></div><div class="delta up">↑ 12</div></div>
-                <div class="stat"><div class="lbl">Pipeline</div><div class="val">31</div><div class="delta up">↑ 8</div></div>
-                <div class="stat"><div class="lbl">Avg Days</div><div class="val"><em>42</em></div><div class="delta up">↓ 47</div></div>
-                <div class="stat"><div class="lbl">Expiring</div><div class="val">7</div><div class="delta flag">⚐</div></div>
-              </div>
-              <div class="grid">
-                <div class="panel">
-                  <div class="panel-head"><h3>Pipeline</h3><span class="filt">31 →</span></div>
-                  <div class="prow">
-                    <div class="pav">SR</div>
-                    <div class="pinfo"><div class="pname">Dr. Sarah Reyes, PsyD</div><div class="pmeta">PSYPACT · Psychologist</div></div>
-                    <div class="pstates">TX·FL·GA</div>
-                    <div class="pstat s-active">Active</div>
-                  </div>
-                  <div class="prow">
-                    <div class="pav">JM</div>
-                    <div class="pinfo"><div class="pname">James Mitchell, LCSW</div><div class="pmeta">Optum · Day 12</div></div>
-                    <div class="pstates">CA·OR</div>
-                    <div class="pstat s-pending">Enrolling</div>
-                  </div>
-                  <div class="prow">
-                    <div class="pav">AP</div>
-                    <div class="pinfo"><div class="pname">Aisha Patel, LPC-A</div><div class="pmeta">1,840 / 3,000 hrs</div></div>
-                    <div class="pstates">TX</div>
-                    <div class="pstat s-pending">Supervision</div>
-                  </div>
-                  <div class="prow">
-                    <div class="pav">DK</div>
-                    <div class="pinfo"><div class="pname">Dr. Daniel Kim, MD</div><div class="pmeta">CA license expiring</div></div>
-                    <div class="pstates">CA·NV</div>
-                    <div class="pstat s-flag">21 days</div>
-                  </div>
-                </div>
-                <div class="panel">
-                  <div class="panel-head"><h3>Agents</h3><span class="filt">Live</span></div>
-                  <div class="feed">
-                    <div class="ev"><div class="ev-dot gold"></div><div><div class="ev-text"><strong>Approval needed</strong> — Optum submission for J. Mitchell</div><div class="ev-time">2 MIN AGO</div></div></div>
-                    <div class="ev"><div class="ev-dot"></div><div><div class="ev-text"><strong>PSV</strong> verified TX LPC license · 99.4%</div><div class="ev-time">14 MIN AGO</div></div></div>
-                    <div class="ev"><div class="ev-dot danger"></div><div><div class="ev-text"><strong>Expiring</strong> D. Kim CA license · 21 days</div><div class="ev-time">1 HR AGO</div></div></div>
-                    <div class="ev"><div class="ev-dot"></div><div><div class="ev-text"><strong>Supervision</strong> 24 hrs logged · A. Patel</div><div class="ev-time">3 HR AGO</div></div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- ============== SOCIAL PROOF STRIP ============== -->
+<section class="social-proof reveal" aria-label="Trust signal">
+  <div class="container">
+    <div class="social-proof-eyebrow">
+      Same credentialing technology used inside the largest US health systems
+    </div>
+    <div class="social-proof-row">
+      <span class="sp-logo">HCA Healthcare</span>
+      <span class="sp-dot" aria-hidden="true">·</span>
+      <span class="sp-logo">Universal Health Services</span>
+      <span class="sp-dot" aria-hidden="true">·</span>
+      <span class="sp-logo">Encompass Health</span>
+      <span class="sp-dot" aria-hidden="true">·</span>
+      <span class="sp-logo">Select Medical</span>
+      <span class="sp-dot" aria-hidden="true">·</span>
+      <span class="sp-logo">Ascension</span>
+    </div>
+    <div class="social-proof-foot">
+      Founders bring 40+ years of credentialing operations experience spanning
+      <strong>700+ facilities</strong> and <strong>80,000+ beds</strong> nationwide.
     </div>
   </div>
 </section>
@@ -160,6 +130,52 @@ const LANDING_BODY_PRE_CALC = `
 
     <div class="pain-conclusion">
       For a 200-provider group with 10 new hires per quarter, slow credentialing costs <strong>$1.1M–$2.25M every year</strong> in revenue your providers <em>could</em> be earning if they were in-network.
+    </div>
+  </div>
+</section>
+
+<!-- ============== FROM THE FOUNDER — moved up to immediately answer "who built this?" after we've named the pain ============== -->
+<section class="founder-section reveal">
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-content">
+        <span class="section-eyebrow">From the founders</span>
+        <h2>Why <em>we</em> built this.</h2>
+        <p class="founder-p">
+          We got tired of watching credentialing teams burn nights and
+          weekends on spreadsheets, broken portals, and 30-payor data
+          re-entry — only to lose providers anyway because the process
+          still took three months.
+        </p>
+        <p class="founder-p">
+          I&apos;m building CredTek with two co-founders who&apos;ve each
+          spent <strong>20+ years inside enterprise medical credentialing
+          programs</strong> at health systems like HCA, UHS, Encompass,
+          Select Medical, and Ascension. They&apos;ve seen every failure
+          mode of every competing tool firsthand, run credentialing
+          through multi-billion-dollar M&amp;A reorganizations, and stood
+          up delegated programs for major payors. They&apos;re staying
+          unnamed until our public launch — you&apos;ll meet them on the
+          demo.
+        </p>
+        <p class="founder-p">
+          Together we built the platform we&apos;d want our own teams to
+          use. If you run credentialing for a US medical practice, MSO, or
+          health system, you&apos;ll recognize every pain point this
+          product fights.
+        </p>
+        <div class="founder-sig">
+          <div class="founder-sig-name">Mike Sweigart · founder</div>
+          <div class="founder-sig-title">+ two co-founders · 40+ years combined enterprise medical credentialing</div>
+        </div>
+      </div>
+      <div class="founder-photo">
+        <img src="/mike-headshot.jpg" alt="Mike Sweigart, Founder of CredTek" />
+        <div class="founder-photo-tag">
+          <span class="founder-photo-dot">●</span>
+          Built by operators
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -330,50 +346,6 @@ const LANDING_BODY_PRE_CALC = `
           <span>Optometry</span>
           <span>Anesthesia · CRNA</span>
           <span>PT · OT · SLP</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============== FROM THE FOUNDER ============== -->
-<section class="founder-section reveal">
-  <div class="container">
-    <div class="founder-grid">
-      <div class="founder-content">
-        <span class="section-eyebrow">From the founder</span>
-        <h2>Why <em>we</em> built this.</h2>
-        <p class="founder-p">
-          We got tired of watching credentialing teams burn nights and
-          weekends on spreadsheets, broken portals, and 30-payor data
-          re-entry — only to lose providers anyway because the process
-          still took three months.
-        </p>
-        <p class="founder-p">
-          I&apos;m building CredTek with two co-founders who&apos;ve each
-          spent <strong>20+ years inside enterprise medical credentialing
-          programs</strong>. They&apos;ve seen every failure mode of every
-          competing tool firsthand, run credentialing through multi-billion-
-          dollar M&amp;A reorganizations, and stood up delegated programs
-          for major payors. They&apos;re staying unnamed until our public
-          launch — you&apos;ll meet them on the demo.
-        </p>
-        <p class="founder-p">
-          Together we built the platform we&apos;d want our own teams to
-          use. If you run credentialing for a US medical practice, MSO, or
-          health system, you&apos;ll recognize every pain point this
-          product fights.
-        </p>
-        <div class="founder-sig">
-          <div class="founder-sig-name">Mike Sweigart · founder</div>
-          <div class="founder-sig-title">+ two co-founders · 40+ years combined enterprise medical credentialing</div>
-        </div>
-      </div>
-      <div class="founder-photo">
-        <img src="/mike-headshot.jpg" alt="Mike Sweigart, Founder of CredTek" />
-        <div class="founder-photo-tag">
-          <span class="founder-photo-dot">●</span>
-          Built by operators
         </div>
       </div>
     </div>
@@ -644,9 +616,16 @@ export default function Page() {
   return (
     <>
       <TopNav />
+      <Hero />
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_PRE_CALC }} />
       <PricingCalculator />
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_POST_CALC }} />
+      <StickyCTABar />
+      {/* FAQ structured data — picked up by Google for rich results. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSONLD) }}
+      />
     </>
   );
 }

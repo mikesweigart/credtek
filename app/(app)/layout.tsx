@@ -6,10 +6,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { DemoBanner } from "./_components/DemoBanner";
 import { DemoButton } from "./_components/DemoButton";
 import { NotificationBell } from "./_components/NotificationBell";
+import { DemoGuide } from "../_components/DemoGuide";
 
 type NavItem = {
   label: string;
@@ -121,6 +122,11 @@ export default function AppLayout({ children }: { children: ReactNode }) {
           <main className="shell-content">{children}</main>
         </div>
       </div>
+      {/* Scripted demo guide — only renders when the URL has
+          ?demo=true, set by EmailDemoModal on the landing page. */}
+      <Suspense fallback={null}>
+        <DemoGuide />
+      </Suspense>
     </>
   );
 }
