@@ -7,28 +7,9 @@
 // you see below.
 
 import { PricingCalculator } from "./_components/PricingCalculator";
+import { TopNav } from "./_components/TopNav";
 
 const LANDING_BODY_PRE_CALC = `
-<!-- ============== TOP NAV ============== -->
-<nav class="topnav">
-  <div class="topnav-inner">
-    <div class="logo">
-      <div class="logo-mark">C</div>
-      <span>CredTek</span>
-    </div>
-    <div class="topnav-links">
-      <a href="#calc">Quote</a>
-      <a href="#pricing">Pricing</a>
-      <a href="/integrations">Integrations</a>
-      <a href="/compare">Compare</a>
-      <a href="/dashboard">Demo</a>
-      <a href="/api-docs">API</a>
-      <a href="/help">Help</a>
-    </div>
-    <a class="topnav-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo</a>
-  </div>
-</nav>
-
 <!-- ============== HERO ============== -->
 <section class="hero">
   <div class="container">
@@ -662,6 +643,7 @@ const LANDING_BODY_POST_CALC = `
 export default function Page() {
   return (
     <>
+      <TopNav />
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_PRE_CALC }} />
       <PricingCalculator />
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_POST_CALC }} />

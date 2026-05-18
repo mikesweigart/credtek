@@ -7838,3 +7838,372 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   .specialty-pills { animation: none !important; }
   .spotlight-card::before { display: none !important; }
 }
+
+/* ============================================================
+   ────────  TOUCH DEVICES — adapt the motion layer  ────────
+   The cursor spotlight + hover-to-pause marquee don't make
+   sense on touch. Skip the visual cost on those devices.
+   ============================================================ */
+@media (hover: none) {
+  .spotlight-card::before { display: none; }
+  .specialty-pills-wrap:hover .specialty-pills {
+    animation-play-state: running;
+  }
+  /* Tap, don't hover — kill the desktop-only nav underline grow. */
+  .topnav-links a::after { display: none; }
+  /* Card hover lifts feel weird when "stuck" after a tap. Disable. */
+  .caps-card:hover,
+  .why-us-card:hover,
+  .plan-step:hover,
+  .price-card:hover {
+    transform: none;
+    box-shadow: 0 1px 3px rgba(11, 31, 46, 0.05);
+  }
+}
+
+/* ============================================================
+   ────────  MOBILE LAYOUT PASS  ────────
+   Holistic mobile cleanup — every prospect first impression on
+   a phone has to feel deliberate. The previous CSS handled the
+   common breakpoints (768/980/600); this block fills the gaps:
+   overflow safety, small-phone typography, container padding,
+   touch-target floors, and the mobile menu drawer.
+   ============================================================ */
+
+/* ---------- Overflow safety floor ----------
+   Any rogue element that's wider than the viewport (a wide
+   <pre>, a long string, an absolute-positioned glow) shouldn't
+   cause horizontal scroll. */
+html, body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+img, svg, video, iframe { max-width: 100%; height: auto; }
+
+/* Long unbroken strings (urls, identifiers) break instead of
+   forcing the column wider. Keep this scoped — we don't want
+   it on every element. */
+.section p, .pain .body, .caps-card p, .why-us-card p,
+.faq-a, .stack-list li .item-text, .footer-meta,
+.hero-sub, .founder-p, .compare-lead, .dv-lead,
+.help-q-body, .stakes-card li, .plan-step p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ---------- Hero — small-phone refinements ---------- */
+@media (max-width: 480px) {
+  .container, .container-narrow {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .topnav-inner {
+    padding: 9px 18px;
+  }
+  /* Floor the h1 ~32px on the smallest phones — previous min
+     was 40px which forced awkward 2-3 line breaks on iPhone SE. */
+  .hero h1 {
+    font-size: clamp(30px, 8vw, 42px);
+    line-height: 1.12;
+    margin-bottom: 18px;
+  }
+  .hero-sub {
+    font-size: 15.5px;
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    padding: 6px 11px;
+    margin-bottom: 18px;
+  }
+  .hero {
+    padding: 32px 0 28px;
+  }
+  .hero-trust {
+    font-size: 11.5px;
+    line-height: 1.7;
+  }
+  /* The radial glow behind the hero gets clipped wrong on
+     skinny viewports — pull it in so it stays a soft accent. */
+  .hero::before {
+    width: 280px;
+    height: 280px;
+    top: -80px;
+    right: -80px;
+  }
+}
+
+/* ---------- Section headings tighter on phones ---------- */
+@media (max-width: 480px) {
+  .section h2,
+  .caps-section h2,
+  .plan-section h2,
+  .stakes-section h2,
+  .calc-section h2 {
+    font-size: clamp(26px, 7vw, 34px);
+    line-height: 1.12;
+  }
+  .section-lead,
+  .caps-section .section-lead,
+  .compare-lead {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .section-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ---------- Calculator — fatter step buttons on touch ---------- */
+@media (max-width: 480px) {
+  .calc-number-wrap {
+    grid-template-columns: 52px 1fr 52px;
+  }
+  .calc-number-step {
+    min-height: 48px;
+    font-size: 22px;
+  }
+  .calc-number {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+  .calc-inputs {
+    padding: 22px 18px;
+  }
+  .calc-input-label { font-size: 12.5px; }
+}
+
+/* Active state for buttons on touch — the only feedback the
+   user gets, so make it visible. */
+@media (hover: none) {
+  .calc-number-step:active {
+    background: var(--blue);
+    color: white;
+    transform: scale(0.96);
+  }
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-quote:active,
+  .topnav-cta:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ---------- Stack-list: 3-column collapses cleanly on phone ----- */
+@media (max-width: 600px) {
+  .stack-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 0 14px;
+  }
+  .stack-list li .check { margin-top: 2px; }
+  .stack-list li .item-val {
+    font-size: 11px;
+    margin-left: 0;
+    align-self: flex-start;
+  }
+  .stack-block { padding: 28px 22px; }
+  .stack-total .val {
+    font-size: 28px !important;
+  }
+}
+
+/* ---------- Specialty strip — tighter on phones ---------- */
+@media (max-width: 600px) {
+  .specialty-strip { padding: 22px 0; }
+  .specialty-pills span {
+    font-size: 11.5px;
+    padding: 5px 10px;
+  }
+  .specialty-strip-lbl {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  /* Speed the marquee up a touch on small screens — there's
+     less width to cover so the perceived speed feels right. */
+  .specialty-pills { animation-duration: 28s; }
+}
+
+/* ---------- Final CTA padding on phones ---------- */
+@media (max-width: 600px) {
+  .final-cta-inner {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .final-cta-btns .btn-primary,
+  .final-cta-btns .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================================
+   ────────  TOP NAV — hamburger + drawer  ────────
+   Below 900px: hide the inline link row, show the burger.
+   Above 900px: hide the burger, show the inline links.
+   ============================================================ */
+.topnav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.topnav-burger {
+  display: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.topnav-burger:hover {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+.topnav-burger:active { transform: scale(0.95); }
+.topnav-burger span {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
+}
+.topnav-burger i {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+  transform-origin: center;
+}
+/* Animate the three bars into an X when the menu is open. */
+.topnav-burger span.is-open i:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.topnav-burger span.is-open i:nth-child(2) {
+  opacity: 0;
+}
+.topnav-burger span.is-open i:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 900px) {
+  .topnav-burger { display: inline-flex; }
+  /* Already hidden by line 99 in the legacy block — repeat for clarity. */
+  .topnav-links { display: none; }
+}
+@media (max-width: 480px) {
+  /* Keep the CTA on screen but make it less prominent so the
+     hamburger has primacy. Even a shorter label could help —
+     leaving copy as-is for brand consistency. */
+  .topnav-cta {
+    font-size: 11.5px;
+    padding: 7px 11px;
+  }
+}
+
+/* ---------- Mobile drawer ---------- */
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 31, 46, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Land the drawer below the sticky top-nav (~52px). */
+  padding-top: 56px;
+}
+.mobile-drawer.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-drawer-panel {
+  background: white;
+  border-bottom: 1px solid var(--line);
+  padding: 22px 24px 28px;
+  box-shadow: 0 16px 32px -16px rgba(11, 31, 46, 0.28);
+  transform: translateY(-12px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-drawer.is-open .mobile-drawer-panel {
+  transform: translateY(0);
+}
+.mobile-drawer-list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.mobile-drawer-list li {
+  border-bottom: 1px solid var(--line-soft);
+}
+.mobile-drawer-list li:last-child { border-bottom: none; }
+.mobile-drawer-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  min-height: 48px;
+}
+.mobile-drawer-list a::after {
+  content: '→';
+  color: var(--muted);
+  font-size: 16px;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.mobile-drawer-list a:active {
+  background: var(--paper);
+}
+.mobile-drawer-list a:active::after {
+  transform: translateX(2px);
+  color: var(--blue);
+}
+.mobile-drawer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--ink);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  min-height: 50px;
+  transition: background 0.15s;
+}
+.mobile-drawer-cta:active {
+  background: var(--blue);
+}
+.mobile-drawer-meta {
+  text-align: center;
+  margin: 16px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  font-family: 'JetBrains Mono', monospace;
+}
+/* Above the mobile breakpoint, the drawer never shows. */
+@media (min-width: 901px) {
+  .mobile-drawer { display: none; }
+}
