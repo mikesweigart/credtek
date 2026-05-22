@@ -1,15 +1,15 @@
 "use client";
 
-// AvelGuide ("Ava") — Avel-branded in-product assistant.
+// AvelGuide ("Ava") — AVEL eCare-branded in-product assistant.
 //
-// Visible on every Avel portal page. Purpose: explain pages
+// Visible on every AVEL eCare portal page. Purpose: explain pages
 // contextually, walk users through tasks, summarize provider
 // status, capture feedback. Pure-product behavior — no sales
 // CTAs. From the visitor's perspective this is a feature of
 // their working credentialing portal.
 //
 // State model: a step machine like the CredTek DemoGuide, but
-// branded for Avel and with Avel-specific flows. Easy to swap
+// branded for AVEL eCare and with AVEL eCare-specific flows. Easy to swap
 // for a real LLM later — the SCRIPT array is one place.
 
 import { useEffect, useMemo, useState } from "react";
@@ -42,25 +42,25 @@ type Ctx = { pathname: string; lastInput: string };
 // Contextual help text by path — short and product-flavored.
 function explainPage(pathname: string): string {
   if (pathname.startsWith("/avelecare/providers")) {
-    return "You're on the Providers page. This is every Avel clinician currently in credentialing or active across our service lines. The table shows their role, service lines, states licensed, current credentialing stage, and whether they're ready to work and ready to bill. Use the filters to slice by service line, space, or readiness state.";
+    return "You're on the Providers page. This is every AVEL eCare clinician currently in credentialing or active across our service lines. The table shows their role, service lines, states licensed, current credentialing stage, and whether they're ready to work and ready to bill. Use the filters to slice by service line, space, or readiness state.";
   }
   if (pathname.startsWith("/avelecare/spaces")) {
-    return "Spaces & Programs is how Avel organizes credentialing by facility and program — East Adams, the Minnesota Rural Hospital network, Kansas RHTP, the New York Crisis Care program, our National School Health Network, and the Senior Care Network. Each space shows its own ready-to-bill count, onboarding pipeline, and credential risks.";
+    return "Spaces & Programs is how AVEL eCare organizes credentialing by facility and program — East Adams, the Minnesota Rural Hospital network, Kansas RHTP, the New York Crisis Care program, our National School Health Network, and the Senior Care Network. Each space shows its own ready-to-bill count, onboarding pipeline, and credential risks.";
   }
   if (pathname.startsWith("/avelecare/workflows")) {
-    return "Workflows are the standardized credentialing templates Avel uses across service lines — Emergency, ICU, Hospitalist, Behavioral Health, School Health, Rural. Each workflow defines stages, SLA targets, and ownership so new providers always follow the same path.";
+    return "Workflows are the standardized credentialing templates AVEL eCare uses across service lines — Emergency, ICU, Hospitalist, Behavioral Health, School Health, Rural. Each workflow defines stages, SLA targets, and ownership so new providers always follow the same path.";
   }
   if (pathname.startsWith("/avelecare/help")) {
     return "This is the Help page — your guided tours and product assistance live here. You can also chat with me from any page using the bubble in the bottom-right.";
   }
   // Default: dashboard.
-  return "You're on the Avel eCare Credentialing Command Center. The KPI tiles at the top show pipeline volume, ready-to-work and ready-to-bill counts, and time-to-credential. The pipeline visual underneath breaks every active provider into their current stage — Intake, PSV, Privileges, Compliance, Payer Enrollment, or Ready to Bill. The alerts panel on the right surfaces anything that needs human attention.";
+  return "You're on the AVEL eCare Credentialing Command Center. The KPI tiles at the top show pipeline volume, ready-to-work and ready-to-bill counts, and time-to-credential. The pipeline visual underneath breaks every active provider into their current stage — Intake, PSV, Privileges, Compliance, Payer Enrollment, or Ready to Bill. The alerts panel on the right surfaces anything that needs human attention.";
 }
 
 const SCRIPT: Record<StepId, Step> = {
   intro: {
     message:
-      "Hi, I'm Ava — your Avel eCare Credentialing assistant. I can explain what you're seeing on any page, walk you through tasks, summarize a provider's readiness, or capture feedback for your portal team. What would you like?",
+      "Hi, I'm Ava — your AVEL eCare Credentialing assistant. I can explain what you're seeing on any page, walk you through tasks, summarize a provider's readiness, or capture feedback for your portal team. What would you like?",
     options: [
       { label: "Explain this page", next: "explain" },
       { label: "Walk me through adding a provider", next: "add-provider-1" },
@@ -86,7 +86,7 @@ const SCRIPT: Record<StepId, Step> = {
   },
   "add-provider-1": {
     message:
-      "Let's add a new Avel clinician. Step 1 — go to the Providers page using the left navigation, then click the 'Add Provider' button in the top right. Let me know when you see the Step 1 form titled 'Basic Information'.",
+      "Let's add a new AVEL eCare clinician. Step 1 — go to the Providers page using the left navigation, then click the 'Add Provider' button in the top right. Let me know when you see the Step 1 form titled 'Basic Information'.",
     options: [
       { label: "Open the Providers page", href: "/avelecare/providers", next: "add-provider-2" },
       { label: "I'm there — what's next?", next: "add-provider-2" },
@@ -102,7 +102,7 @@ const SCRIPT: Record<StepId, Step> = {
   },
   "add-provider-3": {
     message:
-      "Step 3 — assign their service lines (e.g. Emergency, ICU), the states where they're licensed, and the Avel spaces they'll cover. Pick the default workflow template that matches their service line. Click Create — credentialing starts automatically and the provider appears on the Dashboard pipeline.",
+      "Step 3 — assign their service lines (e.g. Emergency, ICU), the states where they're licensed, and the AVEL eCare spaces they'll cover. Pick the default workflow template that matches their service line. Click Create — credentialing starts automatically and the provider appears on the Dashboard pipeline.",
     options: [
       { label: "Back to menu", next: "menu" },
       { label: "Show me a real provider", href: "/avelecare/providers", next: "menu" },
@@ -133,14 +133,14 @@ const SCRIPT: Record<StepId, Step> = {
   },
   "feedback-thanks": {
     message:
-      "Thank you — your feedback is logged with the page you were on. Your Avel portal team reviews these weekly.",
+      "Thank you — your feedback is logged with the page you were on. Your AVEL eCare portal team reviews these weekly.",
     options: [
       { label: "Back to menu", next: "menu" },
     ],
   },
   "tour-1": {
     message:
-      "Welcome to the Avel eCare Credentialing Portal. I can give you a 5-step tour in about 90 seconds. Step 1 — the Dashboard. This is your real-time pipeline. KPI tiles show pipeline volume, ready-to-work, ready-to-bill, and average days to credential. The pipeline visual breaks every provider into their current stage.",
+      "Welcome to the AVEL eCare Credentialing Portal. I can give you a 5-step tour in about 90 seconds. Step 1 — the Dashboard. This is your real-time pipeline. KPI tiles show pipeline volume, ready-to-work, ready-to-bill, and average days to credential. The pipeline visual breaks every provider into their current stage.",
     options: [
       { label: "Next — Providers", next: "tour-2" },
       { label: "Skip the tour", next: "menu" },
@@ -148,21 +148,21 @@ const SCRIPT: Record<StepId, Step> = {
   },
   "tour-2": {
     message:
-      "Step 2 — Providers. Click 'Providers' in the left nav. This is the full Avel clinician roster — Emergency, ICU, Hospitalist, Behavioral Health, EMS, Pharmacy, Senior Care, School Health, and Specialty Clinic. Filter by service line, by space, by readiness state.",
+      "Step 2 — Providers. Click 'Providers' in the left nav. This is the full AVEL eCare clinician roster — Emergency, ICU, Hospitalist, Behavioral Health, EMS, Pharmacy, Senior Care, School Health, and Specialty Clinic. Filter by service line, by space, by readiness state.",
     options: [
       { label: "Next — Spaces", next: "tour-3" },
     ],
   },
   "tour-3": {
     message:
-      "Step 3 — Spaces & Programs. Avel organizes credentialing by facility and program — East Adams Rural Healthcare, the Minnesota Rural Hospital Network, Kansas RHTP, NY Crisis Care, the National School Health Network, and Senior Care. Each space tells you how many clinicians are ready to bill there.",
+      "Step 3 — Spaces & Programs. AVEL eCare organizes credentialing by facility and program — East Adams Rural Healthcare, the Minnesota Rural Hospital Network, Kansas RHTP, NY Crisis Care, the National School Health Network, and Senior Care. Each space tells you how many clinicians are ready to bill there.",
     options: [
       { label: "Next — Workflows", next: "tour-4" },
     ],
   },
   "tour-4": {
     message:
-      "Step 4 — Workflows. The credentialing templates Avel uses across service lines. Emergency, ICU, Hospitalist, Behavioral Health, School Health, Rural Health — each has its own stages, SLA targets, and ownership. Assigning the right workflow keeps every new clinician on the same path.",
+      "Step 4 — Workflows. The credentialing templates AVEL eCare uses across service lines. Emergency, ICU, Hospitalist, Behavioral Health, School Health, Rural Health — each has its own stages, SLA targets, and ownership. Assigning the right workflow keeps every new clinician on the same path.",
     options: [
       { label: "Next — Help & Chat", next: "tour-5" },
     ],
@@ -176,7 +176,7 @@ const SCRIPT: Record<StepId, Step> = {
   },
   "tour-done": {
     message:
-      "That's the tour. The portal is built around two questions you'll keep asking — 'who is ready to work?' and 'who is ready to bill?' Everything else exists to answer those two faster. Welcome to Avel eCare Credentialing.",
+      "That's the tour. The portal is built around two questions you'll keep asking — 'who is ready to work?' and 'who is ready to bill?' Everything else exists to answer those two faster. Welcome to AVEL eCare Credentialing.",
     options: [
       { label: "Back to menu", next: "menu" },
     ],
@@ -223,7 +223,7 @@ function blockerExplanation(query: string): string {
     return "No provider context — pick one from the Providers page first.";
   }
   if (p.readyToBill) {
-    return `${p.name} is fully ready to bill — no blockers. They're billable for all assigned Avel spaces.`;
+    return `${p.name} is fully ready to bill — no blockers. They're billable for all assigned AVEL eCare spaces.`;
   }
   if (p.flags.length === 0) {
     return `${p.name} is still in the ${p.stage.toUpperCase()} stage (${p.daysInStage} days). No specific risk flags yet.`;
@@ -303,7 +303,7 @@ export function AvelGuide() {
   }
 
   return (
-    <div className={`avel-guide${minimized ? " is-minimized" : ""}`} role="dialog" aria-label="Ava — Avel credentialing assistant">
+    <div className={`avel-guide${minimized ? " is-minimized" : ""}`} role="dialog" aria-label="Ava — AVEL eCare credentialing assistant">
       <div className="avel-guide-header">
         <div className="avel-guide-header-left">
           <span className="avel-guide-av">A</span>
@@ -375,7 +375,7 @@ export function AvelGuide() {
           )}
 
           <div className="avel-guide-foot">
-            Avel eCare · in-product assistant
+            AVEL eCare · in-product assistant
           </div>
         </>
       )}

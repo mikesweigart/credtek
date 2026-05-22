@@ -131,7 +131,7 @@ export default async function AvelSpaceDetail(props: {
             </ul>
 
             <div className="avel-callout-soft">
-              These requirements are the Avel workflow template for
+              These requirements are the AVEL eCare workflow template for
               <strong> {space.serviceLine}</strong>. They can be customized
               per facility under Workflows.
             </div>

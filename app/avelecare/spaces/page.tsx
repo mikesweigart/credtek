@@ -1,4 +1,4 @@
-// Spaces & Programs — Avel organizes credentialing by facility
+// Spaces & Programs — AVEL eCare organizes credentialing by facility
 // and program. Each space card shows real-time readiness counts
 // computed from the seed data so the dashboard rollup and these
 // cards always agree.
@@ -14,7 +14,7 @@ export default function AvelSpaces() {
     <>
       <AvelTopbar
         title="Spaces & Programs"
-        subtitle="Organize Avel eCare clinicians by facility, program, and geography. Click any space for credentialing readiness and risks."
+        subtitle="Organize AVEL eCare clinicians by facility, program, and geography. Click any space for credentialing readiness and risks."
       />
 
       <div className="avel-content">
@@ -83,9 +83,9 @@ export default function AvelSpaces() {
         {/* Footer call-out — purely informational, no sales push */}
         <div className="avel-callout">
           <strong>Adding a new space?</strong> Spaces represent any facility
-          or program where Avel clinicians deliver virtual care.
+          or program where AVEL eCare clinicians deliver virtual care.
           Once created, you can attach a credentialing workflow template
-          and Avel will track every required item, state-by-state, until
+          and AVEL eCare will track every required item, state-by-state, until
           the space is fully staffed.
         </div>
       </div>

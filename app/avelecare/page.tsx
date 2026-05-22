@@ -1,5 +1,5 @@
-// Avel eCare credentialing portal — Dashboard (root).
-// Avel-branded "command center" view: KPI tiles, pipeline visual,
+// AVEL eCare credentialing portal — Dashboard (root).
+// AVEL eCare-branded "command center" view: KPI tiles, pipeline visual,
 // alerts panel, service-line filter chips, and a roll-up by space.
 // All numbers computed from the seeded data in _data/seed.ts so the
 // rest of the portal stays internally consistent with this view.
@@ -55,7 +55,7 @@ export default function AvelDashboard() {
     <>
       <AvelTopbar
         title="Credentialing Command Center"
-        subtitle="See which clinicians are ready to deliver and bill virtual care across every Avel service line and partner facility."
+        subtitle="See which clinicians are ready to deliver and bill virtual care across every AVEL eCare service line and partner facility."
       />
 
       <div className="avel-content">
@@ -109,7 +109,7 @@ export default function AvelDashboard() {
           <div className="avel-card-head">
             <div>
               <div className="avel-card-title">Credentialing pipeline</div>
-              <div className="avel-card-sub">Every active Avel clinician, by current stage. Click a column to drill in.</div>
+              <div className="avel-card-sub">Every active AVEL eCare clinician, by current stage. Click a column to drill in.</div>
             </div>
             <Link className="avel-link" href="/avelecare/providers">View all providers →</Link>
           </div>

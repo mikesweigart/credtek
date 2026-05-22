@@ -1,6 +1,6 @@
-// Seeded demo data for the Avel eCare credentialing portal.
+// Seeded demo data for the AVEL eCare credentialing portal.
 // All providers, spaces, and statuses below are fictional but
-// realistic — modelled on Avel's actual service lines, partner
+// realistic — modelled on AVEL eCare's actual service lines, partner
 // states (WA / MN / KS / NY / SD / multi-state), and required
 // scenarios from the build spec:
 //
@@ -82,7 +82,7 @@ export const SPACES: Space[] = [
     serviceLine: "Emergency",
     region: "Washington",
     description:
-      "Virtual Emergency Department coverage delivered by Avel eCare telemedicine experts for the East Adams Rural Healthcare critical access hospital.",
+      "Virtual Emergency Department coverage delivered by AVEL eCare telemedicine experts for the East Adams Rural Healthcare critical access hospital.",
     requirements: [
       "Active Washington medical licensure",
       "East Adams hospital privileging packet",

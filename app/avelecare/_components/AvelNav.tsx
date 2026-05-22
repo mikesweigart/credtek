@@ -1,11 +1,11 @@
 "use client";
 
-// AvelNav — left-sidebar navigation for the Avel eCare portal.
+// AvelNav — left-sidebar navigation for the AVEL eCare portal.
 // Built fresh (not reusing the CredTek .shell-sb classes) so the
-// brand expression is fully owned by Avel: navy column, teal active
-// state, no CredTek logo or accent. The "Avel eCare" wordmark is
+// brand expression is fully owned by AVEL eCare: navy column, teal active
+// state, no CredTek logo or accent. The "AVEL eCare" wordmark is
 // the only branded text in the chrome — visitor should feel they
-// are inside Avel's tool.
+// are inside AVEL eCare's tool.
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -37,10 +37,10 @@ export function AvelNav() {
 
   return (
     <aside className="avel-sb">
-      <Link href="/avelecare" className="avel-sb-logo" aria-label="Avel eCare home">
+      <Link href="/avelecare" className="avel-sb-logo" aria-label="AVEL eCare home">
         <span className="avel-sb-logo-mark">A</span>
         <span className="avel-sb-logo-text">
-          Avel<span className="avel-sb-logo-accent">e</span>Care
+          AVEL <span className="avel-sb-logo-accent">e</span>Care
           <span className="avel-sb-logo-sub">Credentialing</span>
         </span>
       </Link>
@@ -80,7 +80,7 @@ export function AvelNav() {
         <div className="avel-sb-foot-org">
           <div className="avel-sb-foot-org-mark">A</div>
           <div>
-            <div className="avel-sb-foot-org-name">Avel eCare</div>
+            <div className="avel-sb-foot-org-name">AVEL eCare</div>
             <div className="avel-sb-foot-org-meta">Virtual Health System</div>
           </div>
         </div>

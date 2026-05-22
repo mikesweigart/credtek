@@ -1,4 +1,4 @@
-// Providers — full Avel clinician roster. Table layout with
+// Providers — full AVEL eCare clinician roster. Table layout with
 // service line / space / readiness chips. Filter chips are
 // presentational only in this Phase-1 build; full client-side
 // filtering is the next iteration (the seed dataset is small
@@ -15,7 +15,7 @@ export default function AvelProviders() {
     <>
       <AvelTopbar
         title="Providers"
-        subtitle="Track credentialing and enrollment status for every Avel eCare clinician in one place."
+        subtitle="Track credentialing and enrollment status for every AVEL eCare clinician in one place."
       />
 
       <div className="avel-content">
@@ -136,7 +136,7 @@ export default function AvelProviders() {
         </div>
 
         <div className="avel-table-foot">
-          Showing {PROVIDERS.length} of {PROVIDERS.length} providers · Avel eCare clinician roster, May 2026
+          Showing {PROVIDERS.length} of {PROVIDERS.length} providers · AVEL eCare clinician roster, May 2026
           &nbsp;·&nbsp;
           <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
         </div>

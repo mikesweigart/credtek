@@ -33,11 +33,11 @@ const QUICK_GUIDES = [
 const FAQ = [
   {
     q: "What does \"Ready to Work\" mean?",
-    a: "A provider is ready to work when credentialing and privileging are complete for at least one of their assigned Avel spaces. They can be clinically scheduled but may not yet be billable for every payer.",
+    a: "A provider is ready to work when credentialing and privileging are complete for at least one of their assigned AVEL eCare spaces. They can be clinically scheduled but may not yet be billable for every payer.",
   },
   {
     q: "What does \"Ready to Bill\" mean?",
-    a: "A provider is ready to bill when they are credentialed, privileged, and enrolled with at least one active payer for the spaces they cover. Avel can both schedule and bill for their services.",
+    a: "A provider is ready to bill when they are credentialed, privileged, and enrolled with at least one active payer for the spaces they cover. AVEL eCare can both schedule and bill for their services.",
   },
   {
     q: "How are credentialing requirements customized per space?",
@@ -45,7 +45,7 @@ const FAQ = [
   },
   {
     q: "How are expiring credentials surfaced?",
-    a: "Avel scans every active credential against its expiration date and surfaces anything inside the 60-day window on the Dashboard alerts panel and on the provider's profile. Renewal can be auto-drafted for state license boards.",
+    a: "AVEL eCare scans every active credential against its expiration date and surfaces anything inside the 60-day window on the Dashboard alerts panel and on the provider's profile. Renewal can be auto-drafted for state license boards.",
   },
 ];
 
@@ -54,7 +54,7 @@ export default function AvelHelp() {
     <>
       <AvelTopbar
         title="Help & Chat"
-        subtitle="Need help using the Avel eCare Credentialing Portal? Start a chat, browse common guides, or send feedback to your portal team."
+        subtitle="Need help using the AVEL eCare Credentialing Portal? Start a chat, browse common guides, or send feedback to your portal team."
       />
 
       <div className="avel-content">
@@ -75,7 +75,7 @@ export default function AvelHelp() {
             <div className="avel-help-launch-card-av">A</div>
             <div className="avel-help-launch-card-name">Ava</div>
             <div className="avel-help-launch-card-status">
-              <span className="avel-guide-status-dot" /> Online · Avel team
+              <span className="avel-guide-status-dot" /> Online · AVEL eCare team
             </div>
           </div>
         </div>
