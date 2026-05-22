@@ -9107,18 +9107,19 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
    ╚══════════════════════════════════════════════════════════╝ */
 
 .avelecare-shell {
-  /* Avel-inspired palette: deep navy + teal accent. Maps the
-     existing var(--ink) / var(--blue) tokens to Avel colors so
-     any utility class scoped inside also picks up the new tone. */
+  /* AVEL eCare palette — deep navy + teal accent on pure white.
+     Clean clinical surfaces, sans-serif everywhere, no serif or
+     monospace flourishes anywhere in the portal. */
   --avel-ink: #0E2E47;
   --avel-ink-soft: #4A6178;
-  --avel-paper: #F2F7F9;
+  --avel-paper: #FFFFFF;          /* pure white — page background */
+  --avel-surface: #F7FAFC;        /* used sparingly — input fields, hover */
   --avel-line: #D8E2E8;
-  --avel-line-soft: #E8EEF2;
+  --avel-line-soft: #EBEFF3;
   --avel-muted: #82919E;
   --avel-teal: #21A0AA;
   --avel-teal-deep: #156A72;
-  --avel-teal-soft: #DDF0F2;
+  --avel-teal-soft: #E1F2F4;
   --avel-warn: #D97F2A;
   --avel-success: #2F8C5B;
   --avel-danger: #B85533;
@@ -9128,7 +9129,9 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   color: var(--avel-ink);
   display: grid;
   grid-template-columns: 248px 1fr;
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 @media (max-width: 900px) {
   .avelecare-shell { grid-template-columns: 1fr; }
@@ -9175,10 +9178,9 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 22px;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.01em;
   box-shadow: 0 6px 14px -6px rgba(33, 160, 170, 0.5);
 }
 .avel-sb-logo-text {
@@ -9202,13 +9204,12 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 
 .avel-sb-section {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5px;
+  font-size: 10px;
   color: rgba(255, 255, 255, 0.42);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 14px 8px 6px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .avel-sb-item {
   display: flex;
@@ -9241,12 +9242,11 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-sb-badge {
   background: rgba(33, 160, 170, 0.22);
   color: var(--avel-teal-soft);
-  font-size: 10px;
-  font-weight: 700;
-  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
   border-radius: 100px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .avel-sb-foot {
@@ -9270,9 +9270,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 16px;
+  font-weight: 700;
+  font-size: 13px;
 }
 .avel-sb-foot-org-name {
   font-size: 12.5px;
@@ -9291,8 +9290,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   letter-spacing: 0.02em;
 }
 .avel-sb-foot-meta em {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-style: normal;
+  font-weight: 600;
   color: var(--avel-teal-soft);
 }
 
@@ -9311,10 +9310,10 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 .avel-topbar-titles { min-width: 0; }
 .avel-topbar-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 26px;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
   color: var(--avel-ink);
 }
 .avel-topbar-subtitle {
@@ -9330,22 +9329,21 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   flex-shrink: 0;
 }
 .avel-topbar-search {
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   border: 1px solid var(--avel-line);
-  border-radius: 9px;
+  border-radius: 8px;
   padding: 8px 14px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--avel-muted);
-  font-family: 'JetBrains Mono', monospace;
   min-width: 280px;
 }
 .avel-topbar-bell {
   position: relative;
   width: 36px;
   height: 36px;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   border: 1px solid var(--avel-line);
-  border-radius: 9px;
+  border-radius: 8px;
   font-size: 15px;
   cursor: pointer;
   display: flex;
@@ -9409,15 +9407,14 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-kpi-lbl {
   font-size: 11px;
   color: var(--avel-muted);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
 .avel-kpi-val {
-  font-family: 'Instrument Serif', serif;
-  font-size: 30px;
+  font-size: 28px;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1;
   color: var(--avel-ink);
@@ -9447,10 +9444,11 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   margin-bottom: 14px;
 }
 .avel-card-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 1.15;
+  line-height: 1.25;
+  color: var(--avel-ink);
 }
 .avel-card-sub {
   font-size: 12.5px;
@@ -9482,11 +9480,10 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   padding: 12px 18px;
 }
 .avel-filter-strip-lbl {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--avel-muted);
   flex-shrink: 0;
 }
@@ -9498,10 +9495,10 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-chip {
   display: inline-flex;
   align-items: center;
-  font-size: 12px;
-  padding: 5px 11px;
+  font-size: 12.5px;
+  padding: 5px 12px;
   border-radius: 100px;
-  background: var(--avel-paper);
+  background: white;
   border: 1px solid var(--avel-line);
   color: var(--avel-ink-soft);
   font-weight: 500;
@@ -9533,7 +9530,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 @media (max-width: 700px)  { .avel-pipeline-cols { grid-template-columns: repeat(2, 1fr); } }
 
 .avel-pipeline-col {
-  background: var(--avel-paper);
+  background: white;
   border: 1px solid var(--avel-line);
   border-radius: 10px;
   padding: 10px 8px;
@@ -9556,11 +9553,10 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   color: var(--avel-ink-soft);
 }
 .avel-pipeline-count {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--avel-teal-deep);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 .avel-pipeline-body {
   display: flex;
@@ -9568,7 +9564,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   gap: 5px;
 }
 .avel-pipeline-card {
-  background: white;
+  background: var(--avel-surface);
   border: 1px solid var(--avel-line);
   border-radius: 7px;
   padding: 7px 9px;
@@ -9609,7 +9605,6 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   font-size: 11px;
   color: var(--avel-muted);
   padding: 8px 4px;
-  font-style: italic;
   line-height: 1.4;
 }
 
@@ -9660,8 +9655,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 
 .avel-pill {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 4px 9px;
@@ -9688,7 +9682,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   transition: background 0.14s;
 }
 .avel-space-row:first-child { border-top: none; }
-.avel-space-row:hover { background: var(--avel-paper); }
+.avel-space-row:hover { background: var(--avel-surface); }
 .avel-space-row-name { font-size: 13px; font-weight: 600; color: var(--avel-ink); }
 .avel-space-row-meta { font-size: 11px; color: var(--avel-muted); margin-top: 2px; }
 .avel-space-row-bar {
@@ -9704,8 +9698,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   border-radius: 100px;
 }
 .avel-space-row-pct {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--avel-teal-deep);
   text-align: right;
@@ -9774,21 +9767,20 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 .avel-table thead th {
   text-align: left;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   color: var(--avel-muted);
   text-transform: uppercase;
   padding: 12px 14px;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   border-bottom: 1px solid var(--avel-line);
 }
 .avel-table-row {
   border-top: 1px solid var(--avel-line-soft);
   transition: background 0.12s;
 }
-.avel-table-row:hover { background: var(--avel-paper); }
+.avel-table-row:hover { background: var(--avel-surface); }
 .avel-table td { padding: 11px 14px; vertical-align: middle; }
 .avel-table-name-cell { display: flex; align-items: center; gap: 10px; }
 .avel-table-av {
@@ -9809,30 +9801,28 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-table-cell-soft { color: var(--avel-ink-soft); }
 .avel-cell-chips { display: flex; flex-wrap: wrap; gap: 4px; }
 .avel-mini-chip {
-  font-size: 10.5px;
-  padding: 2px 7px;
+  font-size: 11px;
+  padding: 2px 8px;
   background: var(--avel-teal-soft);
   color: var(--avel-teal-deep);
   border-radius: 100px;
   font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
 }
 .avel-cell-states {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--avel-ink-soft);
   letter-spacing: 0.02em;
+  font-weight: 500;
 }
 
 .avel-stage-pill {
   display: inline-block;
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: 100px;
-  font-size: 10.5px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
 }
 .avel-stage-pill.stage-intake { background: #ECEFF3; color: #62748A; }
@@ -9847,9 +9837,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   padding: 3px 11px;
   border-radius: 100px;
   font-size: 11.5px;
-  font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 .avel-readiness-yes { background: var(--avel-teal-soft); color: var(--avel-teal-deep); }
 .avel-readiness-no { background: #FCE5DE; color: var(--avel-danger); }
@@ -9913,18 +9902,18 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   flex-shrink: 0;
 }
 .avel-space-card-name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 19px;
+  font-size: 16px;
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--avel-ink);
-  line-height: 1.2;
+  line-height: 1.25;
 }
 .avel-space-card-meta {
   font-size: 11.5px;
   color: var(--avel-muted);
-  font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.02em;
   margin-top: 4px;
+  font-weight: 500;
 }
 .avel-space-card-desc {
   font-size: 13px;
@@ -9938,15 +9927,15 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   gap: 8px;
 }
 .avel-space-stat {
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   border: 1px solid var(--avel-line);
   border-radius: 8px;
   padding: 8px 10px;
   text-align: center;
 }
 .avel-space-stat-num {
-  font-family: 'Instrument Serif', serif;
   font-size: 20px;
+  font-weight: 600;
   color: var(--avel-ink);
   letter-spacing: -0.02em;
   line-height: 1;
@@ -9954,13 +9943,12 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-space-stat-num-pos { color: var(--avel-teal-deep); }
 .avel-space-stat-num-warn { color: var(--avel-warn); }
 .avel-space-stat-lbl {
-  font-size: 9.5px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--avel-muted);
   margin-top: 4px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
+  font-weight: 600;
 }
 .avel-space-card-bar { display: flex; align-items: center; gap: 10px; }
 .avel-space-card-bar-track {
@@ -9984,7 +9972,6 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-space-card-bar-pct strong {
   color: var(--avel-teal-deep);
   font-weight: 700;
-  font-family: 'JetBrains Mono', monospace;
 }
 
 .avel-callout {
@@ -9998,7 +9985,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 .avel-callout strong { color: var(--avel-teal-deep); }
 .avel-callout-soft {
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   border: 1px dashed var(--avel-line);
   border-radius: 8px;
   padding: 11px 14px;
@@ -10013,10 +10000,10 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   gap: 8px;
   align-items: center;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--avel-muted);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  font-weight: 500;
 }
 .avel-breadcrumb a {
   color: var(--avel-teal-deep);
@@ -10067,8 +10054,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -10085,9 +10071,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-workflow-head { margin-bottom: 16px; }
 .avel-workflow-tag {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--avel-teal-deep);
   background: var(--avel-teal-soft);
@@ -10095,13 +10080,13 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   border-radius: 100px;
   border: 1px solid rgba(33, 160, 170, 0.3);
   margin-bottom: 10px;
-  font-weight: 700;
+  font-weight: 600;
 }
 .avel-workflow-name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 22px;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
   color: var(--avel-ink);
 }
 .avel-workflow-desc {
@@ -10128,19 +10113,17 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   flex-shrink: 0;
 }
 .avel-workflow-stage-body { min-width: 0; flex: 1; }
 .avel-workflow-stage-name { font-size: 13.5px; font-weight: 600; color: var(--avel-ink); }
 .avel-workflow-stage-meta {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--avel-muted);
   margin-top: 2px;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .avel-workflow-stage-meta strong { color: var(--avel-teal-deep); }
 
@@ -10157,19 +10140,18 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 @media (max-width: 768px) { .avel-help-launch { grid-template-columns: 1fr; } }
 .avel-help-launch-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--avel-teal-soft);
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 .avel-help-launch-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 28px;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   margin-bottom: 10px;
 }
 .avel-help-launch-text p {
@@ -10195,9 +10177,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 26px;
+  font-weight: 700;
+  font-size: 22px;
   margin: 0 auto 10px;
 }
 .avel-help-launch-card-name {
@@ -10235,11 +10216,12 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   transform: translateY(-1px);
 }
 .avel-help-card-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: 18px;
-  line-height: 1.15;
-  letter-spacing: -0.005em;
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   margin-bottom: 6px;
+  color: var(--avel-ink);
 }
 .avel-help-card-detail {
   font-size: 13px;
@@ -10307,9 +10289,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 .avel-guide {
@@ -10357,9 +10338,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   border-radius: 50%;
   background: linear-gradient(135deg, var(--avel-teal), var(--avel-teal-deep));
   color: white;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 19px;
+  font-weight: 700;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10372,8 +10352,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.02em;
+  font-weight: 500;
 }
 .avel-guide-status-dot {
   width: 6px;
@@ -10405,7 +10385,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 
 .avel-guide-body {
   padding: 18px 16px 8px;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
   overflow-y: auto;
   flex: 1;
 }
@@ -10429,7 +10409,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   flex-direction: column;
   gap: 6px;
   padding: 8px 14px 14px;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
 }
 .avel-guide-option {
   display: flex;
@@ -10466,7 +10446,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   gap: 6px;
   padding: 8px 14px 14px;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
 }
 .avel-guide-input {
   flex: 1;
@@ -10501,11 +10481,11 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-guide-foot {
   text-align: center;
   padding: 8px 12px 12px;
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--avel-muted);
-  font-family: 'JetBrains Mono', monospace;
   letter-spacing: 0.04em;
-  background: var(--avel-paper);
+  background: var(--avel-surface);
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {
