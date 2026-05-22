@@ -37,13 +37,14 @@ export function AvelNav() {
 
   return (
     <aside className="avel-sb">
+      {/* Logo lockup — icon SVG inlined via background-image, wordmark
+          rendered via CSS mask-image so the single-color SVG can be
+          recolored white on the dark sidebar without filter hacks. */}
       <Link href="/avelecare" className="avel-sb-logo" aria-label="AVEL eCare home">
-        <span className="avel-sb-logo-mark">A</span>
-        <span className="avel-sb-logo-text">
-          AVEL <span className="avel-sb-logo-accent">e</span>Care
-          <span className="avel-sb-logo-sub">Credentialing</span>
-        </span>
+        <span className="avel-sb-mark" role="img" aria-hidden="true" />
+        <span className="avel-sb-wordmark" role="img" aria-label="AVEL eCare" />
       </Link>
+      <div className="avel-sb-tagline">Credentialing Portal</div>
 
       <div className="avel-sb-section">Workspace</div>
       {WORKSPACE.map((item) => {
@@ -78,7 +79,7 @@ export function AvelNav() {
 
       <div className="avel-sb-foot">
         <div className="avel-sb-foot-org">
-          <div className="avel-sb-foot-org-mark">A</div>
+          <span className="avel-sb-foot-org-mark" role="img" aria-hidden="true" />
           <div>
             <div className="avel-sb-foot-org-name">AVEL eCare</div>
             <div className="avel-sb-foot-org-meta">Virtual Health System</div>

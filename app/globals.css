@@ -9162,45 +9162,39 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .avel-sb-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 4px 8px 10px;
-  margin-bottom: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
   color: white;
 }
-.avel-sb-logo-mark {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--avel-teal), var(--avel-teal-deep));
-  border-radius: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.01em;
-  box-shadow: 0 6px 14px -6px rgba(33, 160, 170, 0.5);
+/* Icon mark — actual AVEL eCare brand SVG (white on dark sidebar).
+   Rendered via background-image so it scales crisply at any DPI. */
+.avel-sb-mark {
+  display: inline-block;
+  width: 38px;
+  height: 32px;
+  flex-shrink: 0;
+  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
 }
-.avel-sb-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+/* Wordmark — single-color SVG rendered in white via CSS mask, so we
+   don't need a separate white variant of the colored file. */
+.avel-sb-wordmark {
+  display: inline-block;
+  width: 110px;
+  height: 28px;
+  background-color: white;
+  -webkit-mask: url('/AveleCare.svg') no-repeat left center / contain;
+          mask: url('/AveleCare.svg') no-repeat left center / contain;
 }
-.avel-sb-logo-text {
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-.avel-sb-logo-accent { color: var(--avel-teal); }
-.avel-sb-logo-sub {
+.avel-sb-tagline {
   font-size: 10.5px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-top: 2px;
+  padding: 0 8px 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .avel-sb-section {
@@ -9262,16 +9256,11 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   border-radius: 8px;
 }
 .avel-sb-foot-org-mark {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: white;
-  color: var(--avel-ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
+  width: 30px;
+  height: 26px;
+  flex-shrink: 0;
+  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  opacity: 0.92;
 }
 .avel-sb-foot-org-name {
   font-size: 12.5px;
@@ -10127,6 +10116,67 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 .avel-workflow-stage-meta strong { color: var(--avel-teal-deep); }
 
+/* ──────────  DASHBOARD WELCOME BAND  ────────── */
+/* Sits above the KPI row only on the dashboard. Uses banner.PNG as
+   a richly-coloured backdrop, with a navy gradient on top so text
+   stays legible regardless of the photo's content. ~140px tall so
+   it's clearly a header, not a hero takeover. */
+.avel-dash-hero {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 140px;
+  background-color: var(--avel-ink);
+  background-image: url('/banner.PNG');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 24px 28px;
+  color: white;
+  border: 1px solid var(--avel-line);
+}
+.avel-dash-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(14, 46, 71, 0.92) 0%,
+    rgba(14, 46, 71, 0.78) 45%,
+    rgba(14, 46, 71, 0.35) 100%
+  );
+}
+.avel-dash-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+.avel-dash-hero-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--avel-teal-soft);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.avel-dash-hero-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: white;
+  margin-bottom: 8px;
+}
+.avel-dash-hero-meta {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.02em;
+}
+@media (max-width: 768px) {
+  .avel-dash-hero { padding: 20px 22px; min-height: 120px; }
+  .avel-dash-hero-title { font-size: 18px; }
+}
+
 /* ──────────  HELP PAGE  ────────── */
 .avel-help-launch {
   display: grid;
@@ -10137,6 +10187,21 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   color: white;
   border: none;
   padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+}
+/* AVEL eCare brand mark — large, faint, anchored bottom-right of the
+   hero. Gives the card a quiet branded depth without competing with
+   the type. */
+.avel-help-launch-brand {
+  position: absolute;
+  bottom: -18px;
+  right: -22px;
+  width: 200px;
+  height: 170px;
+  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  opacity: 0.08;
+  pointer-events: none;
 }
 @media (max-width: 768px) { .avel-help-launch { grid-template-columns: 1fr; } }
 .avel-help-launch-eyebrow {

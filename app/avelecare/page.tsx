@@ -59,6 +59,23 @@ export default function AvelDashboard() {
       />
 
       <div className="avel-content">
+        {/* ────────── BRANDED WELCOME BAND ──────────
+            Subtle dashboard-only hero ribbon. Sets context that this is
+            AVEL eCare's tool the moment the page loads, then steps aside
+            so the KPIs do the real work below. */}
+        <div className="avel-dash-hero">
+          <div className="avel-dash-hero-overlay" />
+          <div className="avel-dash-hero-content">
+            <div className="avel-dash-hero-eyebrow">Virtual Health System</div>
+            <div className="avel-dash-hero-title">
+              Welcome back. Here&apos;s where AVEL eCare credentialing stands today.
+            </div>
+            <div className="avel-dash-hero-meta">
+              {PROVIDERS.length} active clinicians · {SPACES.length} spaces &amp; programs · {readyToBill().length} ready to bill
+            </div>
+          </div>
+        </div>
+
         {/* ────────── KPI ROW ────────── */}
         <div className="avel-kpis">
           <div className="avel-kpi">

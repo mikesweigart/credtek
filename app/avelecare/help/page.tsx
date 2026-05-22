@@ -59,6 +59,8 @@ export default function AvelHelp() {
 
       <div className="avel-content">
         <div className="avel-card avel-help-launch">
+          {/* AVEL eCare brand mark — quiet anchor in the dark hero */}
+          <span className="avel-help-launch-brand" role="img" aria-hidden="true" />
           <div className="avel-help-launch-text">
             <div className="avel-help-launch-eyebrow">In-product assistant</div>
             <div className="avel-help-launch-title">
