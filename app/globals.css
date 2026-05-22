@@ -9156,9 +9156,9 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   height: 100vh;
   overflow-y: auto;
 }
-@media (max-width: 900px) {
-  .avel-sb { position: static; height: auto; }
-}
+/* Mobile drawer position lives in the MOBILE PASS block at the bottom
+   of this stylesheet — the old "position: static" override was
+   incompatible with the slide-out drawer pattern. */
 .avel-sb-logo {
   display: flex;
   align-items: center;
@@ -11054,4 +11054,440 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .set-toggle:focus-visible {
   outline: 2px solid var(--avel-teal);
   outline-offset: 2px;
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  AVEL eCare — MOBILE PASS                                ║
+   ║  Drawer nav, hamburger, table h-scroll, pipeline snap,   ║
+   ║  iOS no-zoom inputs, touch targets, active states.       ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/* ──────────  HAMBURGER BUTTON (topbar, mobile only)  ────────── */
+.avel-topbar-burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  background: var(--avel-surface);
+  border: 1px solid var(--avel-line);
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, transform 0.12s;
+}
+.avel-topbar-burger:hover {
+  background: var(--avel-teal-soft);
+  border-color: var(--avel-teal);
+}
+.avel-topbar-burger:active { transform: scale(0.94); }
+.avel-topbar-burger span {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 18px;
+}
+.avel-topbar-burger i {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--avel-ink);
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+  transform-origin: center;
+}
+.avel-topbar-burger span.is-open i:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.avel-topbar-burger span.is-open i:nth-child(2) { opacity: 0; }
+.avel-topbar-burger span.is-open i:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ──────────  SIDEBAR DRAWER (mobile)  ────────── */
+@media (max-width: 900px) {
+  .avelecare-shell { grid-template-columns: 1fr; }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .avel-sb {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    max-width: 86vw;
+    height: 100dvh;
+    height: 100vh; /* fallback */
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  .avel-sb.is-open {
+    transform: translateX(0);
+    box-shadow: 18px 0 48px -20px rgba(0, 0, 0, 0.35);
+  }
+
+  .avel-sb-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 31, 46, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 150;
+    border: none;
+    cursor: pointer;
+    animation: avel-fade-in 0.22s ease-out;
+  }
+  @keyframes avel-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Show the burger on mobile */
+  .avel-topbar-burger { display: inline-flex; }
+
+  /* Pull topbar tight on small screens */
+  .avel-topbar {
+    padding: 12px 16px;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+  .avel-topbar-titles { min-width: 0; flex: 1; }
+  .avel-topbar-title {
+    font-size: 18px;
+    line-height: 1.25;
+    /* Truncate long titles instead of wrapping awkwardly */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .avel-topbar-subtitle {
+    font-size: 12px;
+    margin-top: 2px;
+    /* Allow 2 lines on mobile, then clamp */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .avel-topbar-search { display: none; }
+  .avel-topbar-bell { display: none; } /* Save space — bell becomes drawer-only */
+  .avel-topbar-actions { gap: 8px; }
+  .avel-topbar-av {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  /* Content padding tighter on phones */
+  .avel-content { padding: 16px 14px 36px; gap: 12px; }
+}
+
+/* On very small phones, hide the subtitle entirely — it makes the
+   header too tall for the limited vertical space. */
+@media (max-width: 480px) {
+  .avel-topbar-subtitle { display: none; }
+  .avel-topbar { padding: 10px 14px; }
+  .avel-topbar-title { font-size: 17px; }
+  .avel-content { padding: 14px 12px 36px; }
+}
+
+/* Above 900px: drawer + backdrop never render */
+@media (min-width: 901px) {
+  .avel-sb-backdrop { display: none; }
+}
+
+/* ──────────  TABLE HORIZONTAL SCROLL ON MOBILE  ──────────
+   Tables with 6-8 columns won't fit a phone width. The card-flush
+   wrapper becomes a horizontal scroll container so the table keeps
+   its desktop layout and the user swipes side-to-side. Sticky
+   shadow hints at scrollability. */
+@media (max-width: 900px) {
+  .avel-card-flush {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Soft mask on the right edge so users know to scroll */
+    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+  }
+  .avel-card-flush .avel-table {
+    min-width: 760px;
+  }
+}
+
+/* ──────────  PIPELINE SNAP-SCROLL CAROUSEL ON MOBILE  ──────────
+   Six pipeline stages crammed into 2 columns is unreadable. On phone,
+   convert to a horizontal scroll-snap carousel — each stage takes
+   ~85% of the viewport so the user sees one fully + a hint of the
+   next. Native momentum scroll on iOS via touch behavior. */
+@media (max-width: 700px) {
+  .avel-pipeline-cols {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding-bottom: 6px;
+    /* Negative margin so the carousel can bleed to card edges */
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .avel-pipeline-col {
+    flex: 0 0 84%;
+    scroll-snap-align: start;
+    min-height: 200px;
+  }
+}
+
+/* ──────────  TOPBAR ACTIONS — bell visible again on tablet  ────────── */
+@media (min-width: 481px) and (max-width: 900px) {
+  /* Tablet has more horizontal room; keep the bell visible */
+  .avel-topbar-bell { display: flex; }
+}
+
+/* ──────────  CONTENT — KPI TILES on phone  ──────────
+   At <480px, 6-tile grid even in 2-col is too cramped. Allow scroll
+   horizontally on the dashboard but keep card grids on Reports/etc. */
+@media (max-width: 480px) {
+  .avel-kpis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .avel-kpi { padding: 12px 14px; }
+  .avel-kpi-val { font-size: 24px; }
+  .avel-kpi-lbl { font-size: 10.5px; letter-spacing: 0.06em; }
+  .avel-kpi-delta { font-size: 11px; }
+}
+
+/* ──────────  TOOLBAR (Providers / Documents filter row)  ────────── */
+@media (max-width: 700px) {
+  .avel-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .avel-toolbar-filters {
+    /* Filters become a 2-column grid on phones for finger-friendly tapping */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+  }
+  .avel-toolbar-filters .avel-select {
+    min-height: 44px;
+    width: 100%;
+  }
+  .avel-toolbar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+  .avel-toolbar-actions .avel-btn-primary,
+  .avel-toolbar-actions .avel-btn-ghost {
+    min-height: 44px;
+    width: 100%;
+  }
+}
+
+/* ──────────  FORM INPUTS — 16px to prevent iOS Safari auto-zoom  ────────── */
+@media (max-width: 768px) {
+  .avel-select,
+  .set-input,
+  .avel-guide-input {
+    font-size: 16px;
+    min-height: 44px;
+  }
+  /* Bigger touch targets for stage/readiness pills (often the only
+     visible state indicator) */
+  .avel-stage-pill,
+  .avel-readiness,
+  .doc-status-pill {
+    font-size: 11.5px;
+    padding: 4px 11px;
+  }
+}
+
+/* ──────────  TOUCH-ONLY DEVICES — disable hover lifts  ──────────
+   Cards that lift on hover feel stuck-active after a tap on touch
+   devices. Disable transform on no-hover environments. */
+@media (hover: none) {
+  .avel-space-card:hover,
+  .avel-help-card:hover {
+    transform: none;
+    box-shadow: 0 1px 3px rgba(11, 31, 46, 0.05);
+  }
+  /* Active feedback for taps — quick scale-down */
+  .avel-btn-primary:active,
+  .avel-btn-ghost:active,
+  .avel-help-card:active,
+  .avel-space-card:active,
+  .avel-pipeline-card:active,
+  .set-tab:active,
+  .doc-name:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ──────────  DASHBOARD HERO BAND — tighter on phones  ────────── */
+@media (max-width: 600px) {
+  .avel-dash-hero {
+    min-height: 110px;
+    padding: 18px 18px;
+    border-radius: 12px;
+  }
+  .avel-dash-hero-title { font-size: 17px; line-height: 1.25; }
+  .avel-dash-hero-meta { font-size: 11.5px; }
+  .avel-dash-hero-eyebrow { font-size: 10px; }
+}
+
+/* ──────────  HELP LAUNCH CARD — single col on phone  ────────── */
+@media (max-width: 600px) {
+  .avel-help-launch {
+    grid-template-columns: 1fr;
+    padding: 22px 20px;
+  }
+  .avel-help-launch-title { font-size: 21px; }
+  .avel-help-launch-brand {
+    width: 140px;
+    height: 120px;
+    bottom: -10px;
+    right: -10px;
+  }
+}
+
+/* ──────────  REPORTS — bar chart phone layout  ────────── */
+@media (max-width: 480px) {
+  .rep-bar-row {
+    grid-template-columns: 90px 1fr 56px;
+    gap: 8px;
+  }
+  .rep-bar-label { font-size: 11.5px; }
+  .rep-bar-value { font-size: 12px; }
+  .rep-bar-track { height: 16px; }
+  .rep-legend {
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 10.5px;
+  }
+}
+
+/* ──────────  SETTINGS — tabs scroll, role cards single col  ────────── */
+@media (max-width: 700px) {
+  .set-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+  }
+  .set-tab {
+    flex-shrink: 0;
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+  .set-role-grid { grid-template-columns: 1fr; gap: 10px; }
+  .set-color-grid { grid-template-columns: 1fr; }
+  .set-asset-row { flex-direction: column; align-items: flex-start; }
+  .set-asset-preview { width: 100%; height: 80px; }
+  .set-pref {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+  }
+  .set-pref-title { font-size: 14px; }
+  .set-pref-desc { font-size: 13px; }
+  .set-toggle {
+    width: 48px;
+    height: 28px;
+  }
+  .set-toggle-knob {
+    width: 22px;
+    height: 22px;
+  }
+  .set-toggle.is-on .set-toggle-knob {
+    transform: translateX(20px);
+  }
+}
+
+/* ──────────  CALLOUTS  ────────── */
+@media (max-width: 480px) {
+  .avel-callout,
+  .avel-callout-soft {
+    padding: 14px 16px;
+    font-size: 12.5px;
+  }
+}
+
+/* ──────────  PIPELINE SCROLL HINT — phone only  ──────────
+   Add a subtle scroll-shadow on the right of the pipeline carousel
+   so users see there's more content. */
+@media (max-width: 700px) {
+  .avel-pipeline-cols {
+    mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  }
+}
+
+/* ──────────  ALERTS LIST — tighter on phone  ────────── */
+@media (max-width: 480px) {
+  .avel-alert {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .avel-alert-body { flex: 1 1 60%; min-width: 0; }
+  .avel-alert-link {
+    flex: 0 0 100%;
+    text-align: right;
+    margin-top: 4px;
+  }
+}
+
+/* ──────────  AVA CHAT WIDGET — don't overlap drawer  ──────────
+   When drawer is open, hide the chat launcher so it doesn't
+   compete for the user's attention with the open menu. */
+@media (max-width: 900px) {
+  body[style*="overflow: hidden"] .avel-guide-launcher,
+  body[style*="overflow:hidden"] .avel-guide-launcher,
+  body:has(.avel-sb.is-open) .avel-guide-launcher {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.2s, transform 0.25s;
+  }
+}
+
+/* ──────────  PROVIDER TABLE — column hide on smallest phones  ──────────
+   Some columns are less critical (Role, States) — hide them at
+   <420px so the table stays usable without horizontal scroll.
+   Above 420px the horizontal scroll handles it. */
+@media (max-width: 420px) {
+  .avel-table thead th:nth-child(2),
+  .avel-table tbody td:nth-child(2),
+  .avel-table thead th:nth-child(4),
+  .avel-table tbody td:nth-child(4) {
+    display: none;
+  }
+  .avel-card-flush .avel-table { min-width: auto; }
+  .avel-card-flush {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow-x: visible;
+  }
+}
+
+/* ──────────  SAFE AREA INSETS for notched phones  ────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  @media (max-width: 900px) {
+    .avel-content {
+      padding-bottom: calc(36px + env(safe-area-inset-bottom));
+    }
+    .avel-guide-launcher {
+      bottom: calc(14px + env(safe-area-inset-bottom));
+    }
+    .avel-guide {
+      bottom: calc(12px + env(safe-area-inset-bottom));
+    }
+  }
 }

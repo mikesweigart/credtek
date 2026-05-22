@@ -1,15 +1,29 @@
 "use client";
 
-// AvelNav — left-sidebar navigation for the AVEL eCare portal.
-// Built fresh (not reusing the CredTek .shell-sb classes) so the
+// AvelNav — left-sidebar navigation + topbar header for the AVEL eCare
+// portal. Built fresh (not reusing the CredTek .shell-sb classes) so the
 // brand expression is fully owned by AVEL eCare: navy column, teal active
-// state, no CredTek logo or accent. The "AVEL eCare" wordmark is
-// the only branded text in the chrome — visitor should feel they
-// are inside AVEL eCare's tool.
+// state, AVEL wordmark + icon mark only.
+//
+// MOBILE behavior:
+//   - Below 900px the sidebar becomes a slide-out drawer (-100% to 0).
+//   - The topbar shows a hamburger button on the left.
+//   - Drawer state lives in AvelShellContext (provider wraps the layout).
+//   - Tap a nav link → drawer closes.
+//   - Tap backdrop, press Escape, or resize past 900px → drawer closes.
+//   - Body scroll is locked while drawer is open.
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 type Item = { label: string; href: string; icon: ReactNode; badge?: string };
 
@@ -32,76 +46,165 @@ function isActive(pathname: string, href: string): boolean {
   return pathname.startsWith(href);
 }
 
+// ──────────────────────────────────────────────────────────────
+// Shell context — drawer state shared between sidebar + topbar.
+// ──────────────────────────────────────────────────────────────
+type ShellCtx = { drawerOpen: boolean; setDrawerOpen: (v: boolean) => void };
+const ShellContext = createContext<ShellCtx | null>(null);
+
+export function AvelShellProvider({ children }: { children: ReactNode }) {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // Lock body scroll while drawer is open + close on Esc + close if the
+  // viewport grows past mobile breakpoint (landscape rotation, etc.).
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDrawerOpen(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth > 900) setDrawerOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [drawerOpen]);
+
+  const value = useMemo(() => ({ drawerOpen, setDrawerOpen }), [drawerOpen]);
+  return <ShellContext.Provider value={value}>{children}</ShellContext.Provider>;
+}
+
+function useShell(): ShellCtx {
+  const ctx = useContext(ShellContext);
+  // In a tree without the provider (e.g. tests, errors), fall back to a
+  // no-op so the components don't throw. Provider IS always present in
+  // the real app via the layout.
+  if (!ctx) return { drawerOpen: false, setDrawerOpen: () => {} };
+  return ctx;
+}
+
+// ──────────────────────────────────────────────────────────────
+// AvelNav — sidebar / mobile drawer
+// ──────────────────────────────────────────────────────────────
 export function AvelNav() {
   const pathname = usePathname() ?? "/avelecare";
+  const { drawerOpen, setDrawerOpen } = useShell();
+
+  const close = useCallback(() => setDrawerOpen(false), [setDrawerOpen]);
 
   return (
-    <aside className="avel-sb">
-      {/* Logo lockup — icon SVG inlined via background-image, wordmark
-          rendered via CSS mask-image so the single-color SVG can be
-          recolored white on the dark sidebar without filter hacks. */}
-      <Link href="/avelecare" className="avel-sb-logo" aria-label="AVEL eCare home">
-        <span className="avel-sb-mark" role="img" aria-hidden="true" />
-        <span className="avel-sb-wordmark" role="img" aria-label="AVEL eCare" />
-      </Link>
-      <div className="avel-sb-tagline">Credentialing Portal</div>
+    <>
+      {/* Backdrop — only rendered when drawer is open on mobile. Tap to close. */}
+      {drawerOpen && (
+        <button
+          type="button"
+          className="avel-sb-backdrop"
+          aria-label="Close menu"
+          onClick={close}
+        />
+      )}
 
-      <div className="avel-sb-section">Workspace</div>
-      {WORKSPACE.map((item) => {
-        const active = isActive(pathname, item.href);
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={active ? "avel-sb-item is-active" : "avel-sb-item"}
-          >
-            <span className="avel-sb-icon">{item.icon}</span>
-            <span className="avel-sb-label">{item.label}</span>
-            {item.badge ? <span className="avel-sb-badge">{item.badge}</span> : null}
-          </Link>
-        );
-      })}
+      <aside
+        className={`avel-sb${drawerOpen ? " is-open" : ""}`}
+        aria-label="Primary navigation"
+      >
+        <Link
+          href="/avelecare"
+          className="avel-sb-logo"
+          aria-label="AVEL eCare home"
+          onClick={close}
+        >
+          <span className="avel-sb-mark" role="img" aria-hidden="true" />
+          <span className="avel-sb-wordmark" role="img" aria-label="AVEL eCare" />
+        </Link>
+        <div className="avel-sb-tagline">Credentialing Portal</div>
 
-      <div className="avel-sb-section">Operations</div>
-      {SUPPORT.map((item) => {
-        const active = isActive(pathname, item.href);
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={active ? "avel-sb-item is-active" : "avel-sb-item"}
-          >
-            <span className="avel-sb-icon">{item.icon}</span>
-            <span className="avel-sb-label">{item.label}</span>
-          </Link>
-        );
-      })}
+        <div className="avel-sb-section">Workspace</div>
+        {WORKSPACE.map((item) => {
+          const active = isActive(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={active ? "avel-sb-item is-active" : "avel-sb-item"}
+              onClick={close}
+            >
+              <span className="avel-sb-icon">{item.icon}</span>
+              <span className="avel-sb-label">{item.label}</span>
+              {item.badge ? <span className="avel-sb-badge">{item.badge}</span> : null}
+            </Link>
+          );
+        })}
 
-      <div className="avel-sb-foot">
-        <div className="avel-sb-foot-org">
-          <span className="avel-sb-foot-org-mark" role="img" aria-hidden="true" />
-          <div>
-            <div className="avel-sb-foot-org-name">AVEL eCare</div>
-            <div className="avel-sb-foot-org-meta">Virtual Health System</div>
+        <div className="avel-sb-section">Operations</div>
+        {SUPPORT.map((item) => {
+          const active = isActive(pathname, item.href);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={active ? "avel-sb-item is-active" : "avel-sb-item"}
+              onClick={close}
+            >
+              <span className="avel-sb-icon">{item.icon}</span>
+              <span className="avel-sb-label">{item.label}</span>
+            </Link>
+          );
+        })}
+
+        <div className="avel-sb-foot">
+          <div className="avel-sb-foot-org">
+            <span className="avel-sb-foot-org-mark" role="img" aria-hidden="true" />
+            <div>
+              <div className="avel-sb-foot-org-name">AVEL eCare</div>
+              <div className="avel-sb-foot-org-meta">Virtual Health System</div>
+            </div>
+          </div>
+          <div className="avel-sb-foot-meta">
+            Tagline: <em>Virtual care, perfected.</em>
+            <br />
+            Credentialing, simplified.
           </div>
         </div>
-        <div className="avel-sb-foot-meta">
-          Tagline: <em>Virtual care, perfected.</em>
-          <br />
-          Credentialing, simplified.
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
+// ──────────────────────────────────────────────────────────────
+// AvelTopbar — page header. Renders a hamburger on the left when
+// mobile, the page title + actions on the right.
+// ──────────────────────────────────────────────────────────────
 export function AvelTopbar({ title, subtitle }: { title: string; subtitle?: string }) {
+  const { drawerOpen, setDrawerOpen } = useShell();
+
   return (
     <header className="avel-topbar">
+      <button
+        type="button"
+        className="avel-topbar-burger"
+        aria-label={drawerOpen ? "Close menu" : "Open menu"}
+        aria-expanded={drawerOpen}
+        onClick={() => setDrawerOpen(!drawerOpen)}
+      >
+        <span className={drawerOpen ? "is-open" : ""} aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+      </button>
+
       <div className="avel-topbar-titles">
         <div className="avel-topbar-title">{title}</div>
         {subtitle ? <div className="avel-topbar-subtitle">{subtitle}</div> : null}
       </div>
+
       <div className="avel-topbar-actions">
         <div className="avel-topbar-search" aria-hidden="true">
           ⌕ Search providers, spaces, documents…

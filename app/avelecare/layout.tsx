@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { AvelNav } from "./_components/AvelNav";
+import { AvelNav, AvelShellProvider } from "./_components/AvelNav";
 import { AvelGuide } from "./_components/AvelGuide";
 
 // AVEL eCare-branded portal — fully scoped under /avelecare. Maps to
@@ -24,13 +24,15 @@ export const metadata: Metadata = {
 export default function AvelLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="avelecare-shell">
-      <AvelNav />
-      <div className="avel-main">
-        {children}
-      </div>
-      <Suspense fallback={null}>
-        <AvelGuide />
-      </Suspense>
+      <AvelShellProvider>
+        <AvelNav />
+        <div className="avel-main">
+          {children}
+        </div>
+        <Suspense fallback={null}>
+          <AvelGuide />
+        </Suspense>
+      </AvelShellProvider>
     </div>
   );
 }
