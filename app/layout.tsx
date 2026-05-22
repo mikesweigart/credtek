@@ -3,15 +3,12 @@ import "./globals.css";
 import { ScrollReveal } from "./_components/ScrollReveal";
 import { CursorSpotlight } from "./_components/CursorSpotlight";
 
-// Canonical site URL — drives absolute resolution for OG/Twitter images.
-// Read from env so a Vercel preview deploy resolves against its own URL
-// instead of production.
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://cred-tek.com");
-
+// Hardcoded canonical site URL — env-based resolution removed because
+// Vercel's modifyConfig step was failing with an undefined-path error.
+// If we ever need preview-deploy aware URLs again, wire NEXT_PUBLIC_SITE_URL
+// after we've confirmed the rest of the build is stable.
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL("https://cred-tek.com"),
   title: {
     default: "CredTek — Medical credentialing, faster than anyone in healthcare.",
     template: "%s · CredTek",
@@ -24,7 +21,7 @@ export const metadata: Metadata = {
       "The AI-agent-native credentialing platform for US medical practices, MSOs, and health systems. Built by operators with 40+ years of enterprise medical credentialing experience.",
     type: "website",
     siteName: "CredTek",
-    url: siteUrl,
+    url: "https://cred-tek.com",
   },
   twitter: {
     card: "summary_large_image",
