@@ -12020,3 +12020,279 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   .rsc-cta-band-btns .btn-primary,
   .rsc-cta-band-btns .btn-secondary { width: 100%; justify-content: center; }
 }
+
+/* ============================================================
+   AVEL eCare — working filters, clickable rows, provider detail
+   ============================================================ */
+
+/* Search input styled to match the selects */
+.avel-search {
+  min-width: 200px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.avel-clear { padding-left: 12px; padding-right: 12px; }
+
+/* Clickable table rows */
+.avel-table-row-link { cursor: pointer; }
+.avel-table-row-link:hover { background: var(--avel-surface); }
+.avel-table-name-a {
+  text-decoration: none;
+  color: var(--avel-ink);
+}
+.avel-table-name-a:hover { color: var(--avel-teal-deep); text-decoration: underline; }
+.avel-row-chevron {
+  color: var(--avel-muted);
+  font-size: 18px;
+  text-align: right;
+  width: 24px;
+}
+.avel-table-row-link:hover .avel-row-chevron { color: var(--avel-teal); }
+
+/* Empty state */
+.avel-empty {
+  text-align: center;
+  padding: 48px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.avel-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--avel-surface);
+  border: 1px solid var(--avel-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--avel-muted);
+  margin-bottom: 6px;
+}
+.avel-empty-title { font-size: 15px; font-weight: 600; color: var(--avel-ink); }
+.avel-empty-sub { font-size: 13px; color: var(--avel-muted); margin-bottom: 10px; }
+.avel-empty-inline {
+  font-size: 13px;
+  color: var(--avel-ink-soft);
+  padding: 8px 0 14px;
+}
+
+/* ── Provider detail header ── */
+.avel-pd-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: white;
+  border: 1px solid var(--avel-line);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.avel-pd-av {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--avel-teal), var(--avel-teal-deep));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.avel-pd-id { flex: 1; min-width: 0; }
+.avel-pd-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--avel-ink);
+}
+.avel-pd-meta {
+  font-size: 12.5px;
+  color: var(--avel-muted);
+  margin: 3px 0 10px;
+}
+.avel-pd-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.avel-pd-actions { display: flex; gap: 8px; flex-shrink: 0; }
+@media (max-width: 700px) {
+  .avel-pd-head { flex-wrap: wrap; }
+  .avel-pd-actions { width: 100%; }
+  .avel-pd-actions .avel-btn-primary,
+  .avel-pd-actions .avel-btn-ghost { flex: 1; }
+}
+
+/* ── Provider detail tabs ── */
+.avel-pd-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--avel-line);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.avel-pd-tab {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--avel-ink-soft);
+  padding: 11px 16px;
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: color 0.15s;
+}
+.avel-pd-tab:hover { color: var(--avel-ink); }
+.avel-pd-tab.is-active { color: var(--avel-ink); font-weight: 600; }
+.avel-pd-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--avel-teal);
+  border-radius: 2px;
+}
+.avel-pd-tab-count {
+  font-size: 10.5px;
+  font-weight: 700;
+  background: var(--avel-teal-soft);
+  color: var(--avel-teal-deep);
+  padding: 1px 7px;
+  border-radius: 100px;
+}
+
+/* ── Summary tab ── */
+.avel-pd-readiness { padding: 4px 0 14px; }
+.avel-pd-readiness-big {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.avel-pd-readiness-big.ok { color: var(--avel-teal-deep); }
+.avel-pd-readiness-big.warn { color: var(--avel-warn); }
+.avel-pd-readiness-sub { font-size: 13px; color: var(--avel-ink-soft); margin-top: 4px; }
+.avel-pd-sub-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--avel-muted);
+  margin: 8px 0 8px;
+}
+.avel-pd-spaces { list-style: none; margin: 0; padding: 0; }
+.avel-pd-spaces li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid var(--avel-line-soft);
+  font-size: 13.5px;
+}
+.avel-pd-spaces li:first-child { border-top: none; }
+.avel-pd-spaces a { color: var(--avel-teal-deep); text-decoration: none; font-weight: 500; }
+.avel-pd-spaces a:hover { text-decoration: underline; }
+.avel-pd-spaces span { font-size: 12px; color: var(--avel-muted); }
+.avel-pd-risks { list-style: none; margin: 0 0 14px; padding: 0; }
+.avel-pd-risks li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 0;
+  border-top: 1px solid var(--avel-line-soft);
+  font-size: 13.5px;
+  color: var(--avel-ink);
+}
+.avel-pd-risks li:first-child { border-top: none; }
+.avel-pd-risk-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--avel-warn);
+  flex-shrink: 0;
+}
+
+/* ── Credentialing checklist ── */
+.avel-check-list { list-style: none; margin: 0; padding: 0; }
+.avel-check {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--avel-line-soft);
+}
+.avel-check:first-child { border-top: none; }
+.avel-check-label { font-size: 13.5px; font-weight: 500; color: var(--avel-ink); }
+.avel-check-detail { font-size: 12px; color: var(--avel-muted); }
+@media (max-width: 640px) {
+  .avel-check { grid-template-columns: 1fr auto; }
+  .avel-check-detail { display: none; }
+}
+
+/* ── Enrollment status pills ── */
+.enr-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.enr-active { background: #DEF2E5; color: #2F6E48; }
+.enr-submitted { background: #E3EDF7; color: #2F6FA6; }
+.enr-pending { background: #FDE5D6; color: #B0521D; }
+.enr-queued { background: #ECEFF3; color: #62748A; }
+.enr-none { background: var(--avel-surface); color: var(--avel-muted); }
+
+/* ── Activity timeline ── */
+.avel-timeline { list-style: none; margin: 0; padding: 0; }
+.avel-timeline-item {
+  display: flex;
+  gap: 14px;
+  padding: 0 0 16px;
+  position: relative;
+}
+.avel-timeline-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 5px; top: 16px; bottom: 0;
+  width: 2px;
+  background: var(--avel-line);
+}
+.avel-timeline-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--avel-teal);
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px var(--avel-line);
+  flex-shrink: 0;
+  margin-top: 3px;
+  z-index: 1;
+}
+.avel-timeline-stage {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--avel-teal-deep);
+}
+.avel-timeline-text { font-size: 13.5px; color: var(--avel-ink); margin-top: 2px; }
+
+/* StoryBrand transformation line in the stakes section (dark bg) */
+.stakes-transform {
+  margin-top: 24px;
+  text-align: center;
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.stakes-transform strong {
+  color: var(--gold-soft);
+  font-weight: 600;
+}

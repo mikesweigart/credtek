@@ -468,6 +468,13 @@ const LANDING_BODY_POST_CALC = `
         </ul>
       </div>
     </div>
+
+    <div class="stakes-transform">
+      Your credentialing team stops being <strong>firefighters</strong> and
+      becomes <strong>strategists</strong>. That's the real transformation —
+      the same people, freed from the portal grind, finally doing the work
+      only they can do.
+    </div>
   </div>
 </section>
 
