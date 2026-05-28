@@ -60,7 +60,10 @@ export default async function OG() {
           </div>
         </div>
 
-        {/* Middle — headline */}
+        {/* Middle — headline. NOTE: Satori (next/og) requires every <div>
+            with more than one child to set display:flex explicitly. So the
+            headline is two stacked single-string lines and the subhead is a
+            single string — no mixed text+inline children anywhere. */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div
             style={{
@@ -73,41 +76,42 @@ export default async function OG() {
           >
             Medical credentialing · AI-agent-native
           </div>
-          <div
-            style={{
-              fontSize: 72,
-              lineHeight: 1.05,
-              fontWeight: 700,
-              letterSpacing: "-0.03em",
-              color: "#0B1F2E",
-              maxWidth: 980,
-            }}
-          >
-            Your providers should be{" "}
-            <span
+          <div style={{ display: "flex", flexDirection: "column", maxWidth: 1000 }}>
+            <div
               style={{
+                fontSize: 66,
+                lineHeight: 1.08,
+                fontWeight: 700,
+                letterSpacing: "-0.03em",
+                color: "#0B1F2E",
+              }}
+            >
+              Your providers should be billing.
+            </div>
+            <div
+              style={{
+                fontSize: 66,
+                lineHeight: 1.08,
                 fontFamily: "serif",
                 fontStyle: "italic",
                 fontWeight: 400,
+                letterSpacing: "-0.01em",
                 color: "#0467DE",
               }}
             >
-              billing.
-            </span>{" "}
-            Not waiting on credentialing.
+              Not waiting on credentialing.
+            </div>
           </div>
           <div
             style={{
               fontSize: 26,
               color: "#475569",
               lineHeight: 1.4,
-              maxWidth: 920,
+              maxWidth: 940,
               marginTop: 8,
             }}
           >
-            Faster than anyone in healthcare. Built by operators with{" "}
-            <b style={{ color: "#0B1F2E" }}>40+ years</b> of enterprise
-            medical credentialing experience.
+            Faster than anyone in healthcare. Built by operators with 40+ years of enterprise medical credentialing experience.
           </div>
         </div>
 
