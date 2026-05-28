@@ -5660,8 +5660,185 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: var(--gold-deep);
   font-weight: 600;
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
 }
 .signin-link:hover { color: var(--gold); }
+
+/* Auth mode toggle (Password / Magic link) */
+.signin-modes {
+  display: flex;
+  gap: 4px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 18px;
+}
+.signin-mode {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 9px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.signin-mode:hover { color: var(--ink); }
+.signin-mode.is-active {
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(11, 31, 46, 0.08);
+}
+
+/* Inline auth messages */
+.signin-msg {
+  font-size: 13px;
+  line-height: 1.5;
+  padding: 10px 13px;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+.signin-msg-error {
+  background: rgba(184, 85, 51, 0.08);
+  border: 1px solid rgba(184, 85, 51, 0.3);
+  color: #9B3B1E;
+}
+.signin-msg-info {
+  background: var(--blue-soft);
+  border: 1px solid rgba(4, 103, 222, 0.3);
+  color: var(--blue-deep);
+}
+
+/* ── /account (post-auth confirmation) ── */
+.acct-shell {
+  min-height: 100vh;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.acct-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 36px 38px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 20px 48px -28px rgba(11, 31, 46, 0.3);
+}
+.acct-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #2F6E48;
+  background: #DEF2E5;
+  border: 1px solid rgba(47, 110, 72, 0.3);
+  padding: 4px 11px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+.acct-h1 {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.acct-p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+}
+.acct-grid {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.acct-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-soft);
+}
+.acct-row:first-child { border-top: none; }
+.acct-row dt {
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.acct-row dd {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+  word-break: break-word;
+}
+.acct-note {
+  font-size: 12.5px;
+  color: var(--warn);
+  background: rgba(223, 168, 74, 0.1);
+  border: 1px solid rgba(223, 168, 74, 0.35);
+  border-radius: 8px;
+  padding: 10px 13px;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+.acct-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.acct-btn-primary {
+  background: var(--ink);
+  color: white;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.acct-btn-primary:hover { background: var(--blue); border-color: var(--blue); }
+.acct-btn-secondary {
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.15s;
+}
+.acct-btn-secondary:hover { border-color: var(--blue); }
+.acct-link { color: var(--blue-deep); text-decoration: none; font-weight: 600; font-size: 14px; }
 .signin-demo-note {
   margin-top: 20px;
   padding: 10px 12px;

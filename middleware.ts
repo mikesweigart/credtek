@@ -1,30 +1,26 @@
-// Subdomain rewrite — maps prospect-branded sub-portals to their
-// route group inside the main Next.js project.
+// Middleware does two jobs, in order:
+//   1. Subdomain rewrite — maps prospect-branded sub-portals to their
+//      route group (avelecare.cred-tek.com → /avelecare/*).
+//   2. Supabase session refresh — keeps the auth cookie fresh so SSR
+//      and the browser stay in sync (@supabase/ssr requirement).
 //
-//   avelecare.cred-tek.com  →  /avelecare/*
-//   <next-prospect>.cred-tek.com  →  /<slug>/*  (add when needed)
-//
-// The visitor's URL stays on the subdomain — only the internal
-// route is rewritten. DNS (CNAME the subdomain to the Vercel
-// deployment + add it to the project's Domains tab) is handled
-// separately in GoDaddy + Vercel UI.
+// The session refresh attaches refreshed cookies to whichever response
+// the subdomain logic produces (rewrite OR next), so the two concerns
+// compose cleanly without one clobbering the other.
 
+import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
-// Subdomain → route-group slug. Add new prospects here as we
-// spin up more branded demos.
 const SUBDOMAIN_MAP: Record<string, string> = {
   avelecare: "/avelecare",
 };
 
-export function middleware(req: NextRequest) {
+function routingResponse(req: NextRequest): NextResponse {
   const host = req.headers.get("host") ?? "";
-  // Strip port, lowercase. "Avelecare.Cred-tek.com:3000" → "avelecare.cred-tek.com"
   const hostname = host.split(":")[0].toLowerCase();
-
-  // Extract the left-most label. For "avelecare.cred-tek.com" → "avelecare".
-  // Skip apex + www so the main marketing site is untouched.
   const parts = hostname.split(".");
+
+  // apex / www / localhost → no rewrite
   if (parts.length < 3) return NextResponse.next();
   const sub = parts[0];
   if (sub === "www" || sub === "cred-tek") return NextResponse.next();
@@ -33,11 +29,38 @@ export function middleware(req: NextRequest) {
   if (!target) return NextResponse.next();
 
   const url = req.nextUrl.clone();
-  // Don't double-rewrite if the user already deep-linked into /avelecare.
   if (url.pathname.startsWith(target)) return NextResponse.next();
-  // Rewrite "/" to "/avelecare", "/providers" to "/avelecare/providers", etc.
   url.pathname = `${target}${url.pathname === "/" ? "" : url.pathname}`;
   return NextResponse.rewrite(url);
+}
+
+export async function middleware(req: NextRequest) {
+  // 1. Decide the routing response (rewrite or pass-through).
+  const response = routingResponse(req);
+
+  // 2. Refresh the Supabase session, attaching any updated auth cookies
+  //    to that same response. No-op if env vars aren't set.
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (url && key) {
+    const supabase = createServerClient(url, key, {
+      cookies: {
+        getAll() {
+          return req.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value));
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    });
+    // Touching getUser() triggers the cookie refresh when needed.
+    await supabase.auth.getUser();
+  }
+
+  return response;
 }
 
 export const config = {
