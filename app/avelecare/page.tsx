@@ -103,11 +103,11 @@ export default function AvelDashboard() {
             <div className="avel-kpi-val">{avgDaysPayerEnrollment()}<span className="avel-kpi-unit">d</span></div>
             <div className="avel-kpi-delta">Active enrollments only</div>
           </div>
-          <div className="avel-kpi">
+          <Link href="/avelecare/expirables" className="avel-kpi avel-kpi-link">
             <div className="avel-kpi-lbl">Credentials expiring (60d)</div>
             <div className="avel-kpi-val avel-kpi-val-warn">{expiring.length}</div>
-            <div className="avel-kpi-delta">Review &amp; renew</div>
-          </div>
+            <div className="avel-kpi-delta">Review &amp; renew →</div>
+          </Link>
         </div>
 
         {/* ────────── SERVICE-LINE FILTER STRIP ────────── */}
