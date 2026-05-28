@@ -15,10 +15,10 @@ import { useEffect, useState } from "react";
 const LINKS: { href: string; label: string }[] = [
   { href: "#calc", label: "Quote" },
   { href: "#pricing", label: "Pricing" },
-  { href: "/integrations", label: "Integrations" },
   { href: "/compare", label: "Compare" },
   { href: "/dashboard", label: "Demo" },
-  { href: "/api-docs", label: "API" },
+  { href: "/resources", label: "Resources" },
+  { href: "/integrations", label: "Integrations" },
   { href: "/help", label: "Help" },
 ];
 
