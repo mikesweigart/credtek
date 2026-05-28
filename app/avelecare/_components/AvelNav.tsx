@@ -50,11 +50,17 @@ function isActive(pathname: string, href: string): boolean {
 // ──────────────────────────────────────────────────────────────
 // Shell context — drawer state shared between sidebar + topbar.
 // ──────────────────────────────────────────────────────────────
-type ShellCtx = { drawerOpen: boolean; setDrawerOpen: (v: boolean) => void };
+type ShellCtx = {
+  drawerOpen: boolean;
+  setDrawerOpen: (v: boolean) => void;
+  paletteOpen: boolean;
+  setPaletteOpen: (v: boolean) => void;
+};
 const ShellContext = createContext<ShellCtx | null>(null);
 
 export function AvelShellProvider({ children }: { children: ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [paletteOpen, setPaletteOpen] = useState(false);
 
   // Lock body scroll while drawer is open + close on Esc + close if the
   // viewport grows past mobile breakpoint (landscape rotation, etc.).
@@ -77,16 +83,25 @@ export function AvelShellProvider({ children }: { children: ReactNode }) {
     };
   }, [drawerOpen]);
 
-  const value = useMemo(() => ({ drawerOpen, setDrawerOpen }), [drawerOpen]);
+  const value = useMemo(
+    () => ({ drawerOpen, setDrawerOpen, paletteOpen, setPaletteOpen }),
+    [drawerOpen, paletteOpen]
+  );
   return <ShellContext.Provider value={value}>{children}</ShellContext.Provider>;
 }
 
-function useShell(): ShellCtx {
+export function useShell(): ShellCtx {
   const ctx = useContext(ShellContext);
   // In a tree without the provider (e.g. tests, errors), fall back to a
   // no-op so the components don't throw. Provider IS always present in
   // the real app via the layout.
-  if (!ctx) return { drawerOpen: false, setDrawerOpen: () => {} };
+  if (!ctx)
+    return {
+      drawerOpen: false,
+      setDrawerOpen: () => {},
+      paletteOpen: false,
+      setPaletteOpen: () => {},
+    };
   return ctx;
 }
 
@@ -183,7 +198,7 @@ export function AvelNav() {
 // mobile, the page title + actions on the right.
 // ──────────────────────────────────────────────────────────────
 export function AvelTopbar({ title, subtitle }: { title: string; subtitle?: string }) {
-  const { drawerOpen, setDrawerOpen } = useShell();
+  const { drawerOpen, setDrawerOpen, setPaletteOpen } = useShell();
 
   return (
     <header className="avel-topbar">
@@ -207,9 +222,15 @@ export function AvelTopbar({ title, subtitle }: { title: string; subtitle?: stri
       </div>
 
       <div className="avel-topbar-actions">
-        <div className="avel-topbar-search" aria-hidden="true">
-          ⌕ Search providers, spaces, documents…
-        </div>
+        <button
+          type="button"
+          className="avel-topbar-search"
+          onClick={() => setPaletteOpen(true)}
+          aria-label="Search (Command/Ctrl K)"
+        >
+          <span>⌕ Search providers, spaces, actions…</span>
+          <kbd className="avel-topbar-kbd">⌘K</kbd>
+        </button>
         <button type="button" className="avel-topbar-bell" aria-label="Notifications">
           🔔
           <span className="avel-topbar-bell-dot" />

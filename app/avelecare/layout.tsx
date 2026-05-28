@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AvelNav, AvelShellProvider } from "./_components/AvelNav";
 import { AvelGuide } from "./_components/AvelGuide";
+import { AvelCommandPalette } from "./_components/AvelCommandPalette";
 
 // AVEL eCare-branded portal — fully scoped under /avelecare. Maps to
 // avelecare.cred-tek.com via subdomain rewrite (configured in
@@ -32,6 +33,7 @@ export default function AvelLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <AvelGuide />
         </Suspense>
+        <AvelCommandPalette />
       </AvelShellProvider>
     </div>
   );
