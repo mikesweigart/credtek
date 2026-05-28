@@ -12547,3 +12547,256 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   .cmdk-overlay { padding: 8vh 12px 12px; }
   .cmdk-item-sub { display: none; }
 }
+
+/* ============================================================
+   AVEL eCare — Follow-ups
+   ============================================================ */
+.fu-connect-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--avel-ink) 0%, #1A4566 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+.fu-connect-banner strong { color: white; font-size: 15px; }
+.fu-connect-banner span { color: rgba(255,255,255,0.78); font-size: 13.5px; }
+.fu-connect-banner .avel-btn-primary { background: white; color: var(--avel-ink); border-color: white; flex-shrink: 0; }
+.fu-connect-banner .avel-btn-primary:hover { background: var(--avel-teal-soft); border-color: var(--avel-teal-soft); }
+@media (max-width: 700px) {
+  .fu-connect-banner { flex-direction: column; align-items: flex-start; }
+  .fu-connect-banner .avel-btn-primary { width: 100%; text-align: center; justify-content: center; }
+}
+.fu-connected-note {
+  font-size: 13px;
+  color: var(--avel-teal-deep);
+  background: var(--avel-teal-soft);
+  border: 1px solid rgba(33,160,170,0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.fu-connected-note strong { color: var(--avel-teal-deep); }
+
+.fu-list { list-style: none; margin: 0; padding: 0; }
+.fu-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--avel-line-soft);
+}
+.fu-item:first-child { border-top: none; }
+.fu-item.is-done { opacity: 0.55; }
+.fu-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.fu-dot-high { background: var(--avel-danger); }
+.fu-dot-med { background: var(--avel-warn); }
+.fu-dot-low { background: var(--avel-success); }
+.fu-body { flex: 1; min-width: 0; }
+.fu-title { font-size: 14.5px; font-weight: 600; color: var(--avel-ink); }
+.fu-detail { font-size: 13px; color: var(--avel-ink-soft); margin-top: 3px; line-height: 1.5; }
+.fu-meta { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.fu-provider { font-size: 12px; font-weight: 600; color: var(--avel-teal-deep); text-decoration: none; }
+.fu-provider:hover { text-decoration: underline; }
+.fu-channel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--avel-muted);
+  background: var(--avel-surface);
+  border: 1px solid var(--avel-line);
+  border-radius: 100px;
+  padding: 2px 9px;
+}
+.fu-action { flex-shrink: 0; }
+.fu-btn {
+  background: var(--avel-ink);
+  color: white;
+  border: 1px solid var(--avel-ink);
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.fu-btn:hover { background: var(--avel-teal-deep); border-color: var(--avel-teal-deep); }
+.fu-queued {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--avel-teal-deep);
+  background: var(--avel-teal-soft);
+  border-radius: 100px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .fu-item { flex-wrap: wrap; }
+  .fu-action { width: 100%; padding-left: 24px; }
+  .fu-btn { width: 100%; }
+}
+
+/* ============================================================
+   AVEL eCare — Email & Integrations (Settings tab)
+   ============================================================ */
+.email-providers { display: flex; flex-direction: column; gap: 10px; }
+.email-provider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--avel-line);
+  border-radius: 12px;
+  background: var(--avel-surface);
+}
+.email-provider-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: white;
+  border: 1px solid var(--avel-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--avel-teal-deep);
+  flex-shrink: 0;
+}
+.email-provider-body { flex: 1; min-width: 0; }
+.email-provider-name { font-size: 14px; font-weight: 600; color: var(--avel-ink); }
+.email-provider-desc { font-size: 12.5px; color: var(--avel-muted); margin-top: 2px; }
+.email-connected { padding: 4px 0; }
+.email-connected-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(47,140,91,0.35);
+  background: #EAF6EE;
+  border-radius: 12px;
+}
+.email-connected-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--avel-success);
+  flex-shrink: 0;
+}
+.email-connected-addr { font-size: 14px; font-weight: 600; color: var(--avel-ink); }
+.email-connected-sub { font-size: 12px; color: #2F6E48; margin-top: 1px; }
+.email-connected-row .avel-btn-ghost { margin-left: auto; }
+.email-enables { list-style: none; margin: 0; padding: 0; }
+.email-enables li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--avel-line-soft);
+  font-size: 13px;
+  color: var(--avel-ink);
+  line-height: 1.5;
+}
+.email-enables li:first-child { border-top: none; }
+.email-enable-check {
+  color: var(--avel-teal-deep);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   AVEL eCare — NCQA Audit Binder
+   ============================================================ */
+.ab-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.ab-controls-actions { display: flex; gap: 10px; align-items: center; flex-shrink: 0; }
+@media (max-width: 700px) {
+  .ab-controls-actions { width: 100%; }
+  .ab-controls-actions .avel-select { flex: 1; }
+}
+.ab-placeholder {
+  text-align: center;
+  padding: 48px 20px;
+}
+.ab-placeholder-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: var(--avel-surface);
+  border: 1px solid var(--avel-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; color: var(--avel-muted);
+  margin: 0 auto 12px;
+}
+.ab-cover {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(135deg, var(--avel-ink) 0%, #1A4566 100%);
+  color: white;
+  border: none;
+}
+.ab-cover-mark {
+  width: 46px; height: 40px;
+  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  flex-shrink: 0;
+  opacity: 0.95;
+}
+.ab-cover-body { flex: 1; min-width: 0; }
+.ab-cover-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--avel-teal-soft);
+}
+.ab-cover-title { font-size: 20px; font-weight: 700; letter-spacing: -0.015em; margin: 4px 0 4px; }
+.ab-cover-meta { font-size: 12.5px; color: rgba(255,255,255,0.75); }
+.ab-download { background: white; color: var(--avel-ink); border-color: white; flex-shrink: 0; }
+.ab-download:hover { background: var(--avel-teal-soft); border-color: var(--avel-teal-soft); }
+.ab-evidence { font-size: 12.5px; font-weight: 600; color: #2F6E48; }
+.ab-decision {
+  display: inline-block;
+  font-size: 11.5px; font-weight: 600;
+  padding: 3px 10px; border-radius: 100px;
+}
+.ab-decision-ok { background: #DEF2E5; color: #2F6E48; }
+.ab-decision-pending { background: #FDE5D6; color: #B0521D; }
+.ab-chain-verified {
+  font-size: 12px; font-weight: 700;
+  color: #2F6E48; background: #DEF2E5;
+  border: 1px solid rgba(47,110,72,0.3);
+  border-radius: 100px; padding: 4px 11px;
+}
+.ab-chain { list-style: none; margin: 0; padding: 0; }
+.ab-chain-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid var(--avel-line-soft);
+}
+.ab-chain-link:first-child { border-top: none; }
+.ab-chain-step {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--avel-ink); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.ab-chain-body { flex: 1; min-width: 0; }
+.ab-chain-prov { font-size: 13px; font-weight: 500; color: var(--avel-ink); }
+.ab-chain-hashes {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; margin-top: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  flex-wrap: wrap;
+}
+.ab-hash-prev { color: var(--avel-muted); }
+.ab-hash-arrow { color: var(--avel-line); }
+.ab-hash-cur { color: var(--avel-teal-deep); font-weight: 600; }
+.ab-chain-ok { color: var(--avel-success); font-weight: 700; flex-shrink: 0; }

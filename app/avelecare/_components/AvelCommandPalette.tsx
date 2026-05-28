@@ -18,11 +18,13 @@ const GROUP_ORDER: Group[] = ["Actions", "Pages", "Providers", "Spaces"];
 
 const PAGES: Cmd[] = [
   { id: "pg-dash", group: "Pages", label: "Dashboard", href: "/avelecare", icon: "▣" },
+  { id: "pg-followups", group: "Pages", label: "Follow-ups", href: "/avelecare/followups", icon: "↗" },
   { id: "pg-prov", group: "Pages", label: "Providers", href: "/avelecare/providers", icon: "◯" },
   { id: "pg-spaces", group: "Pages", label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇" },
   { id: "pg-exp", group: "Pages", label: "Expirables & Renewals", href: "/avelecare/expirables", icon: "⏱" },
   { id: "pg-wf", group: "Pages", label: "Workflows", href: "/avelecare/workflows", icon: "▤" },
   { id: "pg-docs", group: "Pages", label: "Documents & Compliance", href: "/avelecare/documents", icon: "📄" },
+  { id: "pg-audit", group: "Pages", label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "▣" },
   { id: "pg-rep", group: "Pages", label: "Reports & Analytics", href: "/avelecare/reports", icon: "▥" },
   { id: "pg-set", group: "Pages", label: "Admin & Settings", href: "/avelecare/settings", icon: "⚙" },
   { id: "pg-help", group: "Pages", label: "Help & Chat", href: "/avelecare/help", icon: "✦" },
@@ -30,8 +32,10 @@ const PAGES: Cmd[] = [
 
 const ACTIONS: Cmd[] = [
   { id: "ac-add", group: "Actions", label: "Add a provider", sub: "Start intake", href: "/avelecare/providers", icon: "＋" },
+  { id: "ac-followups", group: "Actions", label: "Review follow-ups", sub: "What needs a nudge", href: "/avelecare/followups", icon: "↗" },
   { id: "ac-renew", group: "Actions", label: "Review expiring credentials", sub: "Renewals due soon", href: "/avelecare/expirables", icon: "⏱" },
-  { id: "ac-report", group: "Actions", label: "Open reports", sub: "Time-to-credential, risk", href: "/avelecare/reports", icon: "▥" },
+  { id: "ac-audit", group: "Actions", label: "Generate NCQA audit binder", sub: "Delegated credentialing", href: "/avelecare/audit", icon: "▣" },
+  { id: "ac-email", group: "Actions", label: "Connect email", sub: "Send follow-ups from your inbox", href: "/avelecare/settings?tab=email", icon: "✉" },
 ];
 
 const PROVIDER_CMDS: Cmd[] = PROVIDERS.map((p) => ({

@@ -4,10 +4,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AvelTopbar } from "../_components/AvelNav";
 
-type Tab = "branding" | "roles" | "notifications";
+type Tab = "branding" | "email" | "roles" | "notifications";
 
 const ROLES = [
   {
@@ -41,58 +42,186 @@ const ROLES = [
 ];
 
 export default function AvelSettings() {
-  const [tab, setTab] = useState<Tab>("branding");
-
   return (
     <>
       <AvelTopbar
         title="Admin & Settings"
-        subtitle="Configure portal branding, control who can see and do what, and tune how alerts reach your team."
+        subtitle="Configure portal branding, connect your email, control who can see and do what, and tune how alerts reach your team."
       />
+      <Suspense fallback={null}>
+        <SettingsTabs />
+      </Suspense>
+    </>
+  );
+}
 
-      <div className="avel-content">
-        {/* ────────── Tab strip ────────── */}
-        <div className="set-tabs" role="tablist">
+function SettingsTabs() {
+  const searchParams = useSearchParams();
+  const initial = (searchParams.get("tab") as Tab) || "branding";
+  const [tab, setTab] = useState<Tab>(
+    ["branding", "email", "roles", "notifications"].includes(initial) ? initial : "branding"
+  );
+
+  const TABS: { id: Tab; label: string }[] = [
+    { id: "branding", label: "Branding" },
+    { id: "email", label: "Email & Integrations" },
+    { id: "roles", label: "Roles & Permissions" },
+    { id: "notifications", label: "Notifications" },
+  ];
+
+  return (
+    <div className="avel-content">
+      <div className="set-tabs" role="tablist">
+        {TABS.map((t) => (
           <button
+            key={t.id}
             type="button"
             role="tab"
-            aria-selected={tab === "branding"}
-            className={`set-tab${tab === "branding" ? " is-active" : ""}`}
-            onClick={() => setTab("branding")}
+            aria-selected={tab === t.id}
+            className={`set-tab${tab === t.id ? " is-active" : ""}`}
+            onClick={() => setTab(t.id)}
           >
-            Branding
+            {t.label}
           </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === "roles"}
-            className={`set-tab${tab === "roles" ? " is-active" : ""}`}
-            onClick={() => setTab("roles")}
-          >
-            Roles &amp; Permissions
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={tab === "notifications"}
-            className={`set-tab${tab === "notifications" ? " is-active" : ""}`}
-            onClick={() => setTab("notifications")}
-          >
-            Notifications
-          </button>
+        ))}
+      </div>
+
+      {tab === "branding" && <BrandingTab />}
+      {tab === "email" && <EmailTab />}
+      {tab === "roles" && <RolesTab />}
+      {tab === "notifications" && <NotificationsTab />}
+
+      <div className="avel-table-foot">
+        AVEL eCare Credentialing Portal · Admin
+        &nbsp;·&nbsp;
+        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────
+// Email & Integrations tab — connect the user's inbox so the portal
+// can send renewal reminders, document requests, and payer follow-ups
+// from their own email.
+// ──────────────────────────────────────────────────────────────
+const EMAIL_PROVIDERS = [
+  { id: "microsoft", name: "Microsoft 365 / Outlook", desc: "Connect via Microsoft Graph. Most common for health systems.", icon: "✦" },
+  { id: "google", name: "Google Workspace / Gmail", desc: "Connect via Google OAuth.", icon: "✉" },
+  { id: "smtp", name: "Custom SMTP / IMAP", desc: "Any provider — bring your own mail server.", icon: "⚙" },
+];
+
+const EMAIL_ENABLES = [
+  "Automated renewal reminders before licenses, DEA, and COIs lapse",
+  "Provider intake & missing-document requests sent from your inbox",
+  "Payer enrollment follow-ups and escalations",
+  "CAQH re-attestation nudges every 120 days",
+  "Replies thread back into the provider's record automatically",
+];
+
+function EmailTab() {
+  const [connected, setConnected] = useState<string | null>(null);
+  const [pending, setPending] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      setConnected(localStorage.getItem("avel_email_connected"));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  function connect(providerId: string) {
+    setPending(providerId);
+    // Demo: simulate an OAuth round-trip, then store the connected address.
+    const address =
+      providerId === "google" ? "m.koehler@avelecare.com" : "m.koehler@avelecare.com";
+    window.setTimeout(() => {
+      try {
+        localStorage.setItem("avel_email_connected", address);
+      } catch {
+        /* ignore */
+      }
+      setConnected(address);
+      setPending(null);
+    }, 800);
+  }
+
+  function disconnect() {
+    try {
+      localStorage.removeItem("avel_email_connected");
+    } catch {
+      /* ignore */
+    }
+    setConnected(null);
+  }
+
+  return (
+    <div className="avel-grid-2">
+      <div className="avel-card">
+        <div className="avel-card-head">
+          <div>
+            <div className="avel-card-title">Connect your email</div>
+            <div className="avel-card-sub">
+              Send follow-ups, reminders, and requests from your own inbox — and have replies thread back automatically.
+            </div>
+          </div>
         </div>
 
-        {tab === "branding" && <BrandingTab />}
-        {tab === "roles" && <RolesTab />}
-        {tab === "notifications" && <NotificationsTab />}
+        {connected ? (
+          <div className="email-connected">
+            <div className="email-connected-row">
+              <span className="email-connected-dot" />
+              <div>
+                <div className="email-connected-addr">{connected}</div>
+                <div className="email-connected-sub">Connected · sending enabled</div>
+              </div>
+              <button type="button" className="avel-btn-ghost" onClick={disconnect}>
+                Disconnect
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="email-providers">
+            {EMAIL_PROVIDERS.map((p) => (
+              <div key={p.id} className="email-provider">
+                <div className="email-provider-icon">{p.icon}</div>
+                <div className="email-provider-body">
+                  <div className="email-provider-name">{p.name}</div>
+                  <div className="email-provider-desc">{p.desc}</div>
+                </div>
+                <button
+                  type="button"
+                  className="avel-btn-primary"
+                  onClick={() => connect(p.id)}
+                  disabled={pending !== null}
+                >
+                  {pending === p.id ? "Connecting…" : "Connect"}
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-        <div className="avel-table-foot">
-          AVEL eCare Credentialing Portal · Admin
-          &nbsp;·&nbsp;
-          <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+      <div className="avel-card">
+        <div className="avel-card-head">
+          <div>
+            <div className="avel-card-title">What connecting unlocks</div>
+            <div className="avel-card-sub">The portal goes from informing you to acting for you.</div>
+          </div>
+        </div>
+        <ul className="email-enables">
+          {EMAIL_ENABLES.map((e, i) => (
+            <li key={i}><span className="email-enable-check">✓</span>{e}</li>
+          ))}
+        </ul>
+        <div className="avel-callout-soft">
+          Demo: connection is simulated. In production this uses Microsoft Graph or
+          Google OAuth with least-privilege send/read scopes and a signed BAA.
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

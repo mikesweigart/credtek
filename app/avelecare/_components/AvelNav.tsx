@@ -29,6 +29,7 @@ type Item = { label: string; href: string; icon: ReactNode; badge?: string };
 
 const WORKSPACE: Item[] = [
   { label: "Dashboard", href: "/avelecare", icon: "▣" },
+  { label: "Follow-ups", href: "/avelecare/followups", icon: "↗", badge: "5" },
   { label: "Providers", href: "/avelecare/providers", icon: "◯", badge: "15" },
   { label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇", badge: "6" },
   { label: "Expirables", href: "/avelecare/expirables", icon: "⏱", badge: "4" },
@@ -37,6 +38,7 @@ const WORKSPACE: Item[] = [
 
 const SUPPORT: Item[] = [
   { label: "Documents & Compliance", href: "/avelecare/documents", icon: "📄" },
+  { label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "▣" },
   { label: "Reports & Analytics", href: "/avelecare/reports", icon: "▥" },
   { label: "Admin & Settings", href: "/avelecare/settings", icon: "⚙" },
   { label: "Help & Chat", href: "/avelecare/help", icon: "✦" },
