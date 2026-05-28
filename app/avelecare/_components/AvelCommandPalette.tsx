@@ -22,6 +22,7 @@ const PAGES: Cmd[] = [
   { id: "pg-prov", group: "Pages", label: "Providers", href: "/avelecare/providers", icon: "◯" },
   { id: "pg-spaces", group: "Pages", label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇" },
   { id: "pg-exp", group: "Pages", label: "Expirables & Renewals", href: "/avelecare/expirables", icon: "⏱" },
+  { id: "pg-recred", group: "Pages", label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "↻" },
   { id: "pg-wf", group: "Pages", label: "Workflows", href: "/avelecare/workflows", icon: "▤" },
   { id: "pg-docs", group: "Pages", label: "Documents & Compliance", href: "/avelecare/documents", icon: "📄" },
   { id: "pg-audit", group: "Pages", label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "▣" },

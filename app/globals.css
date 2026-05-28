@@ -12800,3 +12800,76 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .ab-hash-arrow { color: var(--avel-line); }
 .ab-hash-cur { color: var(--avel-teal-deep); font-weight: 600; }
 .ab-chain-ok { color: var(--avel-success); font-weight: 700; flex-shrink: 0; }
+
+/* ============================================================
+   AVEL eCare — Re-credentialing forecast
+   ============================================================ */
+.rc-forecast {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 160px;
+  padding: 8px 4px 0;
+}
+.rc-fc-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.rc-fc-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.rc-fc-bar {
+  width: 70%;
+  max-width: 64px;
+  background: linear-gradient(180deg, var(--avel-teal), var(--avel-teal-deep));
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+  min-height: 10px;
+  transition: height 0.4s ease;
+}
+.rc-fc-count {
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+}
+.rc-fc-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--avel-ink-soft);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.rc-count {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.rc-count-over { background: #FCE5DE; color: var(--avel-danger); }
+.rc-count-soon { background: #FDE5D6; color: #B0521D; }
+.rc-count-ok { background: var(--avel-surface); color: var(--avel-ink-soft); }
+
+.rc-status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.rc-status-overdue { background: #FCE5DE; color: var(--avel-danger); }
+.rc-status-committee { background: #ECE2F5; color: #6A468C; }
+.rc-status-progress { background: #E3EDF7; color: #2F6FA6; }
+.rc-status-due { background: #FDE5D6; color: #B0521D; }
+.rc-status-ok { background: #DEF2E5; color: #2F6E48; }

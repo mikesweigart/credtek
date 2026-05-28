@@ -33,6 +33,7 @@ const WORKSPACE: Item[] = [
   { label: "Providers", href: "/avelecare/providers", icon: "◯", badge: "15" },
   { label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇", badge: "6" },
   { label: "Expirables", href: "/avelecare/expirables", icon: "⏱", badge: "4" },
+  { label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "↻" },
   { label: "Workflows", href: "/avelecare/workflows", icon: "▤" },
 ];
 
