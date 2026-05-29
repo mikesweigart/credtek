@@ -215,6 +215,9 @@ export function PortalGuide({
     if (pathname.startsWith("/app/expirables")) {
       return `Triage view — everything expiring inside the next 90 days, bucketed by urgency. Click any row to open the provider's file and start the renewal flow.`;
     }
+    if (pathname.startsWith("/app/coverage")) {
+      return `States × payers matrix per provider. Green cells are billable today. Yellow is in flight. <strong>GAP</strong> cells are states where the provider is licensed but has no enrollment yet — that's the work to do. Filter to <strong>Has gaps</strong> to see only the providers with billing white space.`;
+    }
     if (pathname.startsWith("/app/integrations")) {
       return `Every external system CredTek connects to — PSV sources, state boards, payer portals, EHRs, document repos. <strong>Connected</strong> = live today. <strong>Available</strong> = turn on in a click. The strategic thesis is one click away.`;
     }
@@ -258,6 +261,11 @@ export function PortalGuide({
         q: "How do I credential one provider in multiple states?",
         a: `Add the provider once, then list every state they'll practice in on the <strong>States</strong> field. From the provider page, add a <strong>License</strong> per state under the Licenses tab and a <strong>Payer enrollment</strong> per state under Enrollment. CredTek tracks each state's expiration and renewal separately.`,
         cta: { label: "Add a provider", href: "/app/providers/new" },
+      },
+      {
+        q: "Where can my providers actually bill today?",
+        a: `Open the <strong>Coverage</strong> page in the sidebar. You get a states × payers matrix per provider showing exactly which combinations are billable, in flight, denied, or a gap (licensed but no enrollment). Filter to <strong>Has gaps</strong> to see only the providers with open billing white space.`,
+        cta: { label: "Open coverage matrix", href: "/app/coverage" },
       },
       {
         q: "What can my team see?",

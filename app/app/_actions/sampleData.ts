@@ -19,6 +19,8 @@ import { slugify } from "../../_lib/data/providers";
 
 const SEED_TAG = "credtek:sample";
 
+type EnrollmentStatus = "not_started" | "drafted" | "submitted" | "awaiting_info" | "active" | "denied" | "termed";
+
 type SeedSpec = {
   name: string;
   credential: string;
@@ -31,7 +33,21 @@ type SeedSpec = {
   email: string; // contact email (lives in meta JSON so the follow-up sender can use it)
   licenses?: { state: string; license_number: string; status: string; expires_on: string | null }[];
   credentials?: { kind: string; identifier: string; status: string; expires_on: string | null }[];
+  /** Per-state enrollment outcomes by payer short_name */
+  enrollments?: { state: string; payerKey: string; status: EnrollmentStatus; effective?: string; submitted?: string }[];
 };
+
+// Stable identifier for sample payers, used as short_name so we can find
+// them on reseed without hitting unique-constraint problems (the table
+// has no name unique key).
+const SAMPLE_PAYERS = [
+  { short_name: "Medicare",  name: "Medicare (CMS)",        kind: "medicare" },
+  { short_name: "UHC",       name: "UnitedHealthcare",      kind: "commercial" },
+  { short_name: "Aetna",     name: "Aetna",                 kind: "commercial" },
+  { short_name: "BCBS",      name: "Blue Cross Blue Shield", kind: "commercial" },
+  { short_name: "Cigna",     name: "Cigna Healthcare",      kind: "commercial" },
+  { short_name: "Humana",    name: "Humana",                kind: "commercial" },
+];
 
 const SEED: SeedSpec[] = [
   {
@@ -47,6 +63,7 @@ const SEED: SeedSpec[] = [
     licenses: [
       { state: "TX", license_number: "PSY-44219", status: "active", expires_on: dateInDays(180) },
     ],
+    // Intake stage — no enrollments started yet (every cell will show as a gap)
   },
   {
     name: "James Mitchell",
@@ -65,6 +82,7 @@ const SEED: SeedSpec[] = [
     credentials: [
       { kind: "caqh", identifier: "CAQH-29384772", status: "active", expires_on: dateInDays(120) },
     ],
+    // PSV — too early for enrollments
   },
   {
     name: "Dr. Alex Johnson",
@@ -83,6 +101,11 @@ const SEED: SeedSpec[] = [
     credentials: [
       { kind: "dea", identifier: "AJ1234567", status: "active", expires_on: dateInDays(540) },
       { kind: "board_cert", identifier: "ABEM-44827", status: "active", expires_on: dateInDays(910) },
+    ],
+    // Privileging stage — a couple of payer apps already drafted ahead of stage advance
+    enrollments: [
+      { state: "WA", payerKey: "Medicare", status: "drafted" },
+      { state: "WA", payerKey: "UHC",      status: "drafted" },
     ],
   },
   {
@@ -103,6 +126,17 @@ const SEED: SeedSpec[] = [
       { kind: "dea", identifier: "PR9876543", status: "active", expires_on: dateInDays(620) },
       { kind: "board_cert", identifier: "ABIM-29103", status: "active", expires_on: dateInDays(1100) },
     ],
+    // Mid-enrollment — mix of submitted, awaiting, denial (appeal in flight), some active
+    enrollments: [
+      { state: "NY", payerKey: "Medicare", status: "active",        effective: dateInDays(-7) },
+      { state: "NY", payerKey: "UHC",      status: "submitted",     submitted: dateInDays(-12) },
+      { state: "NY", payerKey: "Aetna",    status: "awaiting_info", submitted: dateInDays(-18) },
+      { state: "NY", payerKey: "BCBS",     status: "submitted",     submitted: dateInDays(-10) },
+      { state: "NY", payerKey: "Cigna",    status: "denied",        submitted: dateInDays(-22) },
+      { state: "NJ", payerKey: "Medicare", status: "active",        effective: dateInDays(-7) },
+      { state: "NJ", payerKey: "UHC",      status: "submitted",     submitted: dateInDays(-14) },
+      { state: "NJ", payerKey: "Aetna",    status: "drafted" },
+    ],
   },
   {
     name: "Marcus Webb",
@@ -120,6 +154,15 @@ const SEED: SeedSpec[] = [
     credentials: [
       { kind: "dea", identifier: "MW5432109", status: "active", expires_on: dateInDays(700) },
       { kind: "caqh", identifier: "CAQH-50983217", status: "active", expires_on: dateInDays(200) },
+    ],
+    // Approved + billable across the major payers; one humana still in flight
+    enrollments: [
+      { state: "CO", payerKey: "Medicare", status: "active", effective: dateInDays(-32) },
+      { state: "CO", payerKey: "UHC",      status: "active", effective: dateInDays(-30) },
+      { state: "CO", payerKey: "Aetna",    status: "active", effective: dateInDays(-25) },
+      { state: "CO", payerKey: "BCBS",     status: "active", effective: dateInDays(-22) },
+      { state: "CO", payerKey: "Cigna",    status: "active", effective: dateInDays(-18) },
+      { state: "CO", payerKey: "Humana",   status: "submitted", submitted: dateInDays(-15) },
     ],
   },
 ];
@@ -147,7 +190,29 @@ export async function seedSampleData() {
     redirect("/app?seeded=exists");
   }
 
-  // Insert providers, then their licenses/credentials.
+  // Ensure the sample payers exist (global reference data). Select first by
+  // short_name; only insert ones not already present. This is idempotent
+  // and safe across multiple workspaces seeding sample data.
+  const shortNames = SAMPLE_PAYERS.map((p) => p.short_name);
+  const { data: existingPayers } = await s
+    .from("payers")
+    .select("id, short_name")
+    .in("short_name", shortNames);
+  const have = new Set((existingPayers ?? []).map((p) => p.short_name as string));
+  const toInsert = SAMPLE_PAYERS.filter((p) => !have.has(p.short_name));
+  if (toInsert.length > 0) {
+    await s.from("payers").insert(toInsert);
+  }
+  const { data: allPayers } = await s
+    .from("payers")
+    .select("id, short_name")
+    .in("short_name", shortNames);
+  const payerIdByKey: Record<string, string> = {};
+  for (const py of allPayers ?? []) {
+    if (py.short_name) payerIdByKey[py.short_name as string] = py.id as string;
+  }
+
+  // Insert providers, then their licenses/credentials/enrollments.
   for (const p of SEED) {
     const enteredAt = timeAgo(p.daysAgoEntered);
     const createdAt = timeAgo(p.daysAgoEntered + 1); // entered after created
@@ -197,11 +262,33 @@ export async function seedSampleData() {
         }))
       );
     }
+
+    if (p.enrollments?.length) {
+      const rows = p.enrollments
+        .map((e) => {
+          const payer_id = payerIdByKey[e.payerKey];
+          if (!payer_id) return null;
+          return {
+            tenant_id: ctx.tenantId,
+            provider_id: prov.id,
+            payer_id,
+            state: e.state,
+            status: e.status,
+            effective_date: e.effective ?? null,
+            submitted_on: e.submitted ?? null,
+          };
+        })
+        .filter((r): r is NonNullable<typeof r> => r !== null);
+      if (rows.length > 0) {
+        await s.from("enrollments").insert(rows);
+      }
+    }
   }
 
   revalidatePath("/app");
   revalidatePath("/app/providers");
   revalidatePath("/app/followups");
+  revalidatePath("/app/coverage");
   redirect("/app?seeded=ok");
 }
 
@@ -225,8 +312,13 @@ export async function resetSampleData() {
     await s.from("providers").delete().in("id", ids);
   }
 
+  // Note: we intentionally do NOT delete sample payers — they're global
+  // reference rows that real enrollments may reference. Leaving them in
+  // place is the safe + idempotent choice.
+
   revalidatePath("/app");
   revalidatePath("/app/providers");
   revalidatePath("/app/followups");
+  revalidatePath("/app/coverage");
   redirect("/app?seeded=cleared");
 }
