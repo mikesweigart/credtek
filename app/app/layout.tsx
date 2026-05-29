@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
-import { getSessionContext } from "../_lib/data/workspace";
+import { getSessionContext, ROLE_LABEL } from "../_lib/data/workspace";
 import { SignOutButton } from "../account/SignOutButton";
 import { PortalNav } from "./_components/PortalNav";
 
@@ -54,6 +54,11 @@ export default async function PortalLayout({ children }: { children: ReactNode }
             {ctx.tenantName ?? "Workspace"}
           </div>
           <div className="shell-topbar-actions">
+            {ctx.role && (
+              <span className={`portal-role-badge role-${ctx.role}`}>
+                {ROLE_LABEL[ctx.role] ?? ctx.role}
+              </span>
+            )}
             <span className="shell-topbar-shortcut">{ctx.email}</span>
             <SignOutButton />
           </div>

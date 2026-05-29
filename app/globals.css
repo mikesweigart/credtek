@@ -13188,3 +13188,149 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   color: var(--muted); font-size: 14px; padding: 4px 6px; border-radius: 6px;
 }
 .portal-del-btn:hover { background: #FBEBE5; color: #B85533; }
+
+/* ============================================================
+   Real app — professional pass: progress viz, role badges,
+   red flags, automation, import, richer color
+   ============================================================ */
+
+/* Role badge */
+.portal-role-badge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+  background: var(--blue-soft); color: var(--blue-deep);
+  border: 1px solid rgba(4,103,222,0.25);
+}
+.portal-role-badge.role-super_admin { background: #2A1A4A; color: #C9B6F0; border-color: #4A3270; }
+.portal-role-badge.role-admin { background: var(--blue-soft); color: var(--blue-deep); border-color: rgba(4,103,222,0.3); }
+.portal-role-badge.role-client { background: #DEF2E5; color: #2F6E48; border-color: rgba(47,110,72,0.3); }
+
+/* KPI flag/auto variants */
+.portal-kpi-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.portal-kpi-flag { color: #B85533; }
+.portal-kpi-auto { color: var(--blue-deep); }
+.portal-kpi-flagcard { border-color: rgba(184,85,51,0.4); background: linear-gradient(180deg, #FDF1ED, white); }
+
+/* Pipeline-health list */
+.portal-card-flag { border-color: rgba(184,85,51,0.45); }
+.portal-card-flag .portal-card-head h2 { color: #B85533; }
+.portal-card-auto { background: linear-gradient(135deg, var(--blue-soft), white); border-color: rgba(4,103,222,0.2); }
+.portal-auto-list { list-style: none; margin: 0; padding: 0; }
+.portal-auto-list li { font-size: 13.5px; color: var(--ink-soft); padding: 7px 0; border-top: 1px solid rgba(4,103,222,0.12); line-height: 1.5; }
+.portal-auto-list li:first-child { border-top: none; }
+.portal-auto-list strong { color: var(--ink); }
+.portal-pl-list { list-style: none; margin: 0; padding: 0; }
+.portal-pl-row {
+  display: grid; grid-template-columns: 1fr 1.4fr; gap: 16px; align-items: center;
+  padding: 14px 0; border-top: 1px solid var(--line-soft);
+}
+.portal-pl-row:first-child { border-top: none; }
+.portal-pl-name { font-size: 14px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.portal-pl-name:hover { color: var(--blue-deep); text-decoration: underline; }
+.portal-empty-actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+@media (max-width: 700px) { .portal-pl-row { grid-template-columns: 1fr; gap: 8px; } }
+
+/* ---------- Provider progress: compact ---------- */
+.pp { display: flex; flex-direction: column; gap: 6px; }
+.pp-track {
+  height: 8px; background: var(--cream); border-radius: 100px; overflow: hidden;
+}
+.pp-fill {
+  height: 100%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--blue), #38B6FF);
+  transition: width 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.pp-fill-flag { background: linear-gradient(90deg, #D97F2A, #B85533); }
+.pp-compact-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pp-stage-name { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+.pp-flag-pill {
+  font-size: 11px; font-weight: 700; color: #B85533;
+  background: #FCE5DE; border-radius: 100px; padding: 2px 9px;
+  animation: pp-flag-pulse 1.8s ease-in-out infinite;
+}
+.pp-ontrack-pill { font-size: 11px; font-weight: 600; color: var(--blue-deep); background: var(--blue-soft); border-radius: 100px; padding: 2px 9px; }
+.pp-done-pill { font-size: 11px; font-weight: 700; color: #2F6E48; background: #DEF2E5; border-radius: 100px; padding: 2px 9px; }
+
+@keyframes pp-flag-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(184,85,51,0.45); }
+  50% { box-shadow: 0 0 0 5px rgba(184,85,51,0); }
+}
+
+/* ---------- Provider progress: full ---------- */
+.pp-full { display: flex; flex-direction: column; gap: 16px; }
+.pp-stepper { list-style: none; display: flex; margin: 4px 0 0; padding: 0; gap: 0; }
+.pp-step { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; }
+.pp-step:not(:last-child)::after {
+  content: ""; position: absolute; top: 13px; left: 50%; width: 100%; height: 2px;
+  background: var(--line); z-index: 0;
+}
+.pp-step-done:not(:last-child)::after { background: var(--blue); }
+.pp-step-dot {
+  width: 28px; height: 28px; border-radius: 50%; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  background: white; color: var(--muted); border: 2px solid var(--line);
+}
+.pp-step-done .pp-step-dot { background: var(--blue); color: white; border-color: var(--blue); }
+.pp-step-current .pp-step-dot {
+  background: white; color: var(--blue-deep); border-color: var(--blue);
+  box-shadow: 0 0 0 4px var(--blue-soft); animation: pp-current-pulse 2s ease-in-out infinite;
+}
+.pp-step-flag .pp-step-dot {
+  color: #B85533; border-color: #B85533;
+  box-shadow: 0 0 0 4px rgba(184,85,51,0.15); animation: pp-flag-pulse 1.8s ease-in-out infinite;
+}
+@keyframes pp-current-pulse {
+  0%,100% { box-shadow: 0 0 0 4px var(--blue-soft); }
+  50% { box-shadow: 0 0 0 7px rgba(4,103,222,0.05); }
+}
+.pp-step-label { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.2; }
+.pp-step-current .pp-step-label { color: var(--ink); font-weight: 600; }
+.pp-step-done .pp-step-label { color: var(--ink-soft); }
+.pp-step-auto { font-size: 10px; color: var(--blue); }
+
+.pp-status {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 18px; border-radius: 12px;
+  background: var(--blue-soft); border: 1px solid rgba(4,103,222,0.25);
+}
+.pp-status-flag { background: #FDF1ED; border-color: rgba(184,85,51,0.4); }
+.pp-status-done { background: #EAF6EE; border-color: rgba(47,110,72,0.35); }
+.pp-status-stage { font-size: 15px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pp-auto-badge { font-size: 10.5px; font-weight: 700; padding: 2px 9px; border-radius: 100px; }
+.pp-auto-on { background: var(--blue); color: white; }
+.pp-auto-off { background: var(--cream); color: var(--ink-soft); border: 1px solid var(--line); }
+.pp-status-time { font-size: 13px; margin-top: 4px; }
+.pp-flag-text { color: #B85533; font-weight: 600; }
+.pp-ontrack-text { color: var(--ink-soft); }
+.pp-followup { text-align: right; flex-shrink: 0; }
+.pp-followup-lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 700; }
+.pp-followup-val { font-size: 14px; font-weight: 700; color: var(--blue-deep); }
+
+.pp-detail { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.pp-detail-row { display: grid; grid-template-columns: 160px 1fr; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--line-soft); }
+.pp-detail-row:first-child { border-top: none; }
+.pp-detail-lbl { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+.pp-detail-val { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
+@media (max-width: 640px) {
+  .pp-status { flex-direction: column; align-items: flex-start; }
+  .pp-followup { text-align: left; }
+  .pp-detail-row { grid-template-columns: 1fr; gap: 4px; }
+  .pp-step-label { font-size: 9.5px; }
+}
+
+/* ---------- Bulk import ---------- */
+.portal-import-help { background: var(--cream); border-style: dashed; }
+.portal-import-help-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.portal-import-code {
+  display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  background: white; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; color: var(--ink);
+}
+.portal-import-help-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.5; }
+.portal-import-example { margin-top: 14px; }
+.portal-import-example-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px; }
+.portal-import-example pre {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.7;
+  background: var(--ink); color: #C9D8EC; padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 0;
+}
+.portal-textarea { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; resize: vertical; min-height: 200px; }

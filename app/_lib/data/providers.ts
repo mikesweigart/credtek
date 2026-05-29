@@ -23,6 +23,8 @@ export type DbProvider = {
     | "committee"
     | "enrollment"
     | "approved";
+  // Present once migration 0004 has run; falls back to created_at.
+  stage_entered_at?: string | null;
 };
 
 export async function listProviders(): Promise<DbProvider[]> {

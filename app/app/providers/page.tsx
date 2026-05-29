@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { listProviders } from "../../_lib/data/providers";
+import { getSessionContext, canEdit } from "../../_lib/data/workspace";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,8 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 export default async function PortalProviders() {
-  const providers = await listProviders();
+  const [providers, ctx] = await Promise.all([listProviders(), getSessionContext()]);
+  const editor = canEdit(ctx.role);
 
   return (
     <div>
@@ -22,17 +24,24 @@ export default async function PortalProviders() {
           <h1 className="portal-h1">Providers</h1>
           <p className="portal-sub">{providers.length} clinician{providers.length === 1 ? "" : "s"} in your workspace</p>
         </div>
-        <Link href="/app/providers/new" className="acct-btn-primary">+ Add provider</Link>
+        {editor && (
+          <div className="portal-head-actions">
+            <Link href="/app/providers/import" className="acct-btn-secondary">⤓ Bulk import</Link>
+            <Link href="/app/providers/new" className="acct-btn-primary">+ Add provider</Link>
+          </div>
+        )}
       </div>
 
       {providers.length === 0 ? (
         <div className="portal-empty">
           <div className="portal-empty-icon">◯</div>
           <h2>No providers yet</h2>
-          <p>Add your first clinician to start tracking credentialing.</p>
-          <Link href="/app/providers/new" className="acct-btn-primary" style={{ display: "inline-flex", marginTop: 8 }}>
-            + Add a provider
-          </Link>
+          <p>{editor ? "Add your first clinician to start tracking credentialing." : "No providers have been added to this workspace yet."}</p>
+          {editor && (
+            <Link href="/app/providers/new" className="acct-btn-primary" style={{ display: "inline-flex", marginTop: 8 }}>
+              + Add a provider
+            </Link>
+          )}
         </div>
       ) : (
         <div className="portal-card portal-card-flush">

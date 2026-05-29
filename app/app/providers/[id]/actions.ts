@@ -1,18 +1,20 @@
 "use server";
 
 // Server actions for the provider credentialing workspace. Every
-// mutation is RLS-scoped to the signed-in user's tenant (tenant_id set
-// from the session, which the RLS WITH CHECK validates). Used as native
-// <form action> handlers — progressive enhancement, works without JS.
+// mutation is RLS-scoped to the tenant AND gated by role — read-only
+// roles (client/finance/readonly) get a silent no-op (UI also hides the
+// controls). Native <form action> handlers — progressive enhancement.
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../_lib/supabase/serverClient";
-import { getSessionContext } from "../../../_lib/data/workspace";
+import { getSessionContext, canEdit } from "../../../_lib/data/workspace";
+import type { SessionCtx } from "../../../_lib/data/workspace";
 
-async function ctxOrRedirect() {
+async function editorCtx(): Promise<SessionCtx | null> {
   const ctx = await getSessionContext();
   if (!ctx.userId) redirect("/sign-in");
+  if (!canEdit(ctx.role)) return null; // read-only role → no-op
   return ctx;
 }
 
@@ -21,7 +23,8 @@ function str(fd: FormData, key: string): string {
 }
 
 export async function addLicense(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
@@ -37,7 +40,8 @@ export async function addLicense(formData: FormData) {
 }
 
 export async function addCredential(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
@@ -53,7 +57,8 @@ export async function addCredential(formData: FormData) {
 }
 
 export async function addDocument(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
@@ -69,7 +74,8 @@ export async function addDocument(formData: FormData) {
 }
 
 export async function addEnrollment(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
@@ -87,7 +93,8 @@ export async function addEnrollment(formData: FormData) {
 }
 
 export async function deleteSubRecord(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const table = str(formData, "table");
   const id = str(formData, "id");
@@ -101,29 +108,33 @@ export async function deleteSubRecord(formData: FormData) {
 const STAGE_SEQ = ["intake", "psv", "privileging", "committee", "enrollment", "approved"];
 
 export async function advanceStage(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const current = str(formData, "current") || "intake";
   const s = await createSupabaseServerClient();
   if (!s || !providerId) return;
   const idx = STAGE_SEQ.indexOf(current);
   const next = STAGE_SEQ[Math.min(idx + 1, STAGE_SEQ.length - 1)];
-  // Stage column may not exist pre-migration-0003 — this errors quietly then.
+  // stage_entered_at resets the SLA clock; both columns exist post-0003/0004.
   await s.from("providers").update({ credentialing_stage: next }).eq("id", providerId);
+  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId);
   revalidatePath(`/app/providers/${providerId}`);
+  revalidatePath("/app");
 }
 
 export async function approveProvider(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
 
-  // Mark active (always works). Set stage approved (works post-0003).
   await s.from("providers").update({ status: "active" }).eq("id", providerId);
   await s.from("providers").update({ credentialing_stage: "approved" }).eq("id", providerId);
+  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId);
 
-  // Write a tamper-evident audit entry for the committee approval.
+  // Tamper-evident audit entry for the committee approval (best-effort).
   try {
     const { data: last } = await s
       .from("audit_log")
@@ -152,7 +163,7 @@ export async function approveProvider(formData: FormData) {
       log_hash: logHash,
     });
   } catch {
-    // Audit is best-effort; approval still succeeds.
+    /* audit is best-effort; approval still succeeds */
   }
 
   revalidatePath(`/app/providers/${providerId}`);
@@ -160,7 +171,8 @@ export async function approveProvider(formData: FormData) {
 }
 
 export async function updateProvider(formData: FormData) {
-  const ctx = await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !providerId) return;
@@ -183,7 +195,8 @@ export async function updateProvider(formData: FormData) {
 }
 
 export async function deleteProvider(formData: FormData) {
-  await ctxOrRedirect();
+  const ctx = await editorCtx();
+  if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !providerId) return;

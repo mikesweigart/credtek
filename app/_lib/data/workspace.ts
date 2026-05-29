@@ -15,6 +15,23 @@ export type SessionCtx = {
   role: string | null;
 };
 
+export const ROLE_LABEL: Record<string, string> = {
+  super_admin: "Super Admin",
+  admin: "Admin",
+  coordinator: "Coordinator",
+  client: "Client",
+  finance: "Finance",
+  readonly: "Read-only",
+};
+
+const EDIT_ROLES = ["super_admin", "admin", "coordinator"];
+
+/** Can this role create/edit/approve, or is it a read-only portal? */
+export function canEdit(role: string | null): boolean {
+  if (!role) return true; // default workspace owner is admin
+  return EDIT_ROLES.includes(role);
+}
+
 const EMPTY: SessionCtx = {
   configured: false,
   userId: null,
