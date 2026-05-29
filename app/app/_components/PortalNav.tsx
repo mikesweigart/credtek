@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const ITEMS: { label: string; href: string; icon: string }[] = [
   { label: "Dashboard", href: "/app", icon: "▣" },
   { label: "Providers", href: "/app/providers", icon: "◯" },
+  { label: "Follow-ups", href: "/app/followups", icon: "✉" },
 ];
 
 export function PortalNav() {

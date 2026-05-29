@@ -10,6 +10,7 @@ export type SessionCtx = {
   configured: boolean;
   userId: string | null;
   email: string | null;
+  fullName: string | null;
   tenantId: string | null;
   tenantName: string | null;
   role: string | null;
@@ -36,6 +37,7 @@ const EMPTY: SessionCtx = {
   configured: false,
   userId: null,
   email: null,
+  fullName: null,
   tenantId: null,
   tenantName: null,
   role: null,
@@ -58,7 +60,7 @@ export async function getSessionContext(): Promise<SessionCtx> {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("tenant_id, role, tenants ( name )")
+    .select("tenant_id, full_name, role, tenants ( name )")
     .eq("id", user.id)
     .maybeSingle();
 
@@ -67,6 +69,7 @@ export async function getSessionContext(): Promise<SessionCtx> {
       configured: true,
       userId: user.id,
       email: user.email ?? null,
+      fullName: (profile.full_name as string | null) ?? null,
       tenantId: profile.tenant_id as string,
       tenantName: tenantNameFrom(profile.tenants),
       role: (profile.role as string) ?? "admin",
@@ -77,12 +80,14 @@ export async function getSessionContext(): Promise<SessionCtx> {
   const healed = await ensureWorkspace(
     user.id,
     user.email ?? "",
-    (user.user_metadata as { org_name?: string } | null)?.org_name
+    (user.user_metadata as { org_name?: string } | null)?.org_name,
+    (user.user_metadata as { full_name?: string } | null)?.full_name
   );
   return {
     configured: true,
     userId: user.id,
     email: user.email ?? null,
+    fullName: healed?.fullName ?? null,
     tenantId: healed?.tenantId ?? null,
     tenantName: healed?.tenantName ?? null,
     role: "admin",
@@ -92,21 +97,23 @@ export async function getSessionContext(): Promise<SessionCtx> {
 async function ensureWorkspace(
   userId: string,
   email: string,
-  orgName?: string
-): Promise<{ tenantId: string; tenantName: string } | null> {
+  orgName?: string,
+  fullName?: string
+): Promise<{ tenantId: string; tenantName: string; fullName: string | null } | null> {
   const admin = supabaseAdmin();
   if (!admin) return null;
 
   // Re-check under the admin client (covers a race with the trigger).
   const { data: existing } = await admin
     .from("profiles")
-    .select("tenant_id, tenants ( name )")
+    .select("tenant_id, full_name, tenants ( name )")
     .eq("id", userId)
     .maybeSingle();
   if (existing?.tenant_id) {
     return {
       tenantId: existing.tenant_id as string,
       tenantName: tenantNameFrom(existing.tenants) ?? "Workspace",
+      fullName: (existing.full_name as string | null) ?? null,
     };
   }
 
@@ -126,8 +133,13 @@ async function ensureWorkspace(
     id: userId,
     tenant_id: tenant.id,
     email,
+    full_name: fullName ?? null,
     role: "admin",
   });
 
-  return { tenantId: tenant.id as string, tenantName: tenant.name as string };
+  return {
+    tenantId: tenant.id as string,
+    tenantName: tenant.name as string,
+    fullName: fullName ?? null,
+  };
 }
