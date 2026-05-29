@@ -6,7 +6,13 @@ import Link from "next/link";
 import { listProviders } from "../_lib/data/providers";
 import { getSessionContext, canEdit } from "../_lib/data/workspace";
 import { ProviderProgress } from "./_components/ProviderProgress";
-import { daysInStage, isOverdue, STAGE_META } from "../_lib/data/credentialing-model";
+import {
+  daysInStage,
+  isOverdue,
+  STAGE_META,
+  TARGET_DAYS_TO_BILLABLE,
+  projectedDaysToBillable,
+} from "../_lib/data/credentialing-model";
 import type { Stage } from "../_lib/data/credentialing";
 import { seedSampleData, resetSampleData } from "./_actions/sampleData";
 
@@ -30,6 +36,14 @@ export default async function PortalDashboard(props: {
   const flagged = enriched.filter((e) => e.overdue);
   const automatedStages = enriched.filter((e) => STAGE_META[e.stage].automated && e.stage !== "approved").length;
   const inProgress = enriched.filter((e) => e.stage !== "approved");
+
+  // Speed-to-billable — the headline outcome metric.
+  const projections = inProgress.map((e) => projectedDaysToBillable(e.stage, e.days));
+  const avgDaysToBillable =
+    projections.length === 0
+      ? 0
+      : Math.round(projections.reduce((s, n) => s + n, 0) / projections.length);
+  const fastest = projections.length ? Math.min(...projections) : 0;
 
   // Are these sample/demo rows? We mark them in meta JSON.
   const hasSample = providers.some((p) => p.meta?.includes("credtek:sample"));
@@ -62,8 +76,8 @@ export default async function PortalDashboard(props: {
         <h1 className="portal-h1">Credentialing workspace</h1>
         <p className="portal-sub">
           {editor
-            ? "Every provider, from intake to final approval — with what's automated, when the next follow-up runs, and a red flag the moment any step runs long."
-            : "A live, read-only view of where each of your providers stands in credentialing — what's automated and what's flagged."}
+            ? <>The fastest path from <strong>intake</strong> to <strong>billable</strong>. CredTek connects to every PSV source, every state board, every payer portal, and runs the prebuilt CRM messaging in between — you watch progress and approve gates.</>
+            : <>A live view of every provider in your file — what&apos;s automated, what&apos;s queued, and how close each one is to billable.</>}
         </p>
       </div>
 
@@ -95,6 +109,32 @@ export default async function PortalDashboard(props: {
         </div>
       ) : (
         <>
+          {/* Speed-to-billable hero */}
+          <div className="portal-card portal-stb-card">
+            <div className="portal-stb-grid">
+              <div className="portal-stb-main">
+                <div className="portal-stb-lbl">Avg projected time to billable</div>
+                <div className="portal-stb-val">
+                  {avgDaysToBillable}
+                  <span className="portal-stb-unit">days</span>
+                </div>
+                <div className="portal-stb-sub">
+                  Across {inProgress.length} provider{inProgress.length === 1 ? "" : "s"} still in pipeline · industry avg ~120 days · CredTek target {TARGET_DAYS_TO_BILLABLE} days
+                </div>
+              </div>
+              <div className="portal-stb-side">
+                <div className="portal-stb-sidecard">
+                  <div className="portal-stb-side-lbl">Fastest in pipeline</div>
+                  <div className="portal-stb-side-val">{fastest}d</div>
+                </div>
+                <div className="portal-stb-sidecard">
+                  <div className="portal-stb-side-lbl">Ready to bill</div>
+                  <div className="portal-stb-side-val portal-kpi-pos">{ready}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* KPIs */}
           <div className="portal-kpis">
             <div className="portal-kpi">
@@ -174,12 +214,19 @@ export default async function PortalDashboard(props: {
 
           {/* Automation summary */}
           <div className="portal-card portal-card-auto">
-            <div className="portal-card-head"><h2>⚡ What CredTek is doing for you</h2></div>
+            <div className="portal-card-head">
+              <h2>⚡ What CredTek is doing for you</h2>
+              <div className="portal-card-headlinks">
+                <Link href="/app/integrations" className="portal-link">View integrations →</Link>
+                <Link href="/app/templates" className="portal-link">View templates →</Link>
+              </div>
+            </div>
             <ul className="portal-auto-list">
-              <li><strong>Intake:</strong> SMS + email document requests, OCR extraction, auto-reminders every 2 days.</li>
-              <li><strong>PSV:</strong> NPPES, OIG, SAM, state board, NPDB &amp; DEA run continuously; auto-escalate after 5 silent days.</li>
-              <li><strong>Enrollment:</strong> payer applications auto-filled (with your approval gate); status-check &amp; escalation every 7 days.</li>
-              <li><strong>Always-on:</strong> sanctions monitoring + expirables &amp; re-credentialing forecasting.</li>
+              <li><strong>API connectivity:</strong> NPPES, OIG LEIE, SAM.gov, NPDB, DEA, 17+ state boards, CAQH, PECOS, UHC, Aetna, Anthem, Cigna, Humana — pulled continuously.</li>
+              <li><strong>Outbound CRM:</strong> 20+ prebuilt emails &amp; letters fire on schedule — intake reminders, facility status checks, payer follow-ups, denial appeals, billing handoffs.</li>
+              <li><strong>Document repos:</strong> two-way sync with Box, Google Drive, SharePoint &amp; OneDrive — your file is the source of truth.</li>
+              <li><strong>E-signature:</strong> DocuSign for provider attestations, BAAs, and committee approvals — full audit trail.</li>
+              <li><strong>Clearinghouse loop:</strong> Availity + Waystar handshake confirms billable status the moment enrollment lands.</li>
             </ul>
           </div>
         </>

@@ -126,3 +126,26 @@ export function nextFollowUpInDays(stage: Stage, days: number): number {
   const r = cadence - (days % cadence);
   return r === 0 ? cadence : r;
 }
+
+/** Total target days from intake start to approved-and-billable. */
+export const TARGET_DAYS_TO_BILLABLE: number = STAGE_SEQUENCE
+  .filter((s) => s !== "approved")
+  .reduce((sum, s) => sum + STAGE_META[s].slaDays, 0);
+
+/** Projected days remaining until this provider is approved & billable. */
+export function projectedDaysToBillable(stage: Stage, daysInCurrentStage: number): number {
+  if (stage === "approved") return 0;
+  const idx = STAGE_SEQUENCE.indexOf(stage);
+  if (idx < 0) return TARGET_DAYS_TO_BILLABLE;
+  const remainingInCurrent = Math.max(0, STAGE_META[stage].slaDays - daysInCurrentStage);
+  const futureStages = STAGE_SEQUENCE.slice(idx + 1).filter((s) => s !== "approved");
+  const futureDays = futureStages.reduce((sum, s) => sum + STAGE_META[s].slaDays, 0);
+  return remainingInCurrent + futureDays;
+}
+
+/** Days already invested in this provider since they were added. */
+export function daysSinceAdded(createdAt: string): number {
+  const ms = Date.now() - new Date(createdAt).getTime();
+  if (Number.isNaN(ms)) return 0;
+  return Math.max(0, Math.floor(ms / 86_400_000));
+}

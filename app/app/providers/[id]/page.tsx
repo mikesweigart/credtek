@@ -12,7 +12,13 @@ import {
   listLicenses, listCredentials, listDocuments, listEnrollments, listPayers,
   CREDENTIAL_KIND_LABEL, payerName, type CredentialKind,
 } from "../../../_lib/data/credentialing";
-import { STAGE_META } from "../../../_lib/data/credentialing-model";
+import {
+  STAGE_META,
+  daysInStage,
+  projectedDaysToBillable,
+  daysSinceAdded,
+  TARGET_DAYS_TO_BILLABLE,
+} from "../../../_lib/data/credentialing-model";
 import type { Stage } from "../../../_lib/data/credentialing";
 import {
   addLicense, addCredential, addDocument, addEnrollment,
@@ -54,6 +60,10 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
   ]);
 
   const stage: Stage = (p.credentialing_stage as Stage) ?? "intake";
+  const daysHere = daysInStage(p.stage_entered_at, p.created_at);
+  const daysIn = daysSinceAdded(p.created_at);
+  const daysLeft = projectedDaysToBillable(stage, daysHere);
+  const billablePct = Math.round(((TARGET_DAYS_TO_BILLABLE - daysLeft) / TARGET_DAYS_TO_BILLABLE) * 100);
 
   // ---------- Summary ----------
   const summary = (
@@ -220,6 +230,34 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
               />
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Speed-to-billable header — the outcome that matters */}
+      <div className="portal-card portal-stb-card portal-stb-card-provider">
+        <div className="portal-stb-grid">
+          <div className="portal-stb-main">
+            <div className="portal-stb-lbl">Projected days to billable</div>
+            <div className="portal-stb-val">
+              {stage === "approved" ? "0" : daysLeft}
+              <span className="portal-stb-unit">days</span>
+            </div>
+            <div className="portal-stb-sub">
+              {stage === "approved"
+                ? "Approved — billable today."
+                : `${daysIn} day${daysIn === 1 ? "" : "s"} invested · ${billablePct}% of the way there · target ${TARGET_DAYS_TO_BILLABLE} days total.`}
+            </div>
+          </div>
+          <div className="portal-stb-side">
+            <div className="portal-stb-sidecard">
+              <div className="portal-stb-side-lbl">Current stage</div>
+              <div className="portal-stb-side-val">{STAGE_META[stage].short}</div>
+            </div>
+            <div className="portal-stb-sidecard">
+              <div className="portal-stb-side-lbl">Days here</div>
+              <div className="portal-stb-side-val">{daysHere}d</div>
+            </div>
+          </div>
         </div>
       </div>
 

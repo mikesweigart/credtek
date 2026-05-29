@@ -215,6 +215,12 @@ export function PortalGuide({
     if (pathname.startsWith("/app/expirables")) {
       return `Triage view — everything expiring inside the next 90 days, bucketed by urgency. Click any row to open the provider's file and start the renewal flow.`;
     }
+    if (pathname.startsWith("/app/integrations")) {
+      return `Every external system CredTek connects to — PSV sources, state boards, payer portals, EHRs, document repos. <strong>Connected</strong> = live today. <strong>Available</strong> = turn on in a click. The strategic thesis is one click away.`;
+    }
+    if (pathname.startsWith("/app/templates")) {
+      return `The credentialing CRM messaging layer — every prebuilt email, letter, and e-sign form CredTek can send on your behalf, by stage. Click any template to see the full body + which variables auto-fill from your data.`;
+    }
     return `Anything you want explained, ask me — I know every page in here.`;
   }, [pathname, hasProviders, flaggedCount, readOnly]);
 
@@ -232,6 +238,16 @@ export function PortalGuide({
       {
         q: "What's actually automated today?",
         a: `Intake document requests + OCR. PSV runs against NPPES, OIG LEIE, SAM.gov, state boards, NPDB, DEA continuously. Payer enrollment applications auto-fill from the golden profile, with your approval gate before submission.`,
+      },
+      {
+        q: "Which systems do you connect to?",
+        a: `Every PSV source, 17+ state licensure boards, CAQH ProView + EnrollHub, the major payer portals (PECOS, UHC, Aetna, Anthem, BCBS, Cigna, Humana, Molina, Tricare), clearinghouses (Availity, Waystar, Optum), EHRs (Epic, Cerner, athenahealth), e-sign (DocuSign), and document repos (Box, Drive, SharePoint). See the full catalog.`,
+        cta: { label: "View integrations", href: "/app/integrations" },
+      },
+      {
+        q: "What outbound messaging is prebuilt?",
+        a: `20+ templates across the lifecycle — intake welcomes, document requests, facility status checks, payer applications + appeals, committee submissions, billing handoffs, expirable warnings and re-credentialing notices. All auto-fill from your provider data.`,
+        cta: { label: "Browse template library", href: "/app/templates" },
       },
       {
         q: "How do follow-ups fire?",
