@@ -25,7 +25,7 @@ export function SignInForm() {
   const [msg, setMsg] = useState<Msg>(null);
 
   function redirectTo() {
-    return `${window.location.origin}/auth/callback?next=/account`;
+    return `${window.location.origin}/auth/callback?next=/app`;
   }
 
   async function onPassword(e: React.FormEvent) {
@@ -49,7 +49,7 @@ export function SignInForm() {
         });
         if (error) setMsg({ kind: "error", text: error.message });
         else if (data.session) {
-          router.push("/account");
+          router.push("/app");
           router.refresh();
         } else {
           setMsg({
@@ -61,7 +61,7 @@ export function SignInForm() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) setMsg({ kind: "error", text: error.message });
         else {
-          router.push("/account");
+          router.push("/app");
           router.refresh();
         }
       }
