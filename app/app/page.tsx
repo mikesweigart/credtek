@@ -8,10 +8,14 @@ import { getSessionContext, canEdit } from "../_lib/data/workspace";
 import { ProviderProgress } from "./_components/ProviderProgress";
 import { daysInStage, isOverdue, STAGE_META } from "../_lib/data/credentialing-model";
 import type { Stage } from "../_lib/data/credentialing";
+import { seedSampleData, resetSampleData } from "./_actions/sampleData";
 
 export const dynamic = "force-dynamic";
 
-export default async function PortalDashboard() {
+export default async function PortalDashboard(props: {
+  searchParams: Promise<{ seeded?: string; error?: string }>;
+}) {
+  const { seeded, error } = await props.searchParams;
   const [providers, ctx] = await Promise.all([listProviders(), getSessionContext()]);
   const editor = canEdit(ctx.role);
 
@@ -27,8 +31,33 @@ export default async function PortalDashboard() {
   const automatedStages = enriched.filter((e) => STAGE_META[e.stage].automated && e.stage !== "approved").length;
   const inProgress = enriched.filter((e) => e.stage !== "approved");
 
+  // Are these sample/demo rows? We mark them in meta JSON.
+  const hasSample = providers.some((p) => p.meta?.includes("credtek:sample"));
+
   return (
     <div>
+      {/* Inline toasts driven by ?seeded=…/?error=… */}
+      {seeded === "ok" && (
+        <div className="portal-card fu-toast fu-toast-ok">
+          ✓ Sample data loaded — explore the platform, then clear it when you&apos;re ready to go live.
+        </div>
+      )}
+      {seeded === "exists" && (
+        <div className="portal-card fu-toast fu-toast-fail">
+          You already have providers in your workspace — sample data was not loaded so nothing of yours could be overwritten.
+        </div>
+      )}
+      {seeded === "cleared" && (
+        <div className="portal-card fu-toast fu-toast-ok">
+          ✓ Sample data cleared. Your workspace is fresh.
+        </div>
+      )}
+      {error === "role" && (
+        <div className="portal-card fu-toast fu-toast-fail">
+          ✗ Your role isn&apos;t allowed to make that change.
+        </div>
+      )}
+
       <div className="portal-head">
         <h1 className="portal-h1">Credentialing workspace</h1>
         <p className="portal-sub">
@@ -39,19 +68,29 @@ export default async function PortalDashboard() {
       </div>
 
       {total === 0 ? (
-        <div className="portal-empty">
+        <div className="portal-empty portal-empty-rich">
           <div className="portal-empty-icon">◯</div>
-          <h2>{editor ? "Add your first provider" : "No providers yet"}</h2>
+          <h2>{editor ? "Let's get you moving" : "No providers yet"}</h2>
           <p>
             {editor
-              ? "Add a clinician (or bulk-import a roster) and CredTek tracks them through every credentialing stage automatically."
+              ? "Two ways to feel the platform working in under a minute — load a small set of sample providers across stages (one will be flagged so you can see the red flag flow), or add your first real clinician."
               : "Once providers are added to this workspace, you'll see their live credentialing status here."}
           </p>
           {editor && (
             <div className="portal-empty-actions">
-              <Link href="/app/providers/new" className="acct-btn-primary">+ Add a provider</Link>
-              <Link href="/app/providers/import" className="acct-btn-secondary">⤓ Bulk import</Link>
+              <form action={seedSampleData}>
+                <button type="submit" className="acct-btn-primary portal-empty-cta">
+                  ✨ Load 5 sample providers
+                </button>
+              </form>
+              <Link href="/app/providers/new" className="acct-btn-secondary">+ Add a real provider</Link>
+              <Link href="/app/providers/import" className="acct-btn-secondary">⤓ Bulk import CSV</Link>
             </div>
+          )}
+          {editor && (
+            <p className="portal-empty-hint">
+              Sample data is tagged — you can clear it any time, your real providers are never touched.
+            </p>
           )}
         </div>
       ) : (
@@ -78,6 +117,21 @@ export default async function PortalDashboard() {
             </div>
           </div>
 
+          {/* Demo data tag + reset, when sample data is loaded */}
+          {editor && hasSample && (
+            <div className="portal-card portal-demo-banner">
+              <div>
+                <strong>You&apos;re viewing sample data.</strong>{" "}
+                <span className="portal-muted">
+                  These five providers are tagged as demo so you can play freely. Clear them whenever you&apos;re ready to use the workspace for real.
+                </span>
+              </div>
+              <form action={resetSampleData}>
+                <button type="submit" className="acct-btn-secondary">Clear sample data</button>
+              </form>
+            </div>
+          )}
+
           {/* Red flags first */}
           {flagged.length > 0 && (
             <div className="portal-card portal-card-flag">
@@ -85,7 +139,7 @@ export default async function PortalDashboard() {
                 <h2>⚑ Needs attention — running over SLA</h2>
               </div>
               <ul className="portal-pl-list">
-                {flagged.map(({ p, stage, days }) => (
+                {flagged.map(({ p, stage }) => (
                   <li key={p.id} className="portal-pl-row">
                     <Link href={`/app/providers/${p.id}`} className="portal-pl-name">
                       {p.name}{p.credential ? `, ${p.credential}` : ""}

@@ -20,6 +20,7 @@ import {
 } from "./actions";
 import { ProviderTabs } from "./_components/ProviderTabs";
 import { ProviderProgress } from "../../_components/ProviderProgress";
+import { ConfirmDelete } from "../../_components/ConfirmDelete";
 
 export const dynamic = "force-dynamic";
 
@@ -206,10 +207,15 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
           {editor && (
             <div className="portal-head-actions">
               <Link href={`/app/providers/${p.id}/edit`} className="acct-btn-secondary">Edit</Link>
-              <form action={deleteProvider}>
-                <input type="hidden" name="providerId" value={p.id} />
-                <button type="submit" className="portal-danger-btn">Delete</button>
-              </form>
+              <ConfirmDelete
+                action={deleteProvider}
+                hidden={{ providerId: p.id }}
+                triggerLabel="Delete"
+                title={`Delete ${p.name}?`}
+                description="This removes the provider and all of their licenses, credentials, documents, and payer enrollments. This action cannot be undone."
+                confirmPhrase="DELETE"
+                confirmLabel="Delete provider"
+              />
             </div>
           )}
         </div>

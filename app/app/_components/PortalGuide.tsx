@@ -14,7 +14,7 @@
 //  • Zero deps — pure client component, no SDKs, no analytics dark
 //    patterns. Just a calm, smart shopping-assistant model.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 type Props = {
@@ -56,6 +56,8 @@ export function PortalGuide({
   const [inTour, setInTour] = useState(false);
   const [activeTopic, setActiveTopic] = useState<Topic | null>(null);
   const [glow, setGlow] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const launcherRef = useRef<HTMLButtonElement>(null);
 
   // Auto-open once per browser. Persistent open state for the same
   // session so navigating around doesn't slam the panel closed.
@@ -95,6 +97,41 @@ export function PortalGuide({
   useEffect(() => {
     if (!open) setActiveTopic(null);
   }, [open]);
+
+  // When the panel opens, focus its container (a11y); when it closes,
+  // return focus to the launcher so keyboard users stay oriented.
+  useEffect(() => {
+    if (!mounted) return;
+    if (open) {
+      // Slight delay so the slide-in animation doesn't trip focus.
+      const t = setTimeout(() => panelRef.current?.focus(), 60);
+      return () => clearTimeout(t);
+    }
+    launcherRef.current?.focus();
+  }, [open, mounted]);
+
+  // Keyboard handling on the panel: Esc closes, arrows step the tour.
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      if (inTour) {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          setTourIndex((i) => (i + 1) % 6);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          setTourIndex((i) => Math.max(0, i - 1));
+        }
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, inTour]);
 
   const readOnly = role === "client" || role === "readonly" || role === "finance";
 
@@ -235,9 +272,12 @@ export function PortalGuide({
     <>
       {/* Floating launcher — always visible bottom-right */}
       <button
+        ref={launcherRef}
         type="button"
         className={`pg-launcher${open ? " pg-launcher-open" : ""}${glow ? " pg-launcher-glow" : ""}`}
         aria-label={open ? "Close CredTek guide" : "Open CredTek guide"}
+        aria-expanded={open}
+        aria-controls="pg-panel"
         onClick={() => setOpen((v) => !v)}
       >
         <span className="pg-launcher-avatar">C</span>
@@ -248,7 +288,15 @@ export function PortalGuide({
       </button>
 
       {open && (
-        <div className="pg-panel" role="dialog" aria-label="CredTek guide">
+        <div
+          id="pg-panel"
+          ref={panelRef}
+          tabIndex={-1}
+          className="pg-panel"
+          role="dialog"
+          aria-modal="false"
+          aria-label="CredTek guide"
+        >
           {/* Header */}
           <div className="pg-head">
             <div className="pg-head-l">

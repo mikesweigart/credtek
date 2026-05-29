@@ -63,6 +63,7 @@ export default async function PortalLayout({ children }: { children: ReactNode }
 
   return (
     <div className="shell">
+      <a href="#shell-main" className="shell-skip-link">Skip to main content</a>
       <aside className="shell-sb">
         <div className="shell-sb-logo">
           <div className="shell-sb-logo-mark">C</div>
@@ -94,7 +95,7 @@ export default async function PortalLayout({ children }: { children: ReactNode }
             <SignOutButton />
           </div>
         </header>
-        <main className="shell-content">{children}</main>
+        <main id="shell-main" className="shell-content" tabIndex={-1}>{children}</main>
       </div>
 
       <PortalGuide
