@@ -15,6 +15,14 @@ export type DbProvider = {
   license_states: string[];
   meta: string | null;
   created_at: string;
+  // Present once migration 0003 has run; read defensively otherwise.
+  credentialing_stage?:
+    | "intake"
+    | "psv"
+    | "privileging"
+    | "committee"
+    | "enrollment"
+    | "approved";
 };
 
 export async function listProviders(): Promise<DbProvider[]> {
