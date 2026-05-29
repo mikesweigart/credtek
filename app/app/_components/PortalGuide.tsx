@@ -56,6 +56,11 @@ export function PortalGuide({
   const [inTour, setInTour] = useState(false);
   const [activeTopic, setActiveTopic] = useState<Topic | null>(null);
   const [glow, setGlow] = useState(false);
+  const [mode, setMode] = useState<"guide" | "feedback">("guide");
+  const [fbText, setFbText] = useState("");
+  const [fbMood, setFbMood] = useState<"" | "love" | "good" | "confused" | "broken">("");
+  const [fbStatus, setFbStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
+  const [fbError, setFbError] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
 
@@ -201,11 +206,14 @@ export function PortalGuide({
     }
     if (pathname.startsWith("/app/providers/")) {
       return readOnly
-        ? `This is the live credentialing file. The progress bar at the top shows where this provider is, what's automated, and when the next follow-up fires.`
-        : `Use the tabs to add licenses, credentials, documents, and payer enrollments. <strong>Advance stage →</strong> moves them forward and resets the SLA clock.`;
+        ? `This is the live credentialing file. The progress bar shows where this provider is, the <strong>PSV checklist</strong> shows each of the seven sources with a per-source status, and the <strong>activity timeline</strong> shows what's already happened and what's projected next.`
+        : `Use the tabs to add licenses, credentials, documents, and payer enrollments. <strong>Advance stage →</strong> moves them forward and resets the SLA clock. The <strong>PSV checklist</strong> + <strong>activity timeline</strong> show exactly what CredTek is doing behind the scenes.`;
     }
     if (pathname.startsWith("/app/followups")) {
       return `Every row here is a real, ready-to-send email derived from your provider data. Click <strong>Send now</strong> to fire it, or open the provider to edit the file first.`;
+    }
+    if (pathname.startsWith("/app/expirables")) {
+      return `Triage view — everything expiring inside the next 90 days, bucketed by urgency. Click any row to open the provider's file and start the renewal flow.`;
     }
     return `Anything you want explained, ask me — I know every page in here.`;
   }, [pathname, hasProviders, flaggedCount, readOnly]);
@@ -258,6 +266,40 @@ export function PortalGuide({
     router.push(href);
   }
 
+  async function submitFeedback() {
+    if (!fbText.trim()) return;
+    setFbStatus("sending");
+    setFbError(null);
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: fbText.trim(),
+          page: typeof window !== "undefined" ? window.location.pathname + window.location.search : "",
+          mood: fbMood,
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.ok) {
+        setFbStatus("err");
+        setFbError(json.error ?? "Send failed");
+        return;
+      }
+      setFbStatus("ok");
+      setFbText("");
+      setFbMood("");
+      // After a moment, go back to guide mode automatically.
+      setTimeout(() => {
+        setMode("guide");
+        setFbStatus("idle");
+      }, 2200);
+    } catch (e) {
+      setFbStatus("err");
+      setFbError(e instanceof Error ? e.message : "Network error");
+    }
+  }
+
   // Greet with red-flag urgency when relevant.
   const greetSub =
     flaggedCount > 0
@@ -303,10 +345,28 @@ export function PortalGuide({
               <div className="pg-head-avatar">C</div>
               <div className="pg-head-titles">
                 <div className="pg-head-title">Cred</div>
-                <div className="pg-head-sub">Your CredTek guide</div>
+                <div className="pg-head-sub">
+                  {mode === "feedback" ? "Send feedback to Mike" : "Your CredTek guide"}
+                </div>
               </div>
             </div>
             <div className="pg-head-r">
+              <button
+                type="button"
+                className={`pg-head-tab${mode === "guide" ? " pg-head-tab-on" : ""}`}
+                onClick={() => setMode("guide")}
+                aria-pressed={mode === "guide"}
+              >
+                Guide
+              </button>
+              <button
+                type="button"
+                className={`pg-head-tab${mode === "feedback" ? " pg-head-tab-on" : ""}`}
+                onClick={() => setMode("feedback")}
+                aria-pressed={mode === "feedback"}
+              >
+                💬 Feedback
+              </button>
               <button
                 type="button"
                 className="pg-head-btn"
@@ -320,6 +380,7 @@ export function PortalGuide({
 
           {/* Body */}
           <div className="pg-body">
+            {mode === "guide" && (<>
             {/* Bot greeting bubble — always visible at top */}
             <div className="pg-bubble pg-bubble-bot">
               <div className="pg-bubble-name">Cred</div>
@@ -458,8 +519,88 @@ export function PortalGuide({
                   >
                     🔁 Replay welcome tour
                   </button>
+                  <button
+                    type="button"
+                    className="pg-btn pg-btn-secondary"
+                    onClick={() => setMode("feedback")}
+                  >
+                    💬 Send Mike feedback
+                  </button>
                 </div>
               </>
+            )}
+            </>)}
+
+            {mode === "feedback" && (
+              <div className="pg-bubble pg-bubble-bot pg-bubble-feedback">
+                <div className="pg-bubble-name">Feedback for Mike</div>
+                <p className="pg-bubble-text" style={{ marginBottom: 12 }}>
+                  Tell me anything — what&apos;s missing, what&apos;s broken, what&apos;s great. The current page URL is attached automatically.
+                </p>
+
+                <div className="pg-fb-moods" role="radiogroup" aria-label="How are you feeling about this?">
+                  {[
+                    { k: "love", l: "❤️ Love it" },
+                    { k: "good", l: "👍 Good" },
+                    { k: "confused", l: "🤔 Confused" },
+                    { k: "broken", l: "🐛 Broken" },
+                  ].map((m) => (
+                    <button
+                      key={m.k}
+                      type="button"
+                      role="radio"
+                      aria-checked={fbMood === m.k}
+                      className={`pg-fb-mood${fbMood === m.k ? " pg-fb-mood-on" : ""}`}
+                      onClick={() => setFbMood(m.k as typeof fbMood)}
+                    >
+                      {m.l}
+                    </button>
+                  ))}
+                </div>
+
+                <textarea
+                  className="portal-input pg-fb-text"
+                  rows={5}
+                  placeholder="Type your note here. Be honest — Mike wants the hard truth."
+                  value={fbText}
+                  onChange={(e) => setFbText(e.target.value)}
+                  disabled={fbStatus === "sending"}
+                />
+
+                {fbStatus === "ok" && (
+                  <div className="pg-fb-result pg-fb-result-ok">
+                    ✓ Thanks — Mike has it.
+                  </div>
+                )}
+                {fbStatus === "err" && (
+                  <div className="pg-fb-result pg-fb-result-err">
+                    ✗ Couldn&apos;t send{fbError ? `: ${fbError}` : ""}. Try again, or email <a href="mailto:mikesweigart@yahoo.com" style={{ color: "#0053A0" }}>mikesweigart@yahoo.com</a> directly.
+                  </div>
+                )}
+
+                <div className="pg-tour-actions" style={{ marginTop: 14 }}>
+                  <button
+                    type="button"
+                    className="pg-btn pg-btn-ghost"
+                    onClick={() => {
+                      setMode("guide");
+                      setFbStatus("idle");
+                    }}
+                    disabled={fbStatus === "sending"}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    className="pg-btn pg-btn-primary"
+                    onClick={submitFeedback}
+                    disabled={!fbText.trim() || fbStatus === "sending"}
+                    aria-disabled={!fbText.trim() || fbStatus === "sending"}
+                  >
+                    {fbStatus === "sending" ? "Sending…" : "Send to Mike"}
+                  </button>
+                </div>
+              </div>
             )}
           </div>
 

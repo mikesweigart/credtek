@@ -21,6 +21,8 @@ import {
 import { ProviderTabs } from "./_components/ProviderTabs";
 import { ProviderProgress } from "../../_components/ProviderProgress";
 import { ConfirmDelete } from "../../_components/ConfirmDelete";
+import { ActivityTimeline } from "../../_components/ActivityTimeline";
+import { PsvChecklist } from "../../_components/PsvChecklist";
 
 export const dynamic = "force-dynamic";
 
@@ -242,6 +244,20 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
         </div>
         <ProviderProgress stage={stage} stageEnteredAt={p.stage_entered_at} createdAt={p.created_at} />
       </div>
+
+      {/* Operational depth — what credentialing managers want to see */}
+      <PsvChecklist
+        stage={stage}
+        stageEnteredAt={p.stage_entered_at}
+        createdAt={p.created_at}
+        providerId={p.id}
+      />
+      <ActivityTimeline
+        stage={stage}
+        stageEnteredAt={p.stage_entered_at}
+        createdAt={p.created_at}
+        providerName={p.name}
+      />
 
       <ProviderTabs
         counts={{ licenses: licenses.length, credentials: credentials.length, documents: documents.length, enrollment: enrollments.length }}
