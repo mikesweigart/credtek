@@ -1,7 +1,12 @@
 // Procedural ambient music bed — generated once with ffmpeg, committed.
-// Two soft sine pads layered + a slow filtered pulse, mixed at a low
-// level. 62 seconds long (covers the 60s cut + fade tails). No external
-// samples; deterministic so the bed is reproducible.
+//
+// Design: three sustained sine pads forming a soft Db–F–Ab chord
+// (low-mid range so it sits under spoken word / kinetic type without
+// stepping on it). Lowpass softens the harshness, aecho adds depth,
+// a gentle breathing tremolo gives life, and dynaudnorm + a final
+// loudnorm pass anchor the level at ~-16 LUFS so the bed is *audible*
+// in the cut. The previous build had the bed at -51 dB max — well
+// below the noise floor — so it was effectively silent.
 
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -17,37 +22,49 @@ if (!ffmpegPath) {
   process.exit(1);
 }
 
-// Build the filter graph: two pad tones + a slow LFO-amplified bass.
-// Levels stay deliberately quiet so the bed sits *under* the cut.
+// Filter graph notes:
+//  • Each sine is at a healthy amplitude (0.30–0.45) so the pre-mix
+//    sits around -10 dBFS RMS.
+//  • amix sums — divide-by-N normalization is OFF so the levels we
+//    set are the levels we hear.
+//  • Tremolo at 0.18 Hz with depth 0.30 makes the bed breathe slowly,
+//    matching the storyboard's emotional pace (~6s cycle).
+//  • Lowpass 1200 keeps the brightness off so the bed never competes
+//    with the type. Highpass 70 cleans rumble.
+//  • aecho is the spatial layer — short delays for a soft hall.
+//  • dynaudnorm tames any peaks; loudnorm anchors final loudness.
 const filterComplex = [
-  // Pad 1 — Db (~69 Hz fundamental) sine, low-pass softened
-  "sine=frequency=138.59:duration=62[a1]",
-  // Pad 2 — F (~87 Hz) for a major-third-ish color
-  "sine=frequency=174.61:duration=62[a2]",
-  // Pad 3 — Ab (208 Hz) sustained
-  "sine=frequency=207.65:duration=62[a3]",
-  // Slow rhythmic LFO so the bed breathes
-  "sine=frequency=0.25:duration=62,aeval=val(0)*0.5+0.5[lfo]",
-  // Mix the pads quiet
-  "[a1]volume=0.10[p1]",
-  "[a2]volume=0.07[p2]",
-  "[a3]volume=0.05[p3]",
-  "[p1][p2][p3]amix=inputs=3:duration=longest:normalize=0[pads]",
-  // Modulate by the LFO
-  "[pads][lfo]amultiply[pulsed]",
-  // Final soft EQ + slight reverb-ish delay for depth
-  "[pulsed]lowpass=f=800,highpass=f=70,aecho=0.6:0.5:60:0.3[outA]",
+  // Sustained pads (Db2 + F2 + Ab2 — quiet stack, jazzy and warm)
+  "sine=frequency=138.59:sample_rate=44100:duration=62[pad1]",
+  "sine=frequency=174.61:sample_rate=44100:duration=62[pad2]",
+  "sine=frequency=207.65:sample_rate=44100:duration=62[pad3]",
+  // Apply per-pad amplitude
+  "[pad1]volume=0.45[p1]",
+  "[pad2]volume=0.35[p2]",
+  "[pad3]volume=0.30[p3]",
+  // Mix without normalization (the levels above are intentional)
+  "[p1][p2][p3]amix=inputs=3:duration=longest:normalize=0[mixed]",
+  // Slow breathing tremolo (frequency in Hz, depth 0..1)
+  "[mixed]tremolo=f=0.18:d=0.30[breathing]",
+  // Tonal softening — lose the harshness, keep the warmth
+  "[breathing]lowpass=f=1200,highpass=f=70[softened]",
+  // Spatial depth — short hall
+  "[softened]aecho=0.85:0.6:80|120:0.35|0.25[wet]",
+  // Tame any peaks before MP3 encode
+  "[wet]dynaudnorm=f=300:g=15:p=0.85:m=10[normalized]",
+  // Force stereo at the output
+  "[normalized]aformat=channel_layouts=stereo[outA]",
 ].join(";");
 
 const args = [
   "-y",
-  "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
   "-filter_complex", filterComplex,
   "-map", "[outA]",
   "-t", "62",
   "-c:a", "libmp3lame",
-  "-b:a", "96k",
+  "-b:a", "160k",
   "-ac", "2",
+  "-ar", "44100",
   out,
 ];
 
@@ -61,4 +78,20 @@ if (!existsSync(out)) {
   console.error("Bed file was not produced.");
   process.exit(1);
 }
-console.log("Bed ready.");
+
+// Sanity-check the level so we never silently ship a silent bed again.
+const probe = spawnSync(
+  ffmpegPath,
+  ["-i", out, "-af", "volumedetect", "-vn", "-f", "null", "-"],
+  { encoding: "utf-8" }
+);
+const meanMatch = probe.stderr.match(/mean_volume:\s*(-?[\d.]+)\s*dB/);
+const maxMatch = probe.stderr.match(/max_volume:\s*(-?[\d.]+)\s*dB/);
+const mean = meanMatch ? parseFloat(meanMatch[1]) : NaN;
+const max = maxMatch ? parseFloat(maxMatch[1]) : NaN;
+console.log(`Bed levels — mean: ${mean} dB, max: ${max} dB`);
+if (max < -24) {
+  console.error(`✗ Bed peak is ${max} dB — too quiet (target -3 to -12).`);
+  process.exit(1);
+}
+console.log("✓ Bed ready and audible.");

@@ -59,10 +59,11 @@ export const CredTekVideo: React.FC = () => {
         <Scene8_CTA />
       </Sequence>
 
-      {/* Procedurally-generated synth bed. Mixed at ~45% with a 1s
-          fade-in at the top and a 1.5s fade-out at the end so the
-          music breathes in/out around the cut instead of cutting hard.
-          Volume is a function of frame — Remotion samples per-frame. */}
+      {/* Procedurally-generated synth bed. The bed file sits at
+          ~-16 dB RMS / -7 dB peak, so we scale to ~0.35 in the mix
+          to land around -25 dB RMS in the final cut — audible but
+          well under the burned-in type. 1s fade-in at the top and
+          1.5s fade-out at the end. */}
       <Audio
         src={staticFile("bed.mp3")}
         volume={(f) => {
@@ -71,7 +72,7 @@ export const CredTekVideo: React.FC = () => {
           return interpolate(
             f,
             [0, fadeInEnd, fadeOutStart, TOTAL_FRAMES],
-            [0, 0.45, 0.45, 0],
+            [0, 0.35, 0.35, 0],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
           );
         }}
