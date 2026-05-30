@@ -19,25 +19,7 @@
 
 import { useState } from "react";
 import { EmailDemoModal } from "./EmailDemoModal";
-
-type PayorState =
-  | "active"
-  | "filling"
-  | "awaiting"
-  | "documents"
-  | "queued"
-  | "not-started";
-
-const PAYORS: { name: string; tag: string; pct: number; state: PayorState }[] = [
-  { name: "Aetna", tag: "Active · in-network", pct: 100, state: "active" },
-  { name: "UnitedHealthcare", tag: "Active · in-network", pct: 100, state: "active" },
-  { name: "Cigna", tag: "Active · in-network", pct: 100, state: "active" },
-  { name: "Anthem BCBS", tag: "Day 14 · awaiting reply", pct: 78, state: "awaiting" },
-  { name: "Optum BH", tag: "⚙ Agent filling form (live)", pct: 52, state: "filling" },
-  { name: "Tricare", tag: "Day 4 · documents queued", pct: 32, state: "documents" },
-  { name: "Humana", tag: "Queued", pct: 18, state: "queued" },
-  { name: "Magellan", tag: "Not started", pct: 6, state: "not-started" },
-];
+import { HeroVideo } from "./HeroVideo";
 
 export function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -96,54 +78,14 @@ export function Hero() {
               </div>
             </div>
 
-            {/* ============== SINGLE-WORKFLOW ZOOM ============== */}
-            <div className="screenshot hero-zoom">
-              <div className="screenshot-chrome">
-                <div className="ss-dot"></div>
-                <div className="ss-dot"></div>
-                <div className="ss-dot"></div>
-                <div className="ss-url">app.credtek.com / providers / sarah-reyes</div>
-              </div>
-
-              <div className="payor-zoom">
-                <div className="payor-zoom-head">
-                  <div className="payor-zoom-av">SR</div>
-                  <div className="payor-zoom-id">
-                    <div className="payor-zoom-name">Dr. Sarah Reyes, PsyD</div>
-                    <div className="payor-zoom-meta">
-                      PSYPACT · TX · FL · GA &nbsp;·&nbsp; <strong>8 / 12 payors active</strong>
-                    </div>
-                  </div>
-                  <div className="payor-zoom-status">
-                    <span className="payor-zoom-pulse" /> Live
-                  </div>
-                </div>
-
-                <div className="payor-zoom-section-label">
-                  12 PAYOR ENROLLMENTS
-                </div>
-
-                <ul className="payor-list">
-                  {PAYORS.map((p) => (
-                    <li key={p.name} className={`payor-row state-${p.state}`}>
-                      <div className="payor-bar">
-                        <span
-                          className="payor-bar-fill"
-                          style={{ width: `${p.pct}%` }}
-                        />
-                      </div>
-                      <div className="payor-meta">
-                        <span className="payor-name">{p.name}</span>
-                        <span className="payor-tag">{p.tag}</span>
-                      </div>
-                    </li>
-                  ))}
-                  <li className="payor-row payor-row-more">
-                    <span>+ 4 more payors · expand</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {/* ============== 60-SECOND EXPLAINER VIDEO ============== */}
+            {/* The autoplay loop tells the full story the static zoom
+                used to gesture at: problem → stakes → guide → product →
+                plan → CTA. Silent-first burned-in transcript means it
+                works with sound off (which is how most hero loops are
+                consumed). Muted-autoplay-loop pattern, tap-to-play
+                fallback only on real NotAllowedError. */}
+            <HeroVideo />
           </div>
         </div>
       </section>

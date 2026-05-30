@@ -13990,6 +13990,80 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
+   Hero explainer video — browser-style frame, autoplay muted loop
+   ============================================================ */
+.hero-video-frame {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  border-radius: 18px;
+  padding: 10px;
+  background: linear-gradient(160deg, #ffffff, #f0f4fa);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 30px 80px rgba(11,31,46,0.18),
+    0 8px 24px rgba(11,31,46,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.hero-video-window {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b1f2e; /* matches video bed so first paint is seamless */
+  aspect-ratio: 16 / 9;
+}
+.hero-video-el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-video-tap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(11, 31, 46, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  appearance: none;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 160ms ease;
+}
+.hero-video-tap:hover { background: rgba(11, 31, 46, 0.70); }
+.hero-video-tap-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #0467DE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  padding-left: 6px;
+  box-shadow: 0 10px 30px rgba(4,103,222,0.55);
+}
+.hero-video-tap-text {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+}
+
+/* On small screens the video sits BELOW the hero copy, full width. */
+@media (max-width: 920px) {
+  .hero-video-frame {
+    margin: 32px auto 0;
+    max-width: 100%;
+  }
+}
+
+/* ============================================================
    Activity timeline (provider page)
    ============================================================ */
 .at-card { margin-bottom: 16px; }
