@@ -14006,30 +14006,134 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
     inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
-/* When the hero is in "video band" mode (.hero-with-video), the video
-   spans the full container above the headline, so the burned-in
-   transcript reads at native legibility. The .hero-inner grid below
-   collapses to a single column. */
-.hero-with-video .hero-video-frame {
-  max-width: 100%;
-  margin: 0 auto 48px;
-  padding: 14px;
-  border-radius: 22px;
+/* ============================================================
+   .hero-cinematic — video-as-headline layout
+   ============================================================ */
+
+.hero-cinematic {
+  padding: 56px 0 80px;
 }
-.hero-with-video .hero-inner {
-  grid-template-columns: 1fr;
+@media (max-width: 980px) {
+  .hero-cinematic { padding: 32px 0 56px; }
+}
+
+.hero-cinematic .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0;
 }
-.hero-with-video .hero-video-window {
+
+/* Eyebrow above the video — centered, comfortable spacing */
+.hero-eyebrow-centered {
+  margin-bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold-deep);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* The video frame itself — cinematic, edge-to-edge of the container,
+   with a luxurious shadow and minimal bezel. Letting the burned-in
+   transcript read at native scale was the whole point. */
+.hero-cinematic .hero-video-frame {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto 56px;
+  padding: 10px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, #ffffff, #f0f4fa);
+  box-shadow:
+    0 50px 120px rgba(11,31,46,0.22),
+    0 18px 48px rgba(11,31,46,0.12),
+    0 4px 12px rgba(11,31,46,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.hero-cinematic .hero-video-window {
   border-radius: 16px;
 }
-.hero-with-video .hero-video-tap-circle {
-  width: 88px;
-  height: 88px;
-  font-size: 34px;
+.hero-cinematic .hero-video-tap-circle {
+  width: 96px;
+  height: 96px;
+  font-size: 38px;
+  box-shadow: 0 14px 36px rgba(4,103,222,0.55);
 }
-.hero-with-video .hero-video-tap-text {
-  font-size: 17px;
+.hero-cinematic .hero-video-tap-text {
+  font-size: 18px;
+}
+
+/* Below-the-video copy column. Tightly constrained so the action
+   path doesn't sprawl across the full 1180px container. */
+.hero-below {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero-below-line {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(28px, 3.2vw, 38px);
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+.hero-below-line em {
+  font-style: italic;
+  color: var(--gold-deep);
+}
+
+.hero-cta-centered {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-trust-centered {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+  max-width: 700px;
+}
+.hero-trust-centered .dot { color: var(--gold); }
+.hero-trust-centered strong { color: var(--ink); font-weight: 600; }
+
+/* Visually hidden but accessible to screen readers + crawlers — used
+   for the H1 since the video poster carries the visual headline. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 980px) {
+  .hero-cinematic .hero-video-frame {
+    margin-bottom: 36px;
+    padding: 6px;
+    border-radius: 18px;
+  }
+  .hero-below { gap: 22px; }
 }
 
 /* Unmute / mute toggle on the embed — bottom-right of the window so it
