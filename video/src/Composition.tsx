@@ -59,20 +59,21 @@ export const CredTekVideo: React.FC = () => {
         <Scene8_CTA />
       </Sequence>
 
-      {/* Procedurally-generated synth bed. The bed file sits at
-          ~-16 dB RMS / -7 dB peak, so we scale to ~0.35 in the mix
-          to land around -25 dB RMS in the final cut — audible but
-          well under the burned-in type. 1s fade-in at the top and
-          1.5s fade-out at the end. */}
+      {/* User-supplied music bed (musiccredtek-hero.mp4). Source sits
+          at ~-18 dB mean / 0 dB peak (fully-mastered music). At 0.5
+          linear scale (~-6 dB) the final cut lands at mean ~-24 dB /
+          max ~-6 dB — clearly audible as a hero loop, leaves headroom
+          if voice is ever overlaid. 1s fade-in at the top and 1.5s
+          fade-out at the end so the music breathes around the cut. */}
       <Audio
-        src={staticFile("bed.mp3")}
+        src={staticFile("musiccredtek-hero.mp4")}
         volume={(f) => {
           const fadeInEnd = FPS * 1;        // 30 frames
           const fadeOutStart = TOTAL_FRAMES - FPS * 1.5; // last 45 frames
           return interpolate(
             f,
             [0, fadeInEnd, fadeOutStart, TOTAL_FRAMES],
-            [0, 0.35, 0.35, 0],
+            [0, 0.5, 0.5, 0],
             { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
           );
         }}
