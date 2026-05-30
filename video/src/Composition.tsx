@@ -5,8 +5,8 @@
 // All 8 beats compose against the same Backdrop layer, so the visual
 // thread (gradient + grid) is continuous even though the content cuts.
 
-import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
-import { COLORS, SCENES, TOTAL_FRAMES } from "./constants";
+import { AbsoluteFill, Audio, interpolate, Sequence, staticFile } from "remotion";
+import { COLORS, FPS, SCENES, TOTAL_FRAMES } from "./constants";
 import { Scene1_Hook } from "./scenes/Scene1_Hook";
 import { Scene2_Problem } from "./scenes/Scene2_Problem";
 import { Scene3_Stakes } from "./scenes/Scene3_Stakes";
@@ -59,9 +59,23 @@ export const CredTekVideo: React.FC = () => {
         <Scene8_CTA />
       </Sequence>
 
-      {/* Procedurally-generated synth bed. Falls back gracefully if
-          the file isn't there. */}
-      <Audio src={staticFile("bed.mp3")} volume={0.18} />
+      {/* Procedurally-generated synth bed. Mixed at ~45% with a 1s
+          fade-in at the top and a 1.5s fade-out at the end so the
+          music breathes in/out around the cut instead of cutting hard.
+          Volume is a function of frame — Remotion samples per-frame. */}
+      <Audio
+        src={staticFile("bed.mp3")}
+        volume={(f) => {
+          const fadeInEnd = FPS * 1;        // 30 frames
+          const fadeOutStart = TOTAL_FRAMES - FPS * 1.5; // last 45 frames
+          return interpolate(
+            f,
+            [0, fadeInEnd, fadeOutStart, TOTAL_FRAMES],
+            [0, 0.45, 0.45, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+          );
+        }}
+      />
     </AbsoluteFill>
   );
 };

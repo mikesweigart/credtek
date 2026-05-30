@@ -26,8 +26,14 @@ export function Hero() {
 
   return (
     <>
-      <section className="hero">
+      <section className="hero hero-with-video">
         <div className="container">
+          {/* ============== 60-SECOND EXPLAINER VIDEO ============== */}
+          {/* Full-width band at the top of the hero — the autoplay loop
+              tells the full story arc. Display width ~1180px means the
+              burned-in transcript reads at native legibility. */}
+          <HeroVideo />
+
           <div className="hero-inner">
             <div>
               <div className="hero-eyebrow">
@@ -78,14 +84,9 @@ export function Hero() {
               </div>
             </div>
 
-            {/* ============== 60-SECOND EXPLAINER VIDEO ============== */}
-            {/* The autoplay loop tells the full story the static zoom
-                used to gesture at: problem → stakes → guide → product →
-                plan → CTA. Silent-first burned-in transcript means it
-                works with sound off (which is how most hero loops are
-                consumed). Muted-autoplay-loop pattern, tap-to-play
-                fallback only on real NotAllowedError. */}
-            <HeroVideo />
+            {/* Right column intentionally empty — the video moved to a
+                full-width band above this row so the burned-in
+                transcript is fully readable on desktop. */}
           </div>
         </div>
       </section>

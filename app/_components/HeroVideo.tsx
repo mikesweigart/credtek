@@ -34,6 +34,10 @@ export function HeroVideo({
 }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const [needsTap, setNeedsTap] = useState(false);
+  // The video autoplays muted (browser policy). The unmute button
+  // lets a curious viewer turn on the ambient music bed without
+  // hijacking the autoplay flow.
+  const [muted, setMuted] = useState(true);
 
   // Belt-and-suspenders autoplay. attribute + property + retry on
   // every relevant ready event.
@@ -82,6 +86,18 @@ export function HeroVideo({
     el.play().then(() => setNeedsTap(false)).catch(() => {});
   }
 
+  function toggleSound() {
+    const el = ref.current;
+    if (!el) return;
+    const next = !muted;
+    el.muted = next;
+    setMuted(next);
+    // If we're unmuting, also make sure we're playing.
+    if (!next) {
+      el.play().catch(() => {});
+    }
+  }
+
   return (
     <div className="hero-video-frame" aria-label={ariaLabel}>
       <div className="hero-video-window">
@@ -106,6 +122,20 @@ export function HeroVideo({
           >
             <span className="hero-video-tap-circle">▶</span>
             <span className="hero-video-tap-text">Play the 60-second explainer</span>
+          </button>
+        )}
+        {!needsTap && (
+          <button
+            type="button"
+            onClick={toggleSound}
+            className="hero-video-sound"
+            aria-label={muted ? "Unmute video" : "Mute video"}
+            aria-pressed={!muted}
+          >
+            <span className="hero-video-sound-icon" aria-hidden>
+              {muted ? "🔇" : "🔊"}
+            </span>
+            {muted ? "Turn sound on" : "Mute"}
           </button>
         )}
       </div>

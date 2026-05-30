@@ -14005,6 +14005,65 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
     0 8px 24px rgba(11,31,46,0.08),
     inset 0 1px 0 rgba(255,255,255,0.9);
 }
+
+/* When the hero is in "video band" mode (.hero-with-video), the video
+   spans the full container above the headline, so the burned-in
+   transcript reads at native legibility. The .hero-inner grid below
+   collapses to a single column. */
+.hero-with-video .hero-video-frame {
+  max-width: 100%;
+  margin: 0 auto 48px;
+  padding: 14px;
+  border-radius: 22px;
+}
+.hero-with-video .hero-inner {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+.hero-with-video .hero-video-window {
+  border-radius: 16px;
+}
+.hero-with-video .hero-video-tap-circle {
+  width: 88px;
+  height: 88px;
+  font-size: 34px;
+}
+.hero-with-video .hero-video-tap-text {
+  font-size: 17px;
+}
+
+/* Unmute / mute toggle on the embed — bottom-right of the window so it
+   doesn't compete with the burned-in copy. */
+.hero-video-sound {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(11, 31, 46, 0.72);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 140ms ease, transform 140ms ease;
+}
+.hero-video-sound:hover {
+  background: rgba(11, 31, 46, 0.90);
+  transform: translateY(-1px);
+}
+.hero-video-sound-icon {
+  font-size: 14px;
+  line-height: 1;
+}
 .hero-video-window {
   position: relative;
   border-radius: 12px;
