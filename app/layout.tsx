@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import { ScrollReveal } from "./_components/ScrollReveal";
 import { CursorSpotlight } from "./_components/CursorSpotlight";
+import { Analytics } from "./_components/Analytics";
 
 // Hardcoded canonical site URL — env-based resolution removed because
 // Vercel's modifyConfig step was failing with an undefined-path error.
@@ -54,6 +56,11 @@ export default function RootLayout({
         {children}
         <ScrollReveal />
         <CursorSpotlight />
+        {/* PostHog page-view + autocapture. No-ops without
+            NEXT_PUBLIC_POSTHOG_KEY so the build stays green. */}
+        <Suspense fallback={null}>
+          <Analytics />
+        </Suspense>
       </body>
     </html>
   );
