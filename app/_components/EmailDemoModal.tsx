@@ -1,9 +1,10 @@
 "use client";
 
 // EmailDemoModal — the new primary conversion path on the landing
-// page. Captures email + facility size, stores the lead locally for
-// now (real submission lives at /api/leads when the backend is wired),
-// then hands the user a live, guided demo at /dashboard?demo=true.
+// page. Captures email + facility size, POSTs the lead to /api/leads
+// (which emails the team + best-effort persists it) AND stashes it
+// locally so the guided demo can personalize, then hands the user a
+// live, guided demo at /dashboard?demo=true.
 //
 // The guided demo itself is rendered by DemoGuide.tsx on the (app)
 // route group — a scripted chat agent that walks the user through
@@ -71,7 +72,7 @@ export function EmailDemoModal({
     setStatus("submitting");
 
     // Stash the lead locally so the guided demo on /dashboard can
-    // personalize the greeting. Real submission would POST here too.
+    // personalize the greeting.
     try {
       const payload = {
         email,
@@ -82,6 +83,26 @@ export function EmailDemoModal({
       localStorage.setItem("credtek_lead", JSON.stringify(payload));
     } catch {
       // localStorage can fail in private mode — fail open.
+    }
+
+    // Transmit the lead to the team. Fire-and-forget with keepalive so it
+    // survives the imminent navigation to the demo and never delays it —
+    // the demo loads regardless of whether this resolves, and the route
+    // degrades to server-console logging until Resend is wired.
+    try {
+      fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({
+          email,
+          facility: facility || null,
+          bucket: bucket || null,
+          source: "landing-demo-modal",
+        }),
+      }).catch(() => {});
+    } catch {
+      // Never let lead transmission block the user's path to the demo.
     }
 
     // Tiny delay so the success state is perceived as "we did
