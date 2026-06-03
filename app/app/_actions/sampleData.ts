@@ -14,6 +14,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "../../_lib/supabase/serverClient";
+import { supabaseAdmin } from "../../_lib/supabase/server";
 import { getSessionContext, canEdit } from "../../_lib/data/workspace";
 import { slugify } from "../../_lib/data/providers";
 
@@ -190,26 +191,36 @@ export async function seedSampleData() {
     redirect("/app?seeded=exists");
   }
 
-  // Ensure the sample payers exist (global reference data). Select first by
-  // short_name; only insert ones not already present. This is idempotent
-  // and safe across multiple workspaces seeding sample data.
+  // Resolve the sample payers to IDs. Payers are GLOBAL reference data with
+  // SELECT-only RLS — there is NO insert policy, so a tenant's cookie-bound
+  // client cannot create the ones it's missing. That silently dropped every
+  // sample enrollment (the payer_id lookup below returns null), leaving the
+  // flagship "billable" story empty. Seed them with the service-role admin
+  // client, which is the correct owner for shared reference data anyway, and
+  // guarantees our short_names resolve regardless of what migration 0001
+  // pre-seeded. Fall back to the cookie client only if the service-role key
+  // is absent (best-effort — reads are allowed, the insert may no-op).
   const shortNames = SAMPLE_PAYERS.map((p) => p.short_name);
-  const { data: existingPayers } = await s
-    .from("payers")
-    .select("id, short_name")
-    .in("short_name", shortNames);
-  const have = new Set((existingPayers ?? []).map((p) => p.short_name as string));
-  const toInsert = SAMPLE_PAYERS.filter((p) => !have.has(p.short_name));
-  if (toInsert.length > 0) {
-    await s.from("payers").insert(toInsert);
-  }
-  const { data: allPayers } = await s
-    .from("payers")
-    .select("id, short_name")
-    .in("short_name", shortNames);
+  const payerWriter = supabaseAdmin() ?? s;
   const payerIdByKey: Record<string, string> = {};
-  for (const py of allPayers ?? []) {
+
+  const { data: existingPayers } = await payerWriter
+    .from("payers")
+    .select("id, short_name")
+    .in("short_name", shortNames);
+  for (const py of existingPayers ?? []) {
     if (py.short_name) payerIdByKey[py.short_name as string] = py.id as string;
+  }
+
+  const toInsert = SAMPLE_PAYERS.filter((p) => !(p.short_name in payerIdByKey));
+  if (toInsert.length > 0) {
+    const { data: inserted } = await payerWriter
+      .from("payers")
+      .insert(toInsert)
+      .select("id, short_name");
+    for (const py of inserted ?? []) {
+      if (py.short_name) payerIdByKey[py.short_name as string] = py.id as string;
+    }
   }
 
   // Insert providers, then their licenses/credentials/enrollments.

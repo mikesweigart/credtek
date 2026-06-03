@@ -15,7 +15,10 @@ async function createProvider(formData: FormData) {
   "use server";
   const ctx = await getSessionContext();
   if (!ctx.userId) redirect("/sign-in");
-  if (!ctx.tenantId) redirect("/app/providers");
+  // No tenant means the workspace bootstrap never completed (e.g. the
+  // service-role key is missing). Don't silently bounce the user to an
+  // empty list — tell them, on the form, that nothing was saved.
+  if (!ctx.tenantId) redirect("/app/providers/new?error=tenant");
 
   const name = String(formData.get("name") ?? "").trim();
   if (!name) redirect("/app/providers/new?error=name");
@@ -30,9 +33,12 @@ async function createProvider(formData: FormData) {
     .filter(Boolean);
 
   const supabase = await createSupabaseServerClient();
-  if (!supabase) redirect("/app/providers");
+  if (!supabase) redirect("/app/providers/new?error=db");
 
-  await supabase.from("providers").insert({
+  // Surface a real save failure instead of redirecting as if it worked —
+  // an unchecked insert error was making the form look successful while
+  // nothing was written.
+  const { error: saveError } = await supabase.from("providers").insert({
     tenant_id: ctx.tenantId,
     slug: slugify(name),
     name,
@@ -42,16 +48,26 @@ async function createProvider(formData: FormData) {
     status,
     license_states: states,
   });
+  if (saveError) redirect("/app/providers/new?error=save");
 
   revalidatePath("/app/providers");
   revalidatePath("/app");
   redirect("/app/providers");
 }
 
+const ERROR_MESSAGES: Record<string, string> = {
+  name: "Please enter the provider's name.",
+  tenant:
+    "Your workspace isn't fully set up yet, so nothing was saved. Try signing out and back in — if it keeps happening, contact support.",
+  db: "We couldn't reach the database just now. Nothing was saved — please try again in a moment.",
+  save: "Something went wrong saving this provider. Nothing was saved — please check the details and try again.",
+};
+
 export default async function NewProviderPage(props: {
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await props.searchParams;
+  const errorMessage = error ? ERROR_MESSAGES[error] : null;
 
   return (
     <div className="portal-form-wrap">
@@ -62,8 +78,8 @@ export default async function NewProviderPage(props: {
       </div>
 
       <form action={createProvider} className="portal-form">
-        {error === "name" && (
-          <div className="portal-form-error">Please enter the provider&apos;s name.</div>
+        {errorMessage && (
+          <div className="portal-form-error" role="alert">{errorMessage}</div>
         )}
 
         <label className="portal-field">
