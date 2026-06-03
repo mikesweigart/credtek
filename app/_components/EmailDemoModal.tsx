@@ -25,6 +25,15 @@ const BUCKETS: { id: ProviderBucket; label: string }[] = [
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+// Matches the server-side check in /api/leads — one @, a dot in the domain,
+// no whitespace. Deliberately permissive (the real proof is whether they
+// can act on the demo), just enough to catch fat-finger typos client-side.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Selector for the elements the focus trap cycles between.
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 export function EmailDemoModal({
   open,
   onClose,
@@ -42,21 +51,57 @@ export function EmailDemoModal({
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
-  // Lock body scroll while open, focus the first input, close on Esc.
+  // Lock body scroll, trap focus inside the dialog, restore focus to the
+  // trigger on close, and close on Esc. A real modal must not let Tab leak
+  // to the page behind it (screen-reader + keyboard users get lost), and
+  // closing it should return focus to wherever the user was.
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    // Defer focus so the input is visible by the time we focus it.
+
+    // Remember what had focus so we can hand it back when the modal closes.
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
+    // Defer initial focus so the input is painted before we focus it.
     const t = window.setTimeout(() => firstInputRef.current?.focus(), 60);
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const root = dialogRef.current;
+      if (!root) return;
+      const nodes = Array.from(
+        root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+      ).filter((el) => el.getClientRects().length > 0);
+      if (nodes.length === 0) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey) {
+        if (active === first || !root.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !root.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
       window.clearTimeout(t);
       window.removeEventListener("keydown", onKey);
+      // Restore focus to the trigger, but only if it's still in the DOM.
+      if (previouslyFocused && document.contains(previouslyFocused)) {
+        previouslyFocused.focus();
+      }
     };
   }, [open, onClose]);
 
@@ -64,7 +109,7 @@ export function EmailDemoModal({
     e.preventDefault();
     setError(null);
 
-    if (!email || !email.includes("@") || !email.includes(".")) {
+    if (!EMAIL_RE.test(email.trim())) {
       setError("Please enter a valid work email.");
       return;
     }

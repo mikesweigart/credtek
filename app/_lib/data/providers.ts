@@ -27,15 +27,75 @@ export type DbProvider = {
   stage_entered_at?: string | null;
 };
 
-export async function listProviders(): Promise<DbProvider[]> {
+// Explicit column projections — we never `select("*")` for the list.
+// Two reasons: (1) "*" over-fetches and means every column we add later
+// silently bloats every list payload; (2) we want a stable, reviewed set.
+// Two projections because the app must work BEFORE and AFTER the stage
+// migrations: 0003 adds `credentialing_stage`, 0004 adds `stage_entered_at`.
+// Try the full set first; if PostgREST reports the column doesn't exist
+// yet (code 42703), fall back to the base set.
+const BASE_PROVIDER_COLS =
+  "id, slug, name, credential, npi, status, status_label, specialty, license_states, meta, created_at";
+const FULL_PROVIDER_COLS = `${BASE_PROVIDER_COLS}, credentialing_stage, stage_entered_at`;
+
+// Hard ceiling on a single fetch so one tenant's growth can't OOM a
+// render or blow the response size. The paginated list view passes a
+// smaller explicit limit; aggregate callers (dashboard, follow-ups) take
+// the default. TODO(scale): once any tenant realistically approaches this
+// many active providers, move those aggregates to SQL count()/avg() rather
+// than pulling every row into the Node process.
+const MAX_PROVIDERS_FETCH = 1000;
+
+function isMissingColumn(error: { code?: string } | null | undefined): boolean {
+  return error?.code === "42703";
+}
+
+export type ListProvidersOptions = {
+  /** Max rows to return. Clamped to [1, MAX_PROVIDERS_FETCH]. */
+  limit?: number;
+  /** Rows to skip (for pagination). */
+  offset?: number;
+};
+
+export async function listProviders(
+  opts: ListProvidersOptions = {},
+): Promise<DbProvider[]> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
-  const { data, error } = await supabase
+
+  const limit = Math.min(
+    Math.max(opts.limit ?? MAX_PROVIDERS_FETCH, 1),
+    MAX_PROVIDERS_FETCH,
+  );
+  const offset = Math.max(opts.offset ?? 0, 0);
+
+  // Full projection first; fall back to base columns only if the stage
+  // columns don't exist yet. Any OTHER error is real → return empty.
+  for (const cols of [FULL_PROVIDER_COLS, BASE_PROVIDER_COLS]) {
+    const { data, error } = await supabase
+      .from("providers")
+      .select(cols)
+      .order("created_at", { ascending: false })
+      .range(offset, offset + limit - 1);
+    if (!error && data) return data as unknown as DbProvider[];
+    if (!isMissingColumn(error)) break;
+  }
+  return [];
+}
+
+/**
+ * Exact count of providers visible to the signed-in tenant (RLS-scoped).
+ * Uses a HEAD request so no rows travel over the wire — it's purely for
+ * pagination totals. Returns 0 when the backend isn't configured.
+ */
+export async function countProviders(): Promise<number> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return 0;
+  const { count, error } = await supabase
     .from("providers")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error || !data) return [];
-  return data as DbProvider[];
+    .select("id", { count: "exact", head: true });
+  if (error || count == null) return 0;
+  return count;
 }
 
 export async function getProviderById(id: string): Promise<DbProvider | null> {

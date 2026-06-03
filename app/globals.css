@@ -5838,7 +5838,21 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   transition: border-color 0.15s;
 }
 .acct-btn-secondary:hover { border-color: var(--blue); }
+.acct-btn-secondary.is-disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
 .acct-link { color: var(--blue-deep); text-decoration: none; font-weight: 600; font-size: 14px; }
+
+/* Providers list pager — only renders once a tenant exceeds one page (50). */
+.portal-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.portal-pager-info { font-size: 13px; color: var(--muted); }
+.portal-pager-actions { display: inline-flex; align-items: center; gap: 12px; }
+.portal-pager-page { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .signin-demo-note {
   margin-top: 20px;
   padding: 10px 12px;
