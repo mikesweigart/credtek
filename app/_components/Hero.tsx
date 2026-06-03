@@ -23,6 +23,10 @@ import { useState } from "react";
 import { EmailDemoModal } from "./EmailDemoModal";
 import { HeroVideo } from "./HeroVideo";
 
+// Real booking link — the hero's primary CTA now books a call directly
+// (no form), so the button verb matches what actually happens.
+const CAL_LINK = "https://calendly.com/mike-fusion-advisory/30min";
+
 export function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -38,7 +42,7 @@ export function Hero() {
               This same one-liner is mirrored in the page <title>, the meta
               description, and the OG/Twitter cards — one message, everywhere. */}
           <h1 className="visually-hidden">
-            CredTek gets your medical providers credentialed and billing in weeks, not months.
+            CredTek gets your medical providers credentialed and billing 40–60% faster.
           </h1>
 
           {/* Eyebrow — qualifies the audience above the video */}
@@ -52,33 +56,35 @@ export function Hero() {
           {/* Below the video — a confident, no-noise action path */}
           <div className="hero-below">
             <p className="hero-below-line">
-              From signed contract to <em>providers billing</em> — in weeks, not months.
+              From signed contract to <em>providers billing</em> — 40–60% faster.
             </p>
 
             <div className="hero-cta hero-cta-centered">
-              {/* Two-action hero: a high-commitment primary (book) and a
-                  zero-friction secondary (explore the real product, no
-                  form). The live demo opens in a new tab so this page —
-                  and the "Book a demo" button — stays one tab away for
-                  the moment the prospect is convinced. */}
+              {/* Three-action hero. Primary = the real, high-commitment
+                  ask: book time with a credentialing veteran (Calendly,
+                  no form — the verb finally matches the outcome).
+                  Secondary = the zero-pressure guided product tour, which
+                  also captures the lead via /api/leads so we can follow up
+                  even if they don't book. Tertiary = run the ROI math. The
+                  full live portal lives in the top nav ("See it live"). */}
               <div className="hero-cta-buttons">
-                <button
-                  type="button"
-                  className="btn-primary btn-primary-lg"
-                  onClick={() => setModalOpen(true)}
-                >
-                  Book a demo
-                  <span className="arrow">→</span>
-                </button>
                 <a
-                  className="btn-secondary btn-secondary-lg"
-                  href="/avelecare"
+                  className="btn-primary btn-primary-lg"
+                  href={CAL_LINK}
                   target="_blank"
                   rel="noopener"
                 >
-                  See it live
+                  Book a demo
                   <span className="arrow">→</span>
                 </a>
+                <button
+                  type="button"
+                  className="btn-secondary btn-secondary-lg"
+                  onClick={() => setModalOpen(true)}
+                >
+                  Take a guided tour
+                  <span className="arrow">→</span>
+                </button>
               </div>
               <a className="hero-cta-tertiary" href="#calc">
                 or just run your ROI numbers first →
@@ -89,17 +95,6 @@ export function Hero() {
               <span className="dot">●</span> <strong>40+ yrs</strong> combined credentialing experience &nbsp;·&nbsp;{" "}
               <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one &nbsp;·&nbsp;{" "}
               <span className="dot">●</span> <strong>NCQA-aligned</strong>
-            </div>
-
-            <div className="hero-soft-cta">
-              Prefer to skip the form?{" "}
-              <a
-                href="https://calendly.com/mike-fusion-advisory/30min"
-                target="_blank"
-                rel="noopener"
-              >
-                Book directly on Calendly →
-              </a>
             </div>
           </div>
         </div>

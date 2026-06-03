@@ -10,25 +10,26 @@ import { Analytics } from "./_components/Analytics";
 // If we ever need preview-deploy aware URLs again, wire NEXT_PUBLIC_SITE_URL
 // after we've confirmed the rest of the build is stable.
 // ONE repeatable promise, everywhere. The controlling one-liner —
-// "CredTek gets your providers credentialed and billing in weeks, not
-// months" — is mirrored across the page <title>, meta description,
-// OG/Twitter cards, the hero's sr-only <h1>, and the hero outcome line.
-// We lead with "weeks, not months" (the concrete, provable promise that
-// already anchors the body's stakes + why-us sections) instead of the
-// old "faster than anyone in healthcare" brag — a credentialing operator
-// trusts a specific timeframe, not a superlative. "Medical credentialing"
-// stays as an exact-match keyword and "billing" carries the North Star
-// (speed-to-billable, not just credentialed).
+// "CredTek gets your providers credentialed and billing 40–60% faster" —
+// is mirrored across the page <title>, meta description, OG/Twitter
+// cards, the hero's sr-only <h1>, and the hero outcome line.
+// We lead with a RELATIVE claim ("40–60% faster") rather than an absolute
+// timeframe: it's the exact number the ROI calculator and the
+// cost-of-inaction section already model, so the headline can't be
+// contradicted by our own stage SLAs (which sum to ~81 days). A
+// credentialing operator trusts a defensible number, not a superlative.
+// "Medical credentialing" stays an exact-match keyword and "billing"
+// carries the North Star (speed-to-billable, not just credentialed).
 export const metadata: Metadata = {
   metadataBase: new URL("https://cred-tek.com"),
   title: {
-    default: "CredTek — Medical credentialing & billing in weeks, not months.",
+    default: "CredTek — Get providers credentialed & billing 40–60% faster.",
     template: "%s · CredTek",
   },
   description:
-    "CredTek gets your providers credentialed and billing in weeks, not months. The AI-agent-native credentialing platform for US medical groups, MSOs & health systems — built by operators with 40+ years of credentialing experience.",
+    "CredTek gets your providers credentialed and billing 40–60% faster. The AI-agent-native credentialing platform for US medical groups, MSOs & health systems — built by operators with 40+ years of credentialing experience.",
   openGraph: {
-    title: "CredTek — Get your providers credentialed and billing in weeks, not months.",
+    title: "CredTek — Get your providers credentialed and billing 40–60% faster.",
     description:
       "The AI-agent-native credentialing platform for US medical groups, MSOs & health systems. Built by operators with 40+ years of enterprise medical credentialing experience.",
     type: "website",
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "CredTek — Providers credentialed and billing in weeks, not months.",
+    title: "CredTek — Providers credentialed and billing 40–60% faster.",
     description:
       "The AI-agent-native credentialing platform for US medical groups, MSOs & health systems — built by 40-year credentialing operators.",
   },

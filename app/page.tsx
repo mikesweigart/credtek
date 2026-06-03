@@ -68,7 +68,7 @@ const LANDING_BODY_PRE_CALC = `
 <section class="social-proof reveal" aria-label="Trust signal">
   <div class="container">
     <div class="social-proof-eyebrow">
-      Same credentialing technology used inside the largest US health systems
+      Built by operators who ran credentialing inside the largest US health systems
     </div>
     <div class="social-proof-row">
       <span class="sp-logo">HCA Healthcare</span>
@@ -431,7 +431,7 @@ const LANDING_BODY_POST_CALC = `
       </div>
       <div class="why-us-card">
         <div class="why-us-icon">⚡</div>
-        <h3>Weeks, not months</h3>
+        <h3>40–60% faster</h3>
         <p>Industry average is 90–120 days from hire date to first in-network payor. CredTek customers typically beat that by half. We don&apos;t need perfect inputs to do it.</p>
       </div>
     </div>
@@ -459,7 +459,7 @@ const LANDING_BODY_POST_CALC = `
       <div class="stakes-card stakes-success">
         <div class="stakes-tag">With CredTek</div>
         <ul>
-          <li>Providers billing in weeks, not months</li>
+          <li>Providers billing 40–60% faster</li>
           <li>Coordinators on strategy, not data entry</li>
           <li>Predictable time-to-revenue your CFO models accurately</li>
           <li>Audit-ready every day, not just at audit time</li>
