@@ -14103,12 +14103,12 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 
 .hero-trust-centered {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 11.5px;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  letter-spacing: 0.04em;
   color: var(--muted);
   margin: 0;
-  line-height: 1.6;
-  max-width: 700px;
+  line-height: 1.65;
+  max-width: 760px;
 }
 .hero-trust-centered .dot { color: var(--gold); }
 .hero-trust-centered strong { color: var(--ink); font-weight: 600; }
@@ -14167,6 +14167,143 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .hero-video-sound-icon {
   font-size: 14px;
   line-height: 1;
+}
+
+/* Replay button — shows after the video plays through once. Centered
+   on a soft scrim so the frozen CTA frame underneath stays readable. */
+.hero-video-replay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(11, 31, 46, 0.30);
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px);
+  appearance: none;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 160ms ease;
+}
+.hero-video-replay:hover { background: rgba(11, 31, 46, 0.45); }
+.hero-video-replay-icon {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0467DE;
+  font-size: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.30);
+  transition: transform 160ms ease;
+}
+.hero-video-replay:hover .hero-video-replay-icon { transform: scale(1.06); }
+.hero-video-replay-text {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.005em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+/* TopNav login link — separate visual lane from the marketing CTA. */
+.topnav-login {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color 140ms ease, background 140ms ease;
+  margin-right: 8px;
+}
+.topnav-login:hover {
+  color: var(--ink);
+  background: var(--cream);
+}
+@media (max-width: 900px) {
+  .topnav-login { display: none; }
+}
+
+.mobile-drawer-login {
+  display: block;
+  text-align: center;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  margin-top: 12px;
+}
+
+/* Scroll cue below the hero — calm animated chevron telling the viewer
+   there's more below. Hides as soon as the user has scrolled past it. */
+.hero-cinematic::after {
+  content: "↓";
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--muted);
+  opacity: 0;
+  animation: hero-scroll-cue 2.6s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+.hero-cinematic {
+  position: relative;
+}
+@keyframes hero-scroll-cue {
+  0%   { opacity: 0; transform: translate(-50%, -6px); }
+  35%  { opacity: 0.65; transform: translate(-50%, 0px); }
+  65%  { opacity: 0.65; transform: translate(-50%, 6px); }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cinematic::after { animation: none; opacity: 0.5; transform: translateX(-50%); }
+}
+
+/* Mobile hero — keep video proportional but cap height so eyebrow +
+   video + CTA + trust strip fit cleanly in a phone viewport. */
+@media (max-width: 720px) {
+  .hero-cinematic .hero-video-frame {
+    margin-bottom: 28px;
+    padding: 4px;
+    border-radius: 14px;
+    box-shadow:
+      0 24px 48px rgba(11,31,46,0.18),
+      0 8px 20px rgba(11,31,46,0.10);
+  }
+  .hero-eyebrow-centered {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    margin-bottom: 14px;
+  }
+  .hero-below-line {
+    font-size: 24px;
+    padding: 0 8px;
+  }
+  .hero-trust-centered {
+    font-size: 11.5px;
+    padding: 0 8px;
+  }
+  .hero-cinematic::after { display: none; }
 }
 .hero-video-window {
   position: relative;

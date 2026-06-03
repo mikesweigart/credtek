@@ -502,7 +502,7 @@ const LANDING_BODY_POST_CALC = `
           <li>Email support</li>
           <li>White-glove onboarding · 14 days</li>
         </ul>
-        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo →</a>
       </div>
       <div class="price-card featured">
         <div class="price-ribbon">Most popular</div>
@@ -520,7 +520,7 @@ const LANDING_BODY_POST_CALC = `
           <li>Custom payor agent requests (1/quarter)</li>
           <li>Volume discount: 10% off enrollments at 200+ providers</li>
         </ul>
-        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a 20-min demo →</a>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo →</a>
       </div>
       <div class="price-card enterprise">
         <div class="price-tag">Enterprise</div>
@@ -538,7 +538,7 @@ const LANDING_BODY_POST_CALC = `
           <li>Multi-tenant / multi-entity hierarchy</li>
           <li>Dedicated onboarding sprint</li>
         </ul>
-        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to founders →</a>
+        <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo →</a>
       </div>
     </div>
 

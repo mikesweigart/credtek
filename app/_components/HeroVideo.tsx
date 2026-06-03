@@ -1,23 +1,23 @@
 "use client";
 
-// HeroVideo — muted autoplay loop for the cred-tek.com landing page.
+// HeroVideo — muted autoplay, plays ONCE, then holds on the CTA frame
+// with a Replay button. Looping a 60s explainer competes with the
+// reader after the first pass, so we let it land, then stop.
 //
-// Why this is more than a <video> tag:
+// Architecture notes:
 //   • Forces `muted` via ref BEFORE calling play() — Safari + Chrome
 //     gate autoplay on muted state, and the attribute alone has races
 //     against React hydration.
 //   • Retries play() on loadedmetadata / loadeddata / canplay so a
 //     slow initial load doesn't permanently fail autoplay.
 //   • Shows a tap-to-play ▶ overlay only when play() rejects with a
-//     real NotAllowedError (some mobile browsers still block even
-//     muted autoplay in low-power mode).
+//     real NotAllowedError.
 //   • playsInline so iOS doesn't go fullscreen.
-//   • Poster image for instant first paint while the MP4 loads.
-//
-// The video lives in /public/credtek-hero.mp4 (self-hosted, no
-// third-party player or tracking). Middleware matcher already
-// excludes media extensions, so the auth proxy never touches this
-// request.
+//   • Poster image for instant first paint.
+//   • onEnded → freezes on the final frame (the CTA), shows a small
+//     Replay button. The last frames of the video already burn in
+//     "Book a demo →" + cred-tek.com so the frozen end-frame stays
+//     promotional rather than going blank.
 
 import { useEffect, useRef, useState } from "react";
 
@@ -34,10 +34,10 @@ export function HeroVideo({
 }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
   const [needsTap, setNeedsTap] = useState(false);
-  // The video autoplays muted (browser policy). The unmute button
-  // lets a curious viewer turn on the ambient music bed without
-  // hijacking the autoplay flow.
   const [muted, setMuted] = useState(true);
+  // Tracks whether the cut has played through. When true, the video
+  // is paused at the final frame and we show a Replay button.
+  const [hasEnded, setHasEnded] = useState(false);
 
   // Belt-and-suspenders autoplay. attribute + property + retry on
   // every relevant ready event.
@@ -53,9 +53,6 @@ export function HeroVideo({
       const p = el.play();
       if (p && typeof p.then === "function") {
         p.catch((err: unknown) => {
-          // Only show the tap overlay on a real NotAllowedError;
-          // other errors (AbortError on hot-reload, etc.) shouldn't
-          // bother the user.
           if (
             err instanceof DOMException &&
             (err.name === "NotAllowedError" || err.name === "SecurityError")
@@ -66,16 +63,20 @@ export function HeroVideo({
       }
     };
 
+    const onEnded = () => setHasEnded(true);
+
     tryPlay();
     el.addEventListener("loadedmetadata", tryPlay);
     el.addEventListener("loadeddata", tryPlay);
     el.addEventListener("canplay", tryPlay);
+    el.addEventListener("ended", onEnded);
 
     return () => {
       cancelled = true;
       el.removeEventListener("loadedmetadata", tryPlay);
       el.removeEventListener("loadeddata", tryPlay);
       el.removeEventListener("canplay", tryPlay);
+      el.removeEventListener("ended", onEnded);
     };
   }, []);
 
@@ -92,10 +93,17 @@ export function HeroVideo({
     const next = !muted;
     el.muted = next;
     setMuted(next);
-    // If we're unmuting, also make sure we're playing.
     if (!next) {
       el.play().catch(() => {});
     }
+  }
+
+  function replay() {
+    const el = ref.current;
+    if (!el) return;
+    el.currentTime = 0;
+    setHasEnded(false);
+    el.play().catch(() => {});
   }
 
   return (
@@ -107,7 +115,8 @@ export function HeroVideo({
           poster={poster}
           autoPlay
           muted
-          loop
+          /* No `loop` — the cut plays once, then holds on the CTA
+             frame with a Replay button. Loops compete with reading. */
           playsInline
           preload="metadata"
           aria-label={ariaLabel}
@@ -124,7 +133,18 @@ export function HeroVideo({
             <span className="hero-video-tap-text">Play the 60-second explainer</span>
           </button>
         )}
-        {!needsTap && (
+        {!needsTap && hasEnded && (
+          <button
+            type="button"
+            onClick={replay}
+            className="hero-video-replay"
+            aria-label="Replay the explainer video"
+          >
+            <span className="hero-video-replay-icon" aria-hidden>↻</span>
+            <span className="hero-video-replay-text">Replay</span>
+          </button>
+        )}
+        {!needsTap && !hasEnded && (
           <button
             type="button"
             onClick={toggleSound}

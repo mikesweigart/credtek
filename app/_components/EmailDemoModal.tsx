@@ -200,7 +200,7 @@ export function EmailDemoModal({
                   target="_blank"
                   rel="noopener"
                 >
-                  Book a 20-min call with a credentialing veteran →
+                  Book a demo with a credentialing veteran →
                 </a>
               </p>
             </form>

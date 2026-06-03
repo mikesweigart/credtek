@@ -57,7 +57,7 @@ export function Hero() {
                 className="btn-primary btn-primary-lg"
                 onClick={() => setModalOpen(true)}
               >
-                Get your free interactive demo
+                Book a demo
                 <span className="arrow">→</span>
               </button>
               <a className="hero-cta-tertiary" href="#calc">
@@ -72,13 +72,13 @@ export function Hero() {
             </div>
 
             <div className="hero-soft-cta">
-              Want a guided 20-minute walkthrough?{" "}
+              Prefer to skip the form?{" "}
               <a
                 href="https://calendly.com/mike-fusion-advisory/30min"
                 target="_blank"
                 rel="noopener"
               >
-                Talk to a credentialing veteran →
+                Book directly on Calendly →
               </a>
             </div>
           </div>

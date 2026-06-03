@@ -13,13 +13,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const LINKS: { href: string; label: string }[] = [
-  { href: "#calc", label: "Quote" },
   { href: "#pricing", label: "Pricing" },
-  { href: "/compare", label: "Compare" },
-  { href: "/dashboard", label: "Demo" },
+  { href: "#calc", label: "ROI" },
+  { href: "/dashboard", label: "See it live" },
   { href: "/resources", label: "Resources" },
-  { href: "/integrations", label: "Integrations" },
-  { href: "/help", label: "Help" },
 ];
 
 const CALENDLY = "https://calendly.com/mike-fusion-advisory/30min";
@@ -66,6 +63,12 @@ export function TopNav() {
           </div>
 
           <div className="topnav-right">
+            <Link
+              className="topnav-login"
+              href="/sign-in"
+            >
+              Log in
+            </Link>
             <a
               className="topnav-cta"
               href={CALENDLY}
@@ -116,6 +119,13 @@ export function TopNav() {
               </li>
             ))}
           </ul>
+          <Link
+            href="/sign-in"
+            className="mobile-drawer-login"
+            onClick={() => setOpen(false)}
+          >
+            Log in
+          </Link>
           <a
             href={CALENDLY}
             target="_blank"

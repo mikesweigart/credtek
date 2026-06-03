@@ -11,7 +11,49 @@ export const dynamic = "force-dynamic";
 
 const FEEDBACK_TO = process.env.CREDTEK_FEEDBACK_TO || "mikesweigart@yahoo.com";
 
+// Simple in-memory token bucket per IP — good enough until we add
+// Upstash Redis. Each IP gets BUCKET_MAX hits per BUCKET_WINDOW_MS.
+// Note: on Vercel serverless, this map is per-function-instance, so
+// the effective ceiling across replicas is higher than the constant
+// suggests. That's fine for a feedback endpoint — production-grade
+// rate limiting would move to Upstash + a shared counter.
+const BUCKET_MAX = 5;
+const BUCKET_WINDOW_MS = 5 * 60 * 1000;
+const buckets = new Map<string, number[]>();
+
+function clientIp(req: Request): string {
+  // Trust Vercel's forwarding headers.
+  const fwd = req.headers.get("x-forwarded-for");
+  if (fwd) return fwd.split(",")[0].trim();
+  const real = req.headers.get("x-real-ip");
+  if (real) return real;
+  return "anon";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const bucket = (buckets.get(ip) ?? []).filter(
+    (t) => now - t < BUCKET_WINDOW_MS
+  );
+  if (bucket.length >= BUCKET_MAX) {
+    buckets.set(ip, bucket);
+    return true;
+  }
+  bucket.push(now);
+  buckets.set(ip, bucket);
+  return false;
+}
+
 export async function POST(req: Request) {
+  // Rate limit FIRST — before parsing the body, before any DB call.
+  const ip = clientIp(req);
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { ok: false, error: "rate-limited" },
+      { status: 429, headers: { "Retry-After": "60" } }
+    );
+  }
+
   let body: { message?: string; page?: string; mood?: string } = {};
   try {
     body = await req.json();

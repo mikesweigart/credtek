@@ -81,7 +81,7 @@ export function StickyCTABar() {
           <div className="sticky-cta-text">
             <strong>See CredTek running in your facility.</strong>
             <span className="sticky-cta-sub">
-              Free interactive demo · guided by an AI walkthrough agent
+              20-minute walkthrough · no slides · live ROI math for your group
             </span>
           </div>
           <div className="sticky-cta-actions">
@@ -90,7 +90,7 @@ export function StickyCTABar() {
               className="sticky-cta-btn"
               onClick={() => setModalOpen(true)}
             >
-              Get the demo →
+              Book a demo →
             </button>
             <button
               type="button"

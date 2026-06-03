@@ -77,7 +77,7 @@ const SCRIPT: Step[] = [
     message:
       "Take your time — I'll stay right here. When you've seen what you need, the fastest way to get pricing for your group is a 20-minute call with one of the founders. They've each spent 20+ years inside enterprise credentialing programs.",
     options: [
-      { label: "Book a 20-min call", href: "https://calendly.com/mike-fusion-advisory/30min", external: true },
+      { label: "Book a demo", href: "https://calendly.com/mike-fusion-advisory/30min", external: true },
       { label: "See the pricing first", href: "/#pricing" },
     ],
   },
@@ -86,7 +86,7 @@ const SCRIPT: Step[] = [
     message:
       "That's the tour. Ready to see what CredTek looks like with your actual roster? We'll pull a sample of your providers, run them through CredTek live, and show ROI for your group specifically. 20 minutes, no slides.",
     options: [
-      { label: "Book a 20-min call", href: "https://calendly.com/mike-fusion-advisory/30min", external: true },
+      { label: "Book a demo", href: "https://calendly.com/mike-fusion-advisory/30min", external: true },
       { label: "See pricing first", href: "/#pricing" },
     ],
   },
