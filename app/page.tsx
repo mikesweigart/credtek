@@ -189,32 +189,32 @@ const LANDING_BODY_PRE_CALC = `
 
     <div class="caps-grid spotlight-group">
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">⚐</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg></div>
         <h3>Multi-state license matrix</h3>
         <p>50 state boards across every specialty. Interstate compacts tracked (IMLC, NLC, PSYPACT, CC, SWC). 180-day expiration forecast with auto-drafted renewals.</p>
       </div>
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">▤</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="m9 14 2 2 4-4"></path></svg></div>
         <h3>Payor enrollment agents</h3>
         <p>Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare + specialty networks + state Medicaid MCOs. Every submission goes through a coordinator&apos;s approval gate.</p>
       </div>
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">✦</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></div>
         <h3>CAQH auto-attestation</h3>
         <p>Every 120 days, automated against the provider&apos;s golden profile. Single-tap SMS approval from the provider. Never miss a window.</p>
       </div>
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">⚙</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
         <h3>Primary-source verification</h3>
         <p>NPPES, OIG LEIE, SAM.gov, NPDB, DEA — continuous monitoring. State board PSV across all 50 states + every specialty board.</p>
       </div>
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">▣</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
         <h3>NCQA audit binder</h3>
         <p>One-click audit-ready evidence packet. Designed for delegated-credentialing arrangements with major payors (Optum, Aetna, Cigna).</p>
       </div>
       <div class="caps-card spotlight-card">
-        <div class="caps-icon">⛨</div>
+        <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg></div>
         <h3>Tamper-evident audit log</h3>
         <p>Every PHI access, state transition, and external call hash-chained with SHA-256. Tampering breaks the chain — your auditors will love it.</p>
       </div>
@@ -420,17 +420,17 @@ const LANDING_BODY_POST_CALC = `
 
     <div class="why-us-grid">
       <div class="why-us-card">
-        <div class="why-us-icon">⚙</div>
+        <div class="why-us-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></div>
         <h3>Agents that actually do the work</h3>
         <p>Real Playwright-driven agents fill Aetna, Anthem, Optum, and Cigna forms end-to-end. <strong>Every submission gets a coordinator&apos;s approval before it leaves CredTek</strong> — no AI-hallucinated data ever reaches a payor.</p>
       </div>
       <div class="why-us-card">
-        <div class="why-us-icon">❤</div>
+        <div class="why-us-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
         <h3>A team that calls you back</h3>
         <p>Named CSM, weekly check-ins for 90 days, direct Slack access to the founders. When inputs are messy — and they always are — we work the problem <em>with</em> you, not around you.</p>
       </div>
       <div class="why-us-card">
-        <div class="why-us-icon">⚡</div>
+        <div class="why-us-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
         <h3>40–60% faster</h3>
         <p>Industry average is 90–120 days from hire date to first in-network payor. CredTek customers typically beat that by half. We don&apos;t need perfect inputs to do it.</p>
       </div>

@@ -8,7 +8,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "CredTek — Medical credentialing, faster than anyone in healthcare.";
+export const alt = "CredTek — Get your providers credentialed and billing 40–60% faster.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -111,7 +111,7 @@ export default async function OG() {
               marginTop: 8,
             }}
           >
-            Faster than anyone in healthcare. Built by operators with 40+ years of enterprise medical credentialing experience.
+            Credentialed and billing 40–60% faster. Built by operators with 40+ years of enterprise medical credentialing experience.
           </div>
         </div>
 

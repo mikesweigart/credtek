@@ -6915,6 +6915,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  color: var(--blue-deep);
   margin-bottom: 16px;
   border: 1px solid rgba(4, 103, 222, 0.18);
 }
