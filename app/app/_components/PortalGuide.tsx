@@ -16,6 +16,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { markGuideSeen } from "../_actions/guide";
 
 type Props = {
   firstName: string;        // "Chris", or "there" if we have no name
@@ -23,6 +24,7 @@ type Props = {
   role: string;             // for tone (admin vs client read-only)
   hasProviders: boolean;    // empty-state vs settled-state
   flaggedCount: number;     // SLA red flags — surfaces in greeting if > 0
+  hasSeenGuide: boolean;    // server truth: has THIS account dismissed the tour?
 };
 
 type TourStep = {
@@ -46,6 +48,7 @@ export function PortalGuide({
   role,
   hasProviders,
   flaggedCount,
+  hasSeenGuide,
 }: Props) {
   const pathname = usePathname() ?? "/app";
   const router = useRouter();
@@ -64,17 +67,25 @@ export function PortalGuide({
   const panelRef = useRef<HTMLDivElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
 
-  // Auto-open once per browser. Persistent open state for the same
-  // session so navigating around doesn't slam the panel closed.
+  // Auto-open once PER ACCOUNT (not per browser). The server flag
+  // `hasSeenGuide` is authoritative — it travels with the account, so
+  // logging in on a phone or second browser won't re-trigger the tour.
+  // localStorage is only a fallback for the window before migration 0005
+  // is applied (server flag always false then). On first open we stamp
+  // both: localStorage immediately (so a fast reload doesn't re-pop) and
+  // the server (fire-and-forget) so the decision sticks everywhere.
   useEffect(() => {
     setMounted(true);
     try {
-      const seen = window.localStorage.getItem(SEEN_KEY);
+      const localSeen = window.localStorage.getItem(SEEN_KEY);
       const wasOpen = window.sessionStorage.getItem(OPEN_KEY) === "1";
-      if (!seen) {
+      const alreadySeen = hasSeenGuide || !!localSeen;
+      if (!alreadySeen) {
         setOpen(true);
         setInTour(true);
         window.localStorage.setItem(SEEN_KEY, new Date().toISOString());
+        // Persist the decision to the account (no-ops gracefully pre-0005).
+        void markGuideSeen().catch(() => {});
         // Pulse the launcher the first time so the eye lands on it.
         setGlow(true);
         const t = setTimeout(() => setGlow(false), 5200);
@@ -84,7 +95,7 @@ export function PortalGuide({
     } catch {
       /* SSR / private mode */
     }
-  }, []);
+  }, [hasSeenGuide]);
 
   // Persist open/closed across the SPA navigation, but not across full
   // browser restart.

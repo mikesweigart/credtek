@@ -12,10 +12,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const LINKS: { href: string; label: string }[] = [
+const LINKS: { href: string; label: string; external?: boolean }[] = [
   { href: "#pricing", label: "Pricing" },
   { href: "#calc", label: "ROI" },
-  { href: "/dashboard", label: "See it live" },
+  // The fully-interactive product demo — no form, nothing gated. Opens
+  // in a new tab so the marketing page (and its Book-a-demo CTA) stays
+  // one tab away when the prospect is done exploring.
+  { href: "/avelecare", label: "See it live", external: true },
   { href: "/resources", label: "Resources" },
 ];
 
@@ -55,11 +58,24 @@ export function TopNav() {
           </Link>
 
           <div className="topnav-links">
-            {LINKS.map((l) => (
-              <a key={l.href} href={l.href}>
-                {l.label}
-              </a>
-            ))}
+            {LINKS.map((l) =>
+              l.external ? (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`${l.label} — opens the live demo in a new tab`}
+                >
+                  {l.label}
+                  <span aria-hidden="true"> ↗</span>
+                </a>
+              ) : (
+                <a key={l.href} href={l.href}>
+                  {l.label}
+                </a>
+              )
+            )}
           </div>
 
           <div className="topnav-right">
@@ -113,8 +129,19 @@ export function TopNav() {
           <ul className="mobile-drawer-list">
             {LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href} onClick={() => setOpen(false)}>
+                <a
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  {...(l.external
+                    ? {
+                        target: "_blank",
+                        rel: "noopener",
+                        "aria-label": `${l.label} — opens the live demo in a new tab`,
+                      }
+                    : {})}
+                >
                   {l.label}
+                  {l.external ? <span aria-hidden="true"> ↗</span> : null}
                 </a>
               </li>
             ))}

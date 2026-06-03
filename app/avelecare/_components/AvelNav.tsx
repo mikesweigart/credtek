@@ -190,6 +190,13 @@ export function AvelNav() {
             <br />
             Credentialing, simplified.
           </div>
+          {/* White-label credit + the visitor's way back to CredTek. A
+              relative "/" is correct in both contexts: on the apex it
+              lands on cred-tek.com's home; on the avelecare.cred-tek.com
+              white-label subdomain the middleware keeps it in-portal. */}
+          <Link className="avel-sb-powered" href="/" onClick={close}>
+            Powered by <strong>CredTek</strong>
+          </Link>
         </div>
       </aside>
     </>

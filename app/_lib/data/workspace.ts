@@ -14,6 +14,9 @@ export type SessionCtx = {
   tenantId: string | null;
   tenantName: string | null;
   role: string | null;
+  /** When the user first dismissed the Cred tour. null = never seen.
+   *  undefined-safe: stays null if migration 0005 hasn't run yet. */
+  guideSeenAt: string | null;
 };
 
 export const ROLE_LABEL: Record<string, string> = {
@@ -41,6 +44,7 @@ const EMPTY: SessionCtx = {
   tenantId: null,
   tenantName: null,
   role: null,
+  guideSeenAt: null,
 };
 
 function tenantNameFrom(tenants: unknown): string | null {
@@ -58,11 +62,38 @@ export async function getSessionContext(): Promise<SessionCtx> {
   } = await supabase.auth.getUser();
   if (!user) return { ...EMPTY, configured: true };
 
-  const { data: profile } = await supabase
+  // Primary read tries to include guide_seen_at (migration 0005). If that
+  // column doesn't exist yet, PostgREST returns an error and we retry with
+  // the proven, narrower select — so the session never breaks on a DB that
+  // hasn't applied 0005. guideSeenAt simply stays null until it does.
+  let profile:
+    | {
+        tenant_id?: string | null;
+        full_name?: string | null;
+        role?: string | null;
+        guide_seen_at?: string | null;
+        tenants?: unknown;
+      }
+    | null = null;
+  let guideSeenAt: string | null = null;
+
+  const primary = await supabase
     .from("profiles")
-    .select("tenant_id, full_name, role, tenants ( name )")
+    .select("tenant_id, full_name, role, guide_seen_at, tenants ( name )")
     .eq("id", user.id)
     .maybeSingle();
+
+  if (primary.error) {
+    const fallback = await supabase
+      .from("profiles")
+      .select("tenant_id, full_name, role, tenants ( name )")
+      .eq("id", user.id)
+      .maybeSingle();
+    profile = fallback.data;
+  } else {
+    profile = primary.data;
+    guideSeenAt = (primary.data?.guide_seen_at as string | null) ?? null;
+  }
 
   if (profile?.tenant_id) {
     return {
@@ -73,6 +104,7 @@ export async function getSessionContext(): Promise<SessionCtx> {
       tenantId: profile.tenant_id as string,
       tenantName: tenantNameFrom(profile.tenants),
       role: (profile.role as string) ?? "admin",
+      guideSeenAt,
     };
   }
 
@@ -91,6 +123,7 @@ export async function getSessionContext(): Promise<SessionCtx> {
     tenantId: healed?.tenantId ?? null,
     tenantName: healed?.tenantName ?? null,
     role: "admin",
+    guideSeenAt: null, // brand-new profile — show the tour
   };
 }
 

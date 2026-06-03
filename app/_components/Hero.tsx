@@ -30,11 +30,15 @@ export function Hero() {
     <>
       <section className="hero hero-cinematic">
         <div className="container">
-          {/* Screen-reader-only H1 — SEO signal stays, visual hierarchy
-              belongs to the video. Search engines see the headline;
-              visitors see the moving picture. */}
+          {/* Screen-reader-only H1 — carries the controlling one-liner for
+              SEO (keywords: medical providers, credentialed, billing). The
+              visual/emotional headline lives in the video (frame 1: "Your
+              providers should be billing. Not waiting."), so the H1 and the
+              video reinforce the same idea without visually repeating it.
+              This same one-liner is mirrored in the page <title>, the meta
+              description, and the OG/Twitter cards — one message, everywhere. */}
           <h1 className="visually-hidden">
-            Your providers should be billing. Not waiting on credentialing.
+            CredTek gets your medical providers credentialed and billing in weeks, not months.
           </h1>
 
           {/* Eyebrow — qualifies the audience above the video */}
@@ -48,20 +52,36 @@ export function Hero() {
           {/* Below the video — a confident, no-noise action path */}
           <div className="hero-below">
             <p className="hero-below-line">
-              From signed contract to <em>providers billing</em> — in 14 days.
+              From signed contract to <em>providers billing</em> — in weeks, not months.
             </p>
 
             <div className="hero-cta hero-cta-centered">
-              <button
-                type="button"
-                className="btn-primary btn-primary-lg"
-                onClick={() => setModalOpen(true)}
-              >
-                Book a demo
-                <span className="arrow">→</span>
-              </button>
+              {/* Two-action hero: a high-commitment primary (book) and a
+                  zero-friction secondary (explore the real product, no
+                  form). The live demo opens in a new tab so this page —
+                  and the "Book a demo" button — stays one tab away for
+                  the moment the prospect is convinced. */}
+              <div className="hero-cta-buttons">
+                <button
+                  type="button"
+                  className="btn-primary btn-primary-lg"
+                  onClick={() => setModalOpen(true)}
+                >
+                  Book a demo
+                  <span className="arrow">→</span>
+                </button>
+                <a
+                  className="btn-secondary btn-secondary-lg"
+                  href="/avelecare"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  See it live
+                  <span className="arrow">→</span>
+                </a>
+              </div>
               <a className="hero-cta-tertiary" href="#calc">
-                or see your ROI first →
+                or just run your ROI numbers first →
               </a>
             </div>
 

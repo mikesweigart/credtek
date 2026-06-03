@@ -104,6 +104,7 @@ export default async function PortalLayout({ children }: { children: ReactNode }
         role={ctx.role ?? "admin"}
         hasProviders={providers.length > 0}
         flaggedCount={flaggedCount}
+        hasSeenGuide={!!ctx.guideSeenAt}
       />
     </div>
   );

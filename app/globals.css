@@ -7526,10 +7526,11 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: white;
 }
 .stakes-section h2 em { color: var(--gold); font-style: italic; }
+/* On the dark ink background the gold-deep kicker reads too low-contrast,
+   so we lift it to blue-soft. Color-only — no pill chrome — to match the
+   plain editorial eyebrow used in every other section. */
 .stakes-section .section-eyebrow {
-  color: var(--gold);
-  background: rgba(201, 146, 61, 0.1);
-  border-color: rgba(201, 146, 61, 0.35);
+  color: var(--blue-soft);
 }
 
 .stakes-grid {
@@ -7629,10 +7630,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
    MOBILE — type scale + spacing rhythm cleanup
    ============================================================ */
 @media (max-width: 768px) {
-  .section h2 {
-    font-size: clamp(28px, 6vw, 36px);
-    line-height: 1.1;
-  }
+  /* (Peer section-headline sizing lives in the unified
+     SECTION HEADLINE SCALE block — see below.) */
   .section-lead {
     font-size: 15.5px;
     line-height: 1.6;
@@ -7827,13 +7826,41 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   max-width: 720px;
 }
 
+/* (Stakes eyebrow is defined once, color-only, up with the other
+   .stakes-section rules — no duplicate override needed here.) */
+
 /* ============================================================
-   STAKES section eyebrow — fix stale gold rgba (was #C9923D)
+   SECTION HEADLINE SCALE — one display scale for every peer
+   section header.
+   Before: each section redefined its own size (60 / 56 / 52)
+   and line-height (1.0 / 1.05 / 1.1), so peer headlines subtly
+   jumped as you scrolled. This unifies them into a single
+   editorial scale so the page's vertical rhythm reads
+   deliberate. Deeper sub-feature headings (.feature-content h3)
+   stay smaller on purpose — that's hierarchy, not drift.
+   Placed AFTER every per-section rule so it wins the cascade;
+   only font-size + line-height are set here, so each section
+   keeps its own margins and accent-color (em) rules.
    ============================================================ */
-.stakes-section .section-eyebrow {
-  color: var(--blue-soft);
-  background: rgba(4, 103, 222, 0.16);
-  border-color: rgba(4, 103, 222, 0.4);
+.section h2,
+.founder-content h2,
+.plan-section h2,
+.stakes-section h2,
+.caps-section h2 {
+  font-size: clamp(32px, 4.6vw, 54px);
+  line-height: 1.06;
+}
+/* Tablet: one tighter step, still unified across all peers. The
+   ≤480 block further down handles phones (and wins, being later). */
+@media (max-width: 768px) {
+  .section h2,
+  .founder-content h2,
+  .plan-section h2,
+  .stakes-section h2,
+  .caps-section h2 {
+    font-size: clamp(28px, 5.4vw, 40px);
+    line-height: 1.1;
+  }
 }
 
 /* ============================================================
@@ -8116,6 +8143,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   .caps-section h2,
   .plan-section h2,
   .stakes-section h2,
+  .founder-content h2,
   .calc-section h2 {
     font-size: clamp(26px, 7vw, 34px);
     line-height: 1.12;
@@ -9460,6 +9488,23 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   font-weight: 600;
   color: var(--avel-teal-soft);
 }
+/* Discreet "Powered by CredTek" credit + back-to-CredTek link in the
+   sidebar foot — orients a self-serve demo visitor and gives them a way
+   home without disturbing the AVEL eCare brand expression. */
+.avel-sb-powered {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 10px 8px 0;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.avel-sb-powered strong { font-weight: 600; color: rgba(255, 255, 255, 0.72); }
+.avel-sb-powered:hover,
+.avel-sb-powered:hover strong { color: var(--avel-teal-soft); }
 
 /* ──────────  TOP BAR  ────────── */
 .avel-topbar {
@@ -14099,6 +14144,49 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   flex-direction: column;
   align-items: center;
   gap: 14px;
+}
+
+/* Two CTAs side by side (Book a demo + See it live), with the ROI link
+   stacking below them via the column .hero-cta-centered parent. */
+.hero-cta-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+/* Large secondary button — visually paired with .btn-primary-lg so the
+   two hero actions read as a balanced pair (solid lead, outlined alt). */
+.btn-secondary-lg {
+  padding: 16px 28px;
+  font-size: 16px;
+  border-radius: 12px;
+  background: #fff;
+  /* Explicit outline (not the faint --line) so the button reads clearly
+     on the light hero while staying visually subordinate to the solid
+     ink primary — a crisp "outlined alt" beside the "solid lead". */
+  border-color: rgba(11, 31, 46, 0.16);
+  color: var(--ink);
+  box-shadow: 0 8px 22px -14px rgba(11, 31, 46, 0.32);
+  transition: border-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.btn-secondary-lg .arrow { transition: transform 0.2s; }
+.btn-secondary-lg:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px -16px rgba(4, 103, 222, 0.4);
+}
+.btn-secondary-lg:hover .arrow { transform: translateX(3px); }
+.btn-secondary-lg:active { transform: translateY(0); }
+@media (max-width: 600px) {
+  /* Stack the two buttons full-width; each already gets width:100% +
+     a 48px touch floor from the shared .hero-cta button rules above. */
+  .hero-cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
 }
 
 .hero-trust-centered {
