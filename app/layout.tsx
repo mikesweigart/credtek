@@ -4,6 +4,7 @@ import "./globals.css";
 import { ScrollReveal } from "./_components/ScrollReveal";
 import { CursorSpotlight } from "./_components/CursorSpotlight";
 import { Analytics } from "./_components/Analytics";
+import { ChatWidget } from "./_components/ChatWidget";
 
 // Hardcoded canonical site URL — env-based resolution removed because
 // Vercel's modifyConfig step was failing with an undefined-path error.
@@ -67,6 +68,11 @@ export default function RootLayout({
         {children}
         <ScrollReveal />
         <CursorSpotlight />
+        {/* Site-wide support/sales assistant. Self-gates to public
+            marketing pages (renders null on the demo portal, the real
+            product, white-label, ops and auth routes — those have their
+            own in-context guides), so a prospect never sees two bubbles. */}
+        <ChatWidget />
         {/* PostHog page-view + autocapture. No-ops without
             NEXT_PUBLIC_POSTHOG_KEY so the build stays green. */}
         <Suspense fallback={null}>
