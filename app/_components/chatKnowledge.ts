@@ -47,6 +47,7 @@ export type Topic = {
 export const STARTER_CHIPS: { label: string; topicId: string }[] = [
   { label: "How fast is it?", topicId: "speed" },
   { label: "Pricing", topicId: "pricing" },
+  { label: "Onboard my providers", topicId: "onboarding" },
   { label: "Security & compliance", topicId: "security" },
   { label: "What do the agents do?", topicId: "agents" },
   { label: "See a demo", topicId: "demo" },
@@ -578,9 +579,19 @@ export const KNOWLEDGE: Topic[] = [
   },
   {
     id: "onboarding",
+    chip: "Onboarding",
     keywords: [
       "onboarding",
       "onboard",
+      "intake",
+      "intake form",
+      "form",
+      "upload roster",
+      "roster",
+      "add providers",
+      "add provider",
+      "fill out",
+      "data entry",
       "implementation",
       "implement",
       "migrate",
@@ -588,6 +599,7 @@ export const KNOWLEDGE: Topic[] = [
       "modio",
       "spreadsheet",
       "spreadsheets",
+      "excel",
       "switch",
       "switching",
       "set up",
@@ -600,19 +612,25 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "**Live in 14 days** with white-glove onboarding — we do the heavy lifting:",
+        text: "Getting your roster in takes minutes. **Two ways to onboard:**",
       },
       {
         t: "ul",
         items: [
-          "We migrate your existing data from **Modio, CAQH, or spreadsheets**.",
-          "We build a **golden profile** per provider with confidence scoring.",
-          "A **dedicated CSM** runs weekly check-ins through your first 90 days.",
+          "**Self-serve intake** — a guided form with live NPI validation. Add each provider, pick the **states** you need licensed and the **payors** you want enrolled with, and submit.",
+          "**Concierge data entry** — too many to type? Upload your roster (Excel or doc) and our team enters it for you for a small fee. **$99 per 25 providers · waived on annual plans.**",
         ],
       },
       {
+        t: "p",
+        text: "Either way, we scope it, sign a **BAA**, and verification + enrollment begin — usually **live in 14 days**, with a dedicated CSM through your first 90.",
+      },
+      {
         t: "actions",
-        items: [{ kind: "calendly", label: "Plan your onboarding" }],
+        items: [
+          { kind: "link", label: "Start onboarding →", href: "/get-started" },
+          { kind: "calendly", label: "Plan your onboarding" },
+        ],
       },
     ],
     followups: ["speed", "ehr", "guarantee"],

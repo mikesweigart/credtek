@@ -557,6 +557,53 @@ const LANDING_BODY_POST_CALC = `
   </div>
 </section>
 
+<!-- ============== ONBOARDING SHOWCASE ============== -->
+<section class="section reveal" id="onboarding" style="border-top: 1px solid var(--line);">
+  <div class="container">
+    <span class="section-eyebrow">Onboarding, the easy way</span>
+    <h2>Get your whole roster in — <em>in minutes, not weeks.</em></h2>
+    <p class="onb-sub">Two ways to start. Fill out a guided intake yourself, or hand us a spreadsheet and we&apos;ll enter every provider for you. Either way you&apos;re scoped within one business day.</p>
+
+    <div class="onb-grid">
+      <div class="onb-card">
+        <div class="onb-badge">Most popular</div>
+        <div class="onb-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4 21a8 8 0 0 1 16 0"/></svg>
+        </div>
+        <h3 class="onb-card-title">Fill out the guided form</h3>
+        <p class="onb-card-desc">Add each provider with live NPI validation, pick the states you need to bill in, and select the payors to enroll with. Save and resume anytime.</p>
+        <ul class="onb-list">
+          <li>Live NPI check as you type</li>
+          <li>All 50 states &amp; territories</li>
+          <li>Every major payor, grouped</li>
+        </ul>
+        <a class="onb-cta" href="/get-started">Start the form <span class="arrow">→</span></a>
+      </div>
+
+      <div class="onb-card">
+        <div class="onb-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
+        </div>
+        <h3 class="onb-card-title">Upload a roster — we&apos;ll enter it</h3>
+        <p class="onb-card-desc">Already have a spreadsheet? Send Excel, CSV, Google Sheet, or PDF and our credentialing team keys in every provider and validates each NPI — for a nominal concierge fee.</p>
+        <ul class="onb-list">
+          <li>$99 per 25 providers · waived on annual plans</li>
+          <li>We validate every NPI &amp; flag duplicates</li>
+          <li>Your data lands straight in CredTek</li>
+        </ul>
+        <a class="onb-cta" href="/get-started">Upload a roster <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="onb-flow">
+      <div class="onb-step"><span class="onb-step-n">1</span><div class="onb-step-body"><strong>You submit</strong><span>Guided form or roster — about 3 minutes.</span></div></div>
+      <div class="onb-step"><span class="onb-step-n">2</span><div class="onb-step-body"><strong>We scope &amp; sign a BAA</strong><span>A coordinator confirms within one business day.</span></div></div>
+      <div class="onb-step"><span class="onb-step-n">3</span><div class="onb-step-body"><strong>Verification &amp; enrollment begin</strong><span>State boards, NPDB, OIG, SAM, DEA, payors.</span></div></div>
+      <div class="onb-step"><span class="onb-step-n">4</span><div class="onb-step-body"><strong>You watch it move</strong><span>Every stage to billable, in real time.</span></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============== FAQ ============== -->
 <section class="section reveal" id="faq" style="background: var(--paper); border-top: 1px solid var(--line);">
   <div class="container container-narrow">

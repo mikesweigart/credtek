@@ -55,6 +55,10 @@ export default async function ProvidersPage({ searchParams }: PageProps) {
           {visible.length} of {PROVIDERS.length} shown · click any row for the
           full profile
         </p>
+        <Link href="/get-started" className="btn-primary">
+          Onboard providers
+          <span className="arrow">→</span>
+        </Link>
       </section>
 
       <div className="filter-row">
