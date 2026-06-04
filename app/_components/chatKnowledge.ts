@@ -618,7 +618,7 @@ export const KNOWLEDGE: Topic[] = [
         t: "ul",
         items: [
           "**Self-serve intake** — a guided form with live NPI validation. Add each provider, pick the **states** you need licensed and the **payors** you want enrolled with, and submit.",
-          "**Concierge data entry** — too many to type? Upload your roster (Excel or doc) and our team enters it for you for a small fee. **$99 per 25 providers · waived on annual plans.**",
+          "**Concierge — we do it for you** — too many to type? Upload your roster (Excel or doc); we review it, validate every NPI, and email you a **flat quote** to prepare the credentialing and payer-enrollment forms for you. **Nothing is charged until you approve** — typically $99 per 25 providers, waived on annual plans.",
         ],
       },
       {

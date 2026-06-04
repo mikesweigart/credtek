@@ -18,6 +18,7 @@ import {
   STATE_NAME_BY_CODE,
   PAYOR_NAME_BY_ID,
   SIZE_BUCKETS,
+  ENGAGEMENT_LABEL_BY_ID,
   isValidNpi,
   type ProviderDraft,
 } from "../../_components/intakeData";
@@ -86,6 +87,8 @@ function cleanProviders(v: unknown, max = 600): ProviderDraft[] {
       lastName: str(o.lastName, 80),
       credential: str(o.credential, 40),
       npi: str(o.npi, 20),
+      caqhId: str(o.caqhId, 30),
+      dea: str(o.dea, 20),
       primaryState: str(o.primaryState, 4),
       specialty: str(o.specialty, 80),
       email: str(o.email, 200),
@@ -112,6 +115,8 @@ export async function POST(req: Request) {
 
   const path = body.path === "concierge" ? "concierge" : "self";
   const orgName = str(body.orgName, 200);
+  const groupNpi = str(body.groupNpi, 20);
+  const engagementType = str(body.engagementType, 40);
   const contactName = str(body.contactName, 160);
   const contactEmail = str(body.contactEmail, 320);
   const contactPhone = str(body.contactPhone, 60);
@@ -139,6 +144,7 @@ export async function POST(req: Request) {
   const ua = req.headers.get("user-agent") ?? "—";
   const referer = req.headers.get("referer") ?? "—";
   const sizeLabel = SIZE_LABEL[sizeBucket] ?? (sizeBucket || "—");
+  const engagementLabel = ENGAGEMENT_LABEL_BY_ID[engagementType] ?? (engagementType || "—");
   const stateNames = states.map((c) => STATE_NAME_BY_CODE[c] ?? c);
   const payorNames = payors.map((id) => PAYOR_NAME_BY_ID[id] ?? id);
   const invalidNpis = providers.filter(
@@ -152,6 +158,8 @@ export async function POST(req: Request) {
       await admin.from("intake_submissions").insert({
         path,
         org_name: orgName,
+        group_npi: groupNpi || null,
+        engagement_type: engagementType || null,
         contact_name: contactName,
         contact_email: contactEmail,
         contact_phone: contactPhone || null,
@@ -196,6 +204,7 @@ export async function POST(req: Request) {
         <td style="padding:5px 8px;border-top:1px solid #efece4;"><strong>${esc(`${p.firstName} ${p.lastName}`.trim()) || "—"}</strong></td>
         <td style="padding:5px 8px;border-top:1px solid #efece4;">${esc(p.credential) || "—"}</td>
         <td style="padding:5px 8px;border-top:1px solid #efece4;">${npiCell}</td>
+        <td style="padding:5px 8px;border-top:1px solid #efece4;">${esc(p.caqhId) || "—"}</td>
         <td style="padding:5px 8px;border-top:1px solid #efece4;">${esc(p.primaryState) || "—"}</td>
         <td style="padding:5px 8px;border-top:1px solid #efece4;">${esc(p.specialty) || "—"}</td>
         <td style="padding:5px 8px;border-top:1px solid #efece4;font-size:12px;">${esc(p.email) || "—"}</td>
@@ -208,7 +217,7 @@ export async function POST(req: Request) {
       ? `<h2 style="font-size:14px;margin:22px 0 8px;color:#0f1f1c;">Providers (${providers.length}${invalidNpis ? ` · ${invalidNpis} NPI need a look` : ""})</h2>
          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;font-size:13px;color:#2b2a26;">
            <tr style="text-align:left;color:#67645c;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;">
-             <th style="padding:0 8px 4px;">#</th><th style="padding:0 8px 4px;">Name</th><th style="padding:0 8px 4px;">Cred</th><th style="padding:0 8px 4px;">NPI</th><th style="padding:0 8px 4px;">State</th><th style="padding:0 8px 4px;">Specialty</th><th style="padding:0 8px 4px;">Email</th>
+             <th style="padding:0 8px 4px;">#</th><th style="padding:0 8px 4px;">Name</th><th style="padding:0 8px 4px;">Cred</th><th style="padding:0 8px 4px;">NPI</th><th style="padding:0 8px 4px;">CAQH</th><th style="padding:0 8px 4px;">State</th><th style="padding:0 8px 4px;">Specialty</th><th style="padding:0 8px 4px;">Email</th>
            </tr>
            ${providerRows}
          </table>${providers.length > 120 ? `<p style="font-size:12px;color:#67645c;margin:6px 0 0;">+ ${providers.length - 120} more not shown.</p>` : ""}`
@@ -233,10 +242,12 @@ export async function POST(req: Request) {
       </p>
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;font-size:14px;color:#2b2a26;">
         <tr><td style="padding:5px 0;color:#67645c;width:150px;">Group</td><td style="padding:5px 0;"><strong>${esc(orgName)}</strong></td></tr>
+        <tr><td style="padding:5px 0;color:#67645c;">Needs</td><td style="padding:5px 0;">${esc(engagementLabel)}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;">Contact</td><td style="padding:5px 0;">${esc(contactName) || "—"}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;">Email</td><td style="padding:5px 0;"><strong>${esc(contactEmail)}</strong></td></tr>
         <tr><td style="padding:5px 0;color:#67645c;">Phone</td><td style="padding:5px 0;">${esc(contactPhone) || "—"}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;">Group size</td><td style="padding:5px 0;">${esc(sizeLabel)}</td></tr>
+        <tr><td style="padding:5px 0;color:#67645c;">Group NPI (Type 2)</td><td style="padding:5px 0;">${esc(groupNpi) || "—"}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;vertical-align:top;">States (${stateNames.length})</td><td style="padding:5px 0;">${esc(stateNames.join(", ")) || "—"}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;vertical-align:top;">Payors (${payorNames.length})</td><td style="padding:5px 0;">${esc(payorNames.join(", ")) || "—"}</td></tr>
         <tr><td style="padding:5px 0;color:#67645c;">Authorizations</td><td style="padding:5px 0;">PSV ${authPsv ? "✓" : "✗"} · BAA ${authBaa ? "✓" : "✗"}</td></tr>
@@ -254,7 +265,7 @@ export async function POST(req: Request) {
       ? providers
           .map(
             (p, i) =>
-              `  ${i + 1}. ${`${p.firstName} ${p.lastName}`.trim()} — ${p.credential || "?"} — NPI ${p.npi || "—"} — ${p.primaryState || "—"}`,
+              `  ${i + 1}. ${`${p.firstName} ${p.lastName}`.trim()} — ${p.credential || "?"} — NPI ${p.npi || "—"}${p.caqhId ? ` — CAQH ${p.caqhId}` : ""}${p.dea ? ` — DEA ${p.dea}` : ""} — ${p.primaryState || "—"}`,
           )
           .join("\n")
       : `  Roster: ${rosterFileName || "—"} (${rosterRowCount != null ? rosterRowCount : "rows TBD"})`;
@@ -262,8 +273,9 @@ export async function POST(req: Request) {
   const text = `New CredTek onboarding (${path})
 
 Group: ${orgName}
+Needs: ${engagementLabel}
 Contact: ${contactName} <${contactEmail}>${contactPhone ? ` · ${contactPhone}` : ""}
-Group size: ${sizeLabel}
+Group size: ${sizeLabel}${groupNpi ? `\nGroup NPI (Type 2): ${groupNpi}` : ""}
 States (${stateNames.length}): ${stateNames.join(", ") || "—"}
 Payors (${payorNames.length}): ${payorNames.join(", ") || "—"}
 Authorizations: PSV ${authPsv ? "yes" : "no"} · BAA ${authBaa ? "yes" : "no"}

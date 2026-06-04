@@ -16009,6 +16009,21 @@ a.cov-cell:hover {
 .gi-step.current .gi-step-label { color: var(--ink); }
 .gi-step.done .gi-step-label { color: var(--gold-deep); }
 
+/* ---- Autosave reassurance ---- */
+.gi-autosave {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 14px 0 0;
+  font-size: 11.5px; color: var(--muted); font-weight: 500; letter-spacing: 0.01em;
+}
+.gi-autosave svg { color: var(--sage); flex: 0 0 auto; }
+
+/* ---- Step transition ---- */
+.gi-step-anim { animation: gi-step-in 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes gi-step-in {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ---- Card ---- */
 .gi-card {
   background: white;
@@ -16058,6 +16073,14 @@ a.cov-cell:hover {
 .gi-hint { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 .gi-hint-center { text-align: center; margin-top: 14px; }
 .gi-hint strong { color: var(--ink-soft); }
+.gi-secure-note {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin: 18px 0 0;
+  font-size: 12px; color: var(--muted); line-height: 1.5;
+  background: var(--paper); border: 1px solid var(--line-soft);
+  border-radius: 11px; padding: 11px 13px;
+}
+.gi-secure-note svg { color: var(--sage); flex: 0 0 auto; margin-top: 1px; }
 
 /* ---- Providers ---- */
 .gi-providers { display: flex; flex-direction: column; gap: 14px; }
@@ -16103,6 +16126,19 @@ a.cov-cell:hover {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 .gi-add-provider:hover { background: var(--blue-soft); border-color: var(--gold); }
+.gi-ids-toggle {
+  margin-top: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--gold-deep); font-size: 12.5px; font-weight: 600; font-family: inherit;
+  padding: 4px 2px; border-radius: 7px;
+}
+.gi-ids-toggle:hover { color: var(--gold); }
+.gi-ids-toggle svg { flex: 0 0 auto; }
+.gi-ids-grid {
+  margin-top: 12px;
+  animation: gi-step-in 0.24s ease both;
+}
 
 /* ---- State picker ---- */
 .gi-state-tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
@@ -16132,6 +16168,22 @@ a.cov-cell:hover {
 }
 .gi-state-chip:hover { border-color: var(--gold-soft); background: white; }
 .gi-state-chip.on { background: var(--ink); color: white; border-color: var(--ink); }
+.gi-selected-states {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin: 12px 0 4px;
+  padding-top: 14px; border-top: 1px dashed var(--line);
+}
+.gi-selected-state {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--ink); color: white; border: 1px solid var(--ink);
+  font-size: 12px; font-weight: 600; font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.02em;
+  border-radius: 999px; padding: 5px 7px 5px 11px; cursor: pointer;
+  transition: background 0.13s ease, transform 0.12s ease;
+}
+.gi-selected-state svg { opacity: 0.65; flex: 0 0 auto; }
+.gi-selected-state:hover { background: var(--danger); border-color: var(--danger); transform: translateY(-1px); }
+.gi-selected-state:hover svg { opacity: 1; }
 
 /* ---- Payor picker ---- */
 .gi-payor-group { margin-bottom: 18px; }
@@ -16340,6 +16392,8 @@ a.cov-cell:hover {
 .gi-btn-primary:focus-visible,
 .gi-btn-secondary:focus-visible,
 .gi-add-provider:focus-visible,
+.gi-ids-toggle:focus-visible,
+.gi-selected-state:focus-visible,
 .gi-template-link:focus-visible {
   outline: none; box-shadow: 0 0 0 3px rgba(4, 103, 222, 0.28);
 }
@@ -16365,6 +16419,8 @@ a.cov-cell:hover {
   .gi-fork-card, .gi-btn-primary, .gi-step-num, .gi-fork-go { transition: none; }
   .gi-fork-card:hover, .gi-btn-primary:hover:not(:disabled) { transform: none; }
   .gi-spinner { animation: none; }
+  .gi-step-anim, .gi-ids-grid { animation: none; }
+  .gi-selected-state:hover { transform: none; }
 }
 
 /* ===================================================================== *

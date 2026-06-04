@@ -222,6 +222,27 @@ export const SIZE_BUCKETS: SizeBucket[] = [
 ];
 
 /* ----------------------------------------------------------------------- *
+ * Engagement type — what credentialing work the group actually needs. This
+ * is the single most useful scoping signal for a coordinator: a brand-new
+ * enrollment, a re-credentialing/revalidation cycle, adding providers to an
+ * existing group contract, or just standing up CAQH are very different jobs.
+ * ----------------------------------------------------------------------- */
+
+export type EngagementType = { id: string; label: string; note?: string };
+
+export const ENGAGEMENT_TYPES: EngagementType[] = [
+  { id: "new", label: "New payer enrollment & credentialing", note: "Get providers in-network from scratch" },
+  { id: "recredential", label: "Re-credentialing / revalidation", note: "Keep existing panels active" },
+  { id: "add_to_group", label: "Add providers to an existing group contract", note: "Link new NPIs to your group" },
+  { id: "caqh", label: "CAQH setup & attestation", note: "Build or refresh CAQH ProView" },
+  { id: "not_sure", label: "Not sure yet — help me scope it", note: "We'll figure it out on the kickoff call" },
+];
+
+export const ENGAGEMENT_LABEL_BY_ID: Record<string, string> = Object.fromEntries(
+  ENGAGEMENT_TYPES.map((e) => [e.id, e.label]),
+);
+
+/* ----------------------------------------------------------------------- *
  * NPI validation — Luhn check digit on the ISO 7812 number, with the
  * "80840" health-application prefix prepended to the first 9 digits.
  * (CMS NPI standard.) Lets us catch typos at the point of entry.
@@ -265,6 +286,8 @@ export const ROSTER_COLUMNS: RosterColumn[] = [
   { key: "last_name", label: "Last name", example: "Patel" },
   { key: "credential", label: "Credential", example: "MD" },
   { key: "npi", label: "NPI", example: "1234567893" },
+  { key: "caqh_id", label: "CAQH ID (if any)", example: "12345678" },
+  { key: "dea", label: "DEA (if prescriber)", example: "BP1234563" },
   { key: "primary_state", label: "Primary state", example: "TX" },
   { key: "states_to_credential", label: "States to credential (; separated)", example: "TX; OK; NM" },
   { key: "payors", label: "Payors (; separated)", example: "Medicare; Aetna; UHC" },
@@ -276,10 +299,11 @@ export const ROSTER_COLUMNS: RosterColumn[] = [
 export const ROSTER_CSV_TEMPLATE: string =
   ROSTER_COLUMNS.map((c) => c.label).join(",") +
   "\n" +
-  // Two example rows so the format is unmistakable.
-  '"Aisha","Patel","MD","1234567893","TX","TX; OK; NM","Medicare; Aetna; UHC","Family Medicine","aisha.patel@example.com","512-555-0142"' +
+  // Two example rows so the format is unmistakable. Missing values are fine —
+  // we chase down anything we need during review, so leave optional cells blank.
+  '"Aisha","Patel","MD","1234567893","12345678","BP1234563","TX","TX; OK; NM","Medicare; Aetna; UHC","Family Medicine","aisha.patel@example.com","512-555-0142"' +
   "\n" +
-  '"Marcus","Lee","LCSW","1992739338","CA","CA","Medicaid; Optum; Magellan","Behavioral Health / Therapy","marcus.lee@example.com","415-555-0188"' +
+  '"Marcus","Lee","LCSW","1992739338","","","CA","CA","Medicaid; Optum; Magellan","Behavioral Health / Therapy","marcus.lee@example.com","415-555-0188"' +
   "\n";
 
 /* ----------------------------------------------------------------------- *
@@ -292,6 +316,8 @@ export type ProviderDraft = {
   lastName: string;
   credential: string;
   npi: string;
+  caqhId: string; // CAQH ProView ID — optional but speeds credentialing
+  dea: string; // DEA number — for prescribers; optional
   primaryState: string;
   specialty: string;
   email: string;
@@ -303,6 +329,8 @@ export type IntakeDraft = {
   path: IntakePath;
   // Organization / contact
   orgName: string;
+  groupNpi: string; // organizational (Type 2) NPI — drives group billing
+  engagementType: string; // what kind of work — see ENGAGEMENT_TYPES
   contactName: string;
   contactEmail: string;
   contactPhone: string;
@@ -337,6 +365,8 @@ export function newProvider(): ProviderDraft {
     lastName: "",
     credential: "",
     npi: "",
+    caqhId: "",
+    dea: "",
     primaryState: "",
     specialty: "",
     email: "",
@@ -348,6 +378,8 @@ export function newDraft(path: IntakePath): IntakeDraft {
   return {
     path,
     orgName: "",
+    groupNpi: "",
+    engagementType: "",
     contactName: "",
     contactEmail: "",
     contactPhone: "",
@@ -373,13 +405,13 @@ export const CONCIERGE_FEE: {
   detail: string;
   bullets: string[];
 } = {
-  headline: "Prefer to hand us a spreadsheet? We'll enter the whole roster for you.",
+  headline: "Hand us your roster — we'll review it and send you a flat quote.",
   detail:
-    "Send your provider roster as Excel, CSV, Google Sheet, or PDF and our credentialing team keys in every provider, validates each NPI, and builds out the states and payors — a one-time concierge data-entry fee of $99 per 25 providers (waived for groups starting on an annual plan).",
+    "Send your provider list as Excel, CSV, Google Sheet, or PDF. Our credentialing team reviews it, validates every NPI, and emails you a flat, all-in quote — typically $99 per 25 providers for data entry, plus optional done-for-you preparation of the credentialing and payer-enrollment forms, priced from your roster. Nothing is charged until you approve the quote.",
   bullets: [
-    "We validate every NPI and flag duplicates or typos before anything is submitted.",
-    "Your data lands straight in CredTek — no re-keying on your end.",
-    "A coordinator confirms scope with you before any verification starts.",
+    "We review your roster and validate every NPI — flagging duplicates, typos, and missing data before you see a price.",
+    "You get a flat, all-in quote within one business day. No charge until you approve it.",
+    "Approve it and we complete the credentialing and enrollment forms for you — your data lands straight in CredTek, no re-keying.",
   ],
 };
 

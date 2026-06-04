@@ -26,13 +26,15 @@ create table if not exists public.intake_submissions (
   path             text not null default 'self'
                      check (path in ('self', 'concierge')),
   org_name         text not null,
+  group_npi        text,                              -- organizational (Type 2) NPI
+  engagement_type  text,                              -- new / recredential / add_to_group / caqh / not_sure
   contact_name     text,
   contact_email    text not null,
   contact_phone    text,
   size_bucket      text,
   states           text[] not null default '{}',     -- selected state codes
   payors           text[] not null default '{}',     -- selected payor ids
-  providers        jsonb  not null default '[]'::jsonb, -- self-serve provider rows
+  providers        jsonb  not null default '[]'::jsonb, -- self-serve rows incl. caqh_id / dea
   roster_file_name text,                              -- concierge: filename only
   roster_row_count integer,                           -- concierge: detected rows
   notes            text,

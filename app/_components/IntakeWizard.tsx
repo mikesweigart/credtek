@@ -25,6 +25,7 @@ import {
   CREDENTIALS,
   PRIMARY_SPECIALTIES,
   SIZE_BUCKETS,
+  ENGAGEMENT_TYPES,
   isValidNpi,
   ROSTER_CSV_TEMPLATE,
   ROSTER_COLUMNS,
@@ -97,6 +98,8 @@ function Icon({ path, size = 20 }: { path: string; size?: number }) {
 const I = {
   check: "M20 6 9 17l-5-5",
   plus: "M12 5v14M5 12h14",
+  minus: "M5 12h14",
+  close: "M18 6 6 18M6 6l12 12",
   trash: "M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14",
   upload: "M12 16V4M7 9l5-5 5 5M5 20h14",
   arrowR: "M5 12h14M13 5l7 7-7 7",
@@ -259,13 +262,19 @@ export function IntakeWizard() {
         ))}
       </ol>
 
+      <div className="gi-autosave">
+        <Icon path={I.check} size={13} /> Progress saves automatically on this device
+      </div>
+
       <div className="gi-card">
-        {stepKey === "group" && <GroupStep draft={draft} update={update} />}
-        {stepKey === "providers" && <ProvidersStep draft={draft} update={update} />}
-        {stepKey === "states" && <StatesStep draft={draft} update={update} />}
-        {stepKey === "payors" && <PayorsStep draft={draft} update={update} />}
-        {stepKey === "upload" && <UploadStep draft={draft} update={update} />}
-        {stepKey === "review" && <ReviewStep draft={draft} update={update} goto={setStepIndex} steps={steps} />}
+        <div className="gi-step-anim" key={stepKey}>
+          {stepKey === "group" && <GroupStep draft={draft} update={update} />}
+          {stepKey === "providers" && <ProvidersStep draft={draft} update={update} />}
+          {stepKey === "states" && <StatesStep draft={draft} update={update} />}
+          {stepKey === "payors" && <PayorsStep draft={draft} update={update} />}
+          {stepKey === "upload" && <UploadStep draft={draft} update={update} />}
+          {stepKey === "review" && <ReviewStep draft={draft} update={update} goto={setStepIndex} steps={steps} />}
+        </div>
 
         <div className="gi-actions">
           <button type="button" className="gi-btn-secondary" onClick={goBack}>
@@ -356,10 +365,10 @@ function Chooser({
           <span className="gi-fork-badge alt">Done for you</span>
           <span className="gi-fork-title">Send us your roster</span>
           <span className="gi-fork-desc">
-            Already have a spreadsheet? Drop in an Excel, CSV, Google Sheet, or PDF and our team keys in every
-            provider, validates each NPI, and builds out the scope.
+            Already have a spreadsheet? Drop in an Excel, CSV, Google Sheet, or PDF. We review it, validate every NPI,
+            and send you a flat quote to complete the credentialing forms for you.
           </span>
-          <span className="gi-fork-meta">Concierge data entry · {CONCIERGE_FEE.detail.match(/\$\d+ per \d+ providers/)?.[0] ?? "nominal fee"}</span>
+          <span className="gi-fork-meta">Reviewed &amp; quoted in 1 business day · no charge until you approve</span>
           <span className="gi-fork-go">
             Upload roster <Icon path={I.arrowR} size={16} />
           </span>
@@ -381,6 +390,16 @@ function Chooser({
  * ================================================================== */
 function GroupStep({ draft, update }: StepProps) {
   const emailBad = draft.contactEmail.length > 0 && !EMAIL_RE.test(draft.contactEmail);
+  const gnpiClean = draft.groupNpi.replace(/\D/g, "");
+  const gnpiState =
+    gnpiClean.length === 0
+      ? "empty"
+      : gnpiClean.length < 10
+        ? "typing"
+        : isValidNpi(draft.groupNpi)
+          ? "valid"
+          : "invalid";
+  const engNote = ENGAGEMENT_TYPES.find((t) => t.id === draft.engagementType)?.note;
   return (
     <>
       <StepHead
@@ -397,6 +416,21 @@ function GroupStep({ draft, update }: StepProps) {
             placeholder="e.g. Lakeshore Medical Group"
             autoComplete="organization"
           />
+        </Field>
+        <Field label="What do you need?" full required>
+          <select
+            className="gi-select"
+            value={draft.engagementType}
+            onChange={(e) => update({ engagementType: e.target.value })}
+          >
+            <option value="">Select…</option>
+            {ENGAGEMENT_TYPES.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.label}
+              </option>
+            ))}
+          </select>
+          {engNote && <span className="gi-hint">{engNote}</span>}
         </Field>
         <Field label="Your name" required>
           <input
@@ -441,7 +475,34 @@ function GroupStep({ draft, update }: StepProps) {
             ))}
           </select>
         </Field>
+        <Field
+          label="Group NPI (Type 2)"
+          full
+          error={gnpiState === "invalid" ? "Check digit doesn't match — re-enter" : undefined}
+        >
+          <div className="gi-npi-wrap">
+            <input
+              className="gi-input"
+              value={draft.groupNpi}
+              inputMode="numeric"
+              maxLength={12}
+              onChange={(e) => update({ groupNpi: e.target.value })}
+              placeholder="Optional — your organizational billing NPI"
+              aria-invalid={gnpiState === "invalid"}
+            />
+            {gnpiState === "valid" && (
+              <span className="gi-npi-badge ok">
+                <Icon path={I.check} size={13} /> Valid
+              </span>
+            )}
+            {gnpiState === "invalid" && <span className="gi-npi-badge bad">Invalid</span>}
+          </div>
+        </Field>
       </div>
+      <p className="gi-secure-note">
+        <Icon path={I.lock} size={13} /> Sensitive items (SSN, DOB, license &amp; malpractice documents) are
+        collected later over an encrypted, BAA-backed link — never on this form.
+      </p>
     </>
   );
 }
@@ -507,6 +568,7 @@ function ProviderCard({
   const npiState =
     npiClean.length === 0 ? "empty" : npiClean.length < 10 ? "typing" : isValidNpi(provider.npi) ? "valid" : "invalid";
   const emailBad = provider.email.length > 0 && !EMAIL_RE.test(provider.email);
+  const [showIds, setShowIds] = useState(Boolean(provider.caqhId || provider.dea));
 
   return (
     <div className="gi-provider">
@@ -610,6 +672,41 @@ function ProviderCard({
           />
         </Field>
       </div>
+
+      <button
+        type="button"
+        className="gi-ids-toggle"
+        onClick={() => setShowIds((v) => !v)}
+        aria-expanded={showIds}
+      >
+        <Icon path={showIds ? I.minus : I.plus} size={14} />
+        {showIds ? "Hide credentialing IDs" : "Add CAQH ID & DEA (optional)"}
+      </button>
+      {showIds && (
+        <div className="gi-provider-grid gi-ids-grid">
+          <Field label="CAQH ID">
+            <input
+              className="gi-input"
+              value={provider.caqhId}
+              inputMode="numeric"
+              maxLength={16}
+              onChange={(e) => onChange({ caqhId: e.target.value })}
+              placeholder="CAQH ProView ID"
+              autoComplete="off"
+            />
+          </Field>
+          <Field label="DEA number">
+            <input
+              className="gi-input"
+              value={provider.dea}
+              maxLength={12}
+              onChange={(e) => onChange({ dea: e.target.value.toUpperCase() })}
+              placeholder="If a prescriber"
+              autoComplete="off"
+            />
+          </Field>
+        </div>
+      )}
     </div>
   );
 }
@@ -674,6 +771,23 @@ function StatesStep({ draft, update }: StepProps) {
       <div className="gi-selected-count" aria-live="polite">
         {draft.states.length === 0 ? "No states selected yet" : `${draft.states.length} state${draft.states.length === 1 ? "" : "s"} selected`}
       </div>
+      {draft.states.length > 0 && (
+        <div className="gi-selected-states" aria-label="Selected states — click to remove">
+          {draft.states.map((code) => (
+            <button
+              key={code}
+              type="button"
+              className="gi-selected-state"
+              onClick={() => toggle(code)}
+              aria-label={`Remove ${STATE_NAME_BY_CODE[code] ?? code}`}
+              title={`Remove ${STATE_NAME_BY_CODE[code] ?? code}`}
+            >
+              {code}
+              <Icon path={I.close} size={11} />
+            </button>
+          ))}
+        </div>
+      )}
       <div className="gi-chip-grid">
         {filtered.map((s) => {
           const on = selected.has(s.code);
@@ -815,9 +929,9 @@ function UploadStep({ draft, update }: StepProps) {
   return (
     <>
       <StepHead
-        eyebrow="Concierge data entry"
-        title="Upload your provider roster."
-        sub="Excel, CSV, Google Sheet, or PDF — whatever you have. We'll key in every provider and validate each NPI."
+        eyebrow="Done-for-you · review & quote"
+        title="Upload your roster — we'll quote it."
+        sub="Excel, CSV, Google Sheet, or PDF — whatever you have. We review it, validate every NPI, and send a flat quote to complete the forms for you. No charge until you approve."
       />
 
       {!draft.rosterFileName ? (
@@ -980,6 +1094,11 @@ function ReviewStep({
 
       <div className="gi-review">
         <ReviewRow label="Group" value={draft.orgName || "—"} onEdit={() => jump("group")} />
+        <ReviewRow
+          label="Needs"
+          value={ENGAGEMENT_TYPES.find((t) => t.id === draft.engagementType)?.label || "—"}
+          onEdit={() => jump("group")}
+        />
         <ReviewRow
           label="Contact"
           value={`${draft.contactName || "—"}${draft.contactEmail ? ` · ${draft.contactEmail}` : ""}`}
@@ -1206,7 +1325,9 @@ function stepValid(key: string, draft: IntakeDraft): boolean {
         draft.orgName.trim().length > 1 &&
         draft.contactName.trim().length > 1 &&
         EMAIL_RE.test(draft.contactEmail) &&
-        draft.sizeBucket.length > 0
+        draft.sizeBucket.length > 0 &&
+        draft.engagementType.length > 0 &&
+        (draft.groupNpi.replace(/\D/g, "").length === 0 || isValidNpi(draft.groupNpi))
       );
     case "providers":
       return draft.providers.length > 0 && draft.providers.every(providerComplete);
