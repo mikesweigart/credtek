@@ -313,11 +313,11 @@ function Chooser({
     <div className="gi-shell">
       <ShellHeader />
       <div className="gi-intro">
-        <div className="gi-eyebrow">Provider onboarding</div>
+        <div className="gi-eyebrow">Two ways to start</div>
         <h1 className="gi-h1">Let&rsquo;s get your providers credentialed and billing.</h1>
         <p className="gi-lede">
-          Two ways to start — fill out a guided form yourself, or hand us your roster and we&rsquo;ll do the data
-          entry. Either way you&rsquo;re scoped within one business day.
+          Fill out a guided form yourself, or hand us your roster and we&rsquo;ll do the data entry.
+          Either way, you&rsquo;re scoped within one business day.
         </p>
       </div>
 
@@ -333,12 +333,12 @@ function Chooser({
       )}
 
       <div className="gi-fork">
-        <button type="button" className="gi-fork-card" onClick={() => onChoose("self")}>
+        <button type="button" className="gi-fork-card gi-fork-card--self" onClick={() => onChoose("self")}>
           <span className="gi-fork-icon">
             <Icon path={I.user} size={22} />
           </span>
           <span className="gi-fork-badge">Most popular</span>
-          <span className="gi-fork-title">Fill out the form</span>
+          <span className="gi-fork-title">Use our form</span>
           <span className="gi-fork-desc">
             A guided, save-as-you-go intake. Add each provider, the states you need, and the payors to enroll with.
             Live NPI validation as you type.
@@ -349,11 +349,12 @@ function Chooser({
           </span>
         </button>
 
-        <button type="button" className="gi-fork-card" onClick={() => onChoose("concierge")}>
+        <button type="button" className="gi-fork-card gi-fork-card--concierge" onClick={() => onChoose("concierge")}>
           <span className="gi-fork-icon">
             <Icon path={I.upload} size={22} />
           </span>
-          <span className="gi-fork-title">Upload a roster — we&rsquo;ll enter it</span>
+          <span className="gi-fork-badge alt">Done for you</span>
+          <span className="gi-fork-title">Send us your roster</span>
           <span className="gi-fork-desc">
             Already have a spreadsheet? Drop in an Excel, CSV, Google Sheet, or PDF and our team keys in every
             provider, validates each NPI, and builds out the scope.
@@ -364,6 +365,11 @@ function Chooser({
           </span>
         </button>
       </div>
+
+      <p className="gi-fork-note">
+        Not sure which to pick? Start the form — you can switch to a roster upload anytime, and a coordinator reviews
+        every submission before any verification begins.
+      </p>
 
       <TrustBar />
     </div>
@@ -1018,9 +1024,9 @@ function ReviewStep({
             onChange={(e) => update({ authPsv: e.target.checked })}
           />
           <span>
-            I authorize CredTek to perform <strong>primary-source verification</strong> of these providers&rsquo;
-            credentials (state boards, NPPES, OIG/LEIE, SAM.gov, NPDB, DEA) and to submit payer enrollments on our
-            behalf.
+            I authorize CredTek to perform <strong>primary-source verification</strong>{" "}
+            of these providers&rsquo; credentials (state boards, NPPES, OIG/LEIE, SAM.gov, NPDB, DEA) and to submit
+            payer enrollments on our behalf.
           </span>
         </label>
         <label className="gi-check">
@@ -1030,8 +1036,9 @@ function ReviewStep({
             onChange={(e) => update({ authBaa: e.target.checked })}
           />
           <span>
-            I understand a <strong>Business Associate Agreement (BAA)</strong> governs this engagement and that data is
-            handled under HIPAA. I&rsquo;m authorized to share this information for my group.
+            I understand a <strong>Business Associate Agreement (BAA)</strong>{" "}
+            governs this engagement and that data is handled under HIPAA. I&rsquo;m authorized to share this
+            information for my group.
           </span>
         </label>
       </div>
@@ -1093,8 +1100,8 @@ function DoneScreen({ draft, onReset }: { draft: IntakeDraft; onReset: () => voi
           <li className="gi-done-step">
             <span className="gi-done-num">3</span>
             <span>
-              <strong>Verification &amp; enrollment begin</strong> — primary-source checks run and payer applications
-              go out. You watch every stage move in real time.
+              <strong>Verification &amp; enrollment begin</strong>{" "}
+              — primary-source checks run and payer applications go out. You watch every stage move in real time.
             </span>
           </li>
         </ol>

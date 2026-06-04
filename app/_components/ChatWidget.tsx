@@ -57,6 +57,7 @@ const EXCLUDE_PREFIXES = [
   // Auth / account / onboarding flows
   "/account",
   "/auth",
+  "/get-started",
   "/intake",
   "/sign-in",
   "/welcome",

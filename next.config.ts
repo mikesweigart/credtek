@@ -13,9 +13,15 @@ import type { NextConfig } from "next";
 //   • calendly.com               — booking (links today, iframe-ready)
 // Upgrade path when we need a strict policy: generate a per-request nonce
 // in middleware and swap 'unsafe-inline' for 'nonce-<…>' 'strict-dynamic'.
+//
+// 'unsafe-eval' is added in development ONLY: Next.js Fast Refresh / React
+// dev mode (and our local preview tooling) rely on eval() for HMR and
+// callstack reconstruction. Production stays locked down without it.
+const IS_DEV = process.env.NODE_ENV !== "production";
+const SCRIPT_SRC = `script-src 'self' 'unsafe-inline'${IS_DEV ? " 'unsafe-eval'" : ""} https://*.posthog.com`;
 const CONTENT_SECURITY_POLICY = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://*.posthog.com",
+  SCRIPT_SRC,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com data:",
   "img-src 'self' data: blob: https:",

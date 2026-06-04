@@ -15819,7 +15819,8 @@ a.cov-cell:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 28px 16px 64px;
+  justify-content: center;
+  padding: 40px 16px;
   gap: 18px;
 }
 .gi-shell > * { width: 100%; max-width: 660px; }
@@ -15940,6 +15941,11 @@ a.cov-cell:hover {
   border: 1px solid rgba(79, 139, 106, 0.28);
   border-radius: 999px; padding: 4px 9px;
 }
+.gi-fork-badge.alt {
+  color: var(--gold-deep);
+  background: var(--blue-soft);
+  border-color: var(--gold-soft);
+}
 .gi-fork-title { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
 .gi-fork-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
 .gi-fork-meta {
@@ -15948,12 +15954,37 @@ a.cov-cell:hover {
   margin-top: 2px;
 }
 .gi-fork-go {
-  margin-top: auto; padding-top: 6px;
-  display: inline-flex; align-items: center; gap: 7px;
-  font-weight: 600; font-size: 14px; color: var(--gold-deep);
-  transition: gap 0.18s ease;
+  margin-top: auto;
+  align-self: stretch;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-weight: 600; font-size: 14px;
+  padding: 11px 16px;
+  border-radius: 11px;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  transition: gap 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
 }
-.gi-fork-card:hover .gi-fork-go { gap: 11px; }
+.gi-fork-card--concierge .gi-fork-go {
+  background: #fff;
+  color: var(--ink);
+}
+.gi-fork-card:hover .gi-fork-go {
+  gap: 11px;
+  box-shadow: 0 8px 20px -10px rgba(11, 31, 46, 0.45);
+}
+.gi-fork-card--concierge:hover .gi-fork-go {
+  background: var(--ink);
+  color: #fff;
+}
+.gi-fork-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 540px;
+  margin: 0 auto;
+}
 
 /* ---- Stepper ---- */
 .gi-stepper {
@@ -16315,7 +16346,7 @@ a.cov-cell:hover {
 
 /* ---- Responsive ---- */
 @media (max-width: 640px) {
-  .gi-shell { padding: 20px 12px 56px; }
+  .gi-shell { padding: 28px 12px; }
   .gi-fork { grid-template-columns: 1fr; }
   .gi-fields { grid-template-columns: 1fr; }
   .gi-provider-grid { grid-template-columns: 1fr; }
