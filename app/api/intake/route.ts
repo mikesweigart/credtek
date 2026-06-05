@@ -129,6 +129,7 @@ export async function POST(req: Request) {
     typeof body.rosterRowCount === "number" && Number.isFinite(body.rosterRowCount)
       ? Math.max(0, Math.min(100000, Math.trunc(body.rosterRowCount)))
       : null;
+  const rosterColumns = strArr(body.rosterColumns, 40).map((c) => str(c, 80));
   const notes = str(body.notes, 4000);
   const authPsv = body.authPsv === true;
   const authBaa = body.authBaa === true;
@@ -229,6 +230,7 @@ export async function POST(req: Request) {
          <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;font-size:14px;color:#2b2a26;">
            <tr><td style="padding:5px 0;color:#67645c;width:150px;">File</td><td style="padding:5px 0;"><strong>${esc(rosterFileName) || "—"}</strong></td></tr>
            <tr><td style="padding:5px 0;color:#67645c;">Detected rows</td><td style="padding:5px 0;">${rosterRowCount != null ? rosterRowCount : "to confirm"}</td></tr>
+           ${rosterColumns.length ? `<tr><td style="padding:5px 0;color:#67645c;vertical-align:top;">Detected columns</td><td style="padding:5px 0;">${esc(rosterColumns.join(", "))}</td></tr>` : ""}
          </table>
          <p style="font-size:13px;color:#B8553F;margin:8px 0 0;"><strong>Action:</strong> send ${esc(contactName) || "the contact"} a secure upload link to receive the file.</p>`
       : "";

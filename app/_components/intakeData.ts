@@ -274,6 +274,78 @@ export function isValidNpi(npi: string): boolean {
 }
 
 /* ----------------------------------------------------------------------- *
+ * NPPES auto-fill — the federal NPI registry is the primary source for NPIs,
+ * so a valid number lets us pull the verified legal name, credential, and
+ * primary practice state and pre-fill the card. The registry stores the
+ * credential as free text ("M.D.", "FNP-BC", "Psy.D."), so map it onto our
+ * CREDENTIALS options. Best-effort: returns "" when we can't confidently map
+ * (we leave the field for the user rather than guess wrong).
+ * ----------------------------------------------------------------------- */
+
+/** Shape returned by /api/npi (a normalized slice of the NPPES record). */
+export type NppesResult = {
+  ok: boolean;
+  found: boolean;
+  npi?: string;
+  enumerationType?: "NPI-1" | "NPI-2";
+  firstName?: string;
+  lastName?: string;
+  organizationName?: string;
+  credentialRaw?: string;
+  credentialMapped?: string;
+  specialty?: string;
+  primaryState?: string;
+  displayName?: string;
+  error?: string;
+};
+
+const CREDENTIAL_IDS = new Set(CREDENTIALS.map((c) => c.id));
+
+/** Map a free-text NPPES credential (+ optional taxonomy) onto a CREDENTIALS id. */
+export function mapNppesCredential(
+  raw: string | null | undefined,
+  taxonomyDesc?: string | null,
+): string {
+  const norm = String(raw ?? "").toUpperCase().replace(/[^A-Z]/g, "");
+  const tax = String(taxonomyDesc ?? "").toLowerCase();
+  const has = (...needles: string[]) => needles.some((n) => norm.includes(n));
+
+  if (has("CRNA")) return "CRNA";
+  if (norm === "MD" || norm === "MBBS") return "MD";
+  if (norm === "DO") return "DO";
+  if (has("CNM", "NURSEMIDWIFE")) return "CNM";
+  if (has("FNP", "PMHNP", "AGNP", "AGACNP", "ACNP", "ARNP", "DNP", "CNP", "NP", "APRN")) return "NP";
+  if (norm === "PA" || has("PAC", "PHYSICIANASSISTANT", "PHYSICIANASSOCIATE")) return "PA";
+  if (has("DPM")) return "DPM";
+  if (has("DDS")) return "DDS";
+  if (has("DMD")) return "DMD";
+  if (norm === "DC") return "DC";
+  if (norm === "OD") return "OD";
+  if (has("PHARMD", "RPH")) return "PharmD";
+  if (has("DPT", "MPT") || norm === "PT") return "PT";
+  if (has("OTR", "OTD") || norm === "OT") return "OT";
+  if (has("SLP", "CCCSLP")) return "SLP";
+  if (has("RDN") || norm === "RD") return "RD";
+  if (has("LICSW", "LCSW")) return "LCSW";
+  if (has("LMSW", "LSW") || norm === "MSW") return "LMSW";
+  if (has("LPCC", "LCPC", "LCMHC", "LMHC", "LPC")) return "LPC";
+  if (has("LCMFT", "LMFT") || norm === "MFT") return "LMFT";
+  if (has("BCBA")) return "BCBA";
+  if (has("PSYD")) return "PsyD";
+  if (has("PHD")) return tax.includes("psycholog") ? "PhD" : "";
+  if (norm === "RN") return "RN";
+
+  // Taxonomy fallback for clinicians who often omit a credential string.
+  if (!norm) {
+    if (tax.includes("social worker")) return "LCSW";
+    if (tax.includes("counselor")) return "LPC";
+    if (tax.includes("marriage")) return "LMFT";
+    if (tax.includes("psychologist")) return "PsyD";
+  }
+  return CREDENTIAL_IDS.has(norm) ? norm : "";
+}
+
+/* ----------------------------------------------------------------------- *
  * Roster template — for the concierge "upload your roster, we'll enter it"
  * path. We expose both the raw CSV (download) and the column metadata (to
  * render an on-screen "what we need" table).
@@ -305,6 +377,76 @@ export const ROSTER_CSV_TEMPLATE: string =
   "\n" +
   '"Marcus","Lee","LCSW","1992739338","","","CA","CA","Medicaid; Optum; Magellan","Behavioral Health / Therapy","marcus.lee@example.com","415-555-0188"' +
   "\n";
+
+/* ----------------------------------------------------------------------- *
+ * Roster column auto-mapping — when a group uploads their own spreadsheet,
+ * we parse it in the browser and try to recognize each header so we can show
+ * "we mapped these columns" before they submit. Header naming is wild in the
+ * wild ("NPI #", "Provider Last Name", "License State"), so match generously.
+ * ----------------------------------------------------------------------- */
+
+export type RosterColumnMatch = {
+  index: number;
+  raw: string;
+  key: string | null; // a ROSTER field key (or "full_name"), null if unrecognized
+  label: string | null; // human label for the mapped field
+};
+
+const ROSTER_ALIASES: Record<string, string[]> = {
+  first_name: ["first name", "first", "firstname", "fname", "given name", "provider first name"],
+  last_name: ["last name", "last", "lastname", "lname", "surname", "family name", "provider last name"],
+  full_name: ["name", "provider name", "provider", "full name", "clinician", "physician", "practitioner", "provider full name"],
+  credential: ["credential", "credentials", "degree", "title", "license type", "provider type", "type", "designation"],
+  npi: ["npi", "npi number", "national provider identifier", "individual npi", "type 1 npi", "npi1"],
+  caqh_id: ["caqh", "caqh id", "caqh number", "caqh proview", "proview id", "proview"],
+  dea: ["dea", "dea number", "dea registration", "dea#"],
+  primary_state: ["primary state", "state", "license state", "home state", "practice state", "st"],
+  states_to_credential: ["states to credential", "states", "credentialing states", "enroll states", "license states", "states needed"],
+  payors: ["payors", "payers", "payer", "payor", "plans", "health plans", "insurance", "networks"],
+  specialty: ["specialty", "speciality", "taxonomy", "primary specialty", "practice area", "specialties"],
+  email: ["email", "e mail", "email address", "provider email", "contact email", "work email"],
+  phone: ["phone", "mobile", "mobile phone", "cell", "telephone", "phone number", "contact number"],
+};
+
+const ROSTER_LABELS: Record<string, string> = {
+  ...Object.fromEntries(ROSTER_COLUMNS.map((c) => [c.key, c.label])),
+  full_name: "Name",
+};
+
+/** Normalize a header cell for matching: lowercase, collapse separators. */
+function normHeader(s: string): string {
+  return String(s || "")
+    .toLowerCase()
+    .replace(/[\s._#/\\()-]+/g, " ")
+    .trim();
+}
+
+/** Map a detected header row onto our known roster fields (best-effort). */
+export function mapRosterColumns(header: string[]): RosterColumnMatch[] {
+  return header.map((raw, index) => {
+    const h = normHeader(raw);
+    let key: string | null = null;
+    if (h) {
+      // 1) exact alias hit
+      for (const [k, aliases] of Object.entries(ROSTER_ALIASES)) {
+        if (aliases.includes(h)) {
+          key = k;
+          break;
+        }
+      }
+      // 2) fuzzy: header contains an alias or vice-versa
+      if (!key) {
+        for (const [k, aliases] of Object.entries(ROSTER_ALIASES)) {
+          if (aliases.some((a) => h === a || h.includes(a) || a.includes(h))) {
+            key = k;
+            break;
+          }
+        }
+      }
+    }
+    return { index, raw, key, label: key ? ROSTER_LABELS[key] ?? key : null };
+  });
+}
 
 /* ----------------------------------------------------------------------- *
  * Draft types — the shape the wizard builds and POSTs to /api/intake.
@@ -343,6 +485,7 @@ export type IntakeDraft = {
   // Concierge roster
   rosterFileName: string;
   rosterRowCount: number | null;
+  rosterColumns: string[]; // detected header labels (preview only — no cell data)
   // Shared
   notes: string;
   // Authorizations (self-serve submit gate)
@@ -389,6 +532,7 @@ export function newDraft(path: IntakePath): IntakeDraft {
     providers: path === "self" ? [newProvider()] : [],
     rosterFileName: "",
     rosterRowCount: null,
+    rosterColumns: [],
     notes: "",
     authPsv: false,
     authBaa: false,

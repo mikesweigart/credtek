@@ -16106,15 +16106,30 @@ a.cov-cell:hover {
 .gi-provider-remove:hover { color: var(--danger); background: rgba(184, 85, 63, 0.08); }
 .gi-provider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .gi-npi-wrap { position: relative; display: flex; align-items: center; }
-.gi-npi-wrap .gi-input { padding-right: 78px; }
+.gi-npi-wrap .gi-input { padding-right: 100px; }
 .gi-npi-badge {
   position: absolute; right: 8px;
   display: inline-flex; align-items: center; gap: 3px;
   font-size: 11px; font-weight: 600;
   padding: 4px 8px; border-radius: 999px;
+  white-space: nowrap;
 }
 .gi-npi-badge.ok { color: var(--sage); background: rgba(79, 139, 106, 0.13); }
 .gi-npi-badge.bad { color: var(--danger); background: rgba(184, 85, 63, 0.12); }
+.gi-npi-badge.verified { color: var(--gold-deep); background: var(--blue-soft); }
+.gi-npi-badge.load { color: var(--muted); background: var(--paper); }
+.gi-spinner-sm {
+  width: 11px; height: 11px;
+  border-color: rgba(11, 31, 46, 0.22); border-top-color: var(--ink-soft);
+}
+.gi-npi-note {
+  display: flex; align-items: flex-start; gap: 6px;
+  margin-top: 7px;
+  font-size: 12px; line-height: 1.45; color: var(--muted);
+}
+.gi-npi-note svg { flex: 0 0 auto; margin-top: 1px; }
+.gi-npi-note.ok { color: var(--sage); font-weight: 500; }
+.gi-npi-note.warn { color: var(--gold-deep); font-weight: 500; }
 .gi-add-provider {
   margin-top: 14px;
   width: 100%;
@@ -16244,6 +16259,51 @@ a.cov-cell:hover {
 .gi-file-meta { font-size: 12px; color: var(--muted); }
 .gi-file-remove { background: transparent; border: none; cursor: pointer; color: var(--muted); padding: 7px; border-radius: 7px; display: flex; }
 .gi-file-remove:hover { color: var(--danger); background: rgba(184, 85, 63, 0.08); }
+/* ---- Roster smart-detect / column mapping ---- */
+.gi-roster-detect {
+  margin-top: 14px;
+  border: 1px solid rgba(4, 103, 222, 0.22);
+  border-radius: 14px;
+  padding: 15px 16px;
+  background: var(--blue-soft);
+}
+.gi-roster-detect.parsing,
+.gi-roster-detect.note {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--paper); border-color: var(--line);
+  font-size: 13px; color: var(--muted); line-height: 1.5;
+}
+.gi-roster-detect.note { align-items: flex-start; }
+.gi-roster-detect.parsing svg,
+.gi-roster-detect.note svg { flex: 0 0 auto; color: var(--muted); }
+.gi-roster-stat {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14.5px; color: var(--ink); line-height: 1.45;
+}
+.gi-roster-stat strong { color: var(--gold-deep); font-weight: 700; }
+.gi-roster-stat-mark {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); color: white;
+}
+.gi-roster-map { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+.gi-roster-col {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; padding: 5px 10px; border-radius: 999px;
+  background: white; border: 1px solid var(--line);
+}
+.gi-roster-col svg { color: var(--muted); flex: 0 0 auto; }
+.gi-roster-col-raw { color: var(--ink-soft); font-weight: 600; }
+.gi-roster-col.on { border-color: rgba(79, 139, 106, 0.5); }
+.gi-roster-col.on .gi-roster-col-map { color: var(--sage); font-weight: 600; }
+.gi-roster-col.off { opacity: 0.72; }
+.gi-roster-col-skip { color: var(--muted); font-size: 11px; font-style: italic; }
+.gi-roster-privacy {
+  display: flex; align-items: center; gap: 6px;
+  margin: 13px 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.45;
+}
+.gi-roster-privacy svg { flex: 0 0 auto; color: var(--sage); }
+
 .gi-preview { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .gi-preview-head {
   font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
@@ -16336,6 +16396,24 @@ a.cov-cell:hover {
 .gi-btn-ghost { background: transparent; color: var(--muted); }
 .gi-btn-ghost:hover { color: var(--ink); background: var(--paper); }
 
+/* ---- Save & finish later ---- */
+.gi-save-later-row { display: flex; justify-content: center; margin-top: 14px; }
+.gi-save-later {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; border: none; cursor: pointer; font-family: inherit;
+  font-size: 12.5px; font-weight: 500; color: var(--muted);
+  padding: 5px 10px; border-radius: 8px;
+}
+.gi-save-later:hover:not(:disabled) { color: var(--gold-deep); background: var(--blue-soft); }
+.gi-save-later:disabled { cursor: default; opacity: 0.7; }
+.gi-save-later svg { flex: 0 0 auto; }
+.gi-save-later-done {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12.5px; font-weight: 500; color: var(--sage);
+  text-align: center;
+}
+.gi-save-later-done svg { flex: 0 0 auto; }
+
 /* ---- Trust bar ---- */
 .gi-trust {
   display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 18px;
@@ -16357,15 +16435,29 @@ a.cov-cell:hover {
   box-shadow: 0 10px 26px -10px rgba(79, 139, 106, 0.7);
 }
 .gi-done .gi-lede { margin-bottom: 24px; }
-.gi-done-steps { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 14px; text-align: left; }
-.gi-done-step { display: flex; align-items: flex-start; gap: 13px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+.gi-done-steps { list-style: none; margin: 0 0 24px; padding: 0; display: flex; flex-direction: column; gap: 16px; text-align: left; }
+.gi-done-step { position: relative; display: flex; align-items: flex-start; gap: 13px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
 .gi-done-step strong { color: var(--ink); }
+.gi-done-step:not(:last-child)::before {
+  content: ""; position: absolute;
+  left: 14px; top: 30px; bottom: -16px; width: 2px;
+  background: var(--line); transform: translateX(-1px);
+}
 .gi-done-num {
+  position: relative; z-index: 1;
   flex: 0 0 auto;
   width: 28px; height: 28px; border-radius: 50%;
   background: var(--ink); color: var(--gold);
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
+}
+.gi-done-body { display: flex; flex-direction: column; gap: 5px; }
+.gi-done-when {
+  align-self: flex-start;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; font-weight: 600;
+  color: var(--gold-deep); background: var(--blue-soft);
+  padding: 2px 8px; border-radius: 999px;
 }
 .gi-done-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 

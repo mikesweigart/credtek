@@ -27,6 +27,7 @@ import {
   SIZE_BUCKETS,
   ENGAGEMENT_TYPES,
   isValidNpi,
+  mapRosterColumns,
   ROSTER_CSV_TEMPLATE,
   ROSTER_COLUMNS,
   CONCIERGE_FEE,
@@ -36,7 +37,10 @@ import {
   type IntakeDraft,
   type IntakePath,
   type ProviderDraft,
+  type NppesResult,
+  type RosterColumnMatch,
 } from "./intakeData";
+import { parseSpreadsheet } from "./parseRoster";
 
 const CAL_LINK = "https://calendly.com/mike-fusion-advisory/30min";
 const STORE_KEY = "credtek_intake_v1";
@@ -119,23 +123,74 @@ export function IntakeWizard() {
   const [stepIndex, setStepIndex] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [resumed, setResumed] = useState(false);
+  const [savedToken, setSavedToken] = useState<string | null>(null);
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "sent" | "error">("idle");
 
-  // ---- Hydrate a saved draft (returning visitor) ----
+  // ---- Hydrate a saved draft: a ?resume=<token> link first (cross-device),
+  //      then the on-device localStorage autosave. ----
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORE_KEY);
-      if (!raw) return;
-      const saved = JSON.parse(raw) as { draft?: IntakeDraft; stepIndex?: number };
-      if (saved?.draft?.path) {
-        setDraft(saved.draft);
-        setStepIndex(Math.max(0, Math.min(saved.stepIndex ?? 0, 4)));
-        setPhase("form");
-        setResumed(true);
+    let cancelled = false;
+    const resumeToken = (() => {
+      try {
+        return new URLSearchParams(window.location.search).get("resume");
+      } catch {
+        return null;
       }
-    } catch {
-      /* corrupt store — ignore */
+    })();
+
+    const hydrateLocal = () => {
+      try {
+        const raw = localStorage.getItem(STORE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw) as { draft?: IntakeDraft; stepIndex?: number };
+        if (!cancelled && saved?.draft?.path) {
+          setDraft(saved.draft);
+          setStepIndex(Math.max(0, Math.min(saved.stepIndex ?? 0, 4)));
+          setPhase("form");
+          setResumed(true);
+        }
+      } catch {
+        /* corrupt store — ignore */
+      }
+    };
+
+    if (resumeToken) {
+      (async () => {
+        try {
+          const r = await fetch(`/api/intake/save?token=${encodeURIComponent(resumeToken)}`);
+          const data = (await r.json()) as { ok?: boolean; draft?: IntakeDraft; stepIndex?: number };
+          if (!cancelled && data?.ok && data.draft?.path) {
+            setDraft(data.draft);
+            setStepIndex(Math.max(0, Math.min(data.stepIndex ?? 0, 4)));
+            setSavedToken(resumeToken);
+            setPhase("form");
+            setResumed(true);
+            track("intake_resumed_from_link");
+            try {
+              window.history.replaceState(null, "", window.location.pathname);
+            } catch {
+              /* ignore */
+            }
+            return;
+          }
+          hydrateLocal(); // token invalid/expired — fall back
+        } catch {
+          if (!cancelled) hydrateLocal();
+        }
+      })();
+    } else {
+      hydrateLocal();
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  // Re-arm the "finish later" affordance whenever the user advances a step.
+  useEffect(() => {
+    setSaveState("idle");
+  }, [stepIndex]);
 
   // ---- Persist on every change while filling the form ----
   useEffect(() => {
@@ -232,6 +287,28 @@ export function IntakeWizard() {
     setPhase("done");
   }, [draft]);
 
+  const saveLater = useCallback(async () => {
+    if (!draft || !EMAIL_RE.test(draft.contactEmail)) return;
+    setSaveState("saving");
+    try {
+      const r = await fetch("/api/intake/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: savedToken, draft, stepIndex, email: draft.contactEmail }),
+      });
+      const data = (await r.json()) as { ok?: boolean; token?: string };
+      if (data?.ok) {
+        if (data.token) setSavedToken(data.token);
+        setSaveState("sent");
+        track("intake_saved_for_later", { step: stepIndex });
+      } else {
+        setSaveState("error");
+      }
+    } catch {
+      setSaveState("error");
+    }
+  }, [draft, stepIndex, savedToken]);
+
   /* ---------------- Render ---------------- */
   if (phase === "done" && draft) {
     return <DoneScreen draft={draft} onReset={resetAll} />;
@@ -299,6 +376,30 @@ export function IntakeWizard() {
             </button>
           )}
         </div>
+
+        {EMAIL_RE.test(draft.contactEmail) && (
+          <div className="gi-save-later-row">
+            {saveState === "sent" ? (
+              <span className="gi-save-later-done">
+                <Icon path={I.check} size={14} /> Link sent to {draft.contactEmail} — finish anytime, on any device.
+              </span>
+            ) : (
+              <button
+                type="button"
+                className="gi-save-later"
+                onClick={saveLater}
+                disabled={saveState === "saving"}
+              >
+                <Icon path={I.file} size={14} />
+                {saveState === "saving"
+                  ? "Sending your link…"
+                  : saveState === "error"
+                    ? "Couldn't send — tap to retry"
+                    : "Email me a link to finish later"}
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <TrustBar />
@@ -551,6 +652,12 @@ function ProvidersStep({ draft, update }: StepProps) {
   );
 }
 
+type NpiLookup = {
+  status: "idle" | "loading" | "found" | "notfound" | "error";
+  name?: string;
+  org?: boolean;
+};
+
 function ProviderCard({
   index,
   provider,
@@ -569,6 +676,67 @@ function ProviderCard({
     npiClean.length === 0 ? "empty" : npiClean.length < 10 ? "typing" : isValidNpi(provider.npi) ? "valid" : "invalid";
   const emailBad = provider.email.length > 0 && !EMAIL_RE.test(provider.email);
   const [showIds, setShowIds] = useState(Boolean(provider.caqhId || provider.dea));
+
+  // ---- NPPES auto-fill ----
+  // On a valid NPI, debounce-verify against the federal registry and pre-fill
+  // any EMPTY fields (we never clobber what the user typed).
+  const [lookup, setLookup] = useState<NpiLookup>({ status: "idle" });
+  const latest = useRef(provider);
+  latest.current = provider;
+  const verifiedNpiRef = useRef("");
+
+  useEffect(() => {
+    const clean = provider.npi.replace(/\D/g, "");
+    if (clean.length !== 10 || !isValidNpi(clean)) {
+      setLookup({ status: "idle" });
+      return;
+    }
+    if (verifiedNpiRef.current === clean) return; // already handled this NPI
+    let cancelled = false;
+    const ctrl = new AbortController();
+    const timer = setTimeout(async () => {
+      setLookup({ status: "loading" });
+      try {
+        const r = await fetch(`/api/npi?number=${clean}`, { signal: ctrl.signal });
+        const data = (await r.json()) as NppesResult;
+        if (cancelled) return;
+        if (!data.ok) {
+          setLookup({ status: "error" });
+          return;
+        }
+        if (!data.found) {
+          setLookup({ status: "notfound" });
+          return;
+        }
+        verifiedNpiRef.current = clean;
+        if (data.enumerationType === "NPI-2") {
+          setLookup({ status: "found", name: data.organizationName, org: true });
+          track("npi_verified", { type: "org" });
+          return;
+        }
+        const cur = latest.current;
+        const patch: Partial<ProviderDraft> = {};
+        if (!cur.firstName.trim() && data.firstName) patch.firstName = data.firstName;
+        if (!cur.lastName.trim() && data.lastName) patch.lastName = data.lastName;
+        if (!cur.credential && data.credentialMapped) patch.credential = data.credentialMapped;
+        if (!cur.primaryState && data.primaryState) patch.primaryState = data.primaryState;
+        if (!cur.specialty.trim() && data.specialty) patch.specialty = data.specialty;
+        if (Object.keys(patch).length) onChange(patch);
+        setLookup({ status: "found", name: data.displayName });
+        track("npi_verified", { type: "individual", filled: Object.keys(patch).length });
+      } catch (e) {
+        if (!cancelled && !(e instanceof DOMException && e.name === "AbortError")) {
+          setLookup({ status: "error" });
+        }
+      }
+    }, 600);
+    return () => {
+      cancelled = true;
+      ctrl.abort();
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [provider.npi]);
 
   return (
     <div className="gi-provider">
@@ -627,16 +795,41 @@ function ProviderCard({
               inputMode="numeric"
               maxLength={12}
               onChange={(e) => onChange({ npi: e.target.value })}
-              placeholder="10-digit NPI"
+              placeholder="10-digit NPI — we'll verify it"
               aria-invalid={npiState === "invalid"}
             />
-            {npiState === "valid" && (
+            {npiState === "invalid" && <span className="gi-npi-badge bad">Invalid</span>}
+            {npiState === "valid" && lookup.status === "loading" && (
+              <span className="gi-npi-badge load">
+                <span className="gi-spinner gi-spinner-sm" aria-hidden="true" /> Checking…
+              </span>
+            )}
+            {npiState === "valid" && lookup.status === "found" && (
+              <span className="gi-npi-badge verified">
+                <Icon path={I.check} size={13} /> NPPES
+              </span>
+            )}
+            {npiState === "valid" && lookup.status !== "loading" && lookup.status !== "found" && (
               <span className="gi-npi-badge ok">
                 <Icon path={I.check} size={13} /> Valid
               </span>
             )}
-            {npiState === "invalid" && <span className="gi-npi-badge bad">Invalid</span>}
           </div>
+          {lookup.status === "found" && !lookup.org && (
+            <span className="gi-npi-note ok">
+              <Icon path={I.check} size={13} /> Verified with NPPES — {lookup.name}. We filled in what we could.
+            </span>
+          )}
+          {lookup.status === "found" && lookup.org && (
+            <span className="gi-npi-note warn">
+              That&rsquo;s an organization (Type 2) NPI — enter the individual provider&rsquo;s NPI here.
+            </span>
+          )}
+          {lookup.status === "notfound" && (
+            <span className="gi-npi-note">
+              No match in the NPPES registry yet — double-check the number, or keep going and we&rsquo;ll verify it.
+            </span>
+          )}
         </Field>
         <Field label="Primary state" required>
           <select
@@ -872,32 +1065,41 @@ function UploadStep({ draft, update }: StepProps) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [dragging, setDragging] = useState(false);
   const [preview, setPreview] = useState<string[][]>([]);
+  const [matches, setMatches] = useState<RosterColumnMatch[]>([]);
   const [parsing, setParsing] = useState(false);
+  const [parseNote, setParseNote] = useState<"" | "unsupported" | "unparsed">("");
 
   const handleFile = useCallback(
-    (file: File) => {
-      update({ rosterFileName: file.name, rosterRowCount: null });
+    async (file: File) => {
+      update({ rosterFileName: file.name, rosterRowCount: null, rosterColumns: [] });
       setPreview([]);
-      const lower = file.name.toLowerCase();
-      const parseable = lower.endsWith(".csv") || lower.endsWith(".tsv") || lower.endsWith(".txt");
-      if (!parseable) return; // xlsx/pdf/doc — coordinator collects securely
+      setMatches([]);
+      setParseNote("");
+      const parseable = /\.(csv|tsv|txt|xlsx|xlsm)$/i.test(file.name);
+      if (!parseable) {
+        // .xls / .pdf / .docx — a coordinator collects these securely.
+        setParseNote("unsupported");
+        return;
+      }
       setParsing(true);
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const rows = parseDelimited(String(reader.result || ""), lower.endsWith(".tsv") ? "\t" : ",");
-          const nonEmpty = rows.filter((r) => r.some((c) => c.trim().length > 0));
-          const dataRows = Math.max(0, nonEmpty.length - 1); // minus header
-          update({ rosterRowCount: dataRows });
-          setPreview(nonEmpty.slice(0, 6)); // header + up to 5
-        } catch {
-          /* unparseable — just keep the filename */
-        } finally {
-          setParsing(false);
+      try {
+        const rows = await parseSpreadsheet(file);
+        const nonEmpty = rows.filter((r) => r.some((c) => (c || "").trim().length > 0));
+        if (nonEmpty.length < 1) {
+          setParseNote("unparsed");
+          return;
         }
-      };
-      reader.onerror = () => setParsing(false);
-      reader.readAsText(file);
+        const header = nonEmpty[0];
+        const dataRows = Math.max(0, nonEmpty.length - 1); // minus header
+        update({ rosterRowCount: dataRows, rosterColumns: header.slice(0, 40) });
+        setMatches(mapRosterColumns(header));
+        setPreview(nonEmpty.slice(0, 6)); // header + up to 5
+      } catch {
+        // Best-effort — keep the filename; a coordinator maps it on our end.
+        setParseNote("unparsed");
+      } finally {
+        setParsing(false);
+      }
     },
     [update],
   );
@@ -906,8 +1108,10 @@ function UploadStep({ draft, update }: StepProps) {
     e.preventDefault();
     setDragging(false);
     const file = e.dataTransfer.files?.[0];
-    if (file) handleFile(file);
+    if (file) void handleFile(file);
   };
+
+  const recognized = matches.filter((m) => m.key).length;
 
   const downloadTemplate = () => {
     try {
@@ -978,8 +1182,10 @@ function UploadStep({ draft, update }: StepProps) {
             type="button"
             className="gi-file-remove"
             onClick={() => {
-              update({ rosterFileName: "", rosterRowCount: null });
+              update({ rosterFileName: "", rosterRowCount: null, rosterColumns: [] });
               setPreview([]);
+              setMatches([]);
+              setParseNote("");
             }}
             aria-label="Remove file"
           >
@@ -995,9 +1201,62 @@ function UploadStep({ draft, update }: StepProps) {
         className="gi-sr-only"
         onChange={(e) => {
           const file = e.target.files?.[0];
-          if (file) handleFile(file);
+          if (file) void handleFile(file);
         }}
       />
+
+      {parsing && (
+        <div className="gi-roster-detect parsing">
+          <span className="gi-spinner gi-spinner-sm" aria-hidden="true" /> Reading your roster in your browser…
+        </div>
+      )}
+
+      {!parsing && matches.length > 0 && (
+        <div className="gi-roster-detect">
+          <div className="gi-roster-stat">
+            <span className="gi-roster-stat-mark">
+              <Icon path={I.check} size={16} />
+            </span>
+            <span>
+              We detected{" "}
+              <strong>
+                {draft.rosterRowCount ?? 0} provider{draft.rosterRowCount === 1 ? "" : "s"}
+              </strong>{" "}
+              and recognized <strong>{recognized} of {matches.length}</strong> columns.
+            </span>
+          </div>
+          <div className="gi-roster-map" aria-label="Columns we recognized">
+            {matches.map((m) => (
+              <span key={m.index} className={`gi-roster-col ${m.key ? "on" : "off"}`}>
+                <span className="gi-roster-col-raw">{m.raw || `Column ${m.index + 1}`}</span>
+                {m.key ? (
+                  <>
+                    <Icon path={I.arrowR} size={12} />
+                    <span className="gi-roster-col-map">{m.label}</span>
+                  </>
+                ) : (
+                  <span className="gi-roster-col-skip">we&rsquo;ll review</span>
+                )}
+              </span>
+            ))}
+          </div>
+          <p className="gi-roster-privacy">
+            <Icon path={I.lock} size={12} /> Parsed entirely in your browser — nothing is uploaded until a
+            coordinator sends you a secure link.
+          </p>
+        </div>
+      )}
+
+      {!parsing && parseNote && (
+        <div className="gi-roster-detect note">
+          <Icon path={I.file} size={16} />
+          <span>
+            {parseNote === "unsupported"
+              ? "Got it — we'll map and validate every column the moment your file lands. Want an instant on-screen preview? Save it as .csv or .xlsx, or use our template below."
+              : "Saved your file. We couldn't preview this one here, but our team maps and validates every column on our end."}
+          </span>
+        </div>
+      )}
 
       {preview.length > 1 && (
         <div className="gi-preview">
@@ -1205,22 +1464,35 @@ function DoneScreen({ draft, onReset }: { draft: IntakeDraft; onReset: () => voi
         <ol className="gi-done-steps">
           <li className="gi-done-step">
             <span className="gi-done-num">1</span>
-            <span>
-              <strong>Within one business day</strong> — a credentialing coordinator emails {draft.contactEmail || "you"} to
-              confirm scope{isConcierge ? " and send a secure link to receive your roster file" : ""}.
+            <span className="gi-done-body">
+              <span className="gi-done-when">Day 1</span>
+              <span>
+                <strong>A coordinator reaches out</strong> — we email {draft.contactEmail || "you"} to confirm scope
+                {isConcierge ? ", send a secure link for your roster, and prep your flat quote" : ""}.
+              </span>
             </span>
           </li>
           <li className="gi-done-step">
             <span className="gi-done-num">2</span>
-            <span>
-              <strong>We sign a BAA</strong> and stand up your workspace in CredTek — {isConcierge ? "your roster is keyed in and every NPI validated" : `your ${draft.providers.length} provider${draft.providers.length === 1 ? "" : "s"} loaded`}.
+            <span className="gi-done-body">
+              <span className="gi-done-when">Days 2–3</span>
+              <span>
+                <strong>We sign a BAA</strong> and stand up your workspace —{" "}
+                {isConcierge
+                  ? "your roster is keyed in and every NPI validated"
+                  : `your ${draft.providers.length} provider${draft.providers.length === 1 ? "" : "s"} loaded`}
+                .
+              </span>
             </span>
           </li>
           <li className="gi-done-step">
             <span className="gi-done-num">3</span>
-            <span>
-              <strong>Verification &amp; enrollment begin</strong>{" "}
-              — primary-source checks run and payer applications go out. You watch every stage move in real time.
+            <span className="gi-done-body">
+              <span className="gi-done-when">By day 14</span>
+              <span>
+                <strong>Verification &amp; enrollment begin</strong> — primary-source checks run and payer
+                applications go out. You watch every stage move in real time.
+              </span>
             </span>
           </li>
         </ol>
@@ -1343,46 +1615,4 @@ function stepValid(key: string, draft: IntakeDraft): boolean {
     default:
       return true;
   }
-}
-
-/** Minimal, tolerant delimited-text parser (handles quoted cells). */
-function parseDelimited(text: string, delim: string): string[][] {
-  const rows: string[][] = [];
-  let row: string[] = [];
-  let cell = "";
-  let inQuotes = false;
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
-    if (inQuotes) {
-      if (ch === '"') {
-        if (text[i + 1] === '"') {
-          cell += '"';
-          i++;
-        } else {
-          inQuotes = false;
-        }
-      } else {
-        cell += ch;
-      }
-    } else if (ch === '"') {
-      inQuotes = true;
-    } else if (ch === delim) {
-      row.push(cell);
-      cell = "";
-    } else if (ch === "\n") {
-      row.push(cell);
-      rows.push(row);
-      row = [];
-      cell = "";
-    } else if (ch === "\r") {
-      // swallow — handled by \n
-    } else {
-      cell += ch;
-    }
-  }
-  if (cell.length > 0 || row.length > 0) {
-    row.push(cell);
-    rows.push(row);
-  }
-  return rows;
 }
