@@ -125,8 +125,8 @@ export default async function HelpArticlePage({ params }: PageProps) {
             </div>
             <span
               style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontStyle: "italic",
+                fontFamily: "'DM Sans', sans-serif",
+                fontStyle: "normal",
                 fontSize: 22,
               }}
             >

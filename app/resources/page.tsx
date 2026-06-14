@@ -164,7 +164,7 @@ export default function ResourcesIndex() {
         <div className="footer-inner">
           <Link href="/" className="logo">
             <div className="logo-mark" style={{ background: "white", color: "var(--ink)" }}>C</div>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: "italic", fontSize: 22 }}>
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontStyle: "normal", fontSize: 22 }}>
               CredTek
             </span>
           </Link>

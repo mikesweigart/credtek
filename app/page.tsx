@@ -569,7 +569,7 @@ const LANDING_BODY_POST_CALC = `
     <div style="margin-top: 28px; padding: 20px 24px; background: var(--cream); border: 1px solid var(--line); border-radius: 14px;">
       <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:16px;">
         <div>
-          <div class="serif" style="font-size:22px;font-style:italic;">Modeling a 200-provider medical group on Growth</div>
+          <div class="serif" style="font-size:22px;font-style:normal;">Modeling a 200-provider medical group on Growth</div>
           <div style="font-size:13px;color:var(--muted);margin-top:4px;">Multi-state, mix of specialties, ~40 enrollments/year</div>
         </div>
         <div style="text-align:right;">
@@ -681,7 +681,7 @@ const LANDING_BODY_POST_CALC = `
   <div class="footer-inner">
     <div class="logo">
       <div class="logo-mark">C</div>
-      <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:22px;">CredTek</span>
+      <span style="font-family:'DM Sans',sans-serif;font-style:normal;font-size:22px;">CredTek</span>
     </div>
     <div class="footer-meta">
       US medical credentialing platform · 2026

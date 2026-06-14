@@ -274,8 +274,8 @@ export default function StatusPage() {
             </div>
             <span
               style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontStyle: "italic",
+                fontFamily: "'DM Sans', sans-serif",
+                fontStyle: "normal",
                 fontSize: 22,
               }}
             >

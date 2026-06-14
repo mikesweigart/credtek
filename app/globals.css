@@ -11,11 +11,12 @@
   --gold-deep: #0053A0;
   --sage: #4F8B6A;
   --sage-soft: #7FB59A;
-  /* Cool off-whites and grays to match the blue accent. */
-  --cream: #F0F4FA;
-  --paper: #F7FAFD;
-  --line: #DCE4ED;
-  --line-soft: #E8EEF5;
+  /* Clinical near-whites — kept as close to white as possible for a clean,
+     sterile feel, with a faint cool tint only for layering. */
+  --cream: #F2F6FB;
+  --paper: #FCFDFF;
+  --line: #E2E8F0;
+  --line-soft: #EEF2F7;
   --muted: #6B7B85;
   --muted-soft: #94A2AA;
   --danger: #B8553F;
@@ -37,7 +38,10 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-.serif { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
+/* Legacy display class — now a clean sans (no serif anywhere). */
+.serif { font-family: 'DM Sans', -apple-system, sans-serif; font-weight: 500; font-style: normal; }
+/* Clinical look: emphasis carries via colour/weight, never italic. */
+em { font-style: normal; }
 .mono { font-family: 'JetBrains Mono', monospace; }
 .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 .container-narrow { max-width: 880px; margin: 0 auto; padding: 0 28px; }
@@ -63,9 +67,9 @@ body {
   border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 17px;
-  font-style: italic;
+  font-style: normal;
 }
 .topnav-links {
   display: flex;
@@ -143,8 +147,8 @@ body {
   color: var(--ink);
 }
 .hero h1 em {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
+  font-family: 'DM Sans', Georgia, sans-serif;
+  font-style: normal;
   color: var(--blue);
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -204,13 +208,13 @@ body {
 }
 @media (max-width: 600px) { .hero-metrics { grid-template-columns: repeat(3, 1fr); gap: 14px; } }
 .hero-metric .num {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1;
   letter-spacing: -0.015em;
   color: var(--ink);
 }
-.hero-metric .num em { font-style: italic; color: var(--gold); }
+.hero-metric .num em { font-style: normal; color: var(--gold); }
 .hero-metric .lbl {
   font-size: 11px; color: var(--muted);
   margin-top: 6px;
@@ -266,8 +270,8 @@ body {
   border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
   color: var(--ink);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 16px;
 }
 .sb-logo-text { font-weight: 600; font-size: 14px; letter-spacing: -0.01em; }
@@ -323,7 +327,7 @@ body {
 }
 .content { padding: 20px; }
 .greet h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   letter-spacing: -0.01em;
   margin-bottom: 4px;
@@ -346,12 +350,12 @@ body {
   margin-bottom: 6px;
 }
 .stat .val {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   line-height: 1;
   letter-spacing: -0.01em;
 }
-.stat .val em { font-style: italic; color: var(--gold); }
+.stat .val em { font-style: normal; color: var(--gold); }
 .stat .delta { font-size: 10px; margin-top: 4px; }
 .stat .delta.up { color: #4F6B58; }
 .stat .delta.flag { color: var(--danger); }
@@ -445,14 +449,14 @@ body {
   display: block;
 }
 .section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 60px);
   line-height: 1.0;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
   font-weight: 400;
 }
-.section h2 em { font-style: italic; color: var(--gold); }
+.section h2 em { font-style: normal; color: var(--gold); }
 .section-lead {
   font-size: clamp(17px, 1.7vw, 19px);
   color: var(--ink-soft);
@@ -473,9 +477,9 @@ body {
   display: grid; grid-template-columns: 28px 1fr; gap: 14px; align-items: start;
 }
 .pain .q {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 32px;
-  font-style: italic;
+  font-style: normal;
   color: var(--gold);
   line-height: 0.8;
 }
@@ -492,10 +496,10 @@ body {
   background: var(--ink);
   color: white;
   border-radius: 14px;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(20px, 2.2vw, 26px);
   line-height: 1.3;
-  font-style: italic;
+  font-style: normal;
 }
 .pain-conclusion strong { color: var(--gold); font-style: normal; font-weight: 400; }
 
@@ -530,7 +534,7 @@ body {
   margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
 }
 .lga-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   letter-spacing: -0.01em;
 }
@@ -578,11 +582,11 @@ body {
   padding: 12px 14px;
 }
 .lga-stat .v {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   line-height: 1;
 }
-.lga-stat .v em { font-style: italic; color: var(--gold); }
+.lga-stat .v em { font-style: normal; color: var(--gold); }
 .lga-stat .l { font-size: 10px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ========== PAYOR PIPELINE KANBAN ========== */
@@ -595,7 +599,7 @@ body {
   margin-bottom: 18px; flex-wrap: wrap; gap: 12px;
 }
 .kb-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
 }
 .kb-cols {
@@ -671,10 +675,10 @@ body {
   background: var(--gold);
   color: var(--ink);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
 }
-.pp-name { font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; }
+.pp-name { font-family: 'DM Sans', sans-serif; font-size: 22px; line-height: 1.1; letter-spacing: -0.01em; }
 .pp-meta { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 4px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.04em; }
 .pp-actions { display: flex; gap: 8px; }
 .pp-btn {
@@ -763,13 +767,13 @@ body {
 }
 .stack-block > * { position: relative; z-index: 1; }
 .stack-block h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 3.5vw, 38px);
   letter-spacing: -0.015em;
   margin-bottom: 22px;
   font-weight: 400;
 }
-.stack-block h3 em { font-style: italic; color: var(--gold); }
+.stack-block h3 em { font-style: normal; color: var(--gold); }
 .stack-list { list-style: none; padding: 0; margin: 0 0 28px; }
 .stack-list li {
   padding: 14px 0;
@@ -781,8 +785,8 @@ body {
 }
 .stack-list li .check {
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 24px;
   line-height: 1;
 }
@@ -801,10 +805,10 @@ body {
 }
 .stack-total .lbl { font-size: 14px; color: rgba(255,255,255,0.7); }
 .stack-total .val {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 3.5vw, 36px);
   color: var(--gold);
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ========== COST OF INACTION ========== */
@@ -817,13 +821,13 @@ body {
 }
 @media (max-width: 768px) { .coi-block { padding: 28px 22px; } }
 .coi-block h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(26px, 3.2vw, 36px);
   margin-bottom: 22px;
   letter-spacing: -0.015em;
   font-weight: 400;
 }
-.coi-block h3 em { font-style: italic; color: var(--danger); }
+.coi-block h3 em { font-style: normal; color: var(--danger); }
 .coi-math {
   background: var(--cream);
   border-radius: 12px;
@@ -851,12 +855,12 @@ body {
   display: block;
 }
 .coi-roi {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(22px, 2.8vw, 30px);
   color: var(--ink);
   line-height: 1.3;
 }
-.coi-roi strong { color: var(--gold); font-style: italic; font-weight: 400; }
+.coi-roi strong { color: var(--gold); font-style: normal; font-weight: 400; }
 
 /* ========== PRICING ========== */
 .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 32px; }
@@ -908,13 +912,13 @@ body {
   border-color: var(--gold);
 }
 .price-card .price-amount {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 54px;
   line-height: 1;
   letter-spacing: -0.02em;
   margin-top: 4px;
 }
-.price-card .price-amount em { font-style: italic; color: var(--gold); }
+.price-card .price-amount em { font-style: normal; color: var(--gold); }
 .price-card .price-unit {
   font-size: 12.5px;
   color: var(--muted);
@@ -949,7 +953,7 @@ body {
 .price-card.enterprise li { border-color: rgba(4, 103, 222, 0.15); }
 .price-card li::before {
   content: '+'; color: var(--gold);
-  font-family: 'Instrument Serif', serif; font-size: 18px; line-height: 1; flex-shrink: 0;
+  font-family: 'DM Sans', sans-serif; font-size: 18px; line-height: 1; flex-shrink: 0;
 }
 .price-cta {
   display: inline-flex;
@@ -999,20 +1003,20 @@ body {
   border-radius: 50%;
   color: var(--gold);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 40px;
   line-height: 1;
   border: 3px solid var(--gold);
 }
 .guarantee h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(24px, 3vw, 30px);
   margin-bottom: 8px;
   letter-spacing: -0.01em;
   font-weight: 400;
 }
-.guarantee h3 em { font-style: italic; color: var(--gold); }
+.guarantee h3 em { font-style: normal; color: var(--gold); }
 .guarantee p { font-size: 15px; color: var(--ink-soft); line-height: 1.55; }
 .guarantee p strong { color: var(--ink); font-weight: 600; }
 
@@ -1031,8 +1035,8 @@ body {
   display: flex; align-items: center; gap: 12px;
 }
 .faq-q .q-mark {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   color: var(--gold);
   font-size: 22px;
 }
@@ -1072,14 +1076,14 @@ body {
   padding: 0 28px;
 }
 .final-cta h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(40px, 6vw, 72px);
   line-height: 0.98;
   letter-spacing: -0.02em;
   margin-bottom: 22px;
   font-weight: 400;
 }
-.final-cta h2 em { font-style: italic; color: var(--gold); }
+.final-cta h2 em { font-style: normal; color: var(--gold); }
 .final-cta p {
   font-size: 19px;
   color: rgba(255,255,255,0.75);
@@ -1146,14 +1150,14 @@ footer {
   .feature-row .ss-wrap { order: 2; }
 }
 .feature-content h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 3.6vw, 42px);
   line-height: 1.05;
   letter-spacing: -0.015em;
   margin-bottom: 16px;
   font-weight: 400;
 }
-.feature-content h3 em { font-style: italic; color: var(--gold); }
+.feature-content h3 em { font-style: normal; color: var(--gold); }
 .feature-content p {
   font-size: 16px;
   color: var(--ink-soft);
@@ -1218,7 +1222,7 @@ footer {
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
   color: white;
-  font-family: 'Instrument Serif', serif; font-style: italic; font-size: 19px;
+  font-family: 'DM Sans', sans-serif; font-style: normal; font-size: 19px;
   box-shadow: 0 4px 14px -4px rgba(4,103,222,0.75);
 }
 .shell-sb-logo-text { font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; }
@@ -1336,7 +1340,7 @@ footer {
 
 /* Page heading on app pages */
 .shell-greet h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 3vw, 36px);
   letter-spacing: -0.015em;
   margin-bottom: 6px;
@@ -1388,12 +1392,12 @@ footer {
 }
 .kpi:has(.kpi-top) .kpi-lbl { margin: 8px 0 0; }
 .kpi-val {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 33px;
   line-height: 1;
   letter-spacing: -0.01em;
 }
-.kpi-val em { font-style: italic; color: var(--gold); }
+.kpi-val em { font-style: normal; color: var(--gold); }
 .kpi-delta { font-size: 11px; margin-top: 6px; }
 .kpi-delta.up { color: #4F6B58; }
 .kpi-delta.down { color: var(--danger); }
@@ -1568,11 +1572,11 @@ footer {
   background: var(--gold);
   color: var(--ink);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 26px;
 }
 .prov-name {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -2062,10 +2066,10 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-size: 36px;
   color: var(--muted-soft);
   margin-bottom: 12px;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
 }
 .empty-state h4 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   margin-bottom: 6px;
   font-weight: 400;
@@ -2159,8 +2163,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 14px;
 }
 
@@ -2194,8 +2198,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   align-items: center;
   justify-content: center;
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 20px;
 }
 .intake-logo-text {
@@ -2279,7 +2283,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 8px;
 }
 .intake-h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 30px;
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -2287,7 +2291,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 10px;
 }
 .intake-h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   line-height: 1.15;
   letter-spacing: -0.015em;
@@ -2603,8 +2607,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   background: transparent;
   padding: 8px 0;
   font-size: 22px;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   color: var(--ink);
 }
 .intake-sig:focus {
@@ -2901,7 +2905,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin: 0 auto 16px;
 }
 .approvals-empty h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   margin-bottom: 8px;
   font-weight: 400;
@@ -2926,7 +2930,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   flex-wrap: wrap;
 }
 .settings-section-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   letter-spacing: -0.01em;
   font-weight: 400;
@@ -3126,14 +3130,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 @media (max-width: 768px) { .calc-section { padding: 56px 0; } }
 .calc-section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 60px);
   line-height: 1.0;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
   font-weight: 400;
 }
-.calc-section h2 em { font-style: italic; color: var(--blue); }
+.calc-section h2 em { font-style: normal; color: var(--blue); }
 
 /* ---- Progress steps strip ---- */
 .calc-steps {
@@ -3235,9 +3239,9 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   user-select: none;
 }
 .calc-input-value {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
-  font-style: italic;
+  font-style: normal;
   color: var(--blue);
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -3346,12 +3350,12 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 600;
 }
 .calc-quote-card-headline-num {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(48px, 7vw, 76px);
   line-height: 1;
   letter-spacing: -0.025em;
   color: var(--blue-deep);
-  font-style: italic;
+  font-style: normal;
   margin: 6px 0 8px;
 }
 .calc-quote-card-headline-sub {
@@ -3360,8 +3364,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .calc-quote-card-headline-sub strong {
   color: var(--blue);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-weight: 400;
   font-size: 18px;
 }
@@ -3453,7 +3457,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border: 1px dashed var(--line);
 }
 .calc-disclaimer em {
-  font-style: italic;
+  font-style: normal;
   color: var(--ink-soft);
   font-weight: 600;
 }
@@ -3524,14 +3528,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .calc-modal-close:hover { background: var(--cream); color: var(--ink); }
 .calc-modal-h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 30px;
   line-height: 1.1;
   letter-spacing: -0.015em;
   font-weight: 400;
   margin: 8px 0 10px;
 }
-.calc-modal-h3 em { font-style: italic; color: var(--blue); }
+.calc-modal-h3 em { font-style: normal; color: var(--blue); }
 .calc-modal-p {
   font-size: 14px;
   color: var(--ink-soft);
@@ -3611,8 +3615,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
+    font-family: 'DM Sans', sans-serif;
+    font-style: normal;
     font-size: 22px;
   }
   .calc-print-logo-text { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
@@ -3625,7 +3629,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
     line-height: 1.5;
   }
   .calc-print-title {
-    font-family: 'Instrument Serif', serif;
+    font-family: 'DM Sans', sans-serif;
     font-size: 36px;
     letter-spacing: -0.02em;
     font-weight: 400;
@@ -3674,7 +3678,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
     page-break-inside: avoid;
   }
   .calc-print-cta h2 {
-    font-family: 'Instrument Serif', serif !important;
+    font-family: 'DM Sans', sans-serif !important;
     font-size: 18px !important;
     color: var(--ink) !important;
     text-transform: none !important;
@@ -3745,7 +3749,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 4px;
 }
 .status-hero-card h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -3851,7 +3855,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 8px;
 }
 .incident-head h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 20px;
   line-height: 1.2;
   font-weight: 400;
@@ -3950,8 +3954,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   align-items: center;
   justify-content: center;
   color: var(--ink);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 16px;
 }
 .ops-logo-text { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
@@ -4016,7 +4020,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .ops-greet { margin-bottom: 18px; }
 .ops-greet h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 32px;
   letter-spacing: -0.015em;
   font-weight: 400;
@@ -4064,7 +4068,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 4px;
 }
 .ops-kpi-val {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   line-height: 1;
   letter-spacing: -0.01em;
@@ -4184,9 +4188,9 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   text-align: center;
   padding: 36px 16px;
   color: var(--muted);
-  font-style: italic;
+  font-style: normal;
 }
-.ops-unassigned { color: var(--muted-soft); font-style: italic; }
+.ops-unassigned { color: var(--muted-soft); font-style: normal; }
 
 .ops-sla {
   display: inline-block;
@@ -4276,7 +4280,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border-bottom: 1px solid var(--line);
 }
 .ops-detail-head h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   line-height: 1.15;
   letter-spacing: -0.015em;
@@ -4467,7 +4471,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: var(--muted);
   background: #F7FAFD;
   border-radius: 6px;
-  font-style: italic;
+  font-style: normal;
 }
 
 .ops-artifacts { display: flex; flex-direction: column; gap: 8px; }
@@ -4556,8 +4560,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .ops-stat-row.highlight strong {
   color: var(--gold-deep);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 18px;
   font-weight: 400;
 }
@@ -4606,8 +4610,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   align-items: center;
   justify-content: center;
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 20px;
 }
 .welcome-logo-text { font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
@@ -4688,16 +4692,16 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 8px;
 }
 .welcome-h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 32px;
   line-height: 1.1;
   letter-spacing: -0.015em;
   font-weight: 400;
   margin-bottom: 12px;
 }
-.welcome-h1 strong { font-weight: 400; color: var(--gold); font-style: italic; }
+.welcome-h1 strong { font-weight: 400; color: var(--gold); font-style: normal; }
 .welcome-h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 26px;
   line-height: 1.15;
   letter-spacing: -0.015em;
@@ -5376,7 +5380,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .margin-amount.warn { color: var(--gold-deep); }
 .margin-amount.danger { color: var(--danger); }
 .margin-amount.neutral { color: var(--muted-soft); }
-.muted { color: var(--muted-soft); font-style: italic; }
+.muted { color: var(--muted-soft); font-style: normal; }
 
 /* ============================================================
    /ops/templates — task template catalog
@@ -5410,7 +5414,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-family: 'JetBrains Mono', monospace;
 }
 .template-name {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   letter-spacing: -0.01em;
   font-weight: 400;
@@ -5447,8 +5451,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: var(--ink);
 }
 .template-stat.highlight .template-stat-val {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 18px;
   font-weight: 400;
 }
@@ -5540,14 +5544,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   padding: 60px 0 40px;
 }
 .compare-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 60px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   margin-bottom: 18px;
   font-weight: 400;
 }
-.compare-hero h1 em { font-style: italic; color: var(--gold); }
+.compare-hero h1 em { font-style: normal; color: var(--gold); }
 .compare-lead {
   font-size: 16px;
   color: var(--ink-soft);
@@ -5579,8 +5583,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   text-align: left !important;
   width: 38%;
   background: var(--ink-deep) !important;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 16px !important;
 }
 .compare-th-credtek {
@@ -5632,9 +5636,9 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .compare-cell {
   text-align: center;
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
-  font-style: italic;
+  font-style: normal;
 }
 .compare-cell.highlight {
   background: rgba(4, 103, 222, 0.06);
@@ -5664,7 +5668,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   text-align: center;
 }
 .compare-cta h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 52px);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -5672,7 +5676,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 400;
   color: white;
 }
-.compare-cta h2 em { font-style: italic; color: var(--gold); }
+.compare-cta h2 em { font-style: normal; color: var(--gold); }
 .compare-cta p {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.75);
@@ -5723,8 +5727,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   align-items: center;
   justify-content: center;
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 20px;
 }
 .signin-logo-text {
@@ -5733,7 +5737,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   letter-spacing: -0.01em;
 }
 .signin-h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 38px;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -6075,10 +6079,10 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 24px;
 }
 .signin-aside-quote {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   line-height: 1.3;
-  font-style: italic;
+  font-style: normal;
   letter-spacing: -0.005em;
   margin-bottom: 18px;
 }
@@ -6196,7 +6200,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 @media (max-width: 900px) { .docs-content { padding: 24px 0 48px; } }
 .docs-content section { margin-bottom: 40px; }
 .docs-content h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 48px);
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -6204,7 +6208,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 400;
 }
 .docs-content h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -6410,14 +6414,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   padding: 56px 0 28px;
 }
 .changelog-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 60px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 400;
   margin-bottom: 16px;
 }
-.changelog-hero h1 em { font-style: italic; color: var(--gold); }
+.changelog-hero h1 em { font-style: normal; color: var(--gold); }
 .changelog-lead {
   font-size: 16px;
   color: var(--ink-soft);
@@ -6503,7 +6507,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border-radius: 100px;
 }
 .changelog-headline {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -6528,14 +6532,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .help-hero { padding: 56px 0 32px; }
 .help-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 400;
   margin-bottom: 14px;
 }
-.help-hero h1 em { font-style: italic; color: var(--gold); }
+.help-hero h1 em { font-style: normal; color: var(--gold); }
 .help-lead {
   font-size: 16px;
   color: var(--ink-soft);
@@ -6635,7 +6639,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 14px;
 }
 .help-article-header h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 44px);
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -6654,7 +6658,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   line-height: 1.7;
 }
 .help-article-body h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -6692,7 +6696,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   text-align: center;
 }
 .help-article-cta h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   line-height: 1.2;
   font-weight: 400;
@@ -6793,7 +6797,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   .founder-grid { grid-template-columns: 1fr; gap: 36px; }
 }
 .founder-content h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -6801,7 +6805,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin: 12px 0 24px;
 }
 .founder-content h2 em {
-  font-style: italic;
+  font-style: normal;
   color: var(--blue);
 }
 .founder-p {
@@ -6817,9 +6821,9 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border-top: 1px solid var(--line);
 }
 .founder-sig-name {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
-  font-style: italic;
+  font-style: normal;
   color: var(--ink);
   letter-spacing: -0.01em;
 }
@@ -6913,14 +6917,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .integ-page { background: var(--paper); min-height: 100vh; }
 .integ-hero { padding: 56px 0 32px; }
 .integ-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 400;
   margin-bottom: 16px;
 }
-.integ-hero h1 em { font-style: italic; color: var(--gold); }
+.integ-hero h1 em { font-style: normal; color: var(--gold); }
 .integ-lead {
   font-size: 16px;
   color: var(--ink-soft);
@@ -6960,7 +6964,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .integ-list { padding: 16px 0 32px; }
 .integ-cat { margin-bottom: 36px; }
 .integ-cat-label {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -7060,7 +7064,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-top: 32px;
 }
 .integ-cta h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -7123,7 +7127,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border: 1px solid rgba(4, 103, 222, 0.18);
 }
 .why-us-card h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -7144,14 +7148,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .demo-video-page { background: var(--paper); min-height: 100vh; }
 .dv-hero { padding: 48px 0 24px; }
 .dv-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(36px, 5vw, 56px);
   line-height: 1.05;
   letter-spacing: -0.02em;
   font-weight: 400;
   margin-bottom: 14px;
 }
-.dv-hero h1 em { font-style: italic; color: var(--blue); }
+.dv-hero h1 em { font-style: normal; color: var(--blue); }
 .dv-lead {
   font-size: 16px;
   color: var(--ink-soft);
@@ -7196,7 +7200,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   color: var(--gold);
 }
 .dv-placeholder h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   font-weight: 400;
   margin-bottom: 12px;
@@ -7212,7 +7216,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 
 .dv-chapters { padding: 16px 0 32px; }
 .dv-section-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: -0.015em;
@@ -7267,7 +7271,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-top: 32px;
 }
 .dv-cta h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -7275,7 +7279,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 14px;
   color: white;
 }
-.dv-cta h2 em { font-style: italic; color: var(--gold); }
+.dv-cta h2 em { font-style: normal; color: var(--gold); }
 .dv-cta p {
   font-size: 15px;
   color: rgba(255, 255, 255, 0.75);
@@ -7378,8 +7382,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 30px;
 }
 .op-logo-text {
@@ -7409,7 +7413,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 
 .op-hero { margin-bottom: 28px; }
 .op-hero h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 42px;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -7463,7 +7467,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 
 .op-pricing { margin-bottom: 24px; }
 .op-pricing h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -7497,8 +7501,8 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .op-pricing-table tr:first-child td { border-top: none; }
 .op-pricing-table strong {
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 20px;
   color: var(--blue);
   font-weight: 400;
@@ -7507,7 +7511,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-top: 10px;
   font-size: 11.5px;
   color: var(--muted);
-  font-style: italic;
+  font-style: normal;
 }
 
 .op-foot {
@@ -7521,7 +7525,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 
 .op-section { margin-bottom: 24px; }
 .op-section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -7661,7 +7665,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 @media (max-width: 768px) { .plan-section { padding: 56px 0; } }
 .plan-section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 52px);
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -7669,7 +7673,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 400;
   max-width: 880px;
 }
-.plan-section h2 em { color: var(--blue); font-style: italic; }
+.plan-section h2 em { color: var(--blue); font-style: normal; }
 
 .plan-grid {
   display: grid;
@@ -7703,14 +7707,14 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 24px;
   margin-bottom: 16px;
   box-shadow: 0 6px 14px -6px rgba(4, 103, 222, 0.45);
 }
 .plan-step h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   letter-spacing: -0.01em;
   font-weight: 400;
@@ -7735,7 +7739,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 @media (max-width: 768px) { .stakes-section { padding: 56px 0; } }
 .stakes-section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 52px);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -7743,7 +7747,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 400;
   color: white;
 }
-.stakes-section h2 em { color: var(--gold); font-style: italic; }
+.stakes-section h2 em { color: var(--gold); font-style: normal; }
 /* On the dark ink background the gold-deep kicker reads too low-contrast,
    so we lift it to blue-soft. Color-only — no pill chrome — to match the
    plain editorial eyebrow used in every other section. */
@@ -7881,7 +7885,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 @media (max-width: 768px) { .caps-section { padding: 56px 0; } }
 .caps-section h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(32px, 4.5vw, 52px);
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -7889,7 +7893,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   font-weight: 400;
   max-width: 880px;
 }
-.caps-section h2 em { color: var(--blue); font-style: italic; }
+.caps-section h2 em { color: var(--blue); font-style: normal; }
 .caps-section .section-lead { max-width: 760px; }
 
 .caps-grid {
@@ -7927,7 +7931,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 14px;
 }
 .caps-card h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 19.5px;
   line-height: 1.2;
   letter-spacing: -0.005em;
@@ -8028,7 +8032,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .price-ribbon::before {
   content: '★';
-  font-family: serif;
+  font-family: inherit;
   font-size: 11px;
   line-height: 1;
 }
@@ -8710,15 +8714,15 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 19px;
   letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 .payor-zoom-id { flex: 1; min-width: 0; }
 .payor-zoom-name {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 19px;
   letter-spacing: -0.005em;
   color: var(--ink);
@@ -8907,7 +8911,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   gap: 14px 18px;
 }
 .sp-logo {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 22px;
   letter-spacing: -0.01em;
   color: var(--ink);
@@ -8919,7 +8923,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .sp-dot {
   color: var(--line);
   font-size: 22px;
-  font-family: serif;
+  font-family: inherit;
   line-height: 1;
   user-select: none;
 }
@@ -9023,7 +9027,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   margin-bottom: 16px;
 }
 .edm-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 36px);
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -9031,7 +9035,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   margin: 0 0 12px;
   color: var(--ink);
 }
-.edm-title em { color: var(--blue); font-style: italic; }
+.edm-title em { color: var(--blue); font-style: normal; }
 .edm-lead {
   font-size: 14.5px;
   line-height: 1.55;
@@ -9167,7 +9171,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   to { transform: scale(1); opacity: 1; }
 }
 .edm-success h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 26px;
   letter-spacing: -0.01em;
   font-weight: 400;
@@ -9322,8 +9326,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 16px;
   font-weight: 400;
 }
@@ -9376,8 +9380,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 17px;
   flex-shrink: 0;
 }
@@ -11985,8 +11989,8 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   margin: 14px 0 16px;
 }
 .rsc-hero h1 em {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-style: italic;
+  font-family: 'DM Sans', Georgia, sans-serif;
+  font-style: normal;
   font-weight: 400;
   color: var(--blue);
   letter-spacing: -0.01em;
@@ -11999,7 +12003,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 
 .rsc-section-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(24px, 3vw, 30px);
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -12040,7 +12044,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   margin-bottom: 10px;
 }
 .rsc-featured-card h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 21px;
   line-height: 1.22;
   letter-spacing: -0.01em;
@@ -12066,7 +12070,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .rsc-all { padding: 36px 0 16px; }
 .rsc-cat-block { margin-bottom: 36px; }
 .rsc-cat-title {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 24px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -12148,14 +12152,14 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   margin-top: 24px;
 }
 .rsc-cta-band h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin-bottom: 14px;
 }
-.rsc-cta-band h2 em { color: var(--gold-soft); font-style: italic; }
+.rsc-cta-band h2 em { color: var(--gold-soft); font-style: normal; }
 .rsc-cta-band p {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.75);
@@ -12226,7 +12230,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 .rsc-article-body p { margin: 0 0 16px; }
 .rsc-article-body strong { color: var(--ink); font-weight: 600; }
-.rsc-article-body em { font-style: italic; }
+.rsc-article-body em { font-style: normal; }
 .rsc-article-body ul,
 .rsc-article-body ol { margin: 0 0 18px; padding-left: 22px; }
 .rsc-article-body li { margin-bottom: 8px; line-height: 1.6; }
@@ -12249,7 +12253,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   margin: 36px 0 8px;
 }
 .rsc-cta h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 23px;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -12300,7 +12304,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   box-shadow: 0 12px 26px -16px rgba(4, 103, 222, 0.26);
 }
 .rsc-more-card h3 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.25;
@@ -13204,7 +13208,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   margin-bottom: 6px;
 }
 .portal-kpi-val {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 32px;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -13985,7 +13989,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .fu-due-now { background: #FFF7E8; color: #6B4A17; border: 1px solid rgba(217,142,52,0.35); }
 .fu-due-soon { background: #E8F2FE; color: #0053A0; border: 1px solid rgba(0,83,160,0.30); }
 .fu-due-ok { background: #E8F8EE; color: #2F6E48; border: 1px solid rgba(47,110,72,0.30); }
-.fu-cadence { color: var(--muted); font-style: italic; }
+.fu-cadence { color: var(--muted); font-style: normal; }
 .fu-subject {
   margin-top: 6px;
   font-size: 13px;
@@ -14358,7 +14362,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 .hero-below-line {
-  font-family: 'Instrument Serif', Georgia, serif;
+  font-family: 'DM Sans', Georgia, sans-serif;
   font-size: clamp(28px, 3.2vw, 38px);
   line-height: 1.18;
   letter-spacing: -0.015em;
@@ -14366,7 +14370,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   margin: 0;
 }
 .hero-below-line em {
-  font-style: italic;
+  font-style: normal;
   color: var(--gold-deep);
 }
 
@@ -16056,8 +16060,8 @@ a.cov-cell:hover {
   border-radius: 9px;
   display: flex; align-items: center; justify-content: center;
   color: var(--gold);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
+  font-family: 'DM Sans', sans-serif;
+  font-style: normal;
   font-size: 21px;
 }
 .gi-logo-text { font-weight: 600; font-size: 18px; letter-spacing: -0.01em; color: var(--ink); }
@@ -16084,7 +16088,7 @@ a.cov-cell:hover {
   margin-bottom: 10px;
 }
 .gi-h1 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: clamp(28px, 5vw, 38px);
   line-height: 1.08;
   letter-spacing: -0.02em;
@@ -16093,7 +16097,7 @@ a.cov-cell:hover {
   margin: 0 0 12px;
 }
 .gi-h2 {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 25px;
   line-height: 1.14;
   letter-spacing: -0.015em;
@@ -16514,7 +16518,7 @@ a.cov-cell:hover {
 .gi-roster-col.on { border-color: rgba(79, 139, 106, 0.5); }
 .gi-roster-col.on .gi-roster-col-map { color: var(--sage); font-weight: 600; }
 .gi-roster-col.off { opacity: 0.72; }
-.gi-roster-col-skip { color: var(--muted); font-size: 11px; font-style: italic; }
+.gi-roster-col-skip { color: var(--muted); font-size: 11px; font-style: normal; }
 .gi-roster-privacy {
   display: flex; align-items: center; gap: 6px;
   margin: 13px 0 0; font-size: 11.5px; color: var(--muted); line-height: 1.45;

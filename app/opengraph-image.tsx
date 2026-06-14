@@ -40,7 +40,7 @@ export default async function OG() {
               alignItems: "center",
               justifyContent: "center",
               color: "#0467DE",
-              fontFamily: "serif",
+              fontFamily: "sans-serif",
               fontStyle: "italic",
               fontSize: 38,
               lineHeight: 1,
@@ -92,7 +92,7 @@ export default async function OG() {
               style={{
                 fontSize: 66,
                 lineHeight: 1.08,
-                fontFamily: "serif",
+                fontFamily: "sans-serif",
                 fontStyle: "italic",
                 fontWeight: 400,
                 letterSpacing: "-0.01em",
