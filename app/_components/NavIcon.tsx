@@ -139,6 +139,16 @@ const ICONS: Record<string, ReactElement> = {
       <path d="M12 17h.01" />
     </>
   ),
+  zap: <path d="M13 2 3 14h9l-1 8 10-12h-9Z" />,
+  alert: (
+    <>
+      <path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </>
+  ),
+  trendUp: <path d="M12 19V5M6 11l6-6 6 6" />,
+  trendDown: <path d="M12 5v14M6 13l6 6 6-6" />,
   menu: <path d="M3 6h18M3 12h18M3 18h18" />,
   close: <path d="M18 6 6 18M6 6l12 12" />,
   chevron: <path d="m9 18 6-6-6-6" />,

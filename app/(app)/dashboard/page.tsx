@@ -5,6 +5,7 @@
 
 import Link from "next/link";
 import { AGENT_FEED, PROVIDERS } from "../../_lib/mockProviders";
+import { NavIcon } from "../../_components/NavIcon";
 
 export const metadata = {
   title: "Dashboard",
@@ -17,64 +18,108 @@ const STATUS_PILL_CLASS: Record<string, string> = {
   flag: "pstat s-flag",
 };
 
+// How far through the credentialing pipeline each status sits — drives the
+// per-row progress bar so a coordinator can read momentum at a glance.
+const STAGE_PCT: Record<string, number> = {
+  active: 100,
+  enrolling: 65,
+  supervision: 45,
+  flag: 30,
+};
+
+type Kpi = {
+  icon: string;
+  label: string;
+  value: string;
+  emphasis?: boolean;
+  trend: { dir: "up" | "down" | "flag"; text: string };
+};
+
+const KPIS: Kpi[] = [
+  { icon: "providers", label: "Active providers", value: "214", trend: { dir: "up", text: "12 this month" } },
+  { icon: "recred", label: "In credentialing", value: "31", trend: { dir: "up", text: "8 this month" } },
+  {
+    icon: "zap",
+    label: "Avg days to active",
+    value: "42",
+    emphasis: true,
+    trend: { dir: "up", text: "47d faster" },
+  },
+  { icon: "alert", label: "Expiring < 30 days", value: "7", trend: { dir: "flag", text: "2 critical" } },
+];
+
+function TrendChip({ dir, text }: { dir: "up" | "down" | "flag"; text: string }) {
+  const iconName = dir === "flag" ? "alert" : dir === "down" ? "trendDown" : "trendUp";
+  return (
+    <span className={`kpi-trend t-${dir}`}>
+      <NavIcon name={iconName} size={12} />
+      {text}
+    </span>
+  );
+}
+
 export default function DashboardPage() {
   return (
     <>
       <section className="shell-greet">
         <span className="app-eyebrow">Coordinator cockpit · live demo</span>
         <h1>Good morning, Marisol.</h1>
-        <p>3 items need approval · 2 expirations in the next 14 days</p>
+        <p>Here&rsquo;s what needs you today, and how your panel is moving.</p>
       </section>
 
+      {/* Point-to-flow — the single most important action, up top. */}
+      <Link href="/approvals" className="dash-cta-strip">
+        <span className="dash-cta-ic">
+          <NavIcon name="approvals" size={20} />
+        </span>
+        <span className="dash-cta-body">
+          <strong>3 approvals waiting</strong>
+          <span>Payer enrollment drafts are ready for your review.</span>
+        </span>
+        <span className="dash-cta-go">
+          Review now <NavIcon name="chevron" size={15} />
+        </span>
+      </Link>
+
       <section className="kpi-row">
-        <div className="kpi">
-          <div className="kpi-lbl">Active providers</div>
-          <div className="kpi-val">
-            <em>214</em>
+        {KPIS.map((k) => (
+          <div key={k.label} className={k.emphasis ? "kpi kpi-hero" : "kpi"}>
+            <div className="kpi-top">
+              <span className="kpi-ic">
+                <NavIcon name={k.icon} size={17} />
+              </span>
+              <TrendChip dir={k.trend.dir} text={k.trend.text} />
+            </div>
+            <div className="kpi-val">{k.emphasis ? <em>{k.value}</em> : k.value}</div>
+            <div className="kpi-lbl">{k.label}</div>
           </div>
-          <div className="kpi-delta up">↑ 12 vs. last month</div>
-        </div>
-        <div className="kpi">
-          <div className="kpi-lbl">In credentialing</div>
-          <div className="kpi-val">31</div>
-          <div className="kpi-delta up">↑ 8 vs. last month</div>
-        </div>
-        <div className="kpi">
-          <div className="kpi-lbl">Avg days to active</div>
-          <div className="kpi-val">
-            <em>42</em>
-          </div>
-          <div className="kpi-delta up">↓ 47 days vs. baseline</div>
-        </div>
-        <div className="kpi">
-          <div className="kpi-lbl">Expiring &lt; 30d</div>
-          <div className="kpi-val">7</div>
-          <div className="kpi-delta flag">⚐ 2 critical</div>
-        </div>
+        ))}
       </section>
 
       <section className="dash-grid">
         <div className="dash-panel">
           <div className="dash-panel-head">
-            <h3>Pipeline · 31 providers</h3>
-            <span className="filt">CLICK A ROW →</span>
+            <h3>Pipeline · 31 in progress</h3>
+            <Link href="/providers" className="dash-panel-link">
+              View all <NavIcon name="chevron" size={14} />
+            </Link>
           </div>
           {PROVIDERS.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/providers/${p.slug}`}
-              className="dash-row"
-            >
+            <Link key={p.slug} href={`/providers/${p.slug}`} className="dash-row">
               <div className="dash-row-av">{p.initials}</div>
-              <div>
+              <div className="dash-row-main">
                 <div className="dash-row-name">
                   {p.name}, {p.credential}
                 </div>
                 <div className="dash-row-meta">{p.meta}</div>
+                <div className="dash-row-prog" aria-hidden="true">
+                  <span
+                    className={`dash-row-prog-bar s-${p.status}`}
+                    style={{ width: `${STAGE_PCT[p.status] ?? 50}%` }}
+                  />
+                </div>
               </div>
-              <div className="dash-row-states">
-                {p.licenseStates.join("·")}
-              </div>
+              <div className="dash-row-states">{p.licenseStates.join("·")}</div>
               <div className={STATUS_PILL_CLASS[p.status]}>{p.statusLabel}</div>
             </Link>
           ))}
@@ -83,7 +128,10 @@ export default function DashboardPage() {
         <div className="dash-panel">
           <div className="dash-panel-head">
             <h3>Agent activity</h3>
-            <span className="filt">LIVE</span>
+            <span className="dash-live">
+              <span className="dash-live-dot" />
+              LIVE
+            </span>
           </div>
           <div className="dash-feed">
             {AGENT_FEED.map((ev, i) => {
