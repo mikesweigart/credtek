@@ -77,6 +77,68 @@ const ICONS: Record<string, ReactElement> = {
       <path d="m21 21-4.3-4.3" />
     </>
   ),
+  followup: (
+    <>
+      <path d="M15 14l5-5-5-5" />
+      <path d="M20 9H9a4 4 0 0 0-4 4v7" />
+    </>
+  ),
+  spaces: (
+    <>
+      <path d="m12 2 10 5-10 5L2 7l10-5Z" />
+      <path d="m2 17 10 5 10-5" />
+      <path d="m2 12 10 5 10-5" />
+    </>
+  ),
+  expirables: (
+    <>
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M12 6.5V12l4 2" />
+    </>
+  ),
+  recred: (
+    <>
+      <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+      <path d="M21 3v5h-5" />
+      <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+      <path d="M3 21v-5h5" />
+    </>
+  ),
+  workflows: (
+    <>
+      <circle cx="6" cy="6" r="2.4" />
+      <circle cx="6" cy="18" r="2.4" />
+      <circle cx="18" cy="9" r="2.4" />
+      <path d="M6 8.4v7.2M8.4 6H14a2.5 2.5 0 0 1 0 5H8.4" />
+    </>
+  ),
+  documents: (
+    <>
+      <path d="M14 3v5h5" />
+      <path d="M7 3h8l5 5v13H7z" />
+      <path d="M9.5 13h5M9.5 17h5" />
+    </>
+  ),
+  audit: (
+    <>
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+      <path d="m9.5 9 1.5 1.5L14 7.5" />
+    </>
+  ),
+  reports: (
+    <>
+      <path d="M3 21h18" />
+      <path d="M7 21V11M12 21V5M17 21v-7" />
+    </>
+  ),
+  help: (
+    <>
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M9.2 9.2a3 3 0 0 1 5.7 1c0 2-3 2.6-3 2.6" />
+      <path d="M12 17h.01" />
+    </>
+  ),
   menu: <path d="M3 6h18M3 12h18M3 18h18" />,
   close: <path d="M18 6 6 18M6 6l12 12" />,
   chevron: <path d="m9 18 6-6-6-6" />,

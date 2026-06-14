@@ -24,25 +24,26 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { NavIcon } from "../../_components/NavIcon";
 
-type Item = { label: string; href: string; icon: ReactNode; badge?: string };
+type Item = { label: string; href: string; icon: string; badge?: string };
 
 const WORKSPACE: Item[] = [
-  { label: "Dashboard", href: "/avelecare", icon: "▣" },
-  { label: "Follow-ups", href: "/avelecare/followups", icon: "↗", badge: "5" },
-  { label: "Providers", href: "/avelecare/providers", icon: "◯", badge: "15" },
-  { label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇", badge: "6" },
-  { label: "Expirables", href: "/avelecare/expirables", icon: "⏱", badge: "4" },
-  { label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "↻" },
-  { label: "Workflows", href: "/avelecare/workflows", icon: "▤" },
+  { label: "Dashboard", href: "/avelecare", icon: "dashboard" },
+  { label: "Follow-ups", href: "/avelecare/followups", icon: "followup", badge: "5" },
+  { label: "Providers", href: "/avelecare/providers", icon: "providers", badge: "15" },
+  { label: "Spaces & Programs", href: "/avelecare/spaces", icon: "spaces", badge: "6" },
+  { label: "Expirables", href: "/avelecare/expirables", icon: "expirables", badge: "4" },
+  { label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "recred" },
+  { label: "Workflows", href: "/avelecare/workflows", icon: "workflows" },
 ];
 
 const SUPPORT: Item[] = [
-  { label: "Documents & Compliance", href: "/avelecare/documents", icon: "📄" },
-  { label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "▣" },
-  { label: "Reports & Analytics", href: "/avelecare/reports", icon: "▥" },
-  { label: "Admin & Settings", href: "/avelecare/settings", icon: "⚙" },
-  { label: "Help & Chat", href: "/avelecare/help", icon: "✦" },
+  { label: "Documents & Compliance", href: "/avelecare/documents", icon: "documents" },
+  { label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "audit" },
+  { label: "Reports & Analytics", href: "/avelecare/reports", icon: "reports" },
+  { label: "Admin & Settings", href: "/avelecare/settings", icon: "settings" },
+  { label: "Help & Chat", href: "/avelecare/help", icon: "help" },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -154,7 +155,9 @@ export function AvelNav() {
               className={active ? "avel-sb-item is-active" : "avel-sb-item"}
               onClick={close}
             >
-              <span className="avel-sb-icon">{item.icon}</span>
+              <span className="avel-sb-icon">
+                <NavIcon name={item.icon} size={18} />
+              </span>
               <span className="avel-sb-label">{item.label}</span>
               {item.badge ? <span className="avel-sb-badge">{item.badge}</span> : null}
             </Link>
@@ -171,7 +174,9 @@ export function AvelNav() {
               className={active ? "avel-sb-item is-active" : "avel-sb-item"}
               onClick={close}
             >
-              <span className="avel-sb-icon">{item.icon}</span>
+              <span className="avel-sb-icon">
+                <NavIcon name={item.icon} size={18} />
+              </span>
               <span className="avel-sb-label">{item.label}</span>
             </Link>
           );
