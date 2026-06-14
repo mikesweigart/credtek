@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { DemoButton } from "../_components/DemoButton";
+import { NavIcon } from "../../_components/NavIcon";
 import {
   PAYOR_COLUMN_COUNTS,
   PAYOR_ENROLLMENTS,
@@ -82,6 +83,69 @@ export default async function PayorsPage({ searchParams }: PageProps) {
           {totalActive} active enrollments · {draftedCount} approvals waiting
           in this view · 4 stages
         </p>
+      </section>
+
+      <section className="kpi-row" style={{ marginBottom: 18 }}>
+        <div className="kpi kpi-hero">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="payors" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">across 4 stages</span>
+          </div>
+          <div className="kpi-val">
+            <em>{totalActive}</em>
+          </div>
+          <div className="kpi-lbl">Active enrollments</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="approvals" size={17} />
+            </span>
+            <span
+              className={
+                PAYOR_COLUMN_COUNTS.drafted > 0 ? "kpi-trend t-flag" : "kpi-trend t-up"
+              }
+            >
+              {PAYOR_COLUMN_COUNTS.drafted > 0 ? (
+                <>
+                  <NavIcon name="alert" size={11} /> needs you
+                </>
+              ) : (
+                "clear"
+              )}
+            </span>
+          </div>
+          <div className="kpi-val">{PAYOR_COLUMN_COUNTS.drafted}</div>
+          <div className="kpi-lbl">Awaiting approval</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="providers" size={17} />
+            </span>
+            <span className="kpi-trend t-up">billing live</span>
+          </div>
+          <div className="kpi-val">{PAYOR_COLUMN_COUNTS.in_network}</div>
+          <div className="kpi-lbl">In-network</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="alert" size={17} />
+            </span>
+            <span
+              className={
+                PAYOR_COLUMN_COUNTS.info_needed > 0 ? "kpi-trend t-flag" : "kpi-trend t-up"
+              }
+            >
+              {PAYOR_COLUMN_COUNTS.info_needed > 0 ? "payer follow-up" : "none open"}
+            </span>
+          </div>
+          <div className="kpi-val">{PAYOR_COLUMN_COUNTS.info_needed}</div>
+          <div className="kpi-lbl">Info needed</div>
+        </div>
       </section>
 
       <div className="filter-row">

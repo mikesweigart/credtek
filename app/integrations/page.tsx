@@ -4,6 +4,7 @@
 // Tier-1 federal sources are always-on for every customer.
 
 import Link from "next/link";
+import { NavIcon } from "../_components/NavIcon";
 
 export const metadata = {
   title: "Integrations · CredTek",
@@ -11,13 +12,44 @@ export const metadata = {
     "CredTek integrates with major EHRs, practice management systems, federal sources, and payor networks across the US medical credentialing stack.",
 };
 
+// Direction of data flow relative to CredTek:
+//   in   — we read/verify FROM this source (federal, state boards)
+//   out  — we submit/send TO this destination (payor portals, email)
+//   sync — data moves both ways (EHRs, CAQH, SSO, two-way messaging)
+type FlowDirection = "in" | "out" | "sync";
+
 type Integration = {
   name: string;
   category: string;
   status: "live" | "beta" | "roadmap";
   /** One-line plain-English description. */
   note: string;
+  /** Override the category default when this tool's flow differs. */
+  direction?: FlowDirection;
 };
+
+// Most tools' flow follows their category; per-tool overrides handle the
+// exceptions (e.g. CAQH and two-way messaging sync both directions).
+const CATEGORY_DIRECTION: Record<string, FlowDirection> = {
+  ehr: "sync",
+  federal: "in",
+  state: "in",
+  payor: "out",
+  bh: "out",
+  medicaid: "out",
+  aux: "out",
+  sso: "sync",
+};
+
+const DIR_META: Record<FlowDirection, { icon: string; label: string }> = {
+  in: { icon: "flowIn", label: "Inbound" },
+  out: { icon: "flowOut", label: "Outbound" },
+  sync: { icon: "flowSync", label: "Two-way" },
+};
+
+function directionOf(i: Integration): FlowDirection {
+  return i.direction ?? CATEGORY_DIRECTION[i.category] ?? "in";
+}
 
 const INTEGRATIONS: Integration[] = [
   // ---- EHRs ----
@@ -37,7 +69,7 @@ const INTEGRATIONS: Integration[] = [
   { name: "SAM.gov", category: "federal", status: "live", note: "Federal sanctions screening — bulk and on-demand." },
   { name: "DEA", category: "federal", status: "live", note: "DEA registration verification and expiration tracking." },
   { name: "NPDB", category: "federal", status: "live", note: "Queries via our NCQA-certified CVO partner; results flow into CredTek." },
-  { name: "CAQH ProView", category: "federal", status: "live", note: "Provider data sync, attestation automation, re-attestation every 120 days with provider SMS approval." },
+  { name: "CAQH ProView", category: "federal", status: "live", direction: "sync", note: "Provider data sync, attestation automation, re-attestation every 120 days with provider SMS approval." },
 
   // ---- State boards ----
   { name: "50-state medical boards", category: "state", status: "live", note: "Primary-source verification for MD, DO, NP, PA, RN, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — every state, every specialty." },
@@ -65,9 +97,9 @@ const INTEGRATIONS: Integration[] = [
   { name: "Florida Medicaid MCOs", category: "medicaid", status: "live", note: "Sunshine, Simply, Aetna Better Health, Molina." },
 
   // ---- Background check + auxiliary ----
-  { name: "Checkr (background checks)", category: "aux", status: "live", note: "API-driven background checks with webhook results." },
+  { name: "Checkr (background checks)", category: "aux", status: "live", direction: "sync", note: "API-driven background checks with webhook results." },
   { name: "NotaryCam", category: "aux", status: "live", note: "Scheduled-notary workflow for documents requiring notarization." },
-  { name: "Twilio (SMS)", category: "aux", status: "live", note: "Provider SMS for CAQH attestation approvals, supervision cosignatures." },
+  { name: "Twilio (SMS)", category: "aux", status: "live", direction: "sync", note: "Provider SMS for CAQH attestation approvals, supervision cosignatures." },
   { name: "Resend (email)", category: "aux", status: "live", note: "Transactional emails — intake invites, expirations, audit trails." },
 
   // ---- Single sign-on (Enterprise) ----
@@ -127,6 +159,11 @@ const CATEGORIES: { id: string; label: string; intro: string }[] = [
 ];
 
 export default function IntegrationsPage() {
+  const flow = {
+    in: INTEGRATIONS.filter((i) => directionOf(i) === "in").length,
+    out: INTEGRATIONS.filter((i) => directionOf(i) === "out").length,
+    sync: INTEGRATIONS.filter((i) => directionOf(i) === "sync").length,
+  };
   return (
     <div className="integ-page">
       <header className="compare-topnav">
@@ -178,6 +215,19 @@ export default function IntegrationsPage() {
               <span className="integ-dot roadmap"></span> Day-2 roadmap · Enterprise tier first
             </span>
           </div>
+
+          <div className="integ-flow-legend">
+            <span className="integ-flow-title">How the data moves</span>
+            <span className="integ-dir integ-dir-in">
+              <NavIcon name="flowIn" size={12} /> Inbound · we verify from the source · {flow.in}
+            </span>
+            <span className="integ-dir integ-dir-out">
+              <NavIcon name="flowOut" size={12} /> Outbound · we submit on your behalf · {flow.out}
+            </span>
+            <span className="integ-dir integ-dir-sync">
+              <NavIcon name="flowSync" size={12} /> Two-way · syncs both directions · {flow.sync}
+            </span>
+          </div>
         </div>
       </section>
 
@@ -197,22 +247,31 @@ export default function IntegrationsPage() {
                 </h2>
                 <p className="integ-cat-intro">{cat.intro}</p>
                 <div className="integ-grid">
-                  {items.map((i) => (
-                    <div className="integ-card" key={i.name}>
-                      <div className="integ-card-head">
-                        <span className={`integ-dot ${i.status}`}></span>
-                        <span className="integ-card-name">{i.name}</span>
-                        <span className={`integ-status integ-status-${i.status}`}>
-                          {i.status === "live"
-                            ? "Live"
-                            : i.status === "beta"
-                              ? "Beta"
-                              : "Roadmap"}
-                        </span>
+                  {items.map((i) => {
+                    const dir = directionOf(i);
+                    const dm = DIR_META[dir];
+                    return (
+                      <div className="integ-card" key={i.name}>
+                        <div className="integ-card-head">
+                          <span className={`integ-dot ${i.status}`}></span>
+                          <span className="integ-card-name">{i.name}</span>
+                          <span className={`integ-status integ-status-${i.status}`}>
+                            {i.status === "live"
+                              ? "Live"
+                              : i.status === "beta"
+                                ? "Beta"
+                                : "Roadmap"}
+                          </span>
+                        </div>
+                        <p className="integ-card-note">{i.note}</p>
+                        <div className="integ-card-flow">
+                          <span className={`integ-dir integ-dir-${dir}`}>
+                            <NavIcon name={dm.icon} size={12} /> {dm.label}
+                          </span>
+                        </div>
                       </div>
-                      <p className="integ-card-note">{i.note}</p>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );

@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DemoButton } from "../../_components/DemoButton";
+import { NavIcon } from "../../../_components/NavIcon";
 import {
   findProvider,
   PAYOR_ENROLLMENTS,
@@ -52,6 +53,9 @@ export default async function ProviderPage({ params, searchParams }: PageProps) 
   const enrollments = PAYOR_ENROLLMENTS.filter(
     (e) => e.providerSlug === slug,
   );
+  const inNetworkCount = enrollments.filter(
+    (e) => e.stage === "in_network",
+  ).length;
 
   return (
     <div
@@ -79,10 +83,49 @@ export default async function ProviderPage({ params, searchParams }: PageProps) 
             className="prov-btn primary"
             demoMessage="Demo — would re-run primary-source verification across state boards, NPDB, OIG, SAM, and DEA. Typical run: 14 seconds."
           >
-            Run PSV ↻
+            Run PSV <NavIcon name="recred" size={15} />
           </DemoButton>
         </div>
       </header>
+
+      <div className="prov-stats">
+        <div className="prov-stat">
+          <span className="prov-stat-ic">
+            <NavIcon name="licenses" size={16} />
+          </span>
+          <span className="prov-stat-body">
+            <span className="prov-stat-val">{p.licenseStates.length}</span>
+            <span className="prov-stat-lbl">Active states</span>
+          </span>
+        </div>
+        <div className="prov-stat">
+          <span className="prov-stat-ic">
+            <NavIcon name="payors" size={16} />
+          </span>
+          <span className="prov-stat-body">
+            <span className="prov-stat-val">{inNetworkCount}</span>
+            <span className="prov-stat-lbl">In-network payors</span>
+          </span>
+        </div>
+        <div className="prov-stat">
+          <span className="prov-stat-ic">
+            <NavIcon name="approvals" size={16} />
+          </span>
+          <span className="prov-stat-body">
+            <span className="prov-stat-val">99.4%</span>
+            <span className="prov-stat-lbl">PSV confidence</span>
+          </span>
+        </div>
+        <div className="prov-stat">
+          <span className="prov-stat-ic">
+            <NavIcon name={isPreLicensed ? "supervision" : "providers"} size={16} />
+          </span>
+          <span className="prov-stat-body">
+            <span className="prov-stat-val">{p.statusLabel}</span>
+            <span className="prov-stat-lbl">Status</span>
+          </span>
+        </div>
+      </div>
 
       <nav className="prov-tabs">
         {TABS.map((t) => (

@@ -3,6 +3,7 @@
 // driver. Today the closest comparable is a Google Sheet that breaks.
 
 import Link from "next/link";
+import { NavIcon } from "../../_components/NavIcon";
 import { PROVIDERS } from "../../_lib/mockProviders";
 
 export const metadata = {
@@ -44,31 +45,59 @@ export default function SupervisionPage() {
       </section>
 
       <section className="kpi-row" style={{ marginBottom: 22 }}>
-        <div className="kpi">
-          <div className="kpi-lbl">Pre-licensed</div>
+        <div className="kpi kpi-hero">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="supervision" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">across the team</span>
+          </div>
           <div className="kpi-val">
             <em>{supervisees.length}</em>
           </div>
-          <div className="kpi-delta up">across the team</div>
+          <div className="kpi-lbl">Pre-licensed</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Cosig overdue</div>
-          <div className="kpi-val">{cosigOverdue}</div>
-          <div className={cosigOverdue > 0 ? "kpi-delta flag" : "kpi-delta up"}>
-            {cosigOverdue > 0 ? "⚐ supervisor reminder sent" : "all current"}
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="alert" size={17} />
+            </span>
+            <span className={cosigOverdue > 0 ? "kpi-trend t-flag" : "kpi-trend t-up"}>
+              {cosigOverdue > 0 ? (
+                <>
+                  <NavIcon name="alert" size={11} /> reminder sent
+                </>
+              ) : (
+                "all current"
+              )}
+            </span>
           </div>
+          <div className="kpi-val">{cosigOverdue}</div>
+          <div className="kpi-lbl">Cosig overdue</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Hours this week</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="zap" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">across the cohort</span>
+          </div>
           <div className="kpi-val">{totalHoursThisWeek}</div>
-          <div className="kpi-delta up">across the cohort</div>
+          <div className="kpi-lbl">Hours this week</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Projected licensure 2026</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="licenses" size={17} />
+            </span>
+            <span className="kpi-trend t-up">
+              <NavIcon name="trendUp" size={12} /> to independent
+            </span>
+          </div>
           <div className="kpi-val">
             <em>{projectedThisQuarter}</em>
           </div>
-          <div className="kpi-delta up">FTE moving to independent</div>
+          <div className="kpi-lbl">Projected licensure 2026</div>
         </div>
       </section>
 

@@ -140,6 +140,26 @@ const ICONS: Record<string, ReactElement> = {
     </>
   ),
   zap: <path d="M13 2 3 14h9l-1 8 10-12h-9Z" />,
+  flowIn: (
+    <>
+      <path d="M11 7 6 12l5 5" />
+      <path d="M6 12h13" />
+    </>
+  ),
+  flowOut: (
+    <>
+      <path d="m13 7 5 5-5 5" />
+      <path d="M5 12h13" />
+    </>
+  ),
+  flowSync: (
+    <>
+      <path d="M17 4l3 3-3 3" />
+      <path d="M4 7h16" />
+      <path d="M7 14l-3 3 3 3" />
+      <path d="M20 17H4" />
+    </>
+  ),
   alert: (
     <>
       <path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z" />
