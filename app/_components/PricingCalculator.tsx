@@ -30,9 +30,9 @@ export function PricingCalculator() {
   const [emailValue, setEmailValue] = useState("");
   const emailDialogRef = useRef<HTMLDivElement>(null);
 
-  // CredTek pricing constants
+  // CredTek pricing constants — starting rates (scale up with complexity/volume)
   const PER_PROVIDER_MONTH = 35;
-  const PER_ENROLLMENT = 300;
+  const PER_ENROLLMENT = 199;
   const TARGET_DELAY_DAYS = 45;
 
   // Hydrate from URL on mount (client-only — server render uses defaults

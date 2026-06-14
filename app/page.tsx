@@ -56,7 +56,7 @@ const FAQ_JSONLD = {
       name: "How much does CredTek cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "For individual providers: three tiers. Starter and Growth are $35/provider/month + $300/enrollment action (volume discounts at 200+ providers); Enterprise (500+ providers) is custom. Facility credentialing (hospitals, ASCs, clinics, labs) is a separate done-for-you solution at $200/facility/month plus a one-time setup scoped per facility. Month-to-month with a 30-day out clause for the first 90 days.",
+        text: "For individual providers, pricing starts at $35/provider/month plus from $199 per credentialing action, and scales up with the complexity and volume of each client (Starter and Growth tiers; Enterprise at 500+ providers is custom). Facility credentialing (hospitals, ASCs, clinics, labs) is a separate done-for-you solution starting at $200/facility/month plus a one-time setup scoped per facility. Month-to-month with a 30-day out clause for the first 90 days.",
       },
     },
   ],
@@ -360,7 +360,7 @@ const LANDING_BODY_PRE_CALC = `
     <p class="section-lead">No feature-gating. Every customer on CredTek gets every capability — because depth, not artificial tiering, is how we win this market.</p>
 
     <div class="stack-block">
-      <h3>What's <em>actually included</em> at $35/provider/month</h3>
+      <h3>What's <em>actually included</em> — from $35/provider/month</h3>
       <p class="stack-block-sub">Seven capability bundles. Every one of them turned on for every customer from day one — no &quot;contact sales for that module&quot; games. Continuous monitoring (OIG · SAM · NPDB · DEA), unlimited users, and HIPAA-compliant document storage are table stakes and built in.</p>
       <ul class="stack-list">
         <li><span class="check">✓</span><span class="item-text"><strong>Intake &amp; Profile Agent</strong> — SMS/email provider invite, document OCR + LLM extraction, golden profile with confidence scoring and coordinator approval gate</span><span class="item-val">VALUE: $300/mo</span></li>
@@ -377,7 +377,7 @@ const LANDING_BODY_PRE_CALC = `
       </div>
       <div class="stack-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px; margin-top: 4px;">
         <div class="lbl" style="color:white;font-weight:500;">Your price on CredTek:</div>
-        <div class="val" style="font-size: clamp(36px, 5vw, 56px);">$35 / provider / month</div>
+        <div class="val" style="font-size: clamp(36px, 5vw, 56px);">From $35 / provider / month</div>
       </div>
     </div>
   </div>
@@ -483,14 +483,15 @@ const LANDING_BODY_POST_CALC = `
   <div class="container">
     <span class="section-eyebrow">Pricing · No "contact us" games (until you need to)</span>
     <h2>Three tiers. <em>Two posted publicly.</em></h2>
-    <p class="section-lead">Most competitors hide pricing behind a "schedule a demo" form. We don't — Starter and Growth are public, so any COO can model the math on a napkin in 30 seconds. Enterprise is custom because at 500+ providers your needs are too specific for a posted number.</p>
+    <p class="section-lead">Most competitors hide pricing behind a "schedule a demo" form. We don't. Every number below is a <strong>starting point</strong> — your final pricing scales with your roster's complexity and volume, and we confirm it on a 20-minute call. No surprises. Enterprise (500+ providers) is custom.</p>
 
     <div class="price-grid-3">
       <div class="price-card">
         <div class="price-tag">Starter</div>
         <div class="price-desc">1–99 active providers · solo practices, small groups, single-state</div>
+        <div class="price-from">Starting at</div>
         <div class="price-amount"><em>$35</em></div>
-        <div class="price-unit">per provider · per month<br/>+ $300 per enrollment action</div>
+        <div class="price-unit">per provider · per month<br/>+ from $199 per credentialing action</div>
         <ul>
           <li>All 7 AI agents</li>
           <li>50-state board PSV · every specialty</li>
@@ -508,8 +509,9 @@ const LANDING_BODY_POST_CALC = `
         <div class="price-ribbon">Most popular</div>
         <div class="price-tag">Growth · most common</div>
         <div class="price-desc">100–499 active providers · multi-state groups, MSOs, PE rollups</div>
+        <div class="price-from">Starting at</div>
         <div class="price-amount"><em>$35</em></div>
-        <div class="price-unit">per provider · per month<br/>+ $300 per enrollment action · volume discounts at 200+</div>
+        <div class="price-unit">per provider · per month<br/>+ from $199 per credentialing action · volume discounts at scale</div>
         <ul>
           <li>Everything in Starter, plus:</li>
           <li>Specialty workflow library (BH supervision, locum, M&amp;A)</li>
@@ -559,8 +561,9 @@ const LANDING_BODY_POST_CALC = `
           </div>
         </div>
         <div style="text-align:right; min-width:210px;">
+          <div style="font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.07em;">Starting at</div>
           <div class="serif" style="font-size:42px; letter-spacing:-0.01em; line-height:1;"><em style="color:var(--gold);">$200</em></div>
-          <div style="font-size:13px; color:var(--muted); margin-top:6px;">per facility · per month<br/>+ one-time setup, scoped per facility</div>
+          <div style="font-size:13px; color:var(--muted); margin-top:6px;">per facility · per month<br/>+ one-time setup · scales with size &amp; volume</div>
           <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener" style="margin-top:16px; display:inline-flex;">Book a demo →</a>
         </div>
       </div>

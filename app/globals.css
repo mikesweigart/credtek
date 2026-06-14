@@ -919,6 +919,12 @@ em { font-style: normal; }
   margin-top: 4px;
 }
 .price-card .price-amount em { font-style: normal; color: var(--gold); }
+.price-card .price-from {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--muted); margin-bottom: 1px;
+}
+.price-card.featured .price-from { color: rgba(255,255,255,0.65); }
 .price-card .price-unit {
   font-size: 12.5px;
   color: var(--muted);

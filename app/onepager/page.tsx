@@ -131,14 +131,14 @@ export default function OnepagerPage() {
               </tr>
               <tr>
                 <td>
-                  <strong>$35</strong>/provider/mo
+                  From <strong>$35</strong>/provider/mo
                   <br />
-                  + $300/enrollment
+                  + from $199/action
                 </td>
                 <td>
-                  <strong>$35</strong>/provider/mo
+                  From <strong>$35</strong>/provider/mo
                   <br />
-                  + $300/enrollment · volume discounts at 200+
+                  + from $199/action · volume discounts at scale
                 </td>
                 <td>
                   <strong>Custom</strong>
