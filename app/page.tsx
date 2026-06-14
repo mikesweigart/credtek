@@ -56,7 +56,7 @@ const FAQ_JSONLD = {
       name: "How much does CredTek cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Three tiers. Starter and Growth are $35/provider/month + $300/enrollment action (volume discounts at 200+ providers). Enterprise (500+ providers) is custom. Month-to-month with a 30-day out clause for the first 90 days.",
+        text: "For individual providers: three tiers. Starter and Growth are $35/provider/month + $300/enrollment action (volume discounts at 200+ providers); Enterprise (500+ providers) is custom. Facility credentialing (hospitals, ASCs, clinics, labs) is a separate done-for-you solution at $200/facility/month plus a one-time setup scoped per facility. Month-to-month with a 30-day out clause for the first 90 days.",
       },
     },
   ],
@@ -539,6 +539,30 @@ const LANDING_BODY_POST_CALC = `
           <li>Dedicated onboarding sprint</li>
         </ul>
         <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo →</a>
+      </div>
+    </div>
+
+    <!-- Facility credentialing — a distinct done-for-you solution, priced per facility -->
+    <div style="margin-top: 28px; padding: 26px 28px; background: linear-gradient(120deg, var(--blue-soft), #f3f8ff); border: 1px solid rgba(4,103,222,0.22); border-radius: 16px;">
+      <div class="row" style="justify-content:space-between; flex-wrap:wrap; gap:24px; align-items:flex-start;">
+        <div style="flex:1; min-width:300px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold-deep); font-weight:600;">New · Facility credentialing</div>
+          <div class="serif" style="font-size:27px; letter-spacing:-0.01em; margin-top:8px;">Credentialing for facilities, not just providers.</div>
+          <p style="font-size:14px; color:var(--ink-soft); line-height:1.55; margin:10px 0 0; max-width:580px;">Hospitals, clinics, ASCs, labs, and group practices need their <em>own</em> credentialing — a different job than a single provider. We do it done-for-you: facility licensure, accreditation (Joint Commission · HFAP · DNV), CLIA, CMS-855A Medicare/Medicaid enrollment, Type-2 NPI, and payer facility contracting — then keep it current through every revalidation.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px;">
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> Facility license &amp; accreditation</span>
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> CMS-855A Medicare/Medicaid</span>
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> CLIA &amp; Type-2 NPI</span>
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> Payer facility contracting</span>
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> Revalidation &amp; expirables</span>
+            <span style="font-size:13px; color:var(--ink-soft);"><span class="check">✓</span> NCQA-aligned facility file</span>
+          </div>
+        </div>
+        <div style="text-align:right; min-width:210px;">
+          <div class="serif" style="font-size:42px; letter-spacing:-0.01em; line-height:1;"><em style="color:var(--gold);">$200</em></div>
+          <div style="font-size:13px; color:var(--muted); margin-top:6px;">per facility · per month<br/>+ one-time setup, scoped per facility</div>
+          <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener" style="margin-top:16px; display:inline-flex;">Book a demo →</a>
+        </div>
       </div>
     </div>
 
