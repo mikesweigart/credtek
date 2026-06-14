@@ -2,6 +2,7 @@
 // landing-page mockup so partners see visual continuity from marketing
 // to product.
 
+import { NavIcon } from "../../_components/NavIcon";
 import { LICENSE_TOTALS, STATES } from "../../_lib/mockProviders";
 
 export const metadata = {
@@ -20,27 +21,49 @@ export default function LicensesPage() {
       </section>
 
       <section className="kpi-row" style={{ marginBottom: 28 }}>
-        <div className="kpi">
-          <div className="kpi-lbl">Active licenses</div>
+        <div className="kpi kpi-hero">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="licenses" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">across the team</span>
+          </div>
           <div className="kpi-val">
             <em>{LICENSE_TOTALS.active}</em>
           </div>
-          <div className="kpi-delta up">across the team</div>
+          <div className="kpi-lbl">Active licenses</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Compact eligible</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="spaces" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">PSYPACT · CC · SWC</span>
+          </div>
           <div className="kpi-val">{LICENSE_TOTALS.compactEligible}</div>
-          <div className="kpi-delta up">PSYPACT · CC · SWC</div>
+          <div className="kpi-lbl">Compact eligible</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">In progress</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="recred" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">~28d to issue</span>
+          </div>
           <div className="kpi-val">{LICENSE_TOTALS.inProgress}</div>
-          <div className="kpi-delta up">avg 28 days to issue</div>
+          <div className="kpi-lbl">In progress</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Expiring &lt; 30d</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="alert" size={17} />
+            </span>
+            <span className="kpi-trend t-flag">
+              <NavIcon name="alert" size={11} /> auto-renewals drafted
+            </span>
+          </div>
           <div className="kpi-val">{LICENSE_TOTALS.expiringSoon}</div>
-          <div className="kpi-delta flag">⚐ auto-renewals drafted</div>
+          <div className="kpi-lbl">Expiring &lt; 30d</div>
         </div>
       </section>
 

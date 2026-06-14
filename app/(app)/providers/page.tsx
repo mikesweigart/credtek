@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { DemoButton } from "../_components/DemoButton";
+import { NavIcon } from "../../_components/NavIcon";
 import {
   PROVIDERS,
   type ProviderStatus,
@@ -18,6 +19,15 @@ const STATUS_PILL_CLASS: Record<ProviderStatus, string> = {
   enrolling: "pstat s-pending",
   supervision: "pstat s-pending",
   flag: "pstat s-flag",
+};
+
+// How far through the pipeline each status sits — drives the per-row progress
+// bar so the roster reads momentum at a glance, matching the dashboard.
+const STAGE_PCT: Record<ProviderStatus, number> = {
+  active: 100,
+  enrolling: 65,
+  supervision: 45,
+  flag: 30,
 };
 
 const FILTERS: { id: string; label: string; predicate: (s: ProviderStatus) => boolean }[] =
@@ -46,6 +56,13 @@ export default async function ProvidersPage({ searchParams }: PageProps) {
   const activeFilter = FILTERS.find((f) => f.id === status) ?? FILTERS[0];
   const visible = PROVIDERS.filter((p) => activeFilter.predicate(p.status));
 
+  const counts = {
+    total: PROVIDERS.length,
+    active: PROVIDERS.filter((p) => p.status === "active").length,
+    enrolling: PROVIDERS.filter((p) => p.status === "enrolling").length,
+    flagged: PROVIDERS.filter((p) => p.status === "flag").length,
+  };
+
   return (
     <>
       <section className="shell-greet">
@@ -59,6 +76,59 @@ export default async function ProvidersPage({ searchParams }: PageProps) {
           Onboard providers
           <span className="arrow">→</span>
         </Link>
+      </section>
+
+      <section className="kpi-row" style={{ marginBottom: 18 }}>
+        <div className="kpi kpi-hero">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="providers" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">all statuses</span>
+          </div>
+          <div className="kpi-val">
+            <em>{counts.total}</em>
+          </div>
+          <div className="kpi-lbl">Total roster</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="approvals" size={17} />
+            </span>
+            <span className="kpi-trend t-up">in-network</span>
+          </div>
+          <div className="kpi-val">{counts.active}</div>
+          <div className="kpi-lbl">Active &amp; billing</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="recred" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">in progress</span>
+          </div>
+          <div className="kpi-val">{counts.enrolling}</div>
+          <div className="kpi-lbl">In credentialing</div>
+        </div>
+        <div className="kpi">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="alert" size={17} />
+            </span>
+            <span className={counts.flagged > 0 ? "kpi-trend t-flag" : "kpi-trend t-up"}>
+              {counts.flagged > 0 ? (
+                <>
+                  <NavIcon name="alert" size={11} /> needs review
+                </>
+              ) : (
+                "all clear"
+              )}
+            </span>
+          </div>
+          <div className="kpi-val">{counts.flagged}</div>
+          <div className="kpi-lbl">Flagged</div>
+        </div>
       </section>
 
       <div className="filter-row">
@@ -113,11 +183,17 @@ export default async function ProvidersPage({ searchParams }: PageProps) {
               className="dash-row"
             >
               <div className="dash-row-av">{p.initials}</div>
-              <div>
+              <div className="dash-row-main">
                 <div className="dash-row-name">
                   {p.name}, {p.credential}
                 </div>
                 <div className="dash-row-meta">{p.meta}</div>
+                <div className="dash-row-prog" aria-hidden="true">
+                  <span
+                    className={`dash-row-prog-bar s-${p.status}`}
+                    style={{ width: `${STAGE_PCT[p.status] ?? 50}%` }}
+                  />
+                </div>
               </div>
               <div className="dash-row-states">
                 {p.licenseStates.join("·")}

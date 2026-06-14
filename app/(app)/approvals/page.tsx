@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { DemoButton } from "../_components/DemoButton";
+import { NavIcon } from "../../_components/NavIcon";
 import { PAYOR_ENROLLMENTS } from "../../_lib/mockProviders";
 
 export const metadata = {
@@ -113,27 +114,49 @@ export default function ApprovalsPage() {
       </section>
 
       <section className="kpi-row" style={{ marginBottom: 22 }}>
-        <div className="kpi">
-          <div className="kpi-lbl">Waiting on you</div>
+        <div className="kpi kpi-hero">
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="approvals" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">last 4 hrs</span>
+          </div>
           <div className="kpi-val">
             <em>{ALL_APPROVALS.length}</em>
           </div>
-          <div className="kpi-delta up">all from the last 4 hours</div>
+          <div className="kpi-lbl">Waiting on you</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Avg time to approve</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="zap" size={17} />
+            </span>
+            <span className="kpi-trend t-neutral">open → send</span>
+          </div>
           <div className="kpi-val">42s</div>
-          <div className="kpi-delta up">from open to send</div>
+          <div className="kpi-lbl">Avg time to approve</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Approved this week</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="audit" size={17} />
+            </span>
+            <span className="kpi-trend t-up">
+              <NavIcon name="trendUp" size={12} /> 24 vs last week
+            </span>
+          </div>
           <div className="kpi-val">87</div>
-          <div className="kpi-delta up">↑ 24 vs. last week</div>
+          <div className="kpi-lbl">Approved this week</div>
         </div>
         <div className="kpi">
-          <div className="kpi-lbl">Edits before send</div>
+          <div className="kpi-top">
+            <span className="kpi-ic">
+              <NavIcon name="documents" size={17} />
+            </span>
+            <span className="kpi-trend t-up">97% as-is</span>
+          </div>
           <div className="kpi-val">3%</div>
-          <div className="kpi-delta up">agent draft accuracy</div>
+          <div className="kpi-lbl">Edits before send</div>
         </div>
       </section>
 
@@ -174,7 +197,9 @@ export default function ApprovalsPage() {
             </div>
 
             <div className="approval-note">
-              <span className="approval-note-icon">✦</span>
+              <span className="approval-note-icon">
+                <NavIcon name="zap" size={13} />
+              </span>
               <span>
                 <strong>Agent note:</strong> {a.agentNote}
               </span>

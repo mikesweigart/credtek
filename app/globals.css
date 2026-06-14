@@ -1378,6 +1378,7 @@ footer {
 .kpi-trend.t-up { color: var(--sage); background: rgba(79,139,106,0.12); }
 .kpi-trend.t-down { color: var(--danger); background: rgba(184,85,63,0.12); }
 .kpi-trend.t-flag { color: #b5762a; background: rgba(193,140,55,0.15); }
+.kpi-trend.t-neutral { color: var(--muted); background: var(--paper); }
 .kpi-lbl {
   font-size: 11px;
   color: var(--muted);
@@ -2843,7 +2844,12 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   margin-bottom: 14px;
 }
 .approval-note strong { color: var(--ink); font-weight: 600; }
-.approval-note-icon { color: var(--gold); font-size: 13px; line-height: 1.7; }
+.approval-note-icon {
+  color: var(--gold);
+  align-self: start;
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
 .approval-actions {
   display: flex;
   gap: 10px;
