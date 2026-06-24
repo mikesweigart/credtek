@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const ITEMS: { label: string; href: string; icon: string; section?: string }[] = [
   { label: "Dashboard", href: "/app", icon: "▣" },
   { label: "Providers", href: "/app/providers", icon: "◯" },
+  { label: "Facilities", href: "/app/facilities", icon: "▢" },
   { label: "Coverage", href: "/app/coverage", icon: "▦" },
   { label: "Expirables", href: "/app/expirables", icon: "⏳" },
   { label: "Follow-ups", href: "/app/followups", icon: "✉" },
