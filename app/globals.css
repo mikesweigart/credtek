@@ -13192,6 +13192,26 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .portal-muted { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
 
 /* KPIs */
+/* Dashboard entity strip (facilities access) */
+.portal-entity-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.portal-entity-strip:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -16px rgba(4,103,222,0.4);
+}
+.portal-entity-strip-main { display: flex; align-items: center; gap: 13px; }
+.portal-entity-strip-ic {
+  flex: 0 0 auto; width: 36px; height: 36px; border-radius: 9px;
+  background: var(--blue-soft); color: var(--gold-deep);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.portal-entity-strip-lbl { display: block; font-size: 14px; font-weight: 600; color: var(--ink); }
+.portal-entity-strip-sub { display: block; font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+
 .portal-kpis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

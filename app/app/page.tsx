@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import { listProviders } from "../_lib/data/providers";
+import { countFacilities } from "../_lib/data/facilities";
 import { getSessionContext, canEdit } from "../_lib/data/workspace";
 import { ProviderProgress } from "./_components/ProviderProgress";
 import {
@@ -22,7 +23,11 @@ export default async function PortalDashboard(props: {
   searchParams: Promise<{ seeded?: string; error?: string }>;
 }) {
   const { seeded, error } = await props.searchParams;
-  const [providers, ctx] = await Promise.all([listProviders(), getSessionContext()]);
+  const [providers, ctx, facilityCount] = await Promise.all([
+    listProviders(),
+    getSessionContext(),
+    countFacilities(),
+  ]);
   const editor = canEdit(ctx.role);
 
   const enriched = providers.map((p) => {
@@ -80,6 +85,23 @@ export default async function PortalDashboard(props: {
             : <>A live view of every provider in your file — what&apos;s automated, what&apos;s queued, and how close each one is to billable.</>}
         </p>
       </div>
+
+      <Link href="/app/facilities" className="portal-card portal-entity-strip">
+        <span className="portal-entity-strip-main">
+          <span className="portal-entity-strip-ic">▢</span>
+          <span>
+            <span className="portal-entity-strip-lbl">Facilities</span>
+            <span className="portal-entity-strip-sub">
+              {facilityCount === 0
+                ? "Credential a hospital, ASC, clinic, or lab"
+                : `${facilityCount} facilit${facilityCount === 1 ? "y" : "ies"} in your workspace`}
+            </span>
+          </span>
+        </span>
+        <span className="portal-link">
+          {facilityCount === 0 ? "Add a facility →" : "Manage facilities →"}
+        </span>
+      </Link>
 
       {total === 0 ? (
         <div className="portal-empty portal-empty-rich">
