@@ -110,3 +110,51 @@ export async function getFacilityById(id: string): Promise<DbFacility | null> {
     .maybeSingle();
   return (data as unknown as DbFacility) ?? null;
 }
+
+/* -------------------- Facility credentials (license / accreditation / CLIA / CMS) -------------------- */
+
+export type FacilityCredentialKind =
+  | "facility_license"
+  | "accreditation"
+  | "clia"
+  | "cms_certification"
+  | "coi_malpractice"
+  | "fire_safety"
+  | "other";
+
+export type ExpirableStatus = "active" | "expiring_soon" | "expired" | "pending" | "awaiting";
+
+export type DbFacilityCredential = {
+  id: string;
+  kind: FacilityCredentialKind;
+  identifier: string | null;
+  issuer: string | null;
+  status: ExpirableStatus;
+  issued_on: string | null;
+  expires_on: string | null;
+  created_at: string;
+};
+
+export const FACILITY_CREDENTIAL_KIND_LABEL: Record<FacilityCredentialKind, string> = {
+  facility_license: "Facility / operating license",
+  accreditation: "Accreditation (JC · HFAP · DNV)",
+  clia: "CLIA certificate",
+  cms_certification: "CMS-855A / Medicare certification",
+  coi_malpractice: "Certificate of insurance",
+  fire_safety: "Fire / life-safety",
+  other: "Other",
+};
+
+export async function listFacilityCredentials(
+  facilityId: string,
+): Promise<DbFacilityCredential[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from("facility_credentials")
+    .select("id, kind, identifier, issuer, status, issued_on, expires_on, created_at")
+    .eq("facility_id", facilityId)
+    .order("created_at", { ascending: false });
+  if (error || !data) return [];
+  return data as unknown as DbFacilityCredential[];
+}
