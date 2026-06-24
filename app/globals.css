@@ -13493,6 +13493,11 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .portal-pill-expiring_soon { background: #FDE5D6; color: #B0521D; }
 .portal-pill-expired { background: #FCE5DE; color: #B85533; }
 .portal-pill-awaiting { background: var(--cream); color: var(--muted); }
+/* Background-check / sanctions screening results */
+.portal-screen-clear { background: #DEF2E5; color: #2F6E48; }
+.portal-screen-flagged { background: #FCE5DE; color: #B85533; }
+.portal-screen-pending { background: var(--blue-soft); color: var(--blue-deep); }
+.portal-screen-not_run { background: var(--cream); color: var(--muted); }
 .portal-enr-active { background: #DEF2E5; color: #2F6E48; }
 .portal-enr-submitted, .portal-enr-awaiting_info { background: #E3EDF7; color: #2F6FA6; }
 .portal-enr-drafted, .portal-enr-not_started { background: var(--cream); color: var(--muted); }

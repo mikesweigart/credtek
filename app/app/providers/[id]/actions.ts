@@ -92,13 +92,30 @@ export async function addEnrollment(formData: FormData) {
   revalidatePath(`/app/providers/${providerId}`);
 }
 
+export async function addScreening(formData: FormData) {
+  const ctx = await editorCtx();
+  if (!ctx) return;
+  const providerId = str(formData, "providerId");
+  const s = await createSupabaseServerClient();
+  if (!s || !ctx.tenantId || !providerId) return;
+  await s.from("screenings").insert({
+    tenant_id: ctx.tenantId,
+    provider_id: providerId,
+    source: str(formData, "source") || "other",
+    result: str(formData, "result") || "not_run",
+    checked_on: str(formData, "checked_on") || null,
+    reference: str(formData, "reference") || null,
+  });
+  revalidatePath(`/app/providers/${providerId}`);
+}
+
 export async function deleteSubRecord(formData: FormData) {
   const ctx = await editorCtx();
   if (!ctx) return;
   const providerId = str(formData, "providerId");
   const table = str(formData, "table");
   const id = str(formData, "id");
-  const allowed = ["provider_licenses", "provider_credentials", "documents", "enrollments"];
+  const allowed = ["provider_licenses", "provider_credentials", "documents", "enrollments", "screenings"];
   const s = await createSupabaseServerClient();
   if (!s || !providerId || !id || !allowed.includes(table)) return;
   await s.from(table).delete().eq("id", id);

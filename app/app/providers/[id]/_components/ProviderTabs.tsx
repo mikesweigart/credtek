@@ -7,23 +7,25 @@
 import { useState, type ReactNode } from "react";
 
 type Props = {
-  counts: { licenses: number; credentials: number; documents: number; enrollment: number };
+  counts: { licenses: number; credentials: number; screening: number; documents: number; enrollment: number };
   summary: ReactNode;
   licenses: ReactNode;
   credentials: ReactNode;
+  screening: ReactNode;
   documents: ReactNode;
   enrollment: ReactNode;
 };
 
-type TabId = "summary" | "licenses" | "credentials" | "documents" | "enrollment";
+type TabId = "summary" | "licenses" | "credentials" | "screening" | "documents" | "enrollment";
 
-export function ProviderTabs({ counts, summary, licenses, credentials, documents, enrollment }: Props) {
+export function ProviderTabs({ counts, summary, licenses, credentials, screening, documents, enrollment }: Props) {
   const [tab, setTab] = useState<TabId>("summary");
 
   const TABS: { id: TabId; label: string; count?: number }[] = [
     { id: "summary", label: "Summary" },
     { id: "licenses", label: "Licenses", count: counts.licenses },
     { id: "credentials", label: "Credentials", count: counts.credentials },
+    { id: "screening", label: "Screening", count: counts.screening },
     { id: "documents", label: "Documents", count: counts.documents },
     { id: "enrollment", label: "Payer Enrollment", count: counts.enrollment },
   ];
@@ -49,6 +51,7 @@ export function ProviderTabs({ counts, summary, licenses, credentials, documents
       {tab === "summary" && summary}
       {tab === "licenses" && licenses}
       {tab === "credentials" && credentials}
+      {tab === "screening" && screening}
       {tab === "documents" && documents}
       {tab === "enrollment" && enrollment}
     </>

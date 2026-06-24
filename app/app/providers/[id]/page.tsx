@@ -13,6 +13,10 @@ import {
   CREDENTIAL_KIND_LABEL, payerName, type CredentialKind,
 } from "../../../_lib/data/credentialing";
 import {
+  listScreenings, SCREENING_SOURCE_LABEL, SCREENING_RESULT_LABEL,
+  type ScreeningSource, type ScreeningResult,
+} from "../../../_lib/data/screenings";
+import {
   STAGE_META,
   daysInStage,
   projectedDaysToBillable,
@@ -21,7 +25,7 @@ import {
 } from "../../../_lib/data/credentialing-model";
 import type { Stage } from "../../../_lib/data/credentialing";
 import {
-  addLicense, addCredential, addDocument, addEnrollment,
+  addLicense, addCredential, addScreening, addDocument, addEnrollment,
   deleteSubRecord, advanceStage, approveProvider, deleteProvider,
 } from "./actions";
 import { ProviderTabs } from "./_components/ProviderTabs";
@@ -55,8 +59,8 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
   if (!p) return notFound();
   const editor = canEdit(ctx.role);
 
-  const [licenses, credentials, documents, enrollments, payers] = await Promise.all([
-    listLicenses(id), listCredentials(id), listDocuments(id), listEnrollments(id), listPayers(),
+  const [licenses, credentials, screenings, documents, enrollments, payers] = await Promise.all([
+    listLicenses(id), listCredentials(id), listScreenings(id), listDocuments(id), listEnrollments(id), listPayers(),
   ]);
 
   const stage: Stage = (p.credentialing_stage as Stage) ?? "intake";
@@ -138,6 +142,51 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
               <span className={`portal-pill portal-pill-${c.status}`}>{c.status.replace("_", " ")}</span>
               <span className="portal-row-meta">{c.expires_on ? `exp ${c.expires_on}` : "—"}</span>
               {editor && <DeleteBtn table="provider_credentials" id={c.id} providerId={p.id} />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+
+  // ---------- Screening (background checks / sanctions) ----------
+  const screeningTab = (
+    <div className="portal-card">
+      {editor && (
+        <form action={addScreening} className="portal-inline-form">
+          <input type="hidden" name="providerId" value={p.id} />
+          <select name="source" className="portal-input" defaultValue="oig_leie">
+            {(Object.keys(SCREENING_SOURCE_LABEL) as ScreeningSource[]).map((k) => (
+              <option key={k} value={k}>{SCREENING_SOURCE_LABEL[k]}</option>
+            ))}
+          </select>
+          <select name="result" className="portal-input portal-input-sm" defaultValue="clear">
+            {(Object.keys(SCREENING_RESULT_LABEL) as ScreeningResult[]).map((r) => (
+              <option key={r} value={r}>{SCREENING_RESULT_LABEL[r]}</option>
+            ))}
+          </select>
+          <input name="checked_on" type="date" className="portal-input portal-input-sm" aria-label="Checked on" />
+          <input name="reference" placeholder="Reference #" className="portal-input portal-input-sm" />
+          <button type="submit" className="acct-btn-primary">Log screen</button>
+        </form>
+      )}
+      {screenings.length === 0 ? (
+        <p className="portal-muted">
+          No background checks logged yet. Standard set: OIG LEIE · SAM.gov · NPDB · State Medicaid · Criminal background.
+        </p>
+      ) : (
+        <ul className="portal-rows">
+          {screenings.map((sc) => (
+            <li key={sc.id} className="portal-row">
+              <span className="portal-row-main">
+                {SCREENING_SOURCE_LABEL[sc.source] ?? sc.source}
+                {sc.reference ? ` · ${sc.reference}` : ""}
+              </span>
+              <span className={`portal-pill portal-screen-${sc.result}`}>
+                {SCREENING_RESULT_LABEL[sc.result] ?? sc.result}
+              </span>
+              <span className="portal-row-meta">{sc.checked_on ? `checked ${sc.checked_on}` : "—"}</span>
+              {editor && <DeleteBtn table="screenings" id={sc.id} providerId={p.id} />}
             </li>
           ))}
         </ul>
@@ -298,10 +347,11 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
       />
 
       <ProviderTabs
-        counts={{ licenses: licenses.length, credentials: credentials.length, documents: documents.length, enrollment: enrollments.length }}
+        counts={{ licenses: licenses.length, credentials: credentials.length, screening: screenings.length, documents: documents.length, enrollment: enrollments.length }}
         summary={summary}
         licenses={licensesTab}
         credentials={credentialsTab}
+        screening={screeningTab}
         documents={documentsTab}
         enrollment={enrollmentTab}
       />
