@@ -12,6 +12,7 @@ const ITEMS: { label: string; href: string; icon: string; section?: string }[] =
   { label: "Follow-ups", href: "/app/followups", icon: "✉" },
   { label: "Templates", href: "/app/templates", icon: "✎", section: "Platform" },
   { label: "Integrations", href: "/app/integrations", icon: "⇄", section: "Platform" },
+  { label: "Team", href: "/app/team", icon: "⚇", section: "Workspace admin" },
 ];
 
 export function PortalNav() {

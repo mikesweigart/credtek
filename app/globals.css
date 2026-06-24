@@ -13212,6 +13212,10 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .portal-entity-strip-lbl { display: block; font-size: 14px; font-weight: 600; color: var(--ink); }
 .portal-entity-strip-sub { display: block; font-size: 12.5px; color: var(--muted); margin-top: 1px; }
 
+/* Team — inline role editor */
+.portal-role-form { display: inline-flex; align-items: center; gap: 7px; }
+.portal-role-form .portal-input-sm { min-width: 130px; }
+
 .portal-kpis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
