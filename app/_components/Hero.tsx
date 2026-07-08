@@ -47,7 +47,7 @@ export function Hero() {
 
           {/* Eyebrow — qualifies the audience above the video */}
           <div className="hero-eyebrow hero-eyebrow-centered">
-            → For credentialing teams at US medical groups, MSOs &amp; health systems
+            → For credentialing leaders at US medical groups &amp; health systems
           </div>
 
           {/* The video carries the message */}
@@ -56,7 +56,7 @@ export function Hero() {
           {/* Below the video — a confident, no-noise action path */}
           <div className="hero-below">
             <p className="hero-below-line">
-              From signed contract to <em>providers billing</em> — 40–60% faster.
+              Our trained team plugs into your credentialing in <em>48 hours</em> — and gets your providers billing <em>40–60% faster</em>.
             </p>
 
             <div className="hero-cta hero-cta-centered">
@@ -92,9 +92,9 @@ export function Hero() {
             </div>
 
             <div className="hero-trust hero-trust-centered">
-              <span className="dot">●</span> <strong>40+ yrs</strong> combined credentialing experience &nbsp;·&nbsp;{" "}
-              <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one &nbsp;·&nbsp;{" "}
-              <span className="dot">●</span> <strong>NCQA-aligned</strong>
+              <span className="dot">●</span> <strong>Decades</strong> of credentialing experience &nbsp;·&nbsp;{" "}
+              <span className="dot">●</span> <strong>Working your roster in 48 hours</strong> &nbsp;·&nbsp;{" "}
+              <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one
             </div>
           </div>
         </div>

@@ -9,6 +9,12 @@
 // chat for this audience. The matcher is a transparent keyword router with
 // a graceful, always-helpful fallback.
 //
+// MESSAGING (StoryBrand): the buyer is the hero; CredTek is the guide with
+// decades of real credentialing experience. We describe what is TRUE — a
+// trained team that plugs in within 48 hours and does the work on a
+// platform the client watches — NOT autonomous AI agents. Keep it honest;
+// this brain runs unattended in front of buyers who will diligence us.
+//
 // AI-UPGRADE PATH (when ready):
 // Point ChatWidget's respond() at a future POST /api/chat (RAG over this
 // same KB). On any error/timeout, fall back to matchTopic() below — so the
@@ -45,11 +51,11 @@ export type Topic = {
 
 // Chips shown in the empty/welcome state of the panel.
 export const STARTER_CHIPS: { label: string; topicId: string }[] = [
-  { label: "How fast is it?", topicId: "speed" },
+  { label: "How fast can you start?", topicId: "speed" },
   { label: "Pricing", topicId: "pricing" },
   { label: "Onboard my providers", topicId: "onboarding" },
   { label: "Security & compliance", topicId: "security" },
-  { label: "What do the agents do?", topicId: "agents" },
+  { label: "How it works", topicId: "agents" },
   { label: "See a demo", topicId: "demo" },
 ];
 
@@ -76,20 +82,20 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "**CredTek is the AI-agent-native medical credentialing platform** — built to get your providers credentialed and **billing 40–60% faster**.",
+        text: "**CredTek is your credentialing team — plugged in.** We get your providers credentialed and **billing 40–60% faster** by putting a trained credentialing team, backed by our platform, to work on your roster.",
       },
       {
         t: "p",
-        text: "Instead of coordinators living in payor portals and spreadsheets, CredTek's agents do the work end-to-end — primary-source verification, CAQH, and payor enrollment — and only stop at a human approval gate before anything is submitted.",
+        text: "Instead of your coordinators living in payor portals and spreadsheets, **our team does the work** — primary-source verification, CAQH, licensing, and payer enrollment — on a platform you watch in real time. Nothing is submitted without your coordinator's approval.",
       },
       {
         t: "p",
-        text: "It's built by operators with **40+ years of enterprise credentialing experience** across 700+ facilities. Where would you like to start?",
+        text: "We've run credentialing inside the largest US health systems — **decades of it, across 700+ facilities** — and we can be working your roster within **48 hours** of our first call. Where would you like to start?",
       },
       {
         t: "actions",
         items: [
-          { kind: "topic", label: "How fast?", topicId: "speed" },
+          { kind: "topic", label: "How fast can you start?", topicId: "speed" },
           { kind: "topic", label: "How it works", topicId: "agents" },
           { kind: "tour", label: "See the demo →" },
         ],
@@ -116,18 +122,22 @@ export const KNOWLEDGE: Topic[] = [
       "go live",
       "live in",
       "when can",
+      "start",
+      "get started fast",
+      "48 hours",
+      "how soon",
     ],
     answer: [
       {
         t: "p",
-        text: "**40–60% faster to billable.** The industry average is **90–120 days** from hire to first in-network payor. CredTek compresses that dramatically by running the work in parallel with agents instead of one coordinator at a time.",
+        text: "**Two kinds of fast.** We plug our team into your operation within **48 hours of our first conversation** — and we get providers **billing 40–60% faster** than the 90–120-day industry average.",
       },
       {
         t: "ul",
         items: [
-          "**Live in 14 days** — full onboarding, including migrating your existing data.",
-          "Every idle, credentialed-but-not-billing provider costs roughly **$2,000/day** in lost revenue. Speed is the whole point.",
-          "Agents work nights and weekends; nothing waits in an inbox.",
+          "**Working your roster in 48 hours** — no 9-month implementation, no rollout project. A trained team just starts.",
+          "**40–60% faster to billable** — because our team runs the steps in parallel, not one coordinator at a time.",
+          "Every idle, credentialed-but-not-billing provider costs roughly **$2,000/day** in revenue you can't bill yet. Speed is the whole point.",
         ],
       },
       {
@@ -165,20 +175,20 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "Pricing is simple and transparent — **$35 per provider / month + $300 per enrollment action**. No per-feature gating; every agent is included on day one.",
+        text: "Pricing is simple and transparent — **from $35 per provider / month + from $199 per credentialing action.** No per-feature gating; every capability is included, and your final number scales with your roster's complexity and volume.",
       },
       {
         t: "ul",
         items: [
           "**Starter** — 1–99 providers.",
-          "**Growth** — 100–499 providers (**10% off enrollment actions at 200+**).",
-          "**Enterprise** — 500+ providers, custom pricing with SOC 2 + EHR integrations.",
+          "**Growth** — 100–499 providers, with volume discounts at scale.",
+          "**Enterprise** — 500+ providers: custom pricing, EHR integrations, custom SLAs.",
           "**Month-to-month**, with a **30-day out clause in the first 90 days** — no long lock-in.",
         ],
       },
       {
         t: "p",
-        text: "For context: a 200-provider group on Growth runs **~$96K/year** — against $2–6M/year typically lost to slow credentialing.",
+        text: "For context: a 200-provider group on Growth runs **~$96K/year** — against the $2–6M/year most groups tie up in slow credentialing.",
       },
       {
         t: "actions",
@@ -202,36 +212,36 @@ export const KNOWLEDGE: Topic[] = [
       "automation",
       "automate",
       "automatic",
-      "bots",
-      "robots",
       "what can it do",
-      "what does the ai do",
-      "ai do",
+      "what do you do for me",
+      "done for you",
+      "plug and play",
+      "team",
     ],
     answer: [
       {
         t: "p",
-        text: "CredTek ships **7 agent bundles** — all included from day one, no feature-gating:",
+        text: "CredTek is a **trained credentialing team plus a platform that runs it** — plugged into your group within 48 hours. Here's what we take off your plate, all included from day one:",
       },
       {
         t: "ul",
         items: [
-          "**Intake & Profile Agent** — builds a golden provider profile with confidence scoring.",
-          "**PSV Agent** — 50-state primary-source verification for every specialty (+ compacts).",
-          "**Specialty Workflow Library** — BH supervision, locum tenens, hospital privileging, M&A NPI.",
-          "**Payor Agents** — fill enrollment forms end-to-end across the major payors.",
-          "**CAQH Agent** — re-attests every 120 days + a 180-day expiration forecast.",
-          "**Audit Agent** — NCQA-aligned binder + SHA-256 tamper-evident log.",
-          "**White-glove onboarding + a dedicated CSM.**",
+          "**Intake & profile** — we build a clean golden profile for every provider, with confidence scoring.",
+          "**50-state primary-source verification** — every specialty, plus the licensure compacts.",
+          "**Specialty workflows** — BH supervision, locum tenens, hospital privileging, M&A NPI changes.",
+          "**Payer enrollment** — we prepare and manage enrollment across the major payers, end to end.",
+          "**CAQH + expirations** — re-attestation every 120 days and a 180-day expiration forecast, so nothing lapses.",
+          "**NCQA-aligned audit binder + tamper-evident log** of every action.",
+          "**A dedicated team** — with your coordinator approving before anything is submitted.",
         ],
       },
       {
         t: "p",
-        text: "The agents are Playwright-driven (they actually drive the payor portals), and **nothing is submitted without a coordinator's approval** — so no AI-generated data ever reaches a payor unchecked.",
+        text: "You get a **live platform to watch every provider move to billable** — and **nothing reaches a payer without your coordinator's sign-off.**",
       },
       {
         t: "actions",
-        items: [{ kind: "tour", label: "Watch the agents work →" }],
+        items: [{ kind: "tour", label: "See the platform →" }],
       },
     ],
     followups: ["psv", "payers", "security"],
@@ -256,16 +266,16 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "**Everything is included on day one** — we don't gate features by tier or nickel-and-dime add-ons.",
+        text: "**Everything is included from day one** — we don't gate features by tier or nickel-and-dime add-ons.",
       },
       {
         t: "p",
-        text: "All 7 agent bundles, 50-state PSV, CAQH automation, the NCQA audit binder, and white-glove onboarding with a dedicated CSM come standard. Tiers differ only by provider count and pricing; Enterprise adds SOC 2 and EHR integrations.",
+        text: "Every customer gets the full team and platform: 50-state PSV, CAQH management, payer enrollment, the specialty workflow library, the NCQA audit binder, and a dedicated onboarding team. Tiers differ only by provider count; Enterprise adds EHR integrations and custom SLAs.",
       },
       {
         t: "actions",
         items: [
-          { kind: "topic", label: "See the agents", topicId: "agents" },
+          { kind: "topic", label: "How it works", topicId: "agents" },
           { kind: "topic", label: "Pricing", topicId: "pricing" },
         ],
       },
@@ -298,11 +308,12 @@ export const KNOWLEDGE: Topic[] = [
       "evernorth",
       "medicaid",
       "which payors",
+      "enrollment",
     ],
     answer: [
       {
         t: "p",
-        text: "CredTek's payor agents handle enrollment across the major commercial and government payors, including:",
+        text: "We prepare and manage enrollment across the major commercial and government payors, including:",
       },
       {
         t: "ul",
@@ -314,11 +325,11 @@ export const KNOWLEDGE: Topic[] = [
       },
       {
         t: "p",
-        text: "The agents fill each payor's enrollment forms end-to-end and route them to your coordinator for approval before submission.",
+        text: "Our team completes each payer's enrollment, tracks it to active on the platform, and **routes it to your coordinator for approval before submission.**",
       },
       {
         t: "actions",
-        items: [{ kind: "topic", label: "How the agents work", topicId: "agents" }],
+        items: [{ kind: "topic", label: "How it works", topicId: "agents" }],
       },
     ],
     followups: ["states", "psv"],
@@ -346,7 +357,7 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "**All 50 states**, every specialty. CredTek's PSV runs state-board verification nationwide and understands the licensure compacts:",
+        text: "**All 50 states**, every specialty. We run state-board verification nationwide and track the licensure compacts:",
       },
       {
         t: "ul",
@@ -384,11 +395,13 @@ export const KNOWLEDGE: Topic[] = [
       "exclusion",
       "monitoring",
       "background",
+      "background check",
+      "screening",
     ],
     answer: [
       {
         t: "p",
-        text: "**Primary-source verification across every required source**, with continuous monitoring — not a one-time check:",
+        text: "**Primary-source verification across every required source** — verified and re-checked on a schedule, so a clean provider stays clean:",
       },
       {
         t: "ul",
@@ -396,13 +409,13 @@ export const KNOWLEDGE: Topic[] = [
           "**NPPES** (NPI registry)",
           "**OIG LEIE** + **SAM.gov** (exclusions / debarment)",
           "**NPDB** (practitioner data bank)",
-          "**DEA** registration — continuously monitored",
+          "**DEA** registration",
           "**50-state license-board PSV** for every specialty",
         ],
       },
       {
         t: "p",
-        text: "Every verification is recorded in a SHA-256 tamper-evident log, so your NCQA audit binder is always one click away.",
+        text: "Every screen is recorded with its result and date in a tamper-evident log, so your NCQA audit binder is always one click away.",
       },
       {
         t: "actions",
@@ -434,14 +447,14 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "CredTek keeps every profile current automatically so nothing lapses:",
+        text: "We keep every profile current so nothing lapses:",
       },
       {
         t: "ul",
         items: [
           "**CAQH re-attestation every 120 days**, with a one-tap SMS approval for your coordinator.",
           "**180-day expiration forecast** for licenses, DEA, board certs, and malpractice — so renewals start early, never late.",
-          "Recredentialing cycles are tracked and triggered automatically.",
+          "Recredentialing cycles are tracked and started on time.",
         ],
       },
       {
@@ -482,11 +495,11 @@ export const KNOWLEDGE: Topic[] = [
       {
         t: "ul",
         items: [
-          "**HIPAA-compliant** document storage, with a **BAA signed on day one**.",
+          "**HIPAA-aligned** document handling, with a **BAA signed on day one**.",
           "**NCQA-aligned** workflows + a one-click audit binder.",
-          "**SHA-256 hash-chained, tamper-evident audit log** of every action.",
-          "**Coordinator approval gate** — no AI-generated data reaches a payor without a human sign-off.",
-          "**SOC 2** for Enterprise.",
+          "**Tamper-evident, hash-chained audit log** of every action.",
+          "**Coordinator approval gate** — nothing reaches a payer without a human sign-off.",
+          "**SOC 2 Type II underway** for Enterprise engagements.",
         ],
       },
       {
@@ -559,7 +572,7 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "CredTek includes a **Specialty Workflow Library** for the cases generic platforms skip:",
+        text: "We handle the **specialty workflows generic platforms skip:**",
       },
       {
         t: "ul",
@@ -612,7 +625,7 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "Getting your roster in takes minutes. **Two ways to onboard:**",
+        text: "Getting your roster in takes minutes, and our team is working within 48 hours. **Two ways to onboard:**",
       },
       {
         t: "ul",
@@ -623,7 +636,7 @@ export const KNOWLEDGE: Topic[] = [
       },
       {
         t: "p",
-        text: "Either way, we scope it, sign a **BAA**, and verification + enrollment begin — usually **live in 14 days**, with a dedicated CSM through your first 90.",
+        text: "Either way, we scope it, sign a **BAA**, and our team is verifying and enrolling within **48 hours** — with a dedicated CSM through your first 90 days.",
       },
       {
         t: "actions",
@@ -664,7 +677,7 @@ export const KNOWLEDGE: Topic[] = [
       },
       {
         t: "p",
-        text: "That keeps provider rosters and enrollment status in sync with your system of record automatically.",
+        text: "That keeps provider rosters and enrollment status in sync with your system of record. On Starter and Growth, we work from your roster directly — no integration required to start.",
       },
       {
         t: "actions",
@@ -702,11 +715,11 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "CredTek is built for **US medical groups, MSOs, health systems, IPAs, PE rollups, and payors** — anyone credentialing providers at scale.",
+        text: "CredTek is built for **US medical groups, MSOs, and health systems credentialing providers at scale** — typically **100–500 providers**, multi-state, with real new-hire volume.",
       },
       {
         t: "p",
-        text: "It shines wherever provider volume, multi-state licensure, or M&A activity makes manual credentialing the bottleneck to revenue.",
+        text: "It shines wherever provider volume, multi-state licensure, or M&A activity makes manual credentialing the bottleneck to revenue. We also credential **facilities** — hospitals, ASCs, clinics, and labs — as their own line.",
       },
       {
         t: "actions",
@@ -737,15 +750,16 @@ export const KNOWLEDGE: Topic[] = [
       "select medical",
       "credibility",
       "who are you guys",
+      "decades",
     ],
     answer: [
       {
         t: "p",
-        text: "CredTek is built by operators, not outsiders. The founding team brings **40+ years of combined enterprise credentialing experience** from **HCA Healthcare, UHS, Encompass Health, Select Medical, and Ascension** — spanning **700+ facilities and 80,000+ beds**.",
+        text: "CredTek is built and run by operators, not outsiders. The founding team brings **decades of enterprise credentialing experience** — inside health systems like **HCA, UHS, Encompass Health, Select Medical, and Ascension** — spanning **700+ facilities and 80,000+ beds**.",
       },
       {
         t: "p",
-        text: "Every workflow in the product reflects how credentialing actually breaks at scale — and how to fix it.",
+        text: "That's why we can plug in and add value in **48 hours**: we've run credentialing at scale, we know exactly how it breaks, and we do the work ourselves.",
       },
       {
         t: "actions",
@@ -776,14 +790,14 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "The math is the pitch. Every credentialed-but-idle provider costs roughly **$2,000/day** in lost revenue.",
+        text: "The math is the pitch. Every credentialed-but-idle provider is roughly **$2,000/day** of revenue you can't bill yet.",
       },
       {
         t: "ul",
         items: [
-          "A 200-provider group runs ~40 enrollments/year; slow credentialing costs them **$2–6M/year**.",
-          "CredTek for that group is **~$96K/year** — a **20×+ return**.",
-          "Most groups recover **$2M+ in year one** just by getting providers billing sooner.",
+          "A 200-provider group runs ~40 enrollments/year; slow credentialing ties up **$2–6M/year**.",
+          "CredTek for that group is **~$96K/year** — a strong multiple back on your subscription.",
+          "Most groups recover **seven figures in year one** just by getting providers billing sooner.",
         ],
       },
       {
@@ -820,11 +834,11 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "The difference is **agent-native**. Most platforms are databases with reminders — they organize the work but a human still does every step. CredTek's agents actually **do** the PSV, CAQH, and payor enrollment, then stop at a human approval gate.",
+        text: "Most platforms are **databases with reminders** — they organize the work, but your team still does every step. CredTek is different: **we're the trained team that does the work for you**, on a platform you can watch.",
       },
       {
         t: "p",
-        text: "That's why we can promise **40–60% faster** and **migrate you off Modio, CAQH, or spreadsheets in 14 days**.",
+        text: "Enterprise tools take 9 months to implement and price out the mid-market. We plug in within **48 hours**, get you **40–60% faster**, and migrate you off Modio, CAQH, or spreadsheets without redoing months of work.",
       },
       {
         t: "actions",
@@ -864,7 +878,7 @@ export const KNOWLEDGE: Topic[] = [
         items: [
           "**Month-to-month** — no annual lock-in.",
           "**30-day out clause in your first 90 days** — if it isn't working, you leave.",
-          "Pricing is **transparent and usage-based** ($35/provider/mo + $300/enrollment) — no surprise fees.",
+          "Pricing is **transparent and usage-based** (from $35/provider/mo + from $199/action) — no surprise fees.",
         ],
       },
       {
@@ -906,8 +920,8 @@ export const KNOWLEDGE: Topic[] = [
       {
         t: "ul",
         items: [
-          "**Interactive demo (no call):** we spin up CredTek with sample providers sized to your group, and a guided agent walks you through the dashboard.",
-          "**Live demo with a credentialing veteran:** a 30-minute call to map it to your exact workflows.",
+          "**Interactive demo (no call):** we spin up CredTek with sample providers sized to your group, and a guided walkthrough shows you the dashboard.",
+          "**Live demo with a credentialing veteran:** a 30-minute call to map it to your exact workflows — and start in 48 hours.",
         ],
       },
       {
@@ -938,7 +952,7 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "Hi! I'm the **CredTek assistant** — happy to help. I can explain how CredTek gets providers billing 40–60% faster, walk through pricing or security, or set you up with a demo.",
+        text: "Hi! I'm the **CredTek assistant** — happy to help. I can explain how our team gets providers billing 40–60% faster, walk through pricing or security, or set you up with a demo.",
       },
       {
         t: "p",
@@ -947,7 +961,7 @@ export const KNOWLEDGE: Topic[] = [
       {
         t: "actions",
         items: [
-          { kind: "topic", label: "How fast?", topicId: "speed" },
+          { kind: "topic", label: "How fast can you start?", topicId: "speed" },
           { kind: "topic", label: "Pricing", topicId: "pricing" },
           { kind: "tour", label: "See the demo →" },
         ],
@@ -1041,7 +1055,7 @@ export function topicById(id: string): Topic | null {
 export const FALLBACK: ChatBlock[] = [
   {
     t: "p",
-    text: "Good question — let me point you to the right place. I'm best at the essentials: **speed, pricing, the agents, payors, security, and getting a demo set up.**",
+    text: "Good question — let me point you to the right place. I'm best at the essentials: **how fast we start, pricing, how we work, payors, security, and getting a demo set up.**",
   },
   {
     t: "p",
@@ -1050,7 +1064,7 @@ export const FALLBACK: ChatBlock[] = [
   {
     t: "actions",
     items: [
-      { kind: "topic", label: "How fast?", topicId: "speed" },
+      { kind: "topic", label: "How fast can you start?", topicId: "speed" },
       { kind: "topic", label: "Pricing", topicId: "pricing" },
       { kind: "topic", label: "Security", topicId: "security" },
       { kind: "calendly", label: "Talk to a human" },

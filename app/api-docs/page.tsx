@@ -243,7 +243,7 @@ export default function ApiDocsPage() {
               </li>
               <li>
                 <strong>tier_3_browser</strong> — web portals with no API.
-                Playwright + LLM-assisted form fill. <em>Always</em> requires
+                Completed by our credentialing team on the platform. <em>Always</em> requires
                 a human approval gate before submission.
               </li>
               <li>

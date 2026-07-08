@@ -24,7 +24,7 @@ const FAQ_JSONLD = {
       name: "How fast can we go live with CredTek?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "14 days from contract signing. White-glove onboarding migrates your existing data (Modio, CAQH, spreadsheets), imports your provider roster, sets up payor-portal credentials, and runs a live training session for your team. Your CSM is on weekly check-ins for the first 90 days.",
+        text: "Our team is working your credentialing within 48 hours of our first call. Full onboarding — migrating your existing data (Modio, CAQH, spreadsheets), importing your provider roster, and setting up payer-portal credentials — completes within about two weeks, but we add value from day one, not day fourteen. Your CSM is on weekly check-ins for the first 90 days.",
       },
     },
     {
@@ -92,7 +92,7 @@ const LANDING_BODY_PRE_CALC = `
 <section class="plan-section reveal" id="how">
   <div class="container">
     <span class="section-eyebrow">How it works</span>
-    <h2>Three steps from <em>signed contract</em> to <em>providers billing.</em></h2>
+    <h2>Three steps to <em>your providers billing.</em></h2>
 
     <ol class="plan-grid">
       <li class="plan-step">
@@ -107,8 +107,8 @@ const LANDING_BODY_PRE_CALC = `
       </li>
       <li class="plan-step">
         <div class="plan-step-num">3</div>
-        <h3>Onboard your roster — within 14 days</h3>
-        <p>Your CSM gets your providers moving while you stay focused on running your practice.</p>
+        <h3>We plug in — within 48 hours</h3>
+        <p>Our trained team starts working your credentialing within 48 hours of that call. No 9-month rollout — your providers move to billable 40–60% faster while you focus on patients.</p>
       </li>
     </ol>
   </div>
@@ -195,7 +195,7 @@ const LANDING_BODY_PRE_CALC = `
       </div>
       <div class="caps-card spotlight-card">
         <div class="caps-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="m9 14 2 2 4-4"></path></svg></div>
-        <h3>Payor enrollment agents</h3>
+        <h3>Payer enrollment, handled for you</h3>
         <p>Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare + specialty networks + state Medicaid MCOs. Every submission goes through a coordinator&apos;s approval gate.</p>
       </div>
       <div class="caps-card spotlight-card">
@@ -421,8 +421,8 @@ const LANDING_BODY_POST_CALC = `
     <div class="why-us-grid">
       <div class="why-us-card">
         <div class="why-us-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg></div>
-        <h3>Agents that actually do the work</h3>
-        <p>Real Playwright-driven agents fill Aetna, Anthem, Optum, and Cigna forms end-to-end. <strong>Every submission gets a coordinator&apos;s approval before it leaves CredTek</strong> — no AI-hallucinated data ever reaches a payor.</p>
+        <h3>A trained team that does the work</h3>
+        <p>Our credentialing specialists prepare and manage your Aetna, Anthem, Optum, and Cigna enrollments end-to-end, on a platform you watch in real time. <strong>Every submission gets your coordinator&apos;s approval before it leaves CredTek</strong> — nothing reaches a payor unchecked.</p>
       </div>
       <div class="why-us-card">
         <div class="why-us-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
@@ -493,7 +493,7 @@ const LANDING_BODY_POST_CALC = `
         <div class="price-amount"><em>$35</em></div>
         <div class="price-unit">per provider · per month<br/>+ from $199 per credentialing action</div>
         <ul>
-          <li>All 7 AI agents</li>
+          <li>Full credentialing team + platform</li>
           <li>50-state board PSV · every specialty</li>
           <li>Multi-state license dashboard</li>
           <li>CAQH automation</li>
@@ -501,7 +501,7 @@ const LANDING_BODY_POST_CALC = `
           <li>NCQA audit binder</li>
           <li>Unlimited users</li>
           <li>Email support</li>
-          <li>White-glove onboarding · 14 days</li>
+          <li>White-glove onboarding · team working in 48 hrs</li>
         </ul>
         <a class="price-cta" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Book a demo →</a>
       </div>
@@ -640,7 +640,7 @@ const LANDING_BODY_POST_CALC = `
     <div class="faq">
       <div class="faq-item">
         <div class="faq-q"><span class="q-mark">Q.</span> How fast can we go live?</div>
-        <div class="faq-a"><strong>14 days from contract signing.</strong> White-glove onboarding migrates your existing data (Modio, CAQH, spreadsheets), imports your provider roster, sets up payor-portal credentials, and runs a live training session for your team. Your CSM is on weekly check-ins for the first 90 days.</div>
+        <div class="faq-a"><strong>Working your roster within 48 hours of our first call.</strong> Full onboarding — migrating your existing data (Modio, CAQH, spreadsheets), importing your roster, and setting up payer-portal credentials — completes within about two weeks, but our team adds value from day one, not day fourteen. Your CSM is on weekly check-ins for the first 90 days.</div>
       </div>
 
       <div class="faq-item">

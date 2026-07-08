@@ -132,7 +132,7 @@ export const HELP_ARTICLES: HelpArticle[] = [
       "Every Tier 3 payor submission gets a coordinator click before it leaves CredTek. Here's how the approval queue works.",
     readTime: "3 min read",
     html: `
-      <p>CredTek's enrollment agents fill the Optum, Carelon, Magellan,
+      <p>CredTek's credentialing team completes the Optum, Carelon, Magellan,
       Evernorth, and Anthem BH applications end-to-end — but
       <strong>nothing leaves CredTek without your click.</strong> The
       human-in-the-loop gate is on the architecture (per the IAL spec),

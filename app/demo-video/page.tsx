@@ -25,7 +25,7 @@ const CHAPTERS: { ts: string; title: string; detail: string }[] = [
     ts: "0:00",
     title: "Why we built CredTek",
     detail:
-      "40 years of enterprise medical credentialing experience + AI agents + a coordinator approval gate on everything.",
+      "Decades of enterprise medical credentialing experience + a trained team + a coordinator approval gate on everything.",
   },
   {
     ts: "1:00",

@@ -39,9 +39,9 @@ export type Resource = {
 const CTA = `
   <div class="rsc-cta">
     <h3>See your own numbers in 60 seconds</h3>
-    <p>CredTek gets providers in-network 40–60% faster — built by
-    operators with 40+ years of enterprise credentialing experience, run
-    by modern AI agents with a human approval gate on every submission.</p>
+    <p>CredTek gets providers in-network 40–60% faster — built and run by
+    operators with decades of enterprise credentialing experience, with a
+    human approval gate on every submission.</p>
     <a class="rsc-cta-btn" href="/#calc">Run the ROI calculator →</a>
   </div>
 `;

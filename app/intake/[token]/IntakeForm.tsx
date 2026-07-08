@@ -86,7 +86,7 @@ export function IntakeForm({ token }: { token: string }) {
               <span className="intake-done-dot success">●</span>
               <span>
                 {caqhConsent
-                  ? "CAQH auto-attestation enabled — you'll get an SMS to approve every 120 days"
+                  ? "CAQH re-attestation managed — you'll get an SMS to approve every 120 days"
                   : "CAQH skipped — your coordinator will reach out about attestation"}
               </span>
             </div>
@@ -421,7 +421,7 @@ function Step4({
   return (
     <>
       <div className="intake-eyebrow">Step 4 of 5</div>
-      <h2 className="intake-h2">CAQH attestation, on autopilot.</h2>
+      <h2 className="intake-h2">CAQH attestation, handled for you.</h2>
       <p className="intake-p">
         Most insurance plans require you to re-attest your CAQH profile every
         120 days. We'll handle it for you — you just approve via SMS when
