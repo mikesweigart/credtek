@@ -1,30 +1,21 @@
 "use client";
 
-// Hero — cinematic video-led layout.
+// Hero — clarity-first (StoryBrand "grunt test"): a visitor must grasp
+// WHAT we offer, HOW it helps, and WHAT to do next within ~5 seconds.
 //
-// Design thinking:
-//   • The 60s video is the headline. Frame 1 of the poster reads
-//     "Your providers should be billing. Not waiting." — there is no
-//     reason to repeat that as an <h1> below it. We keep the <h1> in
-//     the DOM for SEO (sr-only) but the visual headline is the video.
-//   • Eyebrow above the video qualifies the audience ("you, the
-//     credentialing operator"). Everything else flows below.
-//   • Below the video: ONE outcome line, ONE primary CTA, the soft
-//     ROI link, the trust strip. Centered alignment so the video is
-//     the visual focal point and the page below it is the action path.
-//   • Removed the duplicated $2,000/day stat — the video counts that
-//     up at frame 480 with motion. Flat copy can't beat motion at the
-//     same idea, so we don't compete with the video.
-//
-// The result is a confident, uncrowded above-the-fold that respects
-// the visitor's attention.
+// So the fold leads with a real, visible headline + a one-line offer +
+// the primary CTA + a trust strip. The 60-second explainer video is a
+// SUPPORTING element below the action path — smaller and calmer — instead
+// of a full-width autoplay that dominates the fold and competes with the
+// message. (It used to be the "headline," with the real H1 hidden — which
+// failed the grunt test.)
 
 import { useState } from "react";
 import { EmailDemoModal } from "./EmailDemoModal";
 import { HeroVideo } from "./HeroVideo";
 
-// Real booking link — the hero's primary CTA now books a call directly
-// (no form), so the button verb matches what actually happens.
+// Real booking link — the hero's primary CTA books a call directly (no
+// form), so the button verb matches what actually happens.
 const CAL_LINK = "https://calendly.com/mike-fusion-advisory/30min";
 
 export function Hero() {
@@ -32,70 +23,69 @@ export function Hero() {
 
   return (
     <>
-      <section className="hero hero-cinematic">
+      <section className="hero hero-cinematic hero-clarity">
         <div className="container">
-          {/* Screen-reader-only H1 — carries the controlling one-liner for
-              SEO (keywords: medical providers, credentialed, billing). The
-              visual/emotional headline lives in the video (frame 1: "Your
-              providers should be billing. Not waiting."), so the H1 and the
-              video reinforce the same idea without visually repeating it.
-              This same one-liner is mirrored in the page <title>, the meta
-              description, and the OG/Twitter cards — one message, everywhere. */}
-          <h1 className="visually-hidden">
-            CredTek gets your medical providers credentialed and billing 40–60% faster.
-          </h1>
-
-          {/* Eyebrow — qualifies the audience above the video */}
+          {/* Eyebrow — qualifies the audience */}
           <div className="hero-eyebrow hero-eyebrow-centered">
             → For credentialing leaders at US medical groups &amp; health systems
           </div>
 
-          {/* The video carries the message */}
-          <HeroVideo />
+          {/* Visible headline — the outcome the buyer wants (grunt test #1).
+              Keyword-rich for SEO; the page <title> + meta mirror it. */}
+          <h1 className="hero-headline">
+            Get your providers credentialed and billing{" "}
+            <em>40–60% faster.</em>
+          </h1>
 
-          {/* Below the video — a confident, no-noise action path */}
-          <div className="hero-below">
-            <p className="hero-below-line">
-              Our trained team plugs into your credentialing in <em>48 hours</em> — and gets your providers billing <em>40–60% faster</em>.
-            </p>
+          {/* One-line offer — who we are + how we help (grunt test #2). */}
+          <p className="hero-subhead">
+            CredTek is the credentialing team that plugs into your medical group
+            in <strong>48 hours</strong> and does the work — verification,
+            licensing, CAQH, and payer enrollment — while you watch every
+            provider move to billable.
+          </p>
 
-            <div className="hero-cta hero-cta-centered">
-              {/* Three-action hero. Primary = the real, high-commitment
-                  ask: book time with a credentialing veteran (Calendly,
-                  no form — the verb finally matches the outcome).
-                  Secondary = the zero-pressure guided product tour, which
-                  also captures the lead via /api/leads so we can follow up
-                  even if they don't book. Tertiary = run the ROI math. The
-                  full live portal lives in the top nav ("See it live"). */}
-              <div className="hero-cta-buttons">
-                <a
-                  className="btn-primary btn-primary-lg"
-                  href={CAL_LINK}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  Book a demo
-                  <span className="arrow">→</span>
-                </a>
-                <button
-                  type="button"
-                  className="btn-secondary btn-secondary-lg"
-                  onClick={() => setModalOpen(true)}
-                >
-                  Take a guided tour
-                  <span className="arrow">→</span>
-                </button>
-              </div>
-              <a className="hero-cta-tertiary" href="#calc">
-                or just run your ROI numbers first →
+          {/* Action path (grunt test #3) — primary books a call; secondary is
+              the zero-pressure guided tour (captures the lead via /api/leads);
+              tertiary runs the ROI math. */}
+          <div className="hero-cta hero-cta-centered">
+            <div className="hero-cta-buttons">
+              <a
+                className="btn-primary btn-primary-lg"
+                href={CAL_LINK}
+                target="_blank"
+                rel="noopener"
+              >
+                Book a demo
+                <span className="arrow">→</span>
               </a>
+              <button
+                type="button"
+                className="btn-secondary btn-secondary-lg"
+                onClick={() => setModalOpen(true)}
+              >
+                Take a guided tour
+                <span className="arrow">→</span>
+              </button>
             </div>
+            <a className="hero-cta-tertiary" href="#calc">
+              or run your ROI numbers first →
+            </a>
+          </div>
 
-            <div className="hero-trust hero-trust-centered">
-              <span className="dot">●</span> <strong>Decades</strong> of credentialing experience &nbsp;·&nbsp;{" "}
-              <span className="dot">●</span> <strong>Working your roster in 48 hours</strong> &nbsp;·&nbsp;{" "}
-              <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one
-            </div>
+          {/* Trust strip — guide authority + the plug-in promise */}
+          <div className="hero-trust hero-trust-centered">
+            <span className="dot">●</span> <strong>Decades</strong> of credentialing experience &nbsp;·&nbsp;{" "}
+            <span className="dot">●</span> <strong>Working your roster in 48 hours</strong> &nbsp;·&nbsp;{" "}
+            <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one
+          </div>
+
+          {/* Explainer video — supporting element, below the action path */}
+          <div className="hero-video-support">
+            <span className="hero-video-caption">
+              ▸ See how it works — 60-second explainer
+            </span>
+            <HeroVideo />
           </div>
         </div>
       </section>
