@@ -1,13 +1,17 @@
 "use client";
 
-// CredTek instant quote tool. Users adjust four inputs, see a live ROI
-// quote, then save it (print or email themselves) or schedule a call to
-// discuss. URL-shareable so the same quote can be sent peer-to-peer
-// without copy-paste.
+// CredTek instant ROI quote. Users adjust four inputs, see a live,
+// DEFENSIBLE quote, then save it (print or email) or book a call.
+// URL-shareable so the same quote can be sent peer-to-peer.
 //
-// Math is intentionally identical to the static cost-of-inaction section
-// so partners can verify rather than trust. CredTek pricing constants
-// mirror the landing page's pricing section.
+// HONEST MODEL (rebuilt): the value of credentialing faster is the
+// provider's billing pulled FORWARD — not gross revenue "lost." We ask
+// for monthly collections a CFO already knows, convert to a per-day
+// figure, multiply by the days we save, then count only HALF as captured
+// (a conservative realization haircut — the rest is timing you'd recover).
+// Net of the CredTek cost, that lands a believable single-digit ROI, and
+// every number on the card is shown so a partner can verify, not trust.
+// Math here is identical to the static cost-of-inaction section.
 
 import { useEffect, useRef, useState } from "react";
 
@@ -20,28 +24,29 @@ function readInitial(name: string, fallback: number): number {
 
 const CAL_LINK = "https://calendly.com/mike-fusion-advisory/30min";
 
+// CredTek constants. Pricing mirrors the landing page; the model constants
+// are deliberately conservative so the quote under-promises.
+const PER_PROVIDER_MONTH = 35;
+const PER_ENROLLMENT = 199;
+const CREDTEK_DAYS = 50; // time-to-billable we model CredTek reaching
+const REALIZATION = 0.5; // count only half the accelerated billing as captured
+
 export function PricingCalculator() {
   const [providers, setProviders] = useState(200);
   const [newPerQuarter, setNewPerQuarter] = useState(10);
-  const [currentDelayDays, setCurrentDelayDays] = useState(75);
-  const [lostPerDay, setLostPerDay] = useState(2000);
+  const [currentDelayDays, setCurrentDelayDays] = useState(90);
+  const [monthlyCollections, setMonthlyCollections] = useState(18000);
   const [copied, setCopied] = useState(false);
   const [emailOpen, setEmailOpen] = useState(false);
   const [emailValue, setEmailValue] = useState("");
   const emailDialogRef = useRef<HTMLDivElement>(null);
 
-  // CredTek pricing constants — starting rates (scale up with complexity/volume)
-  const PER_PROVIDER_MONTH = 35;
-  const PER_ENROLLMENT = 199;
-  const TARGET_DELAY_DAYS = 45;
-
-  // Hydrate from URL on mount (client-only — server render uses defaults
-  // so the static markup is still cacheable).
+  // Hydrate from URL on mount (client-only — server render uses defaults).
   useEffect(() => {
     setProviders(readInitial("p", 200));
     setNewPerQuarter(readInitial("n", 10));
-    setCurrentDelayDays(readInitial("d", 75));
-    setLostPerDay(readInitial("l", 2000));
+    setCurrentDelayDays(readInitial("d", 90));
+    setMonthlyCollections(readInitial("m", 18000));
   }, []);
 
   // Sync URL as inputs change (replaceState — no history entry per drag).
@@ -51,10 +56,10 @@ export function PricingCalculator() {
     params.set("p", String(providers));
     params.set("n", String(newPerQuarter));
     params.set("d", String(currentDelayDays));
-    params.set("l", String(lostPerDay));
+    params.set("m", String(monthlyCollections));
     const next = `${window.location.pathname}?${params.toString()}#calc`;
     window.history.replaceState({}, "", next);
-  }, [providers, newPerQuarter, currentDelayDays, lostPerDay]);
+  }, [providers, newPerQuarter, currentDelayDays, monthlyCollections]);
 
   // Outside-click closes the email dialog
   useEffect(() => {
@@ -78,16 +83,17 @@ export function PricingCalculator() {
     };
   }, [emailOpen]);
 
-  // Math (identical to the static cost-of-inaction section)
+  // ---- Math (identical to the static cost-of-inaction section) ----
   const annualEnrollments = newPerQuarter * 4;
+  const perProviderPerDay = (monthlyCollections * 12) / 365;
+  const daysSaved = Math.max(0, currentDelayDays - CREDTEK_DAYS);
+  const acceleratedBilling = daysSaved * perProviderPerDay * annualEnrollments;
+  const capturedValue = acceleratedBilling * REALIZATION;
   const credtekSubscription = providers * PER_PROVIDER_MONTH * 12;
   const credtekEnrollments = annualEnrollments * PER_ENROLLMENT;
   const credtekTotal = credtekSubscription + credtekEnrollments;
-  const lostBaseline = currentDelayDays * lostPerDay * annualEnrollments;
-  const lostWithCredtek = TARGET_DELAY_DAYS * lostPerDay * annualEnrollments;
-  const savingsBeforeCost = lostBaseline - lostWithCredtek;
-  const netSavings = Math.max(0, savingsBeforeCost - credtekTotal);
-  const roi = credtekTotal > 0 ? netSavings / credtekTotal : 0;
+  const netGain = Math.max(0, capturedValue - credtekTotal);
+  const roi = credtekTotal > 0 ? netGain / credtekTotal : 0;
 
   // ---- Print ----
   const handlePrint = () => {
@@ -111,7 +117,7 @@ export function PricingCalculator() {
   const handleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const subject = encodeURIComponent(
-      `My CredTek quote — ${fmtMoneyBig(netSavings)} projected savings`,
+      `My CredTek quote — ${fmtMoneyBig(netGain)} projected first-year gain`,
     );
     const body = encodeURIComponent(
       [
@@ -120,16 +126,18 @@ export function PricingCalculator() {
         "INPUTS",
         `· Active providers: ${providers.toLocaleString("en-US")}`,
         `· New providers per quarter: ${newPerQuarter}`,
-        `· Current avg time-to-active: ${currentDelayDays} days`,
-        `· Lost revenue per idle provider per day: ${fmtMoney(lostPerDay)}`,
+        `· Current avg time-to-billable: ${currentDelayDays} days`,
+        `· Avg monthly collections per provider: ${fmtMoney(monthlyCollections)}`,
         "",
-        "QUOTE",
-        `· Cost of doing nothing (per year): ${fmtMoneyBig(lostBaseline)}`,
-        `· CredTek (per year): ${fmtMoneyBig(credtekTotal)}`,
+        "THE MATH (conservative)",
+        `· Days-to-billable saved per provider: ${daysSaved} (we model ${CREDTEK_DAYS} days)`,
+        `· Billing accelerated (gross): ${fmtMoneyBig(acceleratedBilling)}/yr`,
+        `· Captured value (50% realization): ${fmtMoneyBig(capturedValue)}/yr`,
+        `· CredTek investment: ${fmtMoneyBig(credtekTotal)}/yr`,
         `   - ${fmtMoney(credtekSubscription)} subscription`,
         `   - ${fmtMoney(credtekEnrollments)} enrollment actions`,
-        `· Net annual savings (modeling CredTek time-to-active near 45 days; real ranges 30-60% of current): ${fmtMoneyBig(netSavings)}`,
-        `· Year-one ROI: ${roi.toFixed(1)}× on subscription`,
+        `· Net first-year gain: ${fmtMoneyBig(netGain)}`,
+        `· ROI: ${roi.toFixed(1)}× on your CredTek investment`,
         "",
         "NEXT STEP",
         "Book a 20-min call to refine these numbers against your actual",
@@ -149,30 +157,32 @@ export function PricingCalculator() {
 
   return (
     <section className="calc-section" id="calc">
-      {/* Print-only block — hidden on screen, formatted as a clean PDF when
-          the user hits "Print Your Quote" or Cmd/Ctrl+P. */}
+      {/* Print-only block — hidden on screen, formatted as a clean PDF. */}
       <PrintQuote
         providers={providers}
         newPerQuarter={newPerQuarter}
         currentDelayDays={currentDelayDays}
-        lostPerDay={lostPerDay}
+        monthlyCollections={monthlyCollections}
         annualEnrollments={annualEnrollments}
+        daysSaved={daysSaved}
+        acceleratedBilling={acceleratedBilling}
+        capturedValue={capturedValue}
         credtekSubscription={credtekSubscription}
         credtekEnrollments={credtekEnrollments}
         credtekTotal={credtekTotal}
-        lostBaseline={lostBaseline}
-        netSavings={netSavings}
+        netGain={netGain}
         roi={roi}
       />
 
       <div className="container calc-screen">
         <span className="section-eyebrow">Instant quote</span>
         <h2>
-          Get a custom quote <em>in seconds.</em>
+          See your first-year gain <em>in seconds.</em>
         </h2>
         <p className="section-lead">
-          Use our quick, easy tool to generate your quote. Print it or email
-          it to yourself for later — no hassle.{" "}
+          Four inputs, a transparent quote — every number shown so you can
+          check the math, not take it on faith. Print it or email it to
+          yourself.{" "}
           <button
             type="button"
             onClick={handleCopyShare}
@@ -207,42 +217,42 @@ export function PricingCalculator() {
           <div className="calc-inputs">
             <CalcInput
               label="Active providers"
-              tooltip="Total clinicians on your roster today across all states."
+              tooltip="Total clinicians on your roster today across all states. CredTek's mid-market sweet spot is roughly 25–400."
               value={providers}
               setValue={setProviders}
               min={20}
-              max={500}
+              max={400}
               step={10}
               format={(v) => v.toLocaleString("en-US")}
             />
             <CalcInput
               label="New providers per quarter"
-              tooltip="How many new clinicians you onboard each quarter on average."
+              tooltip="How many new clinicians you onboard each quarter on average. These are the ones the credentialing delay costs you on."
               value={newPerQuarter}
               setValue={setNewPerQuarter}
               min={1}
-              max={40}
+              max={30}
               step={1}
               format={(v) => v.toLocaleString("en-US")}
             />
             <CalcInput
-              label="Current avg time-to-active (days)"
-              tooltip="How long it takes today, on average, from a new provider's hire date to in-network with their first major payor."
+              label="Current avg time-to-billable (days)"
+              tooltip="How long it takes today, on average, from a new provider's hire date to in-network and billing with their first major payer. Industry average is 90–120."
               value={currentDelayDays}
               setValue={setCurrentDelayDays}
-              min={45}
+              min={CREDTEK_DAYS}
               max={180}
               step={5}
               format={(v) => `${v} days`}
             />
             <CalcInput
-              label="Lost revenue per idle provider, per day"
-              tooltip="Conservative estimate of revenue your provider could be earning if they were in-network instead of waiting on credentialing. BH groups commonly use $1,500–$3,000."
-              value={lostPerDay}
-              setValue={setLostPerDay}
-              min={500}
-              max={5000}
-              step={100}
+              label="Avg monthly collections per provider"
+              tooltip="What one active provider collects in a typical month once in-network — net collections, not gross charges. A conservative blended figure is fine; refine it on a call."
+              value={monthlyCollections}
+              setValue={setMonthlyCollections}
+              min={5000}
+              max={120000}
+              step={1000}
               format={(v) => fmtMoney(v)}
             />
           </div>
@@ -259,25 +269,27 @@ export function PricingCalculator() {
               </header>
               <div className="calc-quote-card-headline">
                 <span className="calc-quote-card-headline-label">
-                  Net annual savings
+                  Net first-year gain
                 </span>
                 <div className="calc-quote-card-headline-num">
-                  {fmtMoneyBig(netSavings)}
+                  {fmtMoneyBig(netGain)}
                 </div>
                 <span className="calc-quote-card-headline-sub">
-                  Year-one ROI: <strong>{roi.toFixed(1)}×</strong> on your CredTek subscription
+                  ≈ <strong>{roi.toFixed(1)}×</strong> ROI on your CredTek investment
                 </span>
               </div>
               <div className="calc-quote-card-rows">
                 <div className="calc-quote-card-row">
-                  <span>Cost of doing nothing</span>
-                  <strong className="calc-amount-danger">
-                    {fmtMoneyBig(lostBaseline)}
-                  </strong>
+                  <span>Billing accelerated ({daysSaved} days × {annualEnrollments} providers)</span>
+                  <strong>{fmtMoneyBig(acceleratedBilling)}</strong>
+                </div>
+                <div className="calc-quote-card-row sub">
+                  <span>↳ captured at a conservative 50%</span>
+                  <span className="calc-amount-good">{fmtMoneyBig(capturedValue)}</span>
                 </div>
                 <div className="calc-quote-card-row">
-                  <span>CredTek (per year)</span>
-                  <strong>{fmtMoneyBig(credtekTotal)}</strong>
+                  <span>Your CredTek investment</span>
+                  <strong>−{fmtMoneyBig(credtekTotal)}</strong>
                 </div>
                 <div className="calc-quote-card-row sub">
                   <span>↳ subscription</span>
@@ -320,11 +332,12 @@ export function PricingCalculator() {
             </div>
 
             <div className="calc-disclaimer">
-              ✦ Modeling assumes CredTek cuts time-to-active by 40–60%
-              (typical range across customer rosters). Bigger gains when
-              inputs are clean; smaller when they aren&apos;t. Numbers
-              don&apos;t include coordinator team savings or outsourced
-              CVO costs you stop paying.
+              ✦ Conservative by design: we model CredTek reaching billable in
+              ~{CREDTEK_DAYS} days, then count only <strong>half</strong> of the
+              accelerated billing as captured — the rest is timing you&apos;d
+              eventually recover. It also excludes the coordinator hours and
+              outsourced-CVO fees you stop paying. Book a call and we&apos;ll
+              tighten it against your real roster.
             </div>
           </div>
         </div>
@@ -483,13 +496,15 @@ function PrintQuote(props: {
   providers: number;
   newPerQuarter: number;
   currentDelayDays: number;
-  lostPerDay: number;
+  monthlyCollections: number;
   annualEnrollments: number;
+  daysSaved: number;
+  acceleratedBilling: number;
+  capturedValue: number;
   credtekSubscription: number;
   credtekEnrollments: number;
   credtekTotal: number;
-  lostBaseline: number;
-  netSavings: number;
+  netGain: number;
   roi: number;
 }) {
   return (
@@ -507,9 +522,9 @@ function PrintQuote(props: {
 
       <h1 className="calc-print-title">Your CredTek ROI quote</h1>
       <p className="calc-print-sub">
-        Modeled against the inputs you provided. CredTek customers
-        typically cut current time-to-active by 40–60%; this estimate
-        uses the conservative end of that range.
+        Modeled against the inputs you provided. We assume CredTek reaches
+        billable in ~{CREDTEK_DAYS} days and count only half of the
+        accelerated billing as captured — a deliberately conservative view.
       </p>
 
       <section className="calc-print-section">
@@ -529,25 +544,33 @@ function PrintQuote(props: {
               <td>{props.annualEnrollments.toLocaleString("en-US")}</td>
             </tr>
             <tr>
-              <td>Current avg time-to-active</td>
+              <td>Current avg time-to-billable</td>
               <td>{props.currentDelayDays} days</td>
             </tr>
             <tr>
-              <td>Lost revenue per idle provider, per day</td>
-              <td>{fmtMoney(props.lostPerDay)}</td>
+              <td>Avg monthly collections per provider</td>
+              <td>{fmtMoney(props.monthlyCollections)}</td>
             </tr>
           </tbody>
         </table>
       </section>
 
       <section className="calc-print-section">
-        <h2>Quote</h2>
+        <h2>The math</h2>
         <table className="calc-print-table">
           <tbody>
             <tr>
-              <td>Cost of doing nothing (per year)</td>
-              <td className="calc-print-danger">
-                {fmtMoneyBig(props.lostBaseline)}
+              <td>Days-to-billable saved per provider</td>
+              <td>{props.daysSaved} days</td>
+            </tr>
+            <tr>
+              <td>Billing accelerated (gross, per year)</td>
+              <td>{fmtMoneyBig(props.acceleratedBilling)}</td>
+            </tr>
+            <tr>
+              <td>Captured value (50% realization)</td>
+              <td className="calc-print-savings">
+                {fmtMoneyBig(props.capturedValue)}
               </td>
             </tr>
             <tr>
@@ -568,20 +591,20 @@ function PrintQuote(props: {
             </tr>
             <tr>
               <td>
-                <strong>Net annual savings</strong>
+                <strong>Net first-year gain</strong>
               </td>
               <td>
                 <strong className="calc-print-savings">
-                  {fmtMoneyBig(props.netSavings)}
+                  {fmtMoneyBig(props.netGain)}
                 </strong>
               </td>
             </tr>
             <tr>
               <td>
-                <strong>Year-one ROI</strong>
+                <strong>ROI</strong>
               </td>
               <td>
-                <strong>{props.roi.toFixed(1)}×</strong> on subscription
+                <strong>{props.roi.toFixed(1)}×</strong> on your investment
               </td>
             </tr>
           </tbody>
@@ -601,8 +624,8 @@ function PrintQuote(props: {
       </section>
 
       <footer className="calc-print-foot">
-        CredTek · cred-tek.com · the credentialing platform built for
-        behavioral health groups
+        CredTek · cred-tek.com · credentialing, done for mid-market medical
+        groups &amp; health systems
       </footer>
     </div>
   );

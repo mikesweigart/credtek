@@ -126,8 +126,8 @@ export default function OnepagerPage() {
             <tbody>
               <tr>
                 <td>1–99 providers</td>
-                <td>100–499 providers</td>
-                <td>500+ providers</td>
+                <td>100–400 providers</td>
+                <td>400+ providers</td>
               </tr>
               <tr>
                 <td>

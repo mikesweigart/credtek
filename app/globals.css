@@ -3401,6 +3401,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   border-bottom: none;
 }
 .calc-amount-danger { color: var(--danger) !important; }
+.calc-amount-good { color: #2F6E48 !important; font-weight: 600; }
 
 /* ---- Action buttons ---- */
 .calc-actions {

@@ -715,7 +715,7 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "CredTek is built for **US medical groups, MSOs, and health systems credentialing providers at scale** — typically **100–500 providers**, multi-state, with real new-hire volume.",
+        text: "CredTek is built for **US medical groups, MSOs, and health systems credentialing providers at scale** — typically **100–400 providers**, multi-state, with real new-hire volume.",
       },
       {
         t: "p",
@@ -790,14 +790,14 @@ export const KNOWLEDGE: Topic[] = [
     answer: [
       {
         t: "p",
-        text: "The math is the pitch. Every credentialed-but-idle provider is roughly **$2,000/day** of revenue you can't bill yet.",
+        text: "The math is the pitch — and we keep it conservative. Getting a provider billable ~40 days sooner pulls their collections forward; we count only half of that as captured value.",
       },
       {
         t: "ul",
         items: [
-          "A 200-provider group runs ~40 enrollments/year; slow credentialing ties up **$2–6M/year**.",
-          "CredTek for that group is **~$96K/year** — a strong multiple back on your subscription.",
-          "Most groups recover **seven figures in year one** just by getting providers billing sooner.",
+          "A 200-provider group (~40 new/yr, ~$18K/mo collected each) accelerates **~$947K** of billing.",
+          "Captured conservatively at 50%: **~$473K** this year.",
+          "Minus CredTek (~$92K/yr) = a **~$381K net first-year gain — about 4× your investment.**",
         ],
       },
       {

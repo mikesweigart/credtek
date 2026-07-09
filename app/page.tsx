@@ -56,7 +56,7 @@ const FAQ_JSONLD = {
       name: "How much does CredTek cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "For individual providers, pricing starts at $35/provider/month plus from $199 per credentialing action, and scales up with the complexity and volume of each client (Starter and Growth tiers; Enterprise at 500+ providers is custom). Facility credentialing (hospitals, ASCs, clinics, labs) is a separate done-for-you solution starting at $200/facility/month plus a one-time setup scoped per facility. Month-to-month with a 30-day out clause for the first 90 days.",
+        text: "For individual providers, pricing starts at $35/provider/month plus from $199 per credentialing action, and scales up with the complexity and volume of each client (Starter and Growth tiers; Enterprise at 400+ providers is custom). Facility credentialing (hospitals, ASCs, clinics, labs) is a separate done-for-you solution starting at $200/facility/month plus a one-time setup scoped per facility. Month-to-month with a 30-day out clause for the first 90 days.",
       },
     },
   ],
@@ -360,21 +360,17 @@ const LANDING_BODY_PRE_CALC = `
     <p class="section-lead">No feature-gating. Every customer on CredTek gets every capability — because depth, not artificial tiering, is how we win this market.</p>
 
     <div class="stack-block">
-      <h3>What's <em>actually included</em> — from $35/provider/month</h3>
-      <p class="stack-block-sub">Seven capability bundles. Every one of them turned on for every customer from day one — no &quot;contact sales for that module&quot; games. Continuous monitoring (OIG · SAM · NPDB · DEA), unlimited users, and HIPAA-compliant document storage are table stakes and built in.</p>
+      <h3>What's <em>included</em> — from $35/provider/month</h3>
+      <p class="stack-block-sub">Every capability, on for every customer from day one — no &quot;contact sales for that module&quot; games. Unlimited users and HIPAA-aligned document storage are built in.</p>
       <ul class="stack-list">
-        <li><span class="check">✓</span><span class="item-text"><strong>Intake &amp; Profile Agent</strong> — SMS/email provider invite, document OCR + LLM extraction, golden profile with confidence scoring and coordinator approval gate</span><span class="item-val">VALUE: $300/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>50-state PSV · every specialty</strong> — Medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — plus compact eligibility (IMLC · NLC · PSYPACT · CC · SWC)</span><span class="item-val">VALUE: $500/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Specialty workflow library</strong> — BH supervision tracking, locum-tenens windows, hospital privileging, M&amp;A NPI changes — the spreadsheet-killers</span><span class="item-val">VALUE: $400/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>Commercial &amp; specialty Payor Agents</strong> — Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare · Carelon · Magellan · Evernorth · state Medicaid MCOs</span><span class="item-val">VALUE: $700/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>CAQH attestation + expirations engine</strong> — Every-120-day CAQH attestation with provider SMS approval, plus 180-day expiration forecast with auto-drafted renewals</span><span class="item-val">VALUE: $200/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>NCQA audit binder + tamper-evident log</strong> — One-click audit-ready evidence packet for delegated-credentialing. SHA-256 hash chain so tampering breaks the chain</span><span class="item-val">VALUE: $500/mo</span></li>
-        <li><span class="check">✓</span><span class="item-text"><strong>White-glove onboarding + dedicated CSM</strong> — Live in 14 days, weekly check-ins for 90 days, direct Slack channel to the founders</span><span class="item-val">VALUE: $750/mo</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Intake &amp; profile</strong> — SMS/email provider invite, document extraction, and a golden profile with confidence scoring and a coordinator approval gate</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>50-state PSV · every specialty</strong> — Medical, osteopathic, nursing, pharmacy, psychology, social work, counseling, MFT, BCBA, dental — plus compact eligibility (IMLC · NLC · PSYPACT · CC · SWC)</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Specialty workflow library</strong> — BH supervision tracking, locum-tenens windows, hospital privileging, M&amp;A NPI changes — the spreadsheet-killers</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>Commercial &amp; specialty payer enrollment</strong> — Aetna · Anthem · Cigna · UHC · Humana · BCBS · Optum · Tricare · Carelon · Magellan · Evernorth · state Medicaid MCOs</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>CAQH attestation + expirations</strong> — Every-120-day CAQH re-attestation with provider SMS approval, plus a 180-day expiration forecast so renewals start early</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>NCQA audit binder + tamper-evident log</strong> — A one-click audit-ready evidence packet for delegated credentialing, on a hash-chained log</span></li>
+        <li><span class="check">✓</span><span class="item-text"><strong>A dedicated credentialing team</strong> — Working your roster within 48 hours, weekly check-ins for 90 days, a direct line to the founders</span></li>
       </ul>
-      <div class="stack-total">
-        <div class="lbl">Total comparable value:</div>
-        <div class="val">$3,350 / month</div>
-      </div>
       <div class="stack-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px; margin-top: 4px;">
         <div class="lbl" style="color:white;font-weight:500;">Your price on CredTek:</div>
         <div class="val" style="font-size: clamp(36px, 5vw, 56px);">From $35 / provider / month</div>
@@ -391,20 +387,19 @@ const LANDING_BODY_PRE_CALC = `
     <p class="section-lead">Every month you stay on spreadsheets, Modio, or your current outsourced CVO, you're paying a tax. Here's the actual math for a 200-provider medical group.</p>
 
     <div class="coi-block">
-      <h3>The cost of <em>doing nothing</em>.</h3>
-      <p style="font-size: 16px; color: var(--ink-soft); margin-bottom: 8px;">Assume a 200-provider medical group, 10 new hires per quarter, 75-day average enrollment delay, $2,000/day in lost revenue per idle provider:</p>
+      <h3>The math, <em>done honestly</em>.</h3>
+      <p style="font-size: 16px; color: var(--ink-soft); margin-bottom: 8px;">A 200-provider group, 10 new hires a quarter, 90 days to billable today, ~$18K/month collected per active provider. Here's what getting them billing ~40 days sooner is worth:</p>
 
       <div class="coi-math">
         <div class="calc">10 new providers × 4 quarters = <strong style="color:var(--ink);">40 enrollments / year</strong></div>
-        <div class="calc">75 days idle × $2,000/day = <strong style="color:var(--ink);">$150,000 lost per provider</strong></div>
-        <div class="calc">40 × $150,000 = <strong style="color:var(--ink);">$6,000,000 in lost annual revenue</strong></div>
-        <div class="calc">+ Coordinator team of 6 × $75K loaded = <strong style="color:var(--ink);">$450,000 in ops cost</strong></div>
-        <div class="calc">+ Outsourced CVO at $500/file × 40 = <strong style="color:var(--ink);">$20,000</strong></div>
-        <span class="total">→ True annual cost of slow credentialing: $6,470,000</span>
-        <span class="vs">→ CredTek annual cost (200 providers, 40 enrollments): $96,000</span>
+        <div class="calc">90 → 50 days to billable = <strong style="color:var(--ink);">~40 days of billing pulled forward, each</strong></div>
+        <div class="calc">40 days × ~$590/day × 40 providers = <strong style="color:var(--ink);">~$947K billing accelerated</strong></div>
+        <div class="calc">counted at a conservative 50% = <strong style="color:var(--ink);">~$473K captured this year</strong></div>
+        <span class="total">→ Net first-year gain after CredTek: ~$381,000</span>
+        <span class="vs">→ CredTek annual cost (200 providers, 40 enrollments): ~$92,000</span>
       </div>
 
-      <div class="coi-roi">CredTek customers typically cut time-to-revenue by <strong>40-60%</strong>. Even on the conservative end of that range, a 200-provider group recovers <strong>$2M+ in revenue in year one</strong> — a <strong>20×+ return</strong> on the CredTek subscription. Bigger gains when the inputs are clean.</div>
+      <div class="coi-roi">That's a <strong>~4× first-year return</strong> — and it&apos;s deliberately conservative: we count only half the accelerated billing, and it ignores the coordinator hours and outsourced-CVO fees you stop paying. <a href="#calc">Run your own numbers →</a></div>
     </div>
   </div>
 </section>
@@ -483,12 +478,12 @@ const LANDING_BODY_POST_CALC = `
   <div class="container">
     <span class="section-eyebrow">Pricing · No "contact us" games (until you need to)</span>
     <h2>Three tiers. <em>Two posted publicly.</em></h2>
-    <p class="section-lead">Most competitors hide pricing behind a "schedule a demo" form. We don't. Every number below is a <strong>starting point</strong> — your final pricing scales with your roster's complexity and volume, and we confirm it on a 20-minute call. No surprises. Enterprise (500+ providers) is custom.</p>
+    <p class="section-lead">Most competitors hide pricing behind a "schedule a demo" form. We don't. Every number below is a <strong>starting point</strong> — your final pricing scales with your roster's complexity and volume, and we confirm it on a 20-minute call. No surprises. Enterprise (400+ providers) is custom.</p>
 
     <div class="price-grid-3">
       <div class="price-card">
         <div class="price-tag">Starter</div>
-        <div class="price-desc">1–99 active providers · solo practices, small groups, single-state</div>
+        <div class="price-desc">1–99 active providers · small &amp; growing groups</div>
         <div class="price-from">Starting at</div>
         <div class="price-amount"><em>$35</em></div>
         <div class="price-unit">per provider · per month<br/>+ from $199 per credentialing action</div>
@@ -508,7 +503,7 @@ const LANDING_BODY_POST_CALC = `
       <div class="price-card featured">
         <div class="price-ribbon">Most popular</div>
         <div class="price-tag">Growth · most common</div>
-        <div class="price-desc">100–499 active providers · multi-state groups, MSOs, PE rollups</div>
+        <div class="price-desc">100–400 active providers · multi-state groups, MSOs, PE rollups</div>
         <div class="price-from">Starting at</div>
         <div class="price-amount"><em>$35</em></div>
         <div class="price-unit">per provider · per month<br/>+ from $199 per credentialing action · volume discounts at scale</div>
@@ -526,7 +521,7 @@ const LANDING_BODY_POST_CALC = `
       </div>
       <div class="price-card enterprise">
         <div class="price-tag">Enterprise</div>
-        <div class="price-desc">500+ active providers · health systems, IPAs, payors</div>
+        <div class="price-desc">400+ active providers · large groups &amp; health systems</div>
         <div class="price-amount"><em>Custom</em></div>
         <div class="price-unit">tailored to your roster, integrations, and SLAs</div>
         <ul>
@@ -577,7 +572,7 @@ const LANDING_BODY_POST_CALC = `
         </div>
         <div style="text-align:right;">
           <div class="serif" style="font-size:36px;letter-spacing:-0.01em;">~$96K<span style="color:var(--muted);font-size:18px;"> / year</span></div>
-          <div style="font-size:12px;color:var(--gold-deep);font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;font-weight:600;">VS. ~$6.4M IN LOST REVENUE + INTERNAL OPS</div>
+          <div style="font-size:12px;color:var(--gold-deep);font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;font-weight:600;">TYPICALLY A ~4× FIRST-YEAR RETURN</div>
         </div>
       </div>
     </div>
