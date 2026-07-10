@@ -53,7 +53,8 @@ export function TopNav() {
       <nav className="topnav">
         <div className="topnav-inner">
           <Link href="/" className="logo" aria-label="CredTek home">
-            <div className="logo-mark">C</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/credtek-mark.png" alt="" width={30} height={28} className="logo-mark-img" />
             <span>CredTek</span>
           </Link>
 

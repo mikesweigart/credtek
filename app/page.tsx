@@ -6,9 +6,11 @@
 // cost-of-inaction math and the 45-day guarantee — that's the section split
 // you see below.
 
+import Image from "next/image";
 import { PricingCalculator } from "./_components/PricingCalculator";
 import { TopNav } from "./_components/TopNav";
 import { Hero } from "./_components/Hero";
+import { HeroVideo } from "./_components/HeroVideo";
 import { StickyCTABar } from "./_components/StickyCTABar";
 
 // FAQ structured data — Google rewards real FAQ schema with rich-result
@@ -678,11 +680,11 @@ const LANDING_BODY_POST_CALC = `
 <footer>
   <div class="footer-inner">
     <div class="logo">
-      <div class="logo-mark">C</div>
+      <img src="/credtek-mark.png" alt="" width="30" height="28" class="logo-mark-img" />
       <span style="font-family:'DM Sans',sans-serif;font-style:normal;font-size:22px;">CredTek</span>
     </div>
     <div class="footer-meta">
-      US medical credentialing platform · 2026
+      Simplifying credentialing. Strengthening care. · US medical credentialing · 2026
     </div>
   </div>
 </footer>
@@ -693,7 +695,46 @@ export default function Page() {
     <>
       <TopNav />
       <Hero />
+
+      {/* 60-second explainer — its own calm section (moved out of the hero) */}
+      <section className="hv-section">
+        <div className="container hv-inner">
+          <span className="section-eyebrow">See it in action</span>
+          <h2 className="hv-title">Watch how CredTek works — <em>60 seconds.</em></h2>
+          <div className="hv-frame">
+            <HeroVideo />
+          </div>
+        </div>
+      </section>
+
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_PRE_CALC }} />
+
+      {/* Onboarding image band — the outcome you're buying, right before the ROI */}
+      <section className="img-band">
+        <Image
+          src="/team-welcome.png"
+          alt="A clinical team welcoming a newly credentialed provider to the practice"
+          fill
+          sizes="100vw"
+          className="img-band-img"
+        />
+        <div className="img-band-scrim" aria-hidden="true" />
+        <div className="container img-band-content">
+          <h2 className="img-band-title">
+            Your next hire should be <em>seeing patients in weeks</em> — not
+            waiting months on paperwork.
+          </h2>
+          <a
+            className="btn-primary btn-primary-lg"
+            href="https://calendly.com/mike-fusion-advisory/30min"
+            target="_blank"
+            rel="noopener"
+          >
+            Book a demo <span className="arrow">→</span>
+          </a>
+        </div>
+      </section>
+
       <PricingCalculator />
       <div dangerouslySetInnerHTML={{ __html: LANDING_BODY_POST_CALC }} />
       <StickyCTABar />

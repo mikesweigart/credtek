@@ -71,6 +71,8 @@ em { font-style: normal; }
   font-size: 17px;
   font-style: normal;
 }
+/* Real brand mark — the blue shield-check. Replaces the "C" monogram. */
+.logo-mark-img { height: 28px; width: auto; display: block; }
 .topnav-links {
   display: flex;
   gap: 18px;
@@ -14549,8 +14551,45 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 /* Fold now leads with text + CTA — the down-arrow scroll cue isn't needed. */
 .hero-clarity::after { display: none !important; }
+
+/* Hero supporting photo — warm, human, below the action path */
+.hero-visual { width: 100%; max-width: 720px; margin: 52px auto 0; }
+.hero-visual-img {
+  width: 100% !important; height: auto !important; display: block;
+  border-radius: 18px;
+  box-shadow: 0 30px 60px -24px rgba(11,31,46,0.38), 0 8px 24px -14px rgba(11,31,46,0.22);
+}
+@media (max-width: 720px) { .hero-visual { margin-top: 36px; } }
+
+/* 60-second explainer — its own calm section */
+.hv-section { padding: 8px 0; }
+.hv-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.hv-title { font-size: clamp(23px, 3vw, 33px); letter-spacing: -0.02em; margin: 6px 0 22px; }
+.hv-title em { font-style: normal; color: var(--gold-deep); }
+.hv-frame { width: 100%; max-width: 720px; margin: 0 auto; }
+
+/* Full-bleed onboarding image band (mid-page CTA) */
+.img-band {
+  position: relative;
+  min-height: 440px;
+  display: flex; align-items: center;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.img-band-img { object-fit: cover; object-position: center 30%; z-index: 0; }
+.img-band-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(90deg, rgba(11,31,46,0.88) 0%, rgba(11,31,46,0.66) 45%, rgba(11,31,46,0.28) 100%);
+}
+.img-band-content { position: relative; z-index: 2; max-width: 680px; }
+.img-band-title {
+  color: #fff; font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.16; letter-spacing: -0.02em; margin: 0 0 24px;
+}
+.img-band-title em { font-style: normal; color: #7DB9FF; }
 @media (max-width: 720px) {
-  .hero-video-support { margin-top: 36px; }
+  .img-band { min-height: 400px; }
+  .img-band-scrim { background: linear-gradient(180deg, rgba(11,31,46,0.68), rgba(11,31,46,0.84)); }
 }
 
 /* Visually hidden but accessible to screen readers + crawlers — used
