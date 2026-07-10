@@ -10,6 +10,7 @@ import {
   findResource,
   publishedResources,
 } from "../../_lib/resources";
+import { ResourceBanner } from "../../_components/ResourceMedia";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -42,7 +43,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
     <div className="rsc-page">
       <header className="compare-topnav">
         <Link href="/" className="compare-logo">
-          <div className="logo-mark">C</div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/credtek-mark.png" alt="" width={26} height={24} className="logo-mark-img" />
           <span>CredTek</span>
         </Link>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
@@ -64,6 +66,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
           <span className="rsc-article-cat">{RESOURCE_CATEGORY_LABELS[article.category]}</span>
           <h1 className="rsc-article-title">{article.title}</h1>
           <div className="rsc-article-meta">{article.readTime} · CredTek</div>
+
+          <ResourceBanner image={article.image} category={article.category} className="rmed-article" />
 
           <div
             className="rsc-article-body"
@@ -98,7 +102,8 @@ export default async function ResourceArticlePage({ params }: PageProps) {
       >
         <div className="footer-inner">
           <Link href="/" className="logo">
-            <div className="logo-mark" style={{ background: "white", color: "var(--ink)" }}>C</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/credtek-mark.png" alt="" width={26} height={24} className="logo-mark-img" />
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontStyle: "normal", fontSize: 22 }}>
               CredTek
             </span>

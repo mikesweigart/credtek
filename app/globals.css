@@ -12134,6 +12134,30 @@ a.rsc-row:hover {
   box-shadow: 0 8px 20px -16px rgba(4, 103, 222, 0.3);
 }
 .rsc-row-body { min-width: 0; flex: 1; }
+
+/* ── Resource media: branded hero banners + row thumbnails ── */
+.rmed-banner { position: relative; width: 100%; aspect-ratio: 24 / 9; border-radius: 16px; overflow: hidden; isolation: isolate; background: #0B2A52; }
+.rmed-article { margin: 24px 0 34px; box-shadow: 0 26px 50px -30px rgba(11,31,46,0.32); }
+.rmed-card { aspect-ratio: 16 / 8; margin: -22px -22px 16px; border-radius: 15px 15px 0 0; }
+.rmed-photo { object-fit: cover; }
+.rmed-photo-scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(11,31,46,0.04), rgba(11,31,46,0.30)); }
+.rmed-grad { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,0.92); }
+.rmed-grid { position: absolute; inset: 0; opacity: 0.55;
+  background-image: linear-gradient(rgba(255,255,255,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.09) 1px, transparent 1px);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(85% 85% at 50% 45%, #000, transparent 78%);
+  mask-image: radial-gradient(85% 85% at 50% 45%, #000, transparent 78%); }
+.rmed-bigicon { position: relative; z-index: 1; width: 26%; max-width: 108px; height: auto; opacity: 0.95; }
+.rmed-mark { position: absolute; right: 15px; bottom: 13px; width: 24px; height: 22px; color: rgba(255,255,255,0.85); z-index: 3; }
+.rmed-mark svg { width: 100%; height: 100%; display: block; }
+.rmed-mark-onphoto { filter: drop-shadow(0 1px 4px rgba(0,0,0,0.45)); }
+.rmed-thumb { width: 52px; height: 52px; flex: none; border-radius: 12px; display: grid; place-items: center; color: rgba(255,255,255,0.92); }
+.rmed-thumb svg { width: 24px; height: 24px; }
+@media (max-width: 560px) {
+  .rmed-thumb { width: 44px; height: 44px; }
+  .rmed-thumb svg { width: 20px; height: 20px; }
+  .rmed-article { margin: 18px 0 26px; }
+}
 .rsc-row-title {
   font-size: 15.5px;
   font-weight: 600;

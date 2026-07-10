@@ -32,6 +32,9 @@ export type Resource = {
   title: string;
   excerpt: string;
   readTime: string;
+  /** Optional hero photo (public path). Falls back to a branded, category-
+   *  themed gradient banner when omitted. */
+  image?: string;
   /** Plain HTML body. null = roadmap entry (coming soon, not yet published). */
   html: string | null;
 };
@@ -51,6 +54,7 @@ export const RESOURCES: Resource[] = [
   {
     slug: "credentialing-vs-payer-enrollment",
     category: "foundations",
+    image: "/office-handshake.png",
     title: "Credentialing vs. Payer Enrollment: What's the Difference (and Why It Costs You)",
     excerpt:
       "They sound interchangeable. They aren't. Confusing the two is one of the most expensive mistakes a growing medical group makes — here's the clean mental model.",
@@ -205,6 +209,7 @@ export const RESOURCES: Resource[] = [
   // ───────────────────────── ROI ─────────────────────────
   {
     slug: "true-cost-of-slow-credentialing",
+    image: "/team-welcome-2.png",
     category: "roi",
     title: "The True Cost of Slow Credentialing: $2,000–$3,000 per Provider per Day",
     excerpt:
@@ -488,6 +493,7 @@ export const RESOURCES: Resource[] = [
   // ───────────────────────── SPECIALTY ─────────────────────────
   {
     slug: "behavioral-health-supervision-tracking",
+    image: "/team-welcome.png",
     category: "specialty",
     title: "Behavioral Health Supervision Tracking: Pre-Licensed Provider Hours",
     excerpt:

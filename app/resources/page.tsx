@@ -12,6 +12,7 @@ import {
   publishedResources,
   type ResourceCategory,
 } from "../_lib/resources";
+import { ResourceBanner, ResourceThumb } from "../_components/ResourceMedia";
 
 export const metadata = {
   title: "Credentialing Resources & Guides",
@@ -37,7 +38,8 @@ export default function ResourcesIndex() {
     <div className="rsc-page">
       <header className="compare-topnav">
         <Link href="/" className="compare-logo">
-          <div className="logo-mark">C</div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/credtek-mark.png" alt="" width={26} height={24} className="logo-mark-img" />
           <span>CredTek</span>
         </Link>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
@@ -76,6 +78,7 @@ export default function ResourcesIndex() {
           <div className="rsc-featured-grid">
             {featured.map((r) => (
               <Link key={r.slug} href={`/resources/${r.slug}`} className="rsc-featured-card">
+                <ResourceBanner image={r.image} category={r.category} className="rmed-card" />
                 <span className="rsc-card-cat">{RESOURCE_CATEGORY_LABELS[r.category]}</span>
                 <h3>{r.title}</h3>
                 <p>{r.excerpt}</p>
@@ -99,6 +102,7 @@ export default function ResourcesIndex() {
                   {items.map((r) =>
                     r.html ? (
                       <Link key={r.slug} href={`/resources/${r.slug}`} className="rsc-row">
+                        <ResourceThumb category={r.category} />
                         <div className="rsc-row-body">
                           <div className="rsc-row-title">{r.title}</div>
                           <div className="rsc-row-excerpt">{r.excerpt}</div>
@@ -110,6 +114,7 @@ export default function ResourcesIndex() {
                       </Link>
                     ) : (
                       <div key={r.slug} className="rsc-row rsc-row-soon">
+                        <ResourceThumb category={r.category} />
                         <div className="rsc-row-body">
                           <div className="rsc-row-title">{r.title}</div>
                           <div className="rsc-row-excerpt">{r.excerpt}</div>
@@ -163,7 +168,8 @@ export default function ResourcesIndex() {
       >
         <div className="footer-inner">
           <Link href="/" className="logo">
-            <div className="logo-mark" style={{ background: "white", color: "var(--ink)" }}>C</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/credtek-mark.png" alt="" width={26} height={24} className="logo-mark-img" />
             <span style={{ fontFamily: "'DM Sans', sans-serif", fontStyle: "normal", fontSize: 22 }}>
               CredTek
             </span>
