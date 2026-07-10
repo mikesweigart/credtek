@@ -44,7 +44,7 @@ export function AvelFollowups() {
 
   function act(id: string) {
     if (!email) {
-      router.push("/avelecare/settings?tab=email");
+      router.push("/eastside-hospital/settings?tab=email");
       return;
     }
     setQueued((prev) => new Set(prev).add(id));
@@ -61,7 +61,7 @@ export function AvelFollowups() {
             <strong>Connect your email to send follow-ups in one click.</strong>
             <span> Renewal reminders, document requests, and payer escalations go out from your inbox.</span>
           </div>
-          <Link href="/avelecare/settings?tab=email" className="avel-btn-primary">
+          <Link href="/eastside-hospital/settings?tab=email" className="avel-btn-primary">
             Connect email →
           </Link>
         </div>
@@ -136,7 +136,7 @@ export function AvelFollowups() {
                   <div className="fu-detail">{f.detail}</div>
                   <div className="fu-meta">
                     <Link
-                      href={`/avelecare/providers/${f.providerSlug}`}
+                      href={`/eastside-hospital/providers/${f.providerSlug}`}
                       className="fu-provider"
                     >
                       {provider?.name ?? f.providerSlug}
@@ -171,7 +171,7 @@ export function AvelFollowups() {
       <div className="avel-table-foot">
         Eastside Hospital follow-ups · {remaining} open
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </div>
   );

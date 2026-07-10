@@ -256,7 +256,7 @@ export default function AvelReports() {
         <div className="avel-table-foot">
           Eastside Hospital Reports &amp; Analytics · data through May 2026
           &nbsp;·&nbsp;
-          <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+          <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
         </div>
       </div>
     </>

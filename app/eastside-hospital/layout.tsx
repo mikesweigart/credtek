@@ -4,7 +4,7 @@ import { AvelNav, AvelShellProvider } from "./_components/AvelNav";
 import { AvelGuide } from "./_components/AvelGuide";
 import { AvelCommandPalette } from "./_components/AvelCommandPalette";
 
-// Eastside Hospital-branded portal — fully scoped under /avelecare. Maps to
+// Eastside Hospital-branded portal — fully scoped under /eastside-hospital. Maps to
 // avelecare.cred-tek.com via subdomain rewrite (configured in
 // next.config or Vercel project settings; DNS handled separately).
 //

@@ -571,7 +571,7 @@ export const RESOURCES: Resource[] = [
     category: "future",
     title: "AI in Credentialing: What's Real, What's Hype, and Where Humans Still Win",
     excerpt:
-      "AI agents can fill payer portals and extract data from documents — but the approval gate still belongs to a human. An honest look at what to automate and what not to.",
+      "An honest look at what credentialing work to automate — and what always belongs to a human.",
     readTime: "7 min read",
     html: `
       <p>Every credentialing vendor now has "AI" on the homepage. Some of it is

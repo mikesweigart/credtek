@@ -26,7 +26,7 @@ export default function AvelSpaces() {
             return (
               <Link
                 key={s.id}
-                href={`/avelecare/spaces/${s.slug}`}
+                href={`/eastside-hospital/spaces/${s.slug}`}
                 className="avel-space-card"
               >
                 <div className="avel-space-card-head">

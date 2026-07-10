@@ -73,7 +73,7 @@ export const HELP_ARTICLES: HelpArticle[] = [
       <h2>Bulk invite (Modio import)</h2>
       <p>To invite many providers at once, use the Modio import flow at
       <a href="/welcome">/welcome → step 4</a>. Drop your Modio CSV and
-      our intake agent matches existing records, flags anomalies, and
+      our intake process matches existing records, flags anomalies, and
       creates new invites for the rest.</p>
     `,
   },

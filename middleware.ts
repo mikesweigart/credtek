@@ -1,6 +1,6 @@
 // Middleware does two jobs, in order:
 //   1. Subdomain rewrite — maps prospect-branded sub-portals to their
-//      route group (avelecare.cred-tek.com → /avelecare/*).
+//      route group (eastside.cred-tek.com → /eastside-hospital/*).
 //   2. Supabase session refresh — keeps the auth cookie fresh so SSR
 //      and the browser stay in sync (@supabase/ssr requirement).
 //
@@ -12,7 +12,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextRequest, NextResponse } from "next/server";
 
 const SUBDOMAIN_MAP: Record<string, string> = {
-  avelecare: "/avelecare",
+  eastside: "/eastside-hospital",
 };
 
 function routingResponse(req: NextRequest): NextResponse {

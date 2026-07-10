@@ -189,7 +189,7 @@ export function AvelAuditBinder() {
       <div className="avel-table-foot">
         Eastside Hospital · NCQA audit binder
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </div>
   );

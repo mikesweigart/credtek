@@ -140,7 +140,7 @@ export function AvelRecred() {
               return (
                 <tr key={r.providerSlug} className="avel-table-row">
                   <td>
-                    <Link href={`/avelecare/providers/${r.providerSlug}`} className="avel-table-name avel-table-name-a">
+                    <Link href={`/eastside-hospital/providers/${r.providerSlug}`} className="avel-table-name avel-table-name-a">
                       {p?.name ?? r.providerSlug}{p ? `, ${p.credentials}` : ""}
                     </Link>
                   </td>
@@ -185,7 +185,7 @@ export function AvelRecred() {
       <div className="avel-table-foot">
         Showing <strong>{rows.length}</strong> of {RECREDS.length} re-credentialing cycles
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </div>
   );

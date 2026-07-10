@@ -41,7 +41,7 @@ export default async function AvelSpaceDetail(props: {
 
       <div className="avel-content">
         <div className="avel-breadcrumb">
-          <Link href="/avelecare/spaces">Spaces &amp; Programs</Link>
+          <Link href="/eastside-hospital/spaces">Spaces &amp; Programs</Link>
           <span>›</span>
           <span>{space.shortName}</span>
         </div>

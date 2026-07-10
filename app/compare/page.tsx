@@ -185,7 +185,7 @@ const SECTIONS: Section[] = [
         medallion: "no",
       },
       {
-        feature: "40+ years of credentialing experience built into the product",
+        feature: "decades of credentialing experience built into the product",
         detail: "Co-founders ran enterprise medical credentialing programs before building CredTek",
         credtek: "yes",
         modio: "no",
@@ -287,7 +287,7 @@ export default function ComparePage() {
             Book a 20-min demo →
           </Link>
           <div className="final-meta" style={{ marginTop: 24, color: "var(--muted)" }}>
-            40+ years of credentialing experience · live in 14 days · month-to-month with 30-day out
+            decades of credentialing experience · live in 14 days · month-to-month with 30-day out
           </div>
         </div>
       </section>

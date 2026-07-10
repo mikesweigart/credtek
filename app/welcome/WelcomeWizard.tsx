@@ -579,7 +579,7 @@ function Step4({
       <h2 className="welcome-h2">Bring your existing roster.</h2>
       <p className="welcome-p">
         Drop a Modio export, CAQH roster, or any messy spreadsheet — our
-        intake agent matches existing CredTek records, flags anomalies for
+        intake process matches existing CredTek records, flags anomalies for
         your review, and creates new provider profiles for the rest.
       </p>
 

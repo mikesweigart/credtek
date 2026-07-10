@@ -56,11 +56,11 @@ export default function OnepagerPage() {
             New-school technology.
           </h1>
           <p>
-            CredTek is the AI-agent-native credentialing platform for US
+            CredTek is the done-for-you credentialing platform for US
             medical practices, MSOs, and health systems. Built by
-            operators with <strong>40+ years of enterprise medical
-            credentialing experience</strong> — paired with modern AI
-            agents that actually do the typing.
+            operators with <strong>decades of enterprise medical
+            credentialing experience</strong> — backed by a platform that
+            does the busywork, not just tracks it.
           </p>
         </section>
 
@@ -68,7 +68,7 @@ export default function OnepagerPage() {
           <div className="op-diff">
             <div className="op-diff-icon">📚</div>
             <div className="op-diff-body">
-              <h3>40+ years of experience built in</h3>
+              <h3>Decades of experience built in</h3>
               <p>
                 Two co-founders, each with 20+ years inside enterprise
                 medical credentialing programs. The product is designed
@@ -79,12 +79,12 @@ export default function OnepagerPage() {
           <div className="op-diff">
             <div className="op-diff-icon">⚙</div>
             <div className="op-diff-body">
-              <h3>Real agents that fill payor portals</h3>
+              <h3>We handle payer enrollment for you</h3>
               <p>
                 Aetna, Anthem, Cigna, UnitedHealthcare, Humana, BCBS,
-                Optum, Tricare + specialty networks. Human approval gate
-                on every submission. No hallucinated data ever reaches a
-                payor.
+                Optum, Tricare + specialty networks. Our team completes
+                each, with a human approval gate on every submission —
+                nothing reaches a payer unchecked.
               </p>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function OnepagerPage() {
           </table>
           <p className="op-pricing-foot">
             Month-to-month with a 30-day out clause for the first 90 days
-            · live in 14 days · HIPAA + BAA on day one
+            · working in 48 hours · HIPAA + BAA on day one
           </p>
         </section>
 
@@ -199,7 +199,7 @@ export default function OnepagerPage() {
             </thead>
             <tbody>
               <tr>
-                <td>Real payor-portal auto-fill (with human approval gate)</td>
+                <td>Payer enrollment done for you (with human approval gate)</td>
                 <td className="op-compare-credtek">✓</td>
                 <td>✕</td>
                 <td>✕</td>
@@ -248,7 +248,7 @@ export default function OnepagerPage() {
                 <td>21–45d</td>
               </tr>
               <tr>
-                <td>40+ years of operator experience built into the product</td>
+                <td>decades of operator experience built into the product</td>
                 <td className="op-compare-credtek">✓</td>
                 <td>✕</td>
                 <td>✕</td>

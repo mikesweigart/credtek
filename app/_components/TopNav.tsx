@@ -18,7 +18,7 @@ const LINKS: { href: string; label: string; external?: boolean }[] = [
   // The fully-interactive product demo — no form, nothing gated. Opens
   // in a new tab so the marketing page (and its Book-a-demo CTA) stays
   // one tab away when the prospect is done exploring.
-  { href: "/avelecare", label: "See it live", external: true },
+  { href: "/eastside-hospital", label: "See it live", external: true },
   { href: "/resources", label: "Resources" },
 ];
 
@@ -164,7 +164,7 @@ export function TopNav() {
             Book a demo →
           </a>
           <p className="mobile-drawer-meta">
-            US medical credentialing · 40+ years of operator experience
+            US medical credentialing · decades of operator experience
           </p>
         </div>
       </div>

@@ -103,7 +103,7 @@ export default function AvelDashboard() {
             <div className="avel-kpi-val">{avgDaysPayerEnrollment()}<span className="avel-kpi-unit">d</span></div>
             <div className="avel-kpi-delta">Active enrollments only</div>
           </div>
-          <Link href="/avelecare/expirables" className="avel-kpi avel-kpi-link">
+          <Link href="/eastside-hospital/expirables" className="avel-kpi avel-kpi-link">
             <div className="avel-kpi-lbl">Credentials expiring (60d)</div>
             <div className="avel-kpi-val avel-kpi-val-warn">{expiring.length}</div>
             <div className="avel-kpi-delta">Review &amp; renew →</div>
@@ -128,7 +128,7 @@ export default function AvelDashboard() {
               <div className="avel-card-title">Credentialing pipeline</div>
               <div className="avel-card-sub">Every active Eastside Hospital clinician, by current stage. Click a column to drill in.</div>
             </div>
-            <Link className="avel-link" href="/avelecare/providers">View all providers →</Link>
+            <Link className="avel-link" href="/eastside-hospital/providers">View all providers →</Link>
           </div>
 
           <div className="avel-pipeline-cols">
@@ -182,7 +182,7 @@ export default function AvelDashboard() {
                     </div>
                     <div className="avel-alert-detail">{p.flags[0]}</div>
                   </div>
-                  <Link href={`/avelecare/providers`} className="avel-alert-link">Review →</Link>
+                  <Link href={`/eastside-hospital/providers`} className="avel-alert-link">Review →</Link>
                 </li>
               ))}
             </ul>
@@ -191,7 +191,7 @@ export default function AvelDashboard() {
           <div className="avel-card">
             <div className="avel-card-head">
               <div className="avel-card-title">Readiness by space</div>
-              <Link className="avel-link" href="/avelecare/spaces">All spaces →</Link>
+              <Link className="avel-link" href="/eastside-hospital/spaces">All spaces →</Link>
             </div>
             <div className="avel-space-rollup">
               {SPACES.map((s) => {
@@ -200,7 +200,7 @@ export default function AvelDashboard() {
                 return (
                   <Link
                     key={s.id}
-                    href={`/avelecare/spaces/${s.slug}`}
+                    href={`/eastside-hospital/spaces/${s.slug}`}
                     className="avel-space-row"
                   >
                     <div className="avel-space-row-id">

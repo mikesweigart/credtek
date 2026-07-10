@@ -16,7 +16,7 @@ import {
 export const metadata = {
   title: "Credentialing Resources & Guides",
   description:
-    "Practical guides on provider credentialing, payer enrollment, primary-source verification, NCQA delegation, multi-state licensure, and more — from operators with 40+ years of enterprise credentialing experience.",
+    "Practical guides on provider credentialing, payer enrollment, primary-source verification, NCQA delegation, multi-state licensure, and more — from operators with decades of enterprise credentialing experience.",
 };
 
 const CATEGORY_ORDER: ResourceCategory[] = [
@@ -63,7 +63,7 @@ export default function ResourcesIndex() {
           <p className="rsc-lead">
             Practical, no-fluff guides on how provider credentialing and payer
             enrollment actually work in the United States — from the team that&apos;s
-            spent 40+ years inside enterprise credentialing programs. Everything
+            spent decades inside enterprise credentialing programs. Everything
             here is built to save you time, money, and audit headaches.
           </p>
         </div>

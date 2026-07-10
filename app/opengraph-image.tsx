@@ -74,7 +74,7 @@ export default async function OG() {
               textTransform: "uppercase",
             }}
           >
-            Medical credentialing · AI-agent-native
+            Medical credentialing · done-for-you
           </div>
           <div style={{ display: "flex", flexDirection: "column", maxWidth: 1000 }}>
             <div
@@ -111,7 +111,7 @@ export default async function OG() {
               marginTop: 8,
             }}
           >
-            Credentialed and billing 40–60% faster. Built by operators with 40+ years of enterprise medical credentialing experience.
+            Credentialed and billing 40–60% faster. Built by operators with decades of enterprise medical credentialing experience.
           </div>
         </div>
 

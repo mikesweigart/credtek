@@ -129,7 +129,7 @@ export function AvelProviderTable() {
           </thead>
           <tbody>
             {filtered.map((p) => {
-              const href = `/avelecare/providers/${p.slug}`;
+              const href = `/eastside-hospital/providers/${p.slug}`;
               return (
                 <tr
                   key={p.id}
@@ -213,7 +213,7 @@ export function AvelProviderTable() {
         Showing <strong>{filtered.length}</strong> of {PROVIDERS.length} providers
         {hasFilter ? " (filtered)" : ""} · Eastside Hospital clinician roster
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </>
   );

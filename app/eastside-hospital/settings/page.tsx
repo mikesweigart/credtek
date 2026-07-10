@@ -94,7 +94,7 @@ function SettingsTabs() {
       <div className="avel-table-foot">
         Eastside Hospital Credentialing Portal · Admin
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </div>
   );

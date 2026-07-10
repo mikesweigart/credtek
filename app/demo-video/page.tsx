@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Watch the 7-min CredTek demo · CredTek",
   description:
-    "A 7-minute walkthrough of CredTek — the credentialing platform built by operators with 40+ years of enterprise medical credentialing experience.",
+    "A 7-minute walkthrough of CredTek — the credentialing platform built by operators with decades of enterprise medical credentialing experience.",
 };
 
 // ───────────────────────────────────────────────────────────────────────

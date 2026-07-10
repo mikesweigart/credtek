@@ -34,7 +34,7 @@ const FAQ_JSONLD = {
       name: "What happens to our existing credentialing data?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "We migrate it. CredTek's intake agent ingests Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates automatically with confidence scoring — your coordinator approves anomalies.",
+        text: "We migrate it. CredTek ingests your Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates with confidence scoring — your coordinator approves anomalies.",
       },
     },
     {
@@ -84,7 +84,7 @@ const LANDING_BODY_PRE_CALC = `
       <span class="sp-logo">Ascension</span>
     </div>
     <div class="social-proof-foot">
-      Founders bring 40+ years of credentialing operations experience spanning
+      Founders bring decades of credentialing operations experience spanning
       <strong>700+ facilities</strong> and <strong>80,000+ beds</strong> nationwide.
     </div>
   </div>
@@ -647,7 +647,7 @@ const LANDING_BODY_POST_CALC = `
 
       <div class="faq-item">
         <div class="faq-q"><span class="q-mark">Q.</span> What happens to our existing data?</div>
-        <div class="faq-a">We migrate it. CredTek&apos;s intake agent ingests Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates automatically with confidence scoring — your coordinator approves anomalies. <strong>You don&apos;t redo months of work.</strong></div>
+        <div class="faq-a">We migrate it. CredTek ingests your Modio exports, CAQH data, and messy spreadsheets. Your golden profile populates with confidence scoring — your coordinator approves anomalies. <strong>You don&apos;t redo months of work.</strong></div>
       </div>
 
       <div class="faq-item">

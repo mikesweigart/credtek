@@ -140,7 +140,7 @@ export function AvelProviderDetail({ provider }: { provider: Provider }) {
   return (
     <div className="avel-content">
       <div className="avel-breadcrumb">
-        <Link href="/avelecare/providers">Providers</Link>
+        <Link href="/eastside-hospital/providers">Providers</Link>
         <span>›</span>
         <span>{provider.name}</span>
       </div>
@@ -203,7 +203,7 @@ export function AvelProviderDetail({ provider }: { provider: Provider }) {
             <ul className="avel-pd-spaces">
               {spaces.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/avelecare/spaces/${s.slug}`}>{s.name}</Link>
+                  <Link href={`/eastside-hospital/spaces/${s.slug}`}>{s.name}</Link>
                   <span>{s.region}</span>
                 </li>
               ))}

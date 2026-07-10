@@ -140,7 +140,7 @@ export function AvelExpirables() {
               const provider = getProvider(e.providerSlug);
               const w = windowOf(e.daysUntil);
               const tone = WINDOW_META[w].tone;
-              const href = `/avelecare/providers/${e.providerSlug}`;
+              const href = `/eastside-hospital/providers/${e.providerSlug}`;
               return (
                 <tr
                   key={e.id}
@@ -193,7 +193,7 @@ export function AvelExpirables() {
         Showing <strong>{rows.length}</strong> of {EXPIRABLES.length} upcoming expirations
         {hasFilter ? " (filtered)" : ""}
         &nbsp;·&nbsp;
-        <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
+        <Link className="avel-link" href="/eastside-hospital">Back to Dashboard</Link>
       </div>
     </div>
   );

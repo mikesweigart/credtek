@@ -17,26 +17,26 @@ type Cmd = { id: string; group: Group; label: string; sub?: string; href: string
 const GROUP_ORDER: Group[] = ["Actions", "Pages", "Providers", "Spaces"];
 
 const PAGES: Cmd[] = [
-  { id: "pg-dash", group: "Pages", label: "Dashboard", href: "/avelecare", icon: "▣" },
-  { id: "pg-followups", group: "Pages", label: "Follow-ups", href: "/avelecare/followups", icon: "↗" },
-  { id: "pg-prov", group: "Pages", label: "Providers", href: "/avelecare/providers", icon: "◯" },
-  { id: "pg-spaces", group: "Pages", label: "Spaces & Programs", href: "/avelecare/spaces", icon: "◇" },
-  { id: "pg-exp", group: "Pages", label: "Expirables & Renewals", href: "/avelecare/expirables", icon: "⏱" },
-  { id: "pg-recred", group: "Pages", label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "↻" },
-  { id: "pg-wf", group: "Pages", label: "Workflows", href: "/avelecare/workflows", icon: "▤" },
-  { id: "pg-docs", group: "Pages", label: "Documents & Compliance", href: "/avelecare/documents", icon: "📄" },
-  { id: "pg-audit", group: "Pages", label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "▣" },
-  { id: "pg-rep", group: "Pages", label: "Reports & Analytics", href: "/avelecare/reports", icon: "▥" },
-  { id: "pg-set", group: "Pages", label: "Admin & Settings", href: "/avelecare/settings", icon: "⚙" },
-  { id: "pg-help", group: "Pages", label: "Help & Chat", href: "/avelecare/help", icon: "✦" },
+  { id: "pg-dash", group: "Pages", label: "Dashboard", href: "/eastside-hospital", icon: "▣" },
+  { id: "pg-followups", group: "Pages", label: "Follow-ups", href: "/eastside-hospital/followups", icon: "↗" },
+  { id: "pg-prov", group: "Pages", label: "Providers", href: "/eastside-hospital/providers", icon: "◯" },
+  { id: "pg-spaces", group: "Pages", label: "Spaces & Programs", href: "/eastside-hospital/spaces", icon: "◇" },
+  { id: "pg-exp", group: "Pages", label: "Expirables & Renewals", href: "/eastside-hospital/expirables", icon: "⏱" },
+  { id: "pg-recred", group: "Pages", label: "Re-credentialing", href: "/eastside-hospital/recredentialing", icon: "↻" },
+  { id: "pg-wf", group: "Pages", label: "Workflows", href: "/eastside-hospital/workflows", icon: "▤" },
+  { id: "pg-docs", group: "Pages", label: "Documents & Compliance", href: "/eastside-hospital/documents", icon: "📄" },
+  { id: "pg-audit", group: "Pages", label: "NCQA Audit Binder", href: "/eastside-hospital/audit", icon: "▣" },
+  { id: "pg-rep", group: "Pages", label: "Reports & Analytics", href: "/eastside-hospital/reports", icon: "▥" },
+  { id: "pg-set", group: "Pages", label: "Admin & Settings", href: "/eastside-hospital/settings", icon: "⚙" },
+  { id: "pg-help", group: "Pages", label: "Help & Chat", href: "/eastside-hospital/help", icon: "✦" },
 ];
 
 const ACTIONS: Cmd[] = [
-  { id: "ac-add", group: "Actions", label: "Add a provider", sub: "Start intake", href: "/avelecare/providers", icon: "＋" },
-  { id: "ac-followups", group: "Actions", label: "Review follow-ups", sub: "What needs a nudge", href: "/avelecare/followups", icon: "↗" },
-  { id: "ac-renew", group: "Actions", label: "Review expiring credentials", sub: "Renewals due soon", href: "/avelecare/expirables", icon: "⏱" },
-  { id: "ac-audit", group: "Actions", label: "Generate NCQA audit binder", sub: "Delegated credentialing", href: "/avelecare/audit", icon: "▣" },
-  { id: "ac-email", group: "Actions", label: "Connect email", sub: "Send follow-ups from your inbox", href: "/avelecare/settings?tab=email", icon: "✉" },
+  { id: "ac-add", group: "Actions", label: "Add a provider", sub: "Start intake", href: "/eastside-hospital/providers", icon: "＋" },
+  { id: "ac-followups", group: "Actions", label: "Review follow-ups", sub: "What needs a nudge", href: "/eastside-hospital/followups", icon: "↗" },
+  { id: "ac-renew", group: "Actions", label: "Review expiring credentials", sub: "Renewals due soon", href: "/eastside-hospital/expirables", icon: "⏱" },
+  { id: "ac-audit", group: "Actions", label: "Generate NCQA audit binder", sub: "Delegated credentialing", href: "/eastside-hospital/audit", icon: "▣" },
+  { id: "ac-email", group: "Actions", label: "Connect email", sub: "Send follow-ups from your inbox", href: "/eastside-hospital/settings?tab=email", icon: "✉" },
 ];
 
 const PROVIDER_CMDS: Cmd[] = PROVIDERS.map((p) => ({
@@ -44,7 +44,7 @@ const PROVIDER_CMDS: Cmd[] = PROVIDERS.map((p) => ({
   group: "Providers",
   label: `${p.name}, ${p.credentials}`,
   sub: `${p.specialty} · ${STAGE_LABEL[p.stage]}`,
-  href: `/avelecare/providers/${p.slug}`,
+  href: `/eastside-hospital/providers/${p.slug}`,
   icon: p.initials,
 }));
 
@@ -53,7 +53,7 @@ const SPACE_CMDS: Cmd[] = SPACES.map((s) => ({
   group: "Spaces",
   label: s.name,
   sub: `${s.region} · ${s.serviceLine}`,
-  href: `/avelecare/spaces/${s.slug}`,
+  href: `/eastside-hospital/spaces/${s.slug}`,
   icon: "◇",
 }));
 

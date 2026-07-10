@@ -52,7 +52,7 @@ const EXCLUDE_PREFIXES = [
   "/invite",
   // Real product (PortalGuide), white-label (AvelGuide), internal ops
   "/app",
-  "/avelecare",
+  "/eastside-hospital",
   "/ops",
   // Auth / account / onboarding flows
   "/account",

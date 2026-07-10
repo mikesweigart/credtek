@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     template: "%s · CredTek",
   },
   description:
-    "CredTek gets your providers credentialed and billing 40–60% faster. The AI-agent-native credentialing platform for US medical groups, MSOs & health systems — built by operators with 40+ years of credentialing experience.",
+    "CredTek gets your providers credentialed and billing 40–60% faster. The done-for-you credentialing platform for US medical groups, MSOs & health systems — built by operators with decades of credentialing experience.",
   openGraph: {
     title: "CredTek — Get your providers credentialed and billing 40–60% faster.",
     description:
-      "The AI-agent-native credentialing platform for US medical groups, MSOs & health systems. Built by operators with 40+ years of enterprise medical credentialing experience.",
+      "The done-for-you credentialing platform for US medical groups, MSOs & health systems. Built by operators with decades of enterprise medical credentialing experience.",
     type: "website",
     siteName: "CredTek",
     url: "https://cred-tek.com",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CredTek — Providers credentialed and billing 40–60% faster.",
     description:
-      "The AI-agent-native credentialing platform for US medical groups, MSOs & health systems — built by 40-year credentialing operators.",
+      "The done-for-you credentialing platform for US medical groups, MSOs & health systems — built by veteran credentialing operators.",
   },
 };
 

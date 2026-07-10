@@ -41,16 +41,16 @@ type Ctx = { pathname: string; lastInput: string };
 
 // Contextual help text by path — short and product-flavored.
 function explainPage(pathname: string): string {
-  if (pathname.startsWith("/avelecare/providers")) {
+  if (pathname.startsWith("/eastside-hospital/providers")) {
     return "You're on the Providers page. This is every Eastside Hospital clinician currently in credentialing or active across our service lines. The table shows their role, service lines, states licensed, current credentialing stage, and whether they're ready to work and ready to bill. Use the filters to slice by service line, space, or readiness state.";
   }
-  if (pathname.startsWith("/avelecare/spaces")) {
+  if (pathname.startsWith("/eastside-hospital/spaces")) {
     return "Spaces & Programs is how Eastside Hospital organizes credentialing by facility and program — East Adams, the Minnesota Rural Hospital network, Kansas RHTP, the New York Crisis Care program, our National School Health Network, and the Senior Care Network. Each space shows its own ready-to-bill count, onboarding pipeline, and credential risks.";
   }
-  if (pathname.startsWith("/avelecare/workflows")) {
+  if (pathname.startsWith("/eastside-hospital/workflows")) {
     return "Workflows are the standardized credentialing templates Eastside Hospital uses across service lines — Emergency, ICU, Hospitalist, Behavioral Health, School Health, Rural. Each workflow defines stages, SLA targets, and ownership so new providers always follow the same path.";
   }
-  if (pathname.startsWith("/avelecare/help")) {
+  if (pathname.startsWith("/eastside-hospital/help")) {
     return "This is the Help page — your guided tours and product assistance live here. You can also chat with me from any page using the bubble in the bottom-right.";
   }
   // Default: dashboard.
@@ -88,7 +88,7 @@ const SCRIPT: Record<StepId, Step> = {
     message:
       "Let's add a new Eastside Hospital clinician. Step 1 — go to the Providers page using the left navigation, then click the 'Add Provider' button in the top right. Let me know when you see the Step 1 form titled 'Basic Information'.",
     options: [
-      { label: "Open the Providers page", href: "/avelecare/providers", next: "add-provider-2" },
+      { label: "Open the Providers page", href: "/eastside-hospital/providers", next: "add-provider-2" },
       { label: "I'm there — what's next?", next: "add-provider-2" },
     ],
   },
@@ -105,7 +105,7 @@ const SCRIPT: Record<StepId, Step> = {
       "Step 3 — assign their service lines (e.g. Emergency, ICU), the states where they're licensed, and the Eastside Hospital spaces they'll cover. Pick the default workflow template that matches their service line. Click Create — credentialing starts automatically and the provider appears on the Dashboard pipeline.",
     options: [
       { label: "Back to menu", next: "menu" },
-      { label: "Show me a real provider", href: "/avelecare/providers", next: "menu" },
+      { label: "Show me a real provider", href: "/eastside-hospital/providers", next: "menu" },
     ],
   },
   "status-prompt": {
@@ -232,7 +232,7 @@ function blockerExplanation(query: string): string {
 }
 
 export function AvelGuide() {
-  const pathname = usePathname() ?? "/avelecare";
+  const pathname = usePathname() ?? "/eastside-hospital";
 
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);

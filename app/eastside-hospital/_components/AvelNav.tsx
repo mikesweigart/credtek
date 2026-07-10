@@ -29,25 +29,25 @@ import { NavIcon } from "../../_components/NavIcon";
 type Item = { label: string; href: string; icon: string; badge?: string };
 
 const WORKSPACE: Item[] = [
-  { label: "Dashboard", href: "/avelecare", icon: "dashboard" },
-  { label: "Follow-ups", href: "/avelecare/followups", icon: "followup", badge: "5" },
-  { label: "Providers", href: "/avelecare/providers", icon: "providers", badge: "15" },
-  { label: "Spaces & Programs", href: "/avelecare/spaces", icon: "spaces", badge: "6" },
-  { label: "Expirables", href: "/avelecare/expirables", icon: "expirables", badge: "4" },
-  { label: "Re-credentialing", href: "/avelecare/recredentialing", icon: "recred" },
-  { label: "Workflows", href: "/avelecare/workflows", icon: "workflows" },
+  { label: "Dashboard", href: "/eastside-hospital", icon: "dashboard" },
+  { label: "Follow-ups", href: "/eastside-hospital/followups", icon: "followup", badge: "5" },
+  { label: "Providers", href: "/eastside-hospital/providers", icon: "providers", badge: "15" },
+  { label: "Spaces & Programs", href: "/eastside-hospital/spaces", icon: "spaces", badge: "6" },
+  { label: "Expirables", href: "/eastside-hospital/expirables", icon: "expirables", badge: "4" },
+  { label: "Re-credentialing", href: "/eastside-hospital/recredentialing", icon: "recred" },
+  { label: "Workflows", href: "/eastside-hospital/workflows", icon: "workflows" },
 ];
 
 const SUPPORT: Item[] = [
-  { label: "Documents & Compliance", href: "/avelecare/documents", icon: "documents" },
-  { label: "NCQA Audit Binder", href: "/avelecare/audit", icon: "audit" },
-  { label: "Reports & Analytics", href: "/avelecare/reports", icon: "reports" },
-  { label: "Admin & Settings", href: "/avelecare/settings", icon: "settings" },
-  { label: "Help & Chat", href: "/avelecare/help", icon: "help" },
+  { label: "Documents & Compliance", href: "/eastside-hospital/documents", icon: "documents" },
+  { label: "NCQA Audit Binder", href: "/eastside-hospital/audit", icon: "audit" },
+  { label: "Reports & Analytics", href: "/eastside-hospital/reports", icon: "reports" },
+  { label: "Admin & Settings", href: "/eastside-hospital/settings", icon: "settings" },
+  { label: "Help & Chat", href: "/eastside-hospital/help", icon: "help" },
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === "/avelecare") return pathname === "/avelecare";
+  if (href === "/eastside-hospital") return pathname === "/eastside-hospital";
   return pathname.startsWith(href);
 }
 
@@ -113,7 +113,7 @@ export function useShell(): ShellCtx {
 // AvelNav — sidebar / mobile drawer
 // ──────────────────────────────────────────────────────────────
 export function AvelNav() {
-  const pathname = usePathname() ?? "/avelecare";
+  const pathname = usePathname() ?? "/eastside-hospital";
   const { drawerOpen, setDrawerOpen } = useShell();
 
   const close = useCallback(() => setDrawerOpen(false), [setDrawerOpen]);
@@ -135,7 +135,7 @@ export function AvelNav() {
         aria-label="Primary navigation"
       >
         <Link
-          href="/avelecare"
+          href="/eastside-hospital"
           className="avel-sb-logo"
           aria-label="Eastside Hospital home"
           onClick={close}
