@@ -36,7 +36,7 @@ export const HELP_ARTICLES: HelpArticle[] = [
     category: "getting_started",
     title: "Inviting a new provider",
     excerpt:
-      "Send a provider an SMS + email link to complete intake from their phone. The agent extracts everything, you review.",
+      "Send a provider an SMS + email link to complete intake from their phone. CredTek extracts everything, you review.",
     readTime: "3 min read",
     html: `
       <p>The fastest way to onboard a new clinician is the
@@ -56,8 +56,8 @@ export const HELP_ARTICLES: HelpArticle[] = [
         DEA, COI, and CV, and signs attestations. <strong>Average
         completion: 11 minutes.</strong></li>
         <li>You see the provider appear in your <a href="/dashboard">Dashboard</a>
-        pipeline as soon as they submit. The PSV agent and payor
-        enrollment agents start drafting immediately.</li>
+        pipeline as soon as they submit. PSV and payor enrollment
+        start immediately.</li>
       </ol>
 
       <h2>What if the provider doesn't respond?</h2>
@@ -68,7 +68,7 @@ export const HELP_ARTICLES: HelpArticle[] = [
       <h2>Multi-state providers</h2>
       <p>If your provider holds licenses in multiple states, list the
       primary state on the invite — they'll add the others during intake.
-      The PSV agent verifies all of them in parallel.</p>
+      We verify all of them in parallel.</p>
 
       <h2>Bulk invite (Modio import)</h2>
       <p>To invite many providers at once, use the Modio import flow at
@@ -146,20 +146,20 @@ export const HELP_ARTICLES: HelpArticle[] = [
       <h2>Approve, edit, or reject</h2>
       <ul>
         <li><strong>Approve &amp; send</strong> — the most common action.
-        The agent submits to the payor portal, transitions the
+        We submit to the payor portal, transitions the
         IntegrationJob to <code>submitted</code>, and logs to the audit
         chain.</li>
         <li><strong>Edit</strong> — opens an inline editor. Most coordinators
-        never need this; agent drafts have a 97% accept-as-is rate. But if
+        never need this; most drafts are accepted as-is. But if
         the payor has a quirk we missed (a specific phrasing they require
         in a free-text field), this is where you fix it.</li>
-        <li><strong>Reject</strong> — dismisses the draft and asks the agent
-        for a new one (or stops the workflow, depending on action type).</li>
+        <li><strong>Reject</strong> — dismisses the draft and requests a new
+        one (or stops the workflow, depending on action type).</li>
       </ul>
 
-      <h2>How the agent draft is built</h2>
+      <h2>How the draft is built</h2>
       <p>From the provider's golden profile (intake + PSV results + CAQH
-      sync). The agent fills every field on the payor's portal, attaches
+      sync). Our team fills every field on the payor's portal, attaches
       the right documents, and stages the submission. You see exactly what
       will be sent.</p>
 
@@ -277,7 +277,7 @@ export const HELP_ARTICLES: HelpArticle[] = [
 
       <h2>Where to find it</h2>
       <p><a href="/ops/audit">/ops/audit</a> in the Ops view. Filter by
-      actor type (system / user / agent / specialist), action, or
+      actor type (system / user / specialist), action, or
       resource. Each row shows the previous hash and its own hash so you
       can eyeball the chain.</p>
 
