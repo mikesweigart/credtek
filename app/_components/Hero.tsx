@@ -12,6 +12,7 @@
 
 import { useState } from "react";
 import { EmailDemoModal } from "./EmailDemoModal";
+import { HeroConsole } from "./HeroConsole";
 
 // Real booking link — the hero's primary CTA books a call directly (no
 // form), so the button verb matches what actually happens.
@@ -78,6 +79,10 @@ export function Hero() {
             <span className="dot">●</span> <strong>Working your roster in 48 hours</strong> &nbsp;·&nbsp;{" "}
             <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one
           </div>
+
+          {/* Product console — the real credentialing workspace, floated below
+              the action path. The signature modern element. */}
+          <HeroConsole />
 
         </div>
       </section>
