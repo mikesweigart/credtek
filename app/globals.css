@@ -6888,6 +6888,27 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
+/* Two authentic founder photos — candid whiteboard shot + posed team */
+.founder-photo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.founder-shot {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  box-shadow:
+    0 24px 48px -16px rgba(11, 31, 46, 0.25),
+    0 8px 16px -8px rgba(11, 31, 46, 0.1);
+}
+.founder-photo-stack .founder-shot img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+}
+@media (max-width: 768px) { .founder-photo-stack { gap: 12px; } }
 
 /* ============================================================
    POLISH: hover lift on hero/feature mockup screenshots

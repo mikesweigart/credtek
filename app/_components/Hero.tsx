@@ -11,7 +11,6 @@
 // failed the grunt test.)
 
 import { useState } from "react";
-import Image from "next/image";
 import { EmailDemoModal } from "./EmailDemoModal";
 
 // Real booking link — the hero's primary CTA books a call directly (no
@@ -80,20 +79,6 @@ export function Hero() {
             <span className="dot">●</span> <strong>HIPAA + BAA</strong> on day one
           </div>
 
-          {/* Supporting visual — a warm, human trust image. Calmer than an
-              autoplay video, and it reinforces the promise: a real team that
-              plugs into your group. (The 60s explainer moved to its own
-              section just below.) */}
-          <div className="hero-visual">
-            <Image
-              src="/office-handshake.png"
-              alt="A CredTek credentialing specialist shaking hands with a physician in a hospital while clinical staff care for a patient"
-              width={1536}
-              height={1024}
-              sizes="(max-width: 760px) 92vw, 720px"
-              className="hero-visual-img"
-            />
-          </div>
         </div>
       </section>
 

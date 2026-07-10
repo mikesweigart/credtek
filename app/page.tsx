@@ -156,9 +156,8 @@ const LANDING_BODY_PRE_CALC = `
           Select Medical, and Ascension. They&apos;ve seen every failure
           mode of every competing tool firsthand, run credentialing
           through multi-billion-dollar M&amp;A reorganizations, and stood
-          up delegated programs for major payors. They&apos;re staying
-          unnamed until our public launch — you&apos;ll meet them on the
-          demo.
+          up delegated programs for major payors. You&apos;ll meet the whole
+          team on your demo.
         </p>
         <p class="founder-p">
           Together we built the platform we&apos;d want our own teams to
@@ -171,11 +170,16 @@ const LANDING_BODY_PRE_CALC = `
           <div class="founder-sig-title">+ two co-founders · 40+ years combined enterprise medical credentialing</div>
         </div>
       </div>
-      <div class="founder-photo">
-        <img src="/mike-headshot.jpg" alt="Mike Sweigart, Founder of CredTek" />
-        <div class="founder-photo-tag">
-          <span class="founder-photo-dot">●</span>
-          Built by operators
+      <div class="founder-photo-stack">
+        <div class="founder-shot founder-shot-main">
+          <img src="/founders-candid.png" alt="The CredTek founders mapping a credentialing workflow at the whiteboard" loading="lazy" decoding="async" />
+          <div class="founder-photo-tag">
+            <span class="founder-photo-dot">●</span>
+            Built by operators
+          </div>
+        </div>
+        <div class="founder-shot">
+          <img src="/founders-team.png" alt="The three CredTek founders" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
