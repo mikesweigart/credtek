@@ -211,7 +211,7 @@ export function AvelProviderTable() {
 
       <div className="avel-table-foot">
         Showing <strong>{filtered.length}</strong> of {PROVIDERS.length} providers
-        {hasFilter ? " (filtered)" : ""} · AVEL eCare clinician roster
+        {hasFilter ? " (filtered)" : ""} · Eastside Hospital clinician roster
         &nbsp;·&nbsp;
         <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
       </div>

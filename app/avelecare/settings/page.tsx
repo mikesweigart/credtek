@@ -92,7 +92,7 @@ function SettingsTabs() {
       {tab === "notifications" && <NotificationsTab />}
 
       <div className="avel-table-foot">
-        AVEL eCare Credentialing Portal · Admin
+        Eastside Hospital Credentialing Portal · Admin
         &nbsp;·&nbsp;
         <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
       </div>
@@ -246,7 +246,7 @@ function BrandingTab() {
           <input
             type="text"
             className="set-input"
-            defaultValue="AVEL eCare Credentialing Portal"
+            defaultValue="Eastside Hospital Credentialing Portal"
           />
         </div>
 
@@ -266,7 +266,7 @@ function BrandingTab() {
               <span className="avel-sb-mark" aria-hidden="true" />
             </div>
             <div className="set-asset-meta">
-              <div className="set-asset-name">Avel_Icon_White.svg</div>
+              <div className="set-asset-name">eastside-mark.svg</div>
               <div className="set-asset-sub">1.2 KB · 132×113 · vector</div>
               <button type="button" className="avel-btn-ghost">Replace</button>
             </div>
@@ -280,7 +280,7 @@ function BrandingTab() {
               <span className="avel-sb-wordmark" aria-hidden="true" />
             </div>
             <div className="set-asset-meta">
-              <div className="set-asset-name">AveleCare.svg</div>
+              <div className="set-asset-name">eastside-wordmark.svg</div>
               <div className="set-asset-sub">4.5 KB · 305×137 · vector</div>
               <button type="button" className="avel-btn-ghost">Replace</button>
             </div>
@@ -338,7 +338,7 @@ function BrandingTab() {
             readOnly
           />
           <div className="set-help">
-            Subdomain mapped to your AVEL eCare credentialing portal. Managed by your account team.
+            Subdomain mapped to your Eastside Hospital credentialing portal. Managed by your account team.
           </div>
         </div>
       </div>
@@ -356,7 +356,7 @@ function RolesTab() {
         <div>
           <div className="avel-card-title">Roles &amp; permissions</div>
           <div className="avel-card-sub">
-            Define which AVEL eCare users can add providers, adjust workflows, view financial reports, and more.
+            Define which Eastside Hospital users can add providers, adjust workflows, view financial reports, and more.
           </div>
         </div>
         <button type="button" className="avel-btn-primary">+ New role</button>

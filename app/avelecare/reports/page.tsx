@@ -1,4 +1,4 @@
-// Reports & Analytics — example reports that show how AVEL eCare
+// Reports & Analytics — example reports that show how Eastside Hospital
 // credentialing impacts access, staffing, and revenue. CSS-driven
 // bar/heatmap visualizations (no chart library) so the page loads
 // fast and styles cleanly with the rest of the portal.
@@ -9,7 +9,7 @@ import { AvelTopbar } from "../_components/AvelNav";
 export const metadata = { title: "Reports & Analytics" };
 
 // ──────────────────────────────────────────────────────────────
-// Demo data — fabricated but plausible for AVEL eCare's mix.
+// Demo data — fabricated but plausible for Eastside Hospital's mix.
 // ──────────────────────────────────────────────────────────────
 
 const TIME_TO_CRED: { line: string; days: number; sla: number }[] = [
@@ -68,7 +68,7 @@ export default function AvelReports() {
     <>
       <AvelTopbar
         title="Reports & Analytics"
-        subtitle="Understand how credentialing impacts access, staffing, and revenue across AVEL eCare's footprint."
+        subtitle="Understand how credentialing impacts access, staffing, and revenue across Eastside Hospital's footprint."
       />
 
       <div className="avel-content">
@@ -254,7 +254,7 @@ export default function AvelReports() {
         </div>
 
         <div className="avel-table-foot">
-          AVEL eCare Reports &amp; Analytics · data through May 2026
+          Eastside Hospital Reports &amp; Analytics · data through May 2026
           &nbsp;·&nbsp;
           <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
         </div>

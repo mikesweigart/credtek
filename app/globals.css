@@ -9558,13 +9558,13 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ║  AVEL eCARE PORTAL — branded white-label demo            ║
+   ║  EASTSIDE HOSPITAL PORTAL — branded white-label demo            ║
    ║  Scoped entirely under .avelecare-shell so nothing here  ║
    ║  bleeds into the main CredTek marketing site.            ║
    ╚══════════════════════════════════════════════════════════╝ */
 
 .avelecare-shell {
-  /* AVEL eCare palette — deep navy + teal accent on pure white.
+  /* Eastside Hospital palette — deep navy + teal accent on pure white.
      Clean clinical surfaces, sans-serif everywhere, no serif or
      monospace flourishes anywhere in the portal. */
   --avel-ink: #0E2E47;
@@ -9624,25 +9624,29 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   text-decoration: none;
   color: white;
 }
-/* Icon mark — actual AVEL eCare brand SVG (white on dark sidebar).
+/* Icon mark — actual Eastside Hospital brand SVG (white on dark sidebar).
    Rendered via background-image so it scales crisply at any DPI. */
 .avel-sb-mark {
   display: inline-block;
   width: 38px;
   height: 32px;
   flex-shrink: 0;
-  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  background: url('/eastside-mark.svg') no-repeat center / contain;
 }
 /* Wordmark — single-color SVG rendered in white via CSS mask, so we
    don't need a separate white variant of the colored file. */
 .avel-sb-wordmark {
-  display: inline-block;
-  width: 110px;
-  height: 28px;
-  background-color: white;
-  -webkit-mask: url('/AveleCare.svg') no-repeat left center / contain;
-          mask: url('/AveleCare.svg') no-repeat left center / contain;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: white;
+  white-space: nowrap;
+  line-height: 1;
 }
+.avel-sb-wordmark::after { content: "Eastside Hospital"; }
 .avel-sb-tagline {
   font-size: 10.5px;
   font-weight: 600;
@@ -9730,7 +9734,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   width: 30px;
   height: 26px;
   flex-shrink: 0;
-  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  background: url('/eastside-mark.svg') no-repeat center / contain;
   opacity: 0.92;
 }
 .avel-sb-foot-org-name {
@@ -9756,7 +9760,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 /* Discreet "Powered by CredTek" credit + back-to-CredTek link in the
    sidebar foot — orients a self-serve demo visitor and gives them a way
-   home without disturbing the AVEL eCare brand expression. */
+   home without disturbing the Eastside Hospital brand expression. */
 .avel-sb-powered {
   display: inline-flex;
   align-items: center;
@@ -10700,7 +10704,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   position: relative;
   overflow: hidden;
 }
-/* AVEL eCare brand mark — large, faint, anchored bottom-right of the
+/* Eastside Hospital brand mark — large, faint, anchored bottom-right of the
    hero. Gives the card a quiet branded depth without competing with
    the type. */
 .avel-help-launch-brand {
@@ -10709,7 +10713,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   right: -22px;
   width: 200px;
   height: 170px;
-  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  background: url('/eastside-mark.svg') no-repeat center / contain;
   opacity: 0.08;
   pointer-events: none;
 }
@@ -11567,7 +11571,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ║  AVEL eCare — MOBILE PASS                                ║
+   ║  Eastside Hospital — MOBILE PASS                                ║
    ║  Drawer nav, hamburger, table h-scroll, pipeline snap,   ║
    ║  iOS no-zoom inputs, touch targets, active states.       ║
    ╚══════════════════════════════════════════════════════════╝ */
@@ -12004,7 +12008,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 
 /* ============================================================
    /resources — credentialing knowledge hub (uses global CredTek
-   tokens, not the AVEL scope)
+   tokens, not the Eastside scope)
    ============================================================ */
 .rsc-page { background: var(--paper); min-height: 100vh; }
 
@@ -12355,7 +12359,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — working filters, clickable rows, provider detail
+   Eastside Hospital — working filters, clickable rows, provider detail
    ============================================================ */
 
 /* Search input styled to match the selects */
@@ -12631,7 +12635,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — Expirables command center + clickable KPI tiles
+   Eastside Hospital — Expirables command center + clickable KPI tiles
    ============================================================ */
 
 /* Clickable KPI tiles (drill-down) */
@@ -12701,7 +12705,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — ⌘K command palette
+   Eastside Hospital — ⌘K command palette
    ============================================================ */
 .cmdk-overlay {
   position: fixed;
@@ -12860,7 +12864,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — Follow-ups
+   Eastside Hospital — Follow-ups
    ============================================================ */
 .fu-connect-banner {
   display: flex;
@@ -12957,7 +12961,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — Email & Integrations (Settings tab)
+   Eastside Hospital — Email & Integrations (Settings tab)
    ============================================================ */
 .email-providers { display: flex; flex-direction: column; gap: 10px; }
 .email-provider {
@@ -13022,7 +13026,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 
 /* ============================================================
-   AVEL eCare — NCQA Audit Binder
+   Eastside Hospital — NCQA Audit Binder
    ============================================================ */
 .ab-controls {
   display: flex;
@@ -13059,7 +13063,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 }
 .ab-cover-mark {
   width: 46px; height: 40px;
-  background: url('/Avel_Icon_White.svg') no-repeat center / contain;
+  background: url('/eastside-mark.svg') no-repeat center / contain;
   flex-shrink: 0;
   opacity: 0.95;
 }
@@ -13113,7 +13117,7 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .ab-chain-ok { color: var(--avel-success); font-weight: 700; flex-shrink: 0; }
 
 /* ============================================================
-   AVEL eCare — Re-credentialing forecast
+   Eastside Hospital — Re-credentialing forecast
    ============================================================ */
 .rc-forecast {
   display: flex;

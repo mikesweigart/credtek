@@ -1,5 +1,5 @@
-// AVEL eCare credentialing portal — Dashboard (root).
-// AVEL eCare-branded "command center" view: KPI tiles, pipeline visual,
+// Eastside Hospital credentialing portal — Dashboard (root).
+// Eastside Hospital-branded "command center" view: KPI tiles, pipeline visual,
 // alerts panel, service-line filter chips, and a roll-up by space.
 // All numbers computed from the seeded data in _data/seed.ts so the
 // rest of the portal stays internally consistent with this view.
@@ -55,20 +55,20 @@ export default function AvelDashboard() {
     <>
       <AvelTopbar
         title="Credentialing Command Center"
-        subtitle="See which clinicians are ready to deliver and bill virtual care across every AVEL eCare service line and partner facility."
+        subtitle="See which clinicians are ready to deliver and bill virtual care across every Eastside Hospital service line and partner facility."
       />
 
       <div className="avel-content">
         {/* ────────── BRANDED WELCOME BAND ──────────
             Subtle dashboard-only hero ribbon. Sets context that this is
-            AVEL eCare's tool the moment the page loads, then steps aside
+            Eastside Hospital's tool the moment the page loads, then steps aside
             so the KPIs do the real work below. */}
         <div className="avel-dash-hero">
           <div className="avel-dash-hero-overlay" />
           <div className="avel-dash-hero-content">
             <div className="avel-dash-hero-eyebrow">Virtual Health System</div>
             <div className="avel-dash-hero-title">
-              Welcome back. Here&apos;s where AVEL eCare credentialing stands today.
+              Welcome back. Here&apos;s where Eastside Hospital credentialing stands today.
             </div>
             <div className="avel-dash-hero-meta">
               {PROVIDERS.length} active clinicians · {SPACES.length} spaces &amp; programs · {readyToBill().length} ready to bill
@@ -126,7 +126,7 @@ export default function AvelDashboard() {
           <div className="avel-card-head">
             <div>
               <div className="avel-card-title">Credentialing pipeline</div>
-              <div className="avel-card-sub">Every active AVEL eCare clinician, by current stage. Click a column to drill in.</div>
+              <div className="avel-card-sub">Every active Eastside Hospital clinician, by current stage. Click a column to drill in.</div>
             </div>
             <Link className="avel-link" href="/avelecare/providers">View all providers →</Link>
           </div>

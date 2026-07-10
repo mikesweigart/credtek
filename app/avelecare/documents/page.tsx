@@ -1,5 +1,5 @@
 // Documents & Compliance — central library showing every credentialing
-// document across the AVEL eCare roster. Demo data linked to real
+// document across the Eastside Hospital roster. Demo data linked to real
 // providers from _data/seed.ts so the page feels internally consistent
 // with the rest of the portal.
 
@@ -28,7 +28,7 @@ export default function AvelDocuments() {
     <>
       <AvelTopbar
         title="Documents & Compliance"
-        subtitle="One source of truth for every credentialing and compliance document across AVEL eCare."
+        subtitle="One source of truth for every credentialing and compliance document across Eastside Hospital."
       />
 
       <div className="avel-content">

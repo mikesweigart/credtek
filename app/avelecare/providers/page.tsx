@@ -1,4 +1,4 @@
-// Providers — full AVEL eCare clinician roster. The table, filters,
+// Providers — full Eastside Hospital clinician roster. The table, filters,
 // and row navigation are handled by the AvelProviderTable client
 // component so the filters actually filter and rows open the detail.
 
@@ -12,7 +12,7 @@ export default function AvelProviders() {
     <>
       <AvelTopbar
         title="Providers"
-        subtitle="Track credentialing and enrollment status for every AVEL eCare clinician in one place."
+        subtitle="Track credentialing and enrollment status for every Eastside Hospital clinician in one place."
       />
       <div className="avel-content">
         <AvelProviderTable />

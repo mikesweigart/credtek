@@ -144,30 +144,31 @@ const LANDING_BODY_PRE_CALC = `
         <span class="section-eyebrow">From the founders</span>
         <h2>Why <em>we</em> built this.</h2>
         <p class="founder-p">
-          We got tired of watching credentialing teams burn nights and
-          weekends on spreadsheets, broken portals, and 30-payor data
-          re-entry — only to lose providers anyway because the process
-          still took three months.
+          We lived this problem. For years we watched credentialing teams
+          burn nights and weekends on spreadsheets, broken payer portals,
+          and the same provider data re-keyed across thirty payers — and
+          still lose great clinicians, because getting them in-network took
+          three months.
         </p>
         <p class="founder-p">
-          I&apos;m building CredTek with two co-founders who&apos;ve each
-          spent <strong>20+ years inside enterprise medical credentialing
-          programs</strong> at health systems like HCA, UHS, Encompass,
-          Select Medical, and Ascension. They&apos;ve seen every failure
-          mode of every competing tool firsthand, run credentialing
-          through multi-billion-dollar M&amp;A reorganizations, and stood
-          up delegated programs for major payors. You&apos;ll meet the whole
-          team on your demo.
+          Our founders bring <strong>20+ years across medical credentialing,
+          healthcare technology, and provider-network builds</strong> — from
+          inside enterprise health systems to the payer side of the table.
+          We&apos;ve seen every failure mode of every tool, run credentialing
+          through billion-dollar M&amp;A reorganizations, and stood up
+          delegated programs from the ground up.
         </p>
         <p class="founder-p">
-          Together we built the platform we&apos;d want our own teams to
-          use. If you run credentialing for a US medical practice, MSO, or
-          health system, you&apos;ll recognize every pain point this
-          product fights.
+          It never sat right with us that a clinician who should be seeing
+          patients sits idle for a quarter, waiting on paperwork. So we built
+          the platform we always wished we had — one that <em>does</em> the
+          work instead of just tracking it, and gets providers billing in
+          weeks. If you run credentialing for a medical group, MSO, or health
+          system, you&apos;ll recognize every pain point this product fights.
         </p>
         <div class="founder-sig">
-          <div class="founder-sig-name">Mike Sweigart · founder</div>
-          <div class="founder-sig-title">+ two co-founders · 40+ years combined enterprise medical credentialing</div>
+          <div class="founder-sig-name">The CredTek founders</div>
+          <div class="founder-sig-title">20+ years in credentialing, healthcare technology &amp; provider-network builds</div>
         </div>
       </div>
       <div class="founder-photo-stack">

@@ -101,7 +101,7 @@ export function AvelAuditBinder() {
             <div className="ab-cover-mark" aria-hidden="true" />
             <div className="ab-cover-body">
               <div className="ab-cover-eyebrow">NCQA Delegated Credentialing · Evidence Binder</div>
-              <div className="ab-cover-title">AVEL eCare — {scopeLabel}</div>
+              <div className="ab-cover-title">Eastside Hospital — {scopeLabel}</div>
               <div className="ab-cover-meta">
                 Generated May 28, 2026 · {inScope.length} providers ·{" "}
                 {inScope.length * 7} primary-source verifications · standard NCQA file format
@@ -187,7 +187,7 @@ export function AvelAuditBinder() {
       )}
 
       <div className="avel-table-foot">
-        AVEL eCare · NCQA audit binder
+        Eastside Hospital · NCQA audit binder
         &nbsp;·&nbsp;
         <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
       </div>

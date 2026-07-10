@@ -114,7 +114,7 @@ function synthChecklist(p: Provider, docs: DocRow[]): CheckItem[] {
 
 function synthActivity(p: Provider): { date: string; text: string }[] {
   const base: { date: string; text: string }[] = [
-    { date: "Intake", text: `Intake packet received · ${p.name} onboarded to AVEL eCare` },
+    { date: "Intake", text: `Intake packet received · ${p.name} onboarded to Eastside Hospital` },
   ];
   if (["psv", "privileges", "compliance", "enrollment", "ready"].includes(p.stage))
     base.push({ date: "PSV", text: `Primary-source verification run across ${p.statesLicensed.length} state board(s)` });

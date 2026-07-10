@@ -1,8 +1,8 @@
 "use client";
 
-// AvelNav — left-sidebar navigation + topbar header for the AVEL eCare
+// AvelNav — left-sidebar navigation + topbar header for the Eastside Hospital
 // portal. Built fresh (not reusing the CredTek .shell-sb classes) so the
-// brand expression is fully owned by AVEL eCare: navy column, teal active
+// brand expression is fully owned by Eastside Hospital: navy column, teal active
 // state, AVEL wordmark + icon mark only.
 //
 // MOBILE behavior:
@@ -137,11 +137,11 @@ export function AvelNav() {
         <Link
           href="/avelecare"
           className="avel-sb-logo"
-          aria-label="AVEL eCare home"
+          aria-label="Eastside Hospital home"
           onClick={close}
         >
           <span className="avel-sb-mark" role="img" aria-hidden="true" />
-          <span className="avel-sb-wordmark" role="img" aria-label="AVEL eCare" />
+          <span className="avel-sb-wordmark" role="img" aria-label="Eastside Hospital" />
         </Link>
         <div className="avel-sb-tagline">Credentialing Portal</div>
 
@@ -186,7 +186,7 @@ export function AvelNav() {
           <div className="avel-sb-foot-org">
             <span className="avel-sb-foot-org-mark" role="img" aria-hidden="true" />
             <div>
-              <div className="avel-sb-foot-org-name">AVEL eCare</div>
+              <div className="avel-sb-foot-org-name">Eastside Hospital</div>
               <div className="avel-sb-foot-org-meta">Virtual Health System</div>
             </div>
           </div>

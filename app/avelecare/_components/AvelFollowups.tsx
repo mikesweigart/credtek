@@ -169,7 +169,7 @@ export function AvelFollowups() {
       </div>
 
       <div className="avel-table-foot">
-        AVEL eCare follow-ups · {remaining} open
+        Eastside Hospital follow-ups · {remaining} open
         &nbsp;·&nbsp;
         <Link className="avel-link" href="/avelecare">Back to Dashboard</Link>
       </div>
