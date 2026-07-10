@@ -179,9 +179,6 @@ const LANDING_BODY_PRE_CALC = `
             Built by operators
           </div>
         </div>
-        <div class="founder-shot">
-          <img src="/founders-team.png" alt="The three CredTek founders" loading="lazy" decoding="async" />
-        </div>
       </div>
     </div>
   </div>
