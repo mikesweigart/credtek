@@ -1053,7 +1053,7 @@ em { font-style: normal; }
 
 /* ========== FINAL CTA ========== */
 .final-cta {
-  background: var(--ink);
+  background: linear-gradient(140deg, #0B1F2E 6%, #0B3E86 58%, #0467DE);
   color: white;
   padding: 80px 0;
   margin-top: 60px;
@@ -1091,7 +1091,7 @@ em { font-style: normal; }
   margin-bottom: 22px;
   font-weight: 400;
 }
-.final-cta h2 em { font-style: normal; color: var(--gold); }
+.final-cta h2 em { font-style: normal; color: #8FC0FF; }
 .final-cta p {
   font-size: 19px;
   color: rgba(255,255,255,0.75);
@@ -1101,13 +1101,13 @@ em { font-style: normal; }
 }
 .final-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .final-cta .btn-primary {
-  background: var(--gold);
+  background: #ffffff;
   color: var(--ink);
   font-weight: 600;
   padding: 16px 32px;
   font-size: 16px;
 }
-.final-cta .btn-primary:hover { background: var(--gold-soft); }
+.final-cta .btn-primary:hover { background: #EAF2FF; }
 .final-cta .btn-secondary {
   background: transparent;
   color: white;
@@ -14538,7 +14538,11 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
   margin: 0 0 18px;
   max-width: 900px;
 }
-.hero-clarity .hero-headline em { font-style: normal; color: var(--gold-deep); }
+.hero-clarity .hero-headline em {
+  font-style: normal;
+  background: linear-gradient(96deg, var(--blue) 6%, #2E7BFF 58%, #6BA8FF);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 .hero-clarity .hero-subhead {
   font-size: clamp(17px, 1.9vw, 21px);
   line-height: 1.52;

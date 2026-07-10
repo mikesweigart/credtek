@@ -674,7 +674,7 @@ const LANDING_BODY_POST_CALC = `
       <a class="btn-primary" href="https://calendly.com/mike-fusion-advisory/30min" target="_blank" rel="noopener">Talk to us <span class="arrow">→</span></a>
       <a class="btn-secondary" href="#calc">See your numbers first</a>
     </div>
-    <div class="final-meta">→ MONTH-TO-MONTH · LIVE IN 14 DAYS · 40+ YEARS OF CREDENTIALING EXPERIENCE</div>
+    <div class="final-meta">→ MONTH-TO-MONTH · WORKING IN 48 HOURS · DECADES OF CREDENTIALING EXPERIENCE</div>
   </div>
 </section>
 
