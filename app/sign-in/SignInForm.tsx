@@ -181,6 +181,11 @@ export function SignInForm() {
                 minLength={6}
                 required
               />
+              {!isSignUp && (
+                <Link className="signin-forgot" href="/forgot-password">
+                  Forgot your password?
+                </Link>
+              )}
             </div>
           )}
 

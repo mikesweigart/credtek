@@ -96,10 +96,26 @@ function escapeAttr(s: string): string {
   return escapeHtml(s).replace(/`/g, "&#96;");
 }
 
-/** Send an email. Falls back to console-log mode in dev. */
+/** Send an email. Falls back to console-log mode in dev only. */
 export async function sendCredEmail(msg: CredEmail): Promise<SendResult> {
   const client = getClient();
   if (!client) {
+    // In production, a missing RESEND_API_KEY must NEVER read as success.
+    // Otherwise a coordinator sees "Follow-up sent to Dr. X" for an email
+    // that never left the building — worse than an outright failure,
+    // because nobody goes looking for it.
+    if (process.env.NODE_ENV === "production") {
+      // eslint-disable-next-line no-console
+      console.error("[credtek-mail] RESEND_API_KEY is not set — refusing to fake a send.", {
+        to: msg.to,
+        subject: msg.subject,
+      });
+      return {
+        ok: false,
+        mode: "log",
+        error: "Email is not configured on this environment, so nothing was sent.",
+      };
+    }
     // eslint-disable-next-line no-console
     console.log("[credtek-mail:log]", {
       to: msg.to,

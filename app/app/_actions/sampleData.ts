@@ -200,16 +200,37 @@ export async function seedSampleData() {
   // guarantees our short_names resolve regardless of what migration 0001
   // pre-seeded. Fall back to the cookie client only if the service-role key
   // is absent (best-effort — reads are allowed, the insert may no-op).
-  const shortNames = SAMPLE_PAYERS.map((p) => p.short_name);
+  // IMPORTANT: `payers` is GLOBAL reference data — no tenant_id, no unique
+  // constraint on name. Anything inserted here is permanently visible in
+  // EVERY tenant's payer list. So we match against what already exists as
+  // aggressively as we can, and only create a row as a last resort.
+  //
+  // An exact short_name lookup is not good enough: migration 0001 seeds
+  // "Anthem BCBS" while SAMPLE_PAYERS uses "BCBS", so the exact match
+  // misses and we'd insert a duplicate BCBS that every customer sees.
+  // Bias deliberately toward matching — linking a sample enrollment to a
+  // near-identical payer is harmless; polluting shared reference data for
+  // all tenants is not.
   const payerWriter = supabaseAdmin() ?? s;
   const payerIdByKey: Record<string, string> = {};
 
-  const { data: existingPayers } = await payerWriter
+  const { data: allPayers } = await payerWriter
     .from("payers")
-    .select("id, short_name")
-    .in("short_name", shortNames);
-  for (const py of existingPayers ?? []) {
-    if (py.short_name) payerIdByKey[py.short_name as string] = py.id as string;
+    .select("id, name, short_name");
+
+  const norm = (v: string) => v.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const overlaps = (a: string, b: string) =>
+    Boolean(a && b) && (a === b || a.includes(b) || b.includes(a));
+
+  for (const sample of SAMPLE_PAYERS) {
+    const sn = norm(sample.short_name);
+    const nm = norm(sample.name);
+    const hit = (allPayers ?? []).find((py) => {
+      const psn = norm((py.short_name as string) ?? "");
+      const pnm = norm((py.name as string) ?? "");
+      return overlaps(psn, sn) || overlaps(pnm, nm) || overlaps(pnm, sn) || overlaps(psn, nm);
+    });
+    if (hit) payerIdByKey[sample.short_name] = hit.id as string;
   }
 
   const toInsert = SAMPLE_PAYERS.filter((p) => !(p.short_name in payerIdByKey));

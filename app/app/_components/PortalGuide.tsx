@@ -609,7 +609,7 @@ export function PortalGuide({
                 )}
                 {fbStatus === "err" && (
                   <div className="pg-fb-result pg-fb-result-err">
-                    ✗ Couldn&apos;t send{fbError ? `: ${fbError}` : ""}. Try again, or email <a href="mailto:mikesweigart@yahoo.com" style={{ color: "#0053A0" }}>mikesweigart@yahoo.com</a> directly.
+                    ✗ Couldn&apos;t send{fbError ? `: ${fbError}` : ""}. Try again, or email <a href="mailto:support@cred-tek.com" style={{ color: "#0053A0" }}>support@cred-tek.com</a> directly.
                   </div>
                 )}
 

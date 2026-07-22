@@ -1,58 +1,45 @@
-// /ops/* layout. Internal-tool aesthetic — dense, functional, distinct
-// from the customer-facing (app) shell. The audience is credentialing
-// specialists (CVO partner staff in year 1, internal ops in year 2).
+// /ops/* auth gate. This is the INTERNAL console — it exposes the margin
+// model, the specialist queue, and audit tooling. None of that should be
+// reachable by a signed-in customer, let alone the public.
+//
+// Why an email allowlist rather than a role check: getSessionContext()
+// coerces role to "admin" for any signed-in user within their own tenant,
+// so role-gating here would admit every customer. Staff identity is the
+// only thing that actually distinguishes us from them.
+//
+// Fails CLOSED in production: if CREDTEK_OPS_EMAILS isn't configured,
+// nobody gets in. An internal console that defaults to open is how a
+// margin table ends up on a customer's screen. Denials render 404 rather
+// than a redirect, so the route's existence isn't advertised.
 
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { getSessionContext } from "../_lib/data/workspace";
+import { OpsShell } from "./OpsShell";
 
-const NAV = [
-  { label: "Queue", href: "/ops/queue" },
-  { label: "Templates", href: "/ops/templates" },
-  { label: "Audit log", href: "/ops/audit" },
-  { label: "Margin", href: "/ops/margin" },
-];
+export const dynamic = "force-dynamic";
 
-export default function OpsLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname() ?? "/ops/queue";
-  return (
-    <div className="ops-shell">
-      <header className="ops-topbar">
-        <Link href="/ops/queue" className="ops-logo">
-          <div className="ops-logo-mark">C</div>
-          <div className="ops-logo-text">
-            CredTek <span className="ops-logo-suffix">/ Ops</span>
-          </div>
-        </Link>
+function opsAllowlist(): string[] {
+  return (process.env.CREDTEK_OPS_EMAILS ?? "")
+    .split(",")
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
 
-        <nav className="ops-topnav">
-          {NAV.map((item) => {
-            const active = pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={
-                  active ? "ops-topnav-link active" : "ops-topnav-link"
-                }
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+export default async function OpsLayout({ children }: { children: ReactNode }) {
+  // Local development stays open so the console is workable offline.
+  // Vercel previews run with NODE_ENV=production, so they gate too.
+  if (process.env.NODE_ENV !== "production") {
+    return <OpsShell>{children}</OpsShell>;
+  }
 
-        <div className="ops-topbar-right">
-          <span className="ops-pill">CVO partner · Andros Health</span>
-          <span className="ops-pill">Internal ops · 2 specialists</span>
-          <Link href="/dashboard" className="ops-switch">
-            ← Back to customer view
-          </Link>
-        </div>
-      </header>
-      <main className="ops-main">{children}</main>
-    </div>
-  );
+  const ctx = await getSessionContext();
+  const allow = opsAllowlist();
+  const email = (ctx.email ?? "").toLowerCase();
+
+  if (!ctx.userId || allow.length === 0 || !allow.includes(email)) {
+    notFound();
+  }
+
+  return <OpsShell>{children}</OpsShell>;
 }
