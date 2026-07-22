@@ -12,6 +12,7 @@ import {
   type CreateJobInput,
 } from "../../../_lib/ial/jobStore";
 import type { IntegrationTier } from "../../../_lib/ial/types";
+import { requireApiSession } from "../_auth";
 
 const VALID_TIERS: IntegrationTier[] = [
   "tier_1_api",
@@ -31,6 +32,9 @@ type SubmitBody = {
 };
 
 export async function POST(req: Request) {
+  const auth = await requireApiSession();
+  if (!auth.ok) return auth.response;
+
   let body: SubmitBody;
   try {
     body = (await req.json()) as SubmitBody;
@@ -42,8 +46,9 @@ export async function POST(req: Request) {
   }
 
   // --- Validation ----------------------------------------------------
+  // tenant_id is deliberately NOT required or trusted — it's taken from
+  // the authenticated session below.
   const missing: string[] = [];
-  if (!body.tenant_id) missing.push("tenant_id");
   if (!body.integration_type) missing.push("integration_type");
   if (!body.tier) missing.push("tier");
   if (!body.provider_id) missing.push("provider_id");
@@ -66,12 +71,12 @@ export async function POST(req: Request) {
 
   // --- Create -------------------------------------------------------
   const input: CreateJobInput = {
-    tenantId: body.tenant_id!,
+    tenantId: auth.session.tenantId,
     integrationType: body.integration_type!,
     tier: body.tier as IntegrationTier,
     providerId: body.provider_id!,
     payload: body.payload!,
-    createdBy: "api_demo_user",
+    createdBy: auth.session.userId,
   };
   const job = createJob(input);
 

@@ -12,6 +12,7 @@ import {
   serializeJob,
 } from "../../../_lib/ial/jobStore";
 import type { IntegrationStatus } from "../../../_lib/ial/types";
+import { requireApiSession } from "../_auth";
 
 const VALID_STATUSES: IntegrationStatus[] = [
   "drafted",
@@ -25,8 +26,13 @@ const VALID_STATUSES: IntegrationStatus[] = [
 ];
 
 export async function GET(req: Request) {
+  const auth = await requireApiSession();
+  if (!auth.ok) return auth.response;
+
   const url = new URL(req.url);
-  const tenantId = url.searchParams.get("tenant_id") ?? undefined;
+  // Tenant comes from the session, never from the query string — a
+  // ?tenant_id= that isn't yours must not be honoured.
+  const tenantId = auth.session.tenantId;
   const providerId = url.searchParams.get("provider_id") ?? undefined;
   const status = url.searchParams.get("status") ?? undefined;
   const limitParam = url.searchParams.get("limit");

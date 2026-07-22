@@ -202,9 +202,9 @@ export default function ApiDocsPage() {
             <p className="docs-lead">
               Base URL:{" "}
               <code>https://www.cred-tek.com/api</code>. All requests and
-              responses are JSON. Demo endpoints use an in-memory store and
-              are open (no auth). Production wires per-tenant JWT auth via
-              Supabase + RLS.
+              responses are JSON. Every endpoint requires an authenticated
+              CredTek session and is tenant-scoped. The job store behind
+              them is still in-memory pending the Supabase migration.
             </p>
           </section>
 
@@ -217,8 +217,11 @@ export default function ApiDocsPage() {
               404 (not 403, to avoid resource-existence leaks).
             </p>
             <p>
-              Demo: no auth required. The mock store seeds 5 sample jobs
-              under <code>tenant_id=&quot;mindscape&quot;</code>.
+              Today: a signed-in CredTek session (cookie-based) is required —
+              unauthenticated requests return <code>401</code>. A{" "}
+              <code>tenant_id</code> passed in the query string or body is
+              ignored; the tenant is always taken from the session, so a
+              request cannot reach another customer&apos;s jobs.
             </p>
           </section>
 

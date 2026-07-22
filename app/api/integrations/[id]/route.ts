@@ -14,6 +14,7 @@ import type {
   ActorType,
   IntegrationStatus,
 } from "../../../_lib/ial/types";
+import { requireApiSession } from "../_auth";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -31,9 +32,14 @@ const VALID_STATUSES: IntegrationStatus[] = [
 const VALID_ACTORS: ActorType[] = ["system", "user", "agent", "specialist"];
 
 export async function GET(_req: Request, { params }: Params) {
+  const auth = await requireApiSession();
+  if (!auth.ok) return auth.response;
+
   const { id } = await params;
   const job = getJob(id);
-  if (!job) {
+  // A job belonging to someone else is reported as not_found, not
+  // forbidden — 403 would confirm the id exists.
+  if (!job || job.tenantId !== auth.session.tenantId) {
     return NextResponse.json(
       { error: "not_found", id },
       { status: 404 },
@@ -54,7 +60,16 @@ type TransitionBody = {
 };
 
 export async function POST(req: Request, { params }: Params) {
+  const auth = await requireApiSession();
+  if (!auth.ok) return auth.response;
+
   const { id } = await params;
+
+  // Reject cross-tenant transitions before any state is touched.
+  const existing = getJob(id);
+  if (!existing || existing.tenantId !== auth.session.tenantId) {
+    return NextResponse.json({ error: "not_found", id }, { status: 404 });
+  }
 
   let body: TransitionBody;
   try {
