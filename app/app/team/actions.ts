@@ -6,6 +6,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { recordAudit } from "../../_lib/data/audit";
 import { getSessionContext } from "../../_lib/data/workspace";
 import { supabaseAdmin } from "../../_lib/supabase/server";
 
@@ -36,6 +37,10 @@ export async function changeRole(formData: FormData) {
     .update({ role })
     .eq("id", memberId)
     .eq("tenant_id", ctx.tenantId);
+
+  // Who granted whom what access, and when. First thing an auditor asks.
+  await recordAudit({ action: "edit", resourceType: "profile", resourceId: memberId,
+    after: { role }, metadata: { event: "role_change" } });
 
   revalidatePath("/app/team");
   redirect("/app/team?msg=role_updated");
@@ -75,6 +80,9 @@ export async function inviteTeammate(formData: FormData) {
   await admin
     .from("profiles")
     .upsert({ id: userId, tenant_id: ctx.tenantId, email, role }, { onConflict: "id" });
+
+  await recordAudit({ action: "create", resourceType: "profile", resourceId: userId,
+    after: { email, role }, metadata: { event: "workspace_invite" } });
 
   revalidatePath("/app/team");
   redirect("/app/team?msg=invited");

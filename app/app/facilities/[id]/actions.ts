@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../_lib/supabase/serverClient";
 import { getSessionContext, canEdit } from "../../../_lib/data/workspace";
+import { recordAudit } from "../../../_lib/data/audit";
 
 function str(fd: FormData, key: string): string {
   return String(fd.get(key) ?? "").trim();
@@ -28,6 +29,9 @@ export async function addFacilityCredential(formData: FormData) {
     status: str(formData, "status") || "active",
     expires_on: str(formData, "expires_on") || null,
   });
+  await recordAudit({ action: "create", resourceType: "facility_credential", resourceId: facilityId,
+    after: { kind: str(formData, "kind") || "other", identifier: str(formData, "identifier") || null,
+             issuer: str(formData, "issuer") || null, expires_on: str(formData, "expires_on") || null } });
   revalidatePath(`/app/facilities/${facilityId}`);
 }
 
@@ -38,7 +42,9 @@ export async function deleteFacilityCredential(formData: FormData) {
   const facilityId = str(formData, "facilityId");
   const id = str(formData, "id");
   const s = await createSupabaseServerClient();
-  if (!s || !facilityId || !id) return;
+  if (!s || !facilityId || !id || !ctx.tenantId) return;
   await s.from("facility_credentials").delete().eq("id", id).eq("tenant_id", ctx.tenantId);
+  await recordAudit({ action: "delete", resourceType: "facility_credential", resourceId: id,
+    metadata: { facility_id: facilityId } });
   revalidatePath(`/app/facilities/${facilityId}`);
 }

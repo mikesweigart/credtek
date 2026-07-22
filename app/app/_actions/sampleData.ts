@@ -17,6 +17,7 @@ import { createSupabaseServerClient } from "../../_lib/supabase/serverClient";
 import { supabaseAdmin } from "../../_lib/supabase/server";
 import { getSessionContext, canEdit } from "../../_lib/data/workspace";
 import { slugify } from "../../_lib/data/providers";
+import { recordAudit } from "../../_lib/data/audit";
 
 const SEED_TAG = "credtek:sample";
 
@@ -321,6 +322,8 @@ export async function seedSampleData() {
   revalidatePath("/app/providers");
   revalidatePath("/app/followups");
   revalidatePath("/app/coverage");
+  await recordAudit({ action: "create", resourceType: "provider", resourceId: "sample-data",
+    metadata: { event: "sample_data_seeded", providers: SEED.length } });
   redirect("/app?seeded=ok");
 }
 
@@ -346,6 +349,8 @@ export async function resetSampleData() {
     const ids = ours.map((p) => p.id as string);
     // ON DELETE CASCADE on FK takes care of licenses/credentials/enrollments/documents.
     await s.from("providers").delete().in("id", ids).eq("tenant_id", ctx.tenantId);
+    await recordAudit({ action: "delete", resourceType: "provider", resourceId: "sample-data",
+      metadata: { event: "sample_data_cleared", removed: ids.length } });
   }
 
   // Note: we intentionally do NOT delete sample payers — they're global

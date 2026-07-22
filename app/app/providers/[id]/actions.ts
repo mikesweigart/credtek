@@ -7,6 +7,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { recordAudit } from "../../../_lib/data/audit";
 import { createSupabaseServerClient } from "../../../_lib/supabase/serverClient";
 import { getSessionContext, canEdit } from "../../../_lib/data/workspace";
 import type { SessionCtx } from "../../../_lib/data/workspace";
@@ -36,6 +37,8 @@ export async function addLicense(formData: FormData) {
     status: str(formData, "status") || "active",
     expires_on: str(formData, "expires_on") || null,
   });
+  await recordAudit({ action: "create", resourceType: "provider_license", resourceId: providerId,
+    after: { state: str(formData, "state").toUpperCase().slice(0, 2), expires_on: str(formData, "expires_on") || null } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -53,6 +56,8 @@ export async function addCredential(formData: FormData) {
     status: str(formData, "status") || "active",
     expires_on: str(formData, "expires_on") || null,
   });
+  await recordAudit({ action: "create", resourceType: "provider_credential", resourceId: providerId,
+    after: { kind: str(formData, "kind"), identifier: str(formData, "identifier") || null } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -70,6 +75,8 @@ export async function addDocument(formData: FormData) {
     status: str(formData, "status") || "current",
     expires_on: str(formData, "expires_on") || null,
   });
+  await recordAudit({ action: "create", resourceType: "document", resourceId: providerId,
+    after: { name: str(formData, "name"), doc_type: str(formData, "doc_type") } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -89,6 +96,8 @@ export async function addEnrollment(formData: FormData) {
     status: str(formData, "status") || "not_started",
     submitted_on: str(formData, "submitted_on") || null,
   });
+  await recordAudit({ action: "submit", resourceType: "enrollment", resourceId: providerId,
+    after: { payer_id: payerId, state: str(formData, "state").toUpperCase().slice(0, 2), status: str(formData, "status") || "not_started" } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -106,6 +115,9 @@ export async function addScreening(formData: FormData) {
     checked_on: str(formData, "checked_on") || null,
     reference: str(formData, "reference") || null,
   });
+  await recordAudit({ action: "create", resourceType: "screening", resourceId: providerId,
+    after: { source: str(formData, "source") || "other", result: str(formData, "result") || "not_run",
+             checked_on: str(formData, "checked_on") || null, reference: str(formData, "reference") || null } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -117,8 +129,13 @@ export async function deleteSubRecord(formData: FormData) {
   const id = str(formData, "id");
   const allowed = ["provider_licenses", "provider_credentials", "documents", "enrollments", "screenings"];
   const s = await createSupabaseServerClient();
-  if (!s || !providerId || !id || !allowed.includes(table)) return;
-  await s.from(table).delete().eq("id", id);
+  if (!s || !providerId || !id || !ctx.tenantId || !allowed.includes(table)) return;
+  // Tenant-scoped: the table name here is dynamic, which is exactly why
+  // this delete slipped past a literal-table audit. Deleting a licence or
+  // screening by bare id would otherwise cross workspaces.
+  await s.from(table).delete().eq("id", id).eq("tenant_id", ctx.tenantId);
+  await recordAudit({ action: "delete", resourceType: table, resourceId: id,
+    metadata: { provider_id: providerId } });
   revalidatePath(`/app/providers/${providerId}`);
 }
 
@@ -136,6 +153,8 @@ export async function advanceStage(formData: FormData) {
   // stage_entered_at resets the SLA clock; both columns exist post-0003/0004.
   await s.from("providers").update({ credentialing_stage: next }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
   await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
+  await recordAudit({ action: "transition", resourceType: "provider", resourceId: providerId,
+    before: { stage: current }, after: { stage: next } });
   revalidatePath(`/app/providers/${providerId}`);
   revalidatePath("/app");
 }
@@ -151,38 +170,13 @@ export async function approveProvider(formData: FormData) {
   await s.from("providers").update({ credentialing_stage: "approved" }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
   await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
 
-  // Tamper-evident audit entry for the committee approval (best-effort).
-  try {
-    const { data: last } = await s
-      .from("audit_log")
-      .select("log_hash")
-      .eq("tenant_id", ctx.tenantId)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-    const prev = (last?.log_hash as string) ?? null;
-    const payload = `${prev ?? "genesis"}|provider:${providerId}|approve|${Date.now()}`;
-    let h = 2166136261;
-    for (let i = 0; i < payload.length; i++) {
-      h ^= payload.charCodeAt(i);
-      h = Math.imul(h, 16777619);
-    }
-    const logHash = (h >>> 0).toString(16).padStart(8, "0") + Date.now().toString(16);
-    await s.from("audit_log").insert({
-      tenant_id: ctx.tenantId,
-      actor_id: ctx.userId,
-      actor_type: "user",
-      resource_type: "provider",
-      resource_id: providerId,
-      action: "approve",
-      after_state: { status: "active", stage: "approved" },
-      metadata: { event: "credentialing_committee_approval" },
-      prev_log_hash: prev,
-      log_hash: logHash,
-    });
-  } catch {
-    /* audit is best-effort; approval still succeeds */
-  }
+  await recordAudit({
+    action: "approve",
+    resourceType: "provider",
+    resourceId: providerId,
+    after: { status: "active", stage: "approved" },
+    metadata: { event: "credentialing_committee_approval" },
+  });
 
   revalidatePath(`/app/providers/${providerId}`);
   revalidatePath("/app");
@@ -209,6 +203,8 @@ export async function updateProvider(formData: FormData) {
     })
     .eq("id", providerId)
     .eq("tenant_id", ctx.tenantId);
+  await recordAudit({ action: "edit", resourceType: "provider", resourceId: providerId,
+    after: { name: str(formData, "name"), status: str(formData, "status"), npi: str(formData, "npi") || null } });
   revalidatePath(`/app/providers/${providerId}`);
   redirect(`/app/providers/${providerId}`);
 }
@@ -219,6 +215,7 @@ export async function deleteProvider(formData: FormData) {
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
   if (!s || !providerId || !ctx.tenantId) return;
+  await recordAudit({ action: "delete", resourceType: "provider", resourceId: providerId });
   await s.from("providers").delete().eq("id", providerId).eq("tenant_id", ctx.tenantId);
   revalidatePath("/app/providers");
   redirect("/app/providers");
