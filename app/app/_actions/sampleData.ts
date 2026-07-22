@@ -333,15 +333,19 @@ export async function resetSampleData() {
   if (!s) redirect("/app?error=db");
 
   // Only delete rows we tagged in meta as sample data — never touches real providers.
+  // Tenant-scoped on BOTH sides: without it this finds every workspace's
+  // seeded rows and deletes them by id — one customer clearing their demo
+  // data could wipe another's.
   const { data: ours } = await s
     .from("providers")
     .select("id, meta")
+    .eq("tenant_id", ctx.tenantId)
     .ilike("meta", `%${SEED_TAG}%`);
 
   if (ours && ours.length) {
     const ids = ours.map((p) => p.id as string);
     // ON DELETE CASCADE on FK takes care of licenses/credentials/enrollments/documents.
-    await s.from("providers").delete().in("id", ids);
+    await s.from("providers").delete().in("id", ids).eq("tenant_id", ctx.tenantId);
   }
 
   // Note: we intentionally do NOT delete sample payers — they're global

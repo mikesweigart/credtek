@@ -39,6 +39,6 @@ export async function deleteFacilityCredential(formData: FormData) {
   const id = str(formData, "id");
   const s = await createSupabaseServerClient();
   if (!s || !facilityId || !id) return;
-  await s.from("facility_credentials").delete().eq("id", id);
+  await s.from("facility_credentials").delete().eq("id", id).eq("tenant_id", ctx.tenantId);
   revalidatePath(`/app/facilities/${facilityId}`);
 }

@@ -130,12 +130,12 @@ export async function advanceStage(formData: FormData) {
   const providerId = str(formData, "providerId");
   const current = str(formData, "current") || "intake";
   const s = await createSupabaseServerClient();
-  if (!s || !providerId) return;
+  if (!s || !providerId || !ctx.tenantId) return;
   const idx = STAGE_SEQ.indexOf(current);
   const next = STAGE_SEQ[Math.min(idx + 1, STAGE_SEQ.length - 1)];
   // stage_entered_at resets the SLA clock; both columns exist post-0003/0004.
-  await s.from("providers").update({ credentialing_stage: next }).eq("id", providerId);
-  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId);
+  await s.from("providers").update({ credentialing_stage: next }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
+  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
   revalidatePath(`/app/providers/${providerId}`);
   revalidatePath("/app");
 }
@@ -147,15 +147,16 @@ export async function approveProvider(formData: FormData) {
   const s = await createSupabaseServerClient();
   if (!s || !ctx.tenantId || !providerId) return;
 
-  await s.from("providers").update({ status: "active" }).eq("id", providerId);
-  await s.from("providers").update({ credentialing_stage: "approved" }).eq("id", providerId);
-  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId);
+  await s.from("providers").update({ status: "active" }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
+  await s.from("providers").update({ credentialing_stage: "approved" }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
+  await s.from("providers").update({ stage_entered_at: new Date().toISOString() }).eq("id", providerId).eq("tenant_id", ctx.tenantId);
 
   // Tamper-evident audit entry for the committee approval (best-effort).
   try {
     const { data: last } = await s
       .from("audit_log")
       .select("log_hash")
+      .eq("tenant_id", ctx.tenantId)
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -192,7 +193,7 @@ export async function updateProvider(formData: FormData) {
   if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
-  if (!s || !providerId) return;
+  if (!s || !providerId || !ctx.tenantId) return;
   await s
     .from("providers")
     .update({
@@ -206,7 +207,8 @@ export async function updateProvider(formData: FormData) {
         .map((x) => x.trim().toUpperCase())
         .filter(Boolean),
     })
-    .eq("id", providerId);
+    .eq("id", providerId)
+    .eq("tenant_id", ctx.tenantId);
   revalidatePath(`/app/providers/${providerId}`);
   redirect(`/app/providers/${providerId}`);
 }
@@ -216,8 +218,8 @@ export async function deleteProvider(formData: FormData) {
   if (!ctx) return;
   const providerId = str(formData, "providerId");
   const s = await createSupabaseServerClient();
-  if (!s || !providerId) return;
-  await s.from("providers").delete().eq("id", providerId);
+  if (!s || !providerId || !ctx.tenantId) return;
+  await s.from("providers").delete().eq("id", providerId).eq("tenant_id", ctx.tenantId);
   revalidatePath("/app/providers");
   redirect("/app/providers");
 }
