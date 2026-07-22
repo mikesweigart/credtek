@@ -7,6 +7,7 @@
 // when the backend isn't configured, so the app degrades gracefully.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type FacilityType =
   | "hospital"
@@ -80,9 +81,13 @@ export async function listFacilities(
   );
   const offset = Math.max(opts.offset ?? 0, 0);
 
+  const tid = await currentTenantId();
+  if (!tid) return [];
+
   const { data, error } = await supabase
     .from("facilities")
     .select(FACILITY_COLS)
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
   if (error || !data) return [];
@@ -93,9 +98,12 @@ export async function listFacilities(
 export async function countFacilities(): Promise<number> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return 0;
+  const tid = await currentTenantId();
+  if (!tid) return 0;
   const { count, error } = await supabase
     .from("facilities")
-    .select("id", { count: "exact", head: true });
+    .select("id", { count: "exact", head: true })
+    .eq("tenant_id", tid);
   if (error || count == null) return 0;
   return count;
 }
@@ -103,10 +111,13 @@ export async function countFacilities(): Promise<number> {
 export async function getFacilityById(id: string): Promise<DbFacility | null> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return null;
+  const tid = await currentTenantId();
+  if (!tid) return null;
   const { data } = await supabase
     .from("facilities")
     .select(FACILITY_COLS)
     .eq("id", id)
+    .eq("tenant_id", tid)
     .maybeSingle();
   return (data as unknown as DbFacility) ?? null;
 }
@@ -150,10 +161,13 @@ export async function listFacilityCredentials(
 ): Promise<DbFacilityCredential[]> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data, error } = await supabase
     .from("facility_credentials")
     .select("id, kind, identifier, issuer, status, issued_on, expires_on, created_at")
     .eq("facility_id", facilityId)
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
   if (error || !data) return [];
   return data as unknown as DbFacilityCredential[];

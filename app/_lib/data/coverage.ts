@@ -3,6 +3,7 @@
 // pulling the Supabase server client into the browser bundle.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 import type { EnrollmentStatus } from "./credentialing";
 import type {
   CoverageData,
@@ -25,7 +26,8 @@ function cellKey(state: string, payerId: string): string {
 
 export async function getCoverage(): Promise<CoverageData> {
   const s = await createSupabaseServerClient();
-  if (!s) {
+  const tid = await currentTenantId();
+  if (!s || !tid) {
     return {
       providers: [],
       payers: [],
@@ -33,9 +35,12 @@ export async function getCoverage(): Promise<CoverageData> {
     };
   }
 
+  // providers + enrollments are tenant-owned and filtered explicitly.
+  // payers is deliberately NOT filtered: it's global reference data with
+  // no tenant_id column, shared by every workspace.
   const [{ data: pData }, { data: enrData }, { data: payerData }] = await Promise.all([
-    s.from("providers").select("id, name, credential, license_states, status, credentialing_stage").order("name"),
-    s.from("enrollments").select("id, provider_id, payer_id, state, status, effective_date, submitted_on"),
+    s.from("providers").select("id, name, credential, license_states, status, credentialing_stage").eq("tenant_id", tid).order("name"),
+    s.from("enrollments").select("id, provider_id, payer_id, state, status, effective_date, submitted_on").eq("tenant_id", tid),
     s.from("payers").select("id, name, short_name, kind").order("name"),
   ]);
 

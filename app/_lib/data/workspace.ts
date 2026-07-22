@@ -3,6 +3,7 @@
 // tenant/profile if the signup trigger (migration 0002) wasn't
 // installed — so the app works regardless of DB setup state.
 
+import { cache } from "react";
 import { createSupabaseServerClient } from "../supabase/serverClient";
 import { supabaseAdmin } from "../supabase/server";
 
@@ -53,7 +54,20 @@ function tenantNameFrom(tenants: unknown): string | null {
   return (tenants as { name?: string }).name ?? null;
 }
 
-export async function getSessionContext(): Promise<SessionCtx> {
+/**
+ * Resolve the signed-in user + tenant. Wrapped in React cache() so it runs
+ * ONCE per request no matter how many layouts, pages, and data functions
+ * ask for it.
+ *
+ * This matters for two reasons beyond speed:
+ *   1. Every caller previously triggered its own auth + profile round-trip.
+ *      A single page render could issue half a dozen. That cost scales with
+ *      traffic, and it's pure waste.
+ *   2. This function SELF-HEALS a missing tenant/profile — i.e. it can
+ *      WRITE. Deduping means the heal is attempted once per request rather
+ *      than racing with itself.
+ */
+export const getSessionContext = cache(async function getSessionContext(): Promise<SessionCtx> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return EMPTY;
 
@@ -125,6 +139,20 @@ export async function getSessionContext(): Promise<SessionCtx> {
     role: "admin",
     guideSeenAt: null, // brand-new profile — show the tour
   };
+});
+
+/**
+ * The signed-in user's tenant id, or null.
+ *
+ * Data functions use this to scope reads EXPLICITLY rather than relying on
+ * RLS alone. RLS is still the primary control and must stay enabled — this
+ * is defence in depth, so that a single mis-configured policy can't turn
+ * into one customer reading another's roster. Cheap: rides the cached
+ * session context above.
+ */
+export async function currentTenantId(): Promise<string | null> {
+  const ctx = await getSessionContext();
+  return ctx.tenantId;
 }
 
 async function ensureWorkspace(

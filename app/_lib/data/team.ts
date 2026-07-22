@@ -3,6 +3,7 @@
 // this returns the workspace's members and nobody else's.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type TeamMember = {
   id: string;
@@ -14,9 +15,12 @@ export type TeamMember = {
 export async function listTeamMembers(): Promise<TeamMember[]> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data, error } = await supabase
     .from("profiles")
     .select("id, email, full_name, role")
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: true });
   if (error || !data) return [];
   return data as TeamMember[];

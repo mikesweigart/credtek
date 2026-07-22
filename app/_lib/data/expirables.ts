@@ -3,6 +3,7 @@
 // credentialing managers live in.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type ExpirableRow = {
   id: string; // composite: kind:db_id
@@ -32,7 +33,8 @@ function bucket(d: number): ExpirableRow["bucket"] {
 
 export async function listExpirables(): Promise<ExpirableRow[]> {
   const s = await createSupabaseServerClient();
-  if (!s) return [];
+  const tid = await currentTenantId();
+  if (!s || !tid) return [];
 
   const ninetyOut = new Date(); ninetyOut.setHours(0,0,0,0);
   ninetyOut.setDate(ninetyOut.getDate() + 90);
@@ -42,6 +44,7 @@ export async function listExpirables(): Promise<ExpirableRow[]> {
   const { data: licData } = await s
     .from("provider_licenses")
     .select("id, state, license_number, expires_on, provider_id, providers ( name, credential )")
+    .eq("tenant_id", tid)
     .not("expires_on", "is", null)
     .lte("expires_on", cutoff)
     .order("expires_on", { ascending: true });
@@ -50,6 +53,7 @@ export async function listExpirables(): Promise<ExpirableRow[]> {
   const { data: credData } = await s
     .from("provider_credentials")
     .select("id, kind, identifier, expires_on, provider_id, providers ( name, credential )")
+    .eq("tenant_id", tid)
     .not("expires_on", "is", null)
     .lte("expires_on", cutoff)
     .order("expires_on", { ascending: true });

@@ -3,6 +3,7 @@
 // reads are RLS-scoped to the signed-in user's tenant.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type ExpirableStatus = "active" | "expiring_soon" | "expired" | "pending" | "awaiting";
 export type CredentialKind = "state_license" | "dea" | "cds" | "board_cert" | "coi_malpractice" | "caqh" | "other";
@@ -65,10 +66,13 @@ export type DbPayer = { id: string; name: string; short_name: string | null };
 export async function listLicenses(providerId: string): Promise<DbLicense[]> {
   const s = await createSupabaseServerClient();
   if (!s) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data } = await s
     .from("provider_licenses")
     .select("id, state, license_number, status, expires_on")
     .eq("provider_id", providerId)
+    .eq("tenant_id", tid)
     .order("expires_on", { ascending: true });
   return (data as DbLicense[]) ?? [];
 }
@@ -76,10 +80,13 @@ export async function listLicenses(providerId: string): Promise<DbLicense[]> {
 export async function listCredentials(providerId: string): Promise<DbCredential[]> {
   const s = await createSupabaseServerClient();
   if (!s) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data } = await s
     .from("provider_credentials")
     .select("id, kind, identifier, status, expires_on")
     .eq("provider_id", providerId)
+    .eq("tenant_id", tid)
     .order("expires_on", { ascending: true });
   return (data as DbCredential[]) ?? [];
 }
@@ -87,10 +94,13 @@ export async function listCredentials(providerId: string): Promise<DbCredential[
 export async function listDocuments(providerId: string): Promise<DbDocument[]> {
   const s = await createSupabaseServerClient();
   if (!s) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data } = await s
     .from("documents")
     .select("id, name, doc_type, status, expires_on, created_at")
     .eq("provider_id", providerId)
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
   return (data as DbDocument[]) ?? [];
 }
@@ -98,10 +108,13 @@ export async function listDocuments(providerId: string): Promise<DbDocument[]> {
 export async function listEnrollments(providerId: string): Promise<DbEnrollment[]> {
   const s = await createSupabaseServerClient();
   if (!s) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data } = await s
     .from("enrollments")
     .select("id, payer_id, state, status, submitted_on, effective_date, payers ( name, short_name )")
     .eq("provider_id", providerId)
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
   return (data as DbEnrollment[]) ?? [];
 }

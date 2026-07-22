@@ -1,7 +1,12 @@
-// Provider reads/writes for the real app. All RLS-scoped to the
-// signed-in user's tenant by the cookie-bound Supabase client.
+// Provider reads/writes for the real app. Scoped to the signed-in user's
+// tenant TWICE, on purpose: by RLS on the cookie-bound Supabase client,
+// and again by an explicit tenant_id filter on every read. RLS remains the
+// primary control — the explicit filter is defence in depth, so that one
+// mis-configured policy can't become a cross-customer data leak. Reads
+// fail CLOSED (empty/null) when there's no tenant in session.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type DbProvider = {
   id: string;
@@ -62,6 +67,8 @@ export async function listProviders(
 ): Promise<DbProvider[]> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
 
   const limit = Math.min(
     Math.max(opts.limit ?? MAX_PROVIDERS_FETCH, 1),
@@ -75,6 +82,7 @@ export async function listProviders(
     const { data, error } = await supabase
       .from("providers")
       .select(cols)
+      .eq("tenant_id", tid)
       .order("created_at", { ascending: false })
       .range(offset, offset + limit - 1);
     if (!error && data) return data as unknown as DbProvider[];
@@ -91,9 +99,12 @@ export async function listProviders(
 export async function countProviders(): Promise<number> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return 0;
+  const tid = await currentTenantId();
+  if (!tid) return 0;
   const { count, error } = await supabase
     .from("providers")
-    .select("id", { count: "exact", head: true });
+    .select("id", { count: "exact", head: true })
+    .eq("tenant_id", tid);
   if (error || count == null) return 0;
   return count;
 }
@@ -101,10 +112,15 @@ export async function countProviders(): Promise<number> {
 export async function getProviderById(id: string): Promise<DbProvider | null> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return null;
+  const tid = await currentTenantId();
+  if (!tid) return null;
+  // The tenant filter is what stops a guessed/leaked provider UUID from
+  // resolving across customers if RLS is ever mis-configured.
   const { data } = await supabase
     .from("providers")
     .select("*")
     .eq("id", id)
+    .eq("tenant_id", tid)
     .maybeSingle();
   return (data as DbProvider) ?? null;
 }

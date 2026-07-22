@@ -4,6 +4,7 @@
 // before the migration runs, so the provider workspace degrades gracefully.
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
+import { currentTenantId } from "./workspace";
 
 export type ScreeningSource =
   | "oig_leie"
@@ -59,10 +60,13 @@ const SCREENING_COLS = "id, source, result, checked_on, reference, notes, create
 export async function listScreenings(providerId: string): Promise<DbScreening[]> {
   const supabase = await createSupabaseServerClient();
   if (!supabase) return [];
+  const tid = await currentTenantId();
+  if (!tid) return [];
   const { data, error } = await supabase
     .from("screenings")
     .select(SCREENING_COLS)
     .eq("provider_id", providerId)
+    .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
   if (error || !data) return [];
   return data as unknown as DbScreening[];
