@@ -5,6 +5,12 @@
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
 import { currentTenantId } from "./workspace";
+import {
+  reportQueryError,
+  okResult,
+  failedResult,
+  type QueryResult,
+} from "./observe";
 
 export type ScreeningSource =
   | "oig_leie"
@@ -57,17 +63,34 @@ export const STANDARD_SCREENS: ScreeningSource[] = [
 
 const SCREENING_COLS = "id, source, result, checked_on, reference, notes, created_at";
 
-export async function listScreenings(providerId: string): Promise<DbScreening[]> {
+/**
+ * Sanctions / exclusion screening history for a provider.
+ *
+ * Returns a QueryResult rather than a bare array on purpose. An empty
+ * screening list means "this provider has no exclusion hits" — which is
+ * exactly what a coordinator needs to see before letting someone treat
+ * patients and bill federal programs. If the query FAILED, rendering that
+ * same empty state would assert a clean OIG/SAM record we never actually
+ * verified. That is the one failure mode this panel must not have, so we
+ * report the difference and let the UI say "couldn't check".
+ */
+export async function listScreenings(
+  providerId: string,
+): Promise<QueryResult<DbScreening>> {
   const supabase = await createSupabaseServerClient();
-  if (!supabase) return [];
+  if (!supabase) return failedResult<DbScreening>();
   const tid = await currentTenantId();
-  if (!tid) return [];
+  if (!tid) return failedResult<DbScreening>();
   const { data, error } = await supabase
     .from("screenings")
     .select(SCREENING_COLS)
     .eq("provider_id", providerId)
     .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
-  if (error || !data) return [];
-  return data as unknown as DbScreening[];
+  if (error) {
+    reportQueryError("listScreenings", error);
+    return failedResult<DbScreening>();
+  }
+  if (!data) return failedResult<DbScreening>();
+  return okResult(data as unknown as DbScreening[]);
 }

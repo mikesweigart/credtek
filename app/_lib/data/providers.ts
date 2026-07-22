@@ -7,6 +7,7 @@
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
 import { currentTenantId } from "./workspace";
+import { reportQueryError } from "./observe";
 
 export type DbProvider = {
   id: string;
@@ -105,6 +106,7 @@ export async function countProviders(): Promise<number> {
     .from("providers")
     .select("id", { count: "exact", head: true })
     .eq("tenant_id", tid);
+  if (error) reportQueryError("countProviders", error);
   if (error || count == null) return 0;
   return count;
 }

@@ -8,6 +8,7 @@
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
 import { currentTenantId } from "./workspace";
+import { reportQueryError } from "./observe";
 
 export type FacilityType =
   | "hospital"
@@ -90,6 +91,7 @@ export async function listFacilities(
     .eq("tenant_id", tid)
     .order("created_at", { ascending: false })
     .range(offset, offset + limit - 1);
+  if (error) reportQueryError("listFacilities", error);
   if (error || !data) return [];
   return data as unknown as DbFacility[];
 }
@@ -104,6 +106,7 @@ export async function countFacilities(): Promise<number> {
     .from("facilities")
     .select("id", { count: "exact", head: true })
     .eq("tenant_id", tid);
+  if (error) reportQueryError("countFacilities", error);
   if (error || count == null) return 0;
   return count;
 }
@@ -169,6 +172,7 @@ export async function listFacilityCredentials(
     .eq("facility_id", facilityId)
     .eq("tenant_id", tid)
     .order("created_at", { ascending: false });
+  if (error) reportQueryError("listFacilityCredentials", error);
   if (error || !data) return [];
   return data as unknown as DbFacilityCredential[];
 }

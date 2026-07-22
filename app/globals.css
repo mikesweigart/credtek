@@ -13276,6 +13276,20 @@ a.rsc-row:hover .rsc-row-arrow { transform: translateX(3px); }
 .portal-back:hover { text-decoration: underline; }
 .portal-link { font-size: 13px; font-weight: 600; color: var(--blue-deep); text-decoration: none; }
 .portal-muted { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+/* Query failed where an empty state would be misleading. Amber, not red:
+   nothing is broken for the patient — we just can't vouch for the answer,
+   and the user must not read it as a clean result. */
+.portal-alert {
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #7A4A02;
+  background: #FFF7E8;
+  border: 1px solid #F0D9A8;
+}
+.portal-alert strong { color: #5E3901; font-weight: 600; }
 
 /* KPIs */
 /* Dashboard entity strip (facilities access) */

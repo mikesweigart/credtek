@@ -4,6 +4,7 @@
 
 import { createSupabaseServerClient } from "../supabase/serverClient";
 import { currentTenantId } from "./workspace";
+import { reportQueryError } from "./observe";
 
 export type TeamMember = {
   id: string;
@@ -22,6 +23,7 @@ export async function listTeamMembers(): Promise<TeamMember[]> {
     .select("id, email, full_name, role")
     .eq("tenant_id", tid)
     .order("created_at", { ascending: true });
+  if (error) reportQueryError("listTeamMembers", error);
   if (error || !data) return [];
   return data as TeamMember[];
 }

@@ -59,9 +59,13 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
   if (!p) return notFound();
   const editor = canEdit(ctx.role);
 
-  const [licenses, credentials, screenings, documents, enrollments, payers] = await Promise.all([
+  const [licenses, credentials, screeningResult, documents, enrollments, payers] = await Promise.all([
     listLicenses(id), listCredentials(id), listScreenings(id), listDocuments(id), listEnrollments(id), listPayers(),
   ]);
+  // Screening is the one read where "empty" and "failed" must not look
+  // alike — an unverified exclusion check is not a clean one.
+  const screenings = screeningResult.rows;
+  const screeningsFailed = screeningResult.failed;
 
   const stage: Stage = (p.credentialing_stage as Stage) ?? "intake";
   const daysHere = daysInStage(p.stage_entered_at, p.created_at);
@@ -170,7 +174,17 @@ export default async function ProviderWorkspace(props: { params: Promise<{ id: s
           <button type="submit" className="acct-btn-primary">Log screen</button>
         </form>
       )}
-      {screenings.length === 0 ? (
+      {screeningsFailed ? (
+        /* Never render the innocent "none logged" copy when the query
+           failed — that would assert a clean OIG/SAM record we did not
+           actually verify. */
+        <p className="portal-alert" role="alert">
+          <strong>Screening history couldn&apos;t be loaded.</strong> This is not
+          the same as a clear result — treat this provider&apos;s exclusion
+          status as unverified and refresh before relying on it. If it keeps
+          happening, contact support@cred-tek.com.
+        </p>
+      ) : screenings.length === 0 ? (
         <p className="portal-muted">
           No background checks logged yet. Standard set: OIG LEIE · SAM.gov · NPDB · State Medicaid · Criminal background.
         </p>
