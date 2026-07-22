@@ -271,7 +271,7 @@ em { font-style: normal; }
   background: var(--gold);
   border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--ink);
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-style: normal;
   font-size: 16px;
@@ -296,7 +296,7 @@ em { font-style: normal; }
 .sb-item .badge {
   margin-left: auto;
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   font-size: 9px;
   font-weight: 600;
   padding: 1px 6px;
@@ -323,7 +323,7 @@ em { font-style: normal; }
   width: 28px; height: 28px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  color: var(--ink);
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 11px; font-weight: 600;
 }
@@ -675,7 +675,7 @@ em { font-style: normal; }
   width: 52px; height: 52px;
   border-radius: 50%;
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-family: 'DM Sans', sans-serif;
   font-size: 22px;
@@ -691,7 +691,7 @@ em { font-style: normal; }
   border-radius: 7px;
   font-size: 11px;
 }
-.pp-btn.primary { background: var(--gold); color: var(--ink); border-color: var(--gold); font-weight: 500; }
+.pp-btn.primary { background: var(--gold); color: #fff; border-color: var(--gold); font-weight: 500; }
 .pp-tabs {
   background: white;
   padding: 0 24px;
@@ -981,7 +981,7 @@ em { font-style: normal; }
 .price-cta:hover { background: var(--blue); border-color: var(--blue); }
 .price-card.featured .price-cta {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   border-color: var(--gold);
 }
 .price-card.featured .price-cta:hover { background: white; border-color: white; }
@@ -1336,7 +1336,7 @@ footer {
   width: 32px; height: 32px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  color: var(--ink);
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 600;
 }
@@ -1578,7 +1578,7 @@ footer {
   width: 60px; height: 60px;
   border-radius: 50%;
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-family: 'DM Sans', sans-serif;
   font-size: 26px;
@@ -1612,7 +1612,7 @@ footer {
 .prov-btn:hover { background: rgba(255,255,255,0.12); }
 .prov-btn.primary {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   border-color: var(--gold);
   font-weight: 600;
 }
@@ -1937,7 +1937,7 @@ footer {
   flex: 0 0 auto;
   width: 32px; height: 32px; border-radius: 9px;
   background: linear-gradient(135deg, var(--gold), var(--gold-soft));
-  color: var(--ink);
+  color: #fff;
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 700;
 }
@@ -2260,7 +2260,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .intake-step.done .intake-step-num {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   border-color: var(--gold);
 }
 .intake-step-label {
@@ -2660,7 +2660,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   width: 60px; height: 60px;
   border-radius: 50%;
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   font-size: 32px;
   font-weight: 700;
   display: flex;
@@ -3962,7 +3962,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink);
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-style: normal;
   font-size: 16px;
@@ -4670,7 +4670,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .welcome-step.done .welcome-step-num {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   border-color: var(--gold);
 }
 .welcome-step-label {
@@ -5134,7 +5134,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
   width: 60px; height: 60px;
   border-radius: 50%;
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   font-size: 32px;
   font-weight: 700;
   display: flex;
@@ -5598,7 +5598,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .compare-th-credtek {
   background: var(--gold) !important;
-  color: var(--ink) !important;
+  color: #fff !important;
 }
 .compare-th-tag {
   display: block;
@@ -5695,7 +5695,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .compare-cta .btn-primary {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   padding: 16px 32px;
   font-size: 16px;
   font-weight: 600;
@@ -6465,7 +6465,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .changelog-marker.latest {
   background: var(--gold);
   border-color: var(--gold);
-  color: var(--ink);
+  color: #fff;
   font-size: 14px;
 }
 .changelog-line {
@@ -7111,7 +7111,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .integ-cta .btn-primary {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   padding: 14px 24px;
   font-size: 15px;
   font-weight: 600;
@@ -7319,7 +7319,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .dv-cta .btn-primary {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
   padding: 14px 24px;
   font-size: 15px;
   font-weight: 600;
@@ -7582,7 +7582,7 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 }
 .op-compare th.op-compare-credtek {
   background: var(--gold);
-  color: var(--ink);
+  color: #fff;
 }
 .op-compare td {
   padding: 8px 12px;
@@ -7926,14 +7926,38 @@ a.shell-av { text-decoration: none; cursor: pointer; }
 .caps-section h2 em { color: var(--blue); font-style: normal; }
 .caps-section .section-lead { max-width: 760px; }
 
+/* Bento: 4-col track with the opening and closing cards spanning 2, so the
+   row rhythm reads [wide][1][1] / [1][1][wide] instead of a uniform 3x2. */
 .caps-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 32px;
 }
-@media (max-width: 1000px) { .caps-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px) { .caps-grid { grid-template-columns: 1fr; gap: 12px; } }
+.caps-grid > *:nth-child(1),
+.caps-grid > *:nth-child(6) { grid-column: span 2; }
+
+/* The two wide cards carry a touch more presence — they anchor each row. */
+.caps-grid > *:nth-child(1),
+.caps-grid > *:nth-child(6) {
+  background: linear-gradient(158deg, #F6FAFF 0%, #FFFFFF 62%);
+  border-color: rgba(4, 103, 222, 0.16);
+}
+.caps-grid > *:nth-child(1) h3,
+.caps-grid > *:nth-child(6) h3 { font-size: 21.5px; }
+
+@media (max-width: 1000px) {
+  .caps-grid { grid-template-columns: repeat(2, 1fr); }
+  .caps-grid > *:nth-child(1),
+  .caps-grid > *:nth-child(6) { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .caps-grid { grid-template-columns: 1fr; gap: 12px; }
+  .caps-grid > *:nth-child(1),
+  .caps-grid > *:nth-child(6) { grid-column: span 1; }
+  .caps-grid > *:nth-child(1) h3,
+  .caps-grid > *:nth-child(6) h3 { font-size: 19.5px; }
+}
 
 .caps-card {
   background: white;
